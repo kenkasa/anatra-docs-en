@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Molecular Orientation Along a Specific Direction (z_orient, zori) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Molecular Orientation Along a Specific Direction (<code class="docutils literal notranslate"><span class="pre">z_orient</span></code>, <code class="docutils literal notranslate"><span class="pre">zori</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/11_z_orient.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="molecular-orientation-along-a-specific-direction-z-orient-zori">
+<h1>Molecular Orientation Along a Specific Direction (<code class="docutils literal notranslate"><span class="pre">z_orient</span></code>, <code class="docutils literal notranslate"><span class="pre">zori</span></code>)<a class="headerlink" href="#molecular-orientation-along-a-specific-direction-z-orient-zori" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">z_orient</span></code> (<code class="docutils literal notranslate"><span class="pre">zori</span></code>) mode computes the orientation distribution of molecules relative to a reference direction, typically the <span class="math notranslate nohighlight">\(z\)</span>-axis.<br />
+To define the orientation of a molecule, two parts of the molecule are selected: the <em>bottom</em> and the <em>head</em>. The centers of mass of these two parts are denoted by <span class="math notranslate nohighlight">\({\bf R}_{\mathrm{B}}\)</span> and <span class="math notranslate nohighlight">\({\bf R}_{\mathrm{H}}\)</span>, respectively. The molecular axis <span class="math notranslate nohighlight">\({\bf u}\)</span> is then defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9659e10c-3721-4d81-b636-ca2a22600032">
+<span class="eqno">()<a class="headerlink" href="#equation-9659e10c-3721-4d81-b636-ca2a22600032" title="Permalink to this equation"></a></span>\[\begin{align}
+{\bf u} = {\bf R}_{\mathrm{H}} - {\bf R}_{\mathrm{B}}. \label{uvec}
+\end{align}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(\theta\)</span> be the angle between the <span class="math notranslate nohighlight">\(z\)</span>-axis (unit vector <span class="math notranslate nohighlight">\({\bf e}_z\)</span>) and the molecular axis (unit vector <span class="math notranslate nohighlight">\({\bf e}_{\mathrm{u}}\)</span>). Then</p>
+<div class="amsmath math notranslate nohighlight" id="equation-10c8c8c0-323e-413d-9494-4d5267bfe24e">
+<span class="eqno">()<a class="headerlink" href="#equation-10c8c8c0-323e-413d-9494-4d5267bfe24e" title="Permalink to this equation"></a></span>\[\begin{align}
+\cos \theta = {\bf e}_z \cdot {\bf e}_{\mathrm{u}}.
+\end{align}\]</div>
+<p>The orientation distribution function is defined by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0103b921-e9d0-4c6c-8d57-9b443c27f9e7">
+<span class="eqno">()<a class="headerlink" href="#equation-0103b921-e9d0-4c6c-8d57-9b443c27f9e7" title="Permalink to this equation"></a></span>\[\begin{align}
+P(\chi) = C \left\langle \delta(\chi - \cos \theta) \right\rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C\)</span> is a normalization constant determined such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1caedd4b-cf57-4856-a680-c1ee33be333c">
+<span class="eqno">()<a class="headerlink" href="#equation-1caedd4b-cf57-4856-a680-c1ee33be333c" title="Permalink to this equation"></a></span>\[\begin{align}
+\int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) = 1.
+\end{align}\]</div>
+<p>By changing variables from <span class="math notranslate nohighlight">\(\theta\)</span> to <span class="math notranslate nohighlight">\(\chi = \cos \theta\)</span>, the left hand side of the above equation becomes</p>
+<div class="amsmath math notranslate nohighlight" id="equation-526d4787-8346-4c09-81d2-75a5661eb0dc">
+<span class="eqno">()<a class="headerlink" href="#equation-526d4787-8346-4c09-81d2-75a5661eb0dc" title="Permalink to this equation"></a></span>\[\begin{align}
+\int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) &amp;= \int_{0}^{1} d\chi\, P(\chi) \notag \\
+&amp; = CN  
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of targer molecules. Thus, <span class="math notranslate nohighlight">\(C\)</span> is set to <span class="math notranslate nohighlight">\(C=1/N\)</span>.
+The <code class="docutils literal notranslate"><span class="pre">z_orient</span></code> mode calculates <span class="math notranslate nohighlight">\(P(\chi) = P(\cos \theta)\)</span>.</p>
+<p>Additionally, the reference <span class="math notranslate nohighlight">\(z\)</span>-axis does not have to be fixed in the laboratory frame; it can also be defined by the orientation of a particular molecule. If four points <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{B}_0}, {\bf x}_{\mathrm{H}_0}, {\bf x}_{\mathrm{B}_1}, {\bf x}_{\mathrm{H}_1}\)</span> are chosen from this reference molecule, the two vectors:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e1d07896-3dc6-429c-86df-c922473946ad">
+<span class="eqno">()<a class="headerlink" href="#equation-e1d07896-3dc6-429c-86df-c922473946ad" title="Permalink to this equation"></a></span>\[\begin{align}
+{\bf v}_0 = {\bf x}_{\mathrm{H}_0} - {\bf x}_{\mathrm{B}_0}, \quad
+{\bf v}_1 = {\bf x}_{\mathrm{H}_1} - {\bf x}_{\mathrm{B}_1}
+\end{align}\]</div>
+<p>can be used to define the <span class="math notranslate nohighlight">\(z\)</span>-axis unit vector via the cross product:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-800de27f-0fd6-4adc-8808-f297c819d7b9">
+<span class="eqno">()<a class="headerlink" href="#equation-800de27f-0fd6-4adc-8808-f297c819d7b9" title="Permalink to this equation"></a></span>\[\begin{align}
+{\bf e}_z = \frac{ {\bf v}_1 \times {\bf v}_2 }{ \left| {\bf v}_1 \times {\bf v}_2 \right| }.
+\end{align}\]</div>
+<p>The orientation distribution <span class="math notranslate nohighlight">\(P(\cos \theta)\)</span> is then computed based on the angle between this <span class="math notranslate nohighlight">\({\bf e}_z\)</span> and the molecular axis <span class="math notranslate nohighlight">\({\bf u}\)</span>.</p>
+<section id="list-of-options">
+<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fhead</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel</span></code><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode</span></code><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-zdef_type</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-vecX_bottom_selid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-vecX_head_selid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-bottom_selid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-head_selid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-judgeup</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-nmolup</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-center_selid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-dx</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-dt</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-prep_only</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p>–</p></td>
+<td class="text-center"><p>–</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-sel<span class="math notranslate nohighlight">\(x\)</span> &lt;selection&gt;</strong> (up to 7 selections)</p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-sel0</span> <span class="pre">name</span> <span class="pre">P</span> <span class="pre">-sel1</span> <span class="pre">name</span> <span class="pre">N</span></code></p></li>
+</ul>
+<p>Specify the atomic groups used to define the bottom and head parts of the molecule. If using a reference molecular orientation to define the <span class="math notranslate nohighlight">\(z\)</span>-axis (<code class="docutils literal notranslate"><span class="pre">-zdef_type</span> <span class="pre">outerprod</span></code>), additional selections for <span class="math notranslate nohighlight">\({\bf v}_0\)</span> and <span class="math notranslate nohighlight">\({\bf v}_1\)</span> must also be provided. If you use <code class="docutils literal notranslate"><span class="pre">-judgeup</span></code>, selection of reference molecules to determine direction is also necessary.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-head_selid</strong>, <strong>-bottom_selid</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-head_selid</span> <span class="pre">0</span> <span class="pre">-bottom_selid</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specify which selections correspond to the head and bottom of the molecule used to compute the orientation vector <span class="math notranslate nohighlight">\({\bf u}\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-zdef_type &lt;coord or outerprod&gt;</strong>,</p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-zdef_type</span> <span class="pre">coord</span></code></p></li>
+</ul>
+<p>Required for specifying the definition of the <span class="math notranslate nohighlight">\(z\)</span>-direction.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">coord</span></code>: Use laboratory frame <span class="math notranslate nohighlight">\(z\)</span>-axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outerprod</span></code>: Use cross product of vectors <span class="math notranslate nohighlight">\({\bf v}_0\)</span> and <span class="math notranslate nohighlight">\({\bf v}_1\)</span> to define <span class="math notranslate nohighlight">\(z\)</span>-axis</p></li>
+</ul>
+<p>If <code class="docutils literal notranslate"><span class="pre">outerprod</span></code>, the following options smust be set.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-vec0_bottom_selid</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span> <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{B}_0}\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-vec0_head_selid</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span> <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{H}_0}\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-vec1_bottom_selid</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span> <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{B}_1}\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-vec1_head_selid</span></code> <span class="math notranslate nohighlight">\(\rightarrow\)</span> <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{H}_1}\)</span></p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>-judgeup &lt;nmolup coord or none&gt;</strong></p>
+<ul>
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">coord</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">coord</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>-nmolup &lt;# of target molecules in upper leaflet&gt;</strong></p>
+<ul>
+<li><p>Default: 0</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-nmolup</span> <span class="pre">100</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>-center_selid &lt;selid&gt;</strong></p>
+<ul>
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-center_selid</span> <span class="pre">2</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p>This option specifies the orientation of <span class="math notranslate nohighlight">\({\bf e}_{z}\)</span> when taking the laboratory coordinate system<span class="math notranslate nohighlight">\(^{\prime}\)</span>s <span class="math notranslate nohighlight">\(z\)</span>-axis as the reference. The unit vector pointing in the positive <span class="math notranslate nohighlight">\(z\)</span>-axis direction is denoted as <span class="math notranslate nohighlight">\({\bf e}_{z}^{\prime}\)</span>.</p>
+<ul class="simple">
+<li><p>In the case of <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">nmolup</span></code>: Let <span class="math notranslate nohighlight">\(N_{\mathrm{up}}\)</span> be the number specified by the <code class="docutils literal notranslate"><span class="pre">-nmolup</span></code> option. Then, the first <span class="math notranslate nohighlight">\(N_{\mathrm{up}}\)</span> molecules are assigned <span class="math notranslate nohighlight">\({\bf e}_{z} = {\bf e}_{z}^{\prime}\)</span> for calculating <span class="math notranslate nohighlight">\(\cos \theta\)</span>, and the remaining molecules are assigned <span class="math notranslate nohighlight">\({\bf e}_{z} = -{\bf e}_{z}^{\prime}\)</span> for calculating <span class="math notranslate nohighlight">\(\cos \theta\)</span>.</p></li>
+<li><p>In the case of <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">coord</span></code>: Let <span class="math notranslate nohighlight">\(z_{\mathrm{c}}\)</span> be the <span class="math notranslate nohighlight">\(z\)</span>-coordinate of the center of mass of the molecule specified by <code class="docutils literal notranslate"><span class="pre">-center_selid</span></code>, and <span class="math notranslate nohighlight">\(z_{\mathrm{B}}\)</span> and <span class="math notranslate nohighlight">\(z_{\mathrm{H}}\)</span> be the <span class="math notranslate nohighlight">\(z\)</span>-coordinates of the centers of mass of the regions specified by <code class="docutils literal notranslate"><span class="pre">-bottom_selid</span></code> and <code class="docutils literal notranslate"><span class="pre">-head_selid</span></code>, respectively. Then,</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-54051b32-d3f2-4762-942b-287920033376">
+<span class="eqno">()<a class="headerlink" href="#equation-54051b32-d3f2-4762-942b-287920033376" title="Permalink to this equation"></a></span>\[\begin{align}
+{\bf e}_{z} =
+\begin{cases}
+{\bf e}_{z}^{\prime}  &amp; \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} &gt; 0\\[.2cm]
+-{\bf e}_{z}^{\prime} &amp; \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} \leq  0\\
+\end{cases}
+\end{align}\]</div>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-dx &lt;grid width for <span class="math notranslate nohighlight">\(\cos\theta\)</span>&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-dx</span> <span class="pre">0.1</span></code></p></li>
+</ul>
+<p>Grid width <span class="math notranslate nohighlight">\(\Delta\chi\)</span> used for computing <span class="math notranslate nohighlight">\(P(\cos\theta)\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-dt &lt;time step&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-dt</span> <span class="pre">0.1</span></code></p></li>
+</ul>
+<p>Time increment for the output time series data.</p>
+</li>
+</ul>
+</section>
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*.costheta</span></code><br />
+Time series data of <span class="math notranslate nohighlight">\(\cos \theta\)</span>:</p>
+<ul>
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2: <span class="math notranslate nohighlight">\(\cos \theta\)</span> of molecule 1</p></li>
+<li><p>Column 3: <span class="math notranslate nohighlight">\(\cos \theta\)</span> of molecule 2<br />
+…</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.distr</span></code><br />
+Probability distribution <span class="math notranslate nohighlight">\(P(\cos \theta)\)</span>:</p>
+<ul>
+<li><p>Column 1: <span class="math notranslate nohighlight">\(\cos \theta\)</span></p></li>
+<li><p>Column 2: <span class="math notranslate nohighlight">\(P(\cos \theta)\)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="orientation-distribution-of-lipids-in-a-bilayer">
+<h3>Orientation Distribution of Lipids in a Bilayer<a class="headerlink" href="#orientation-distribution-of-lipids-in-a-bilayer" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">anatra</span> <span class="n">z_orient</span>                    \
+  <span class="o">-</span><span class="n">stype</span>       <span class="n">psf</span>                 \
+  <span class="o">-</span><span class="n">sfile</span>       <span class="nb">complex</span><span class="o">.</span><span class="n">psf</span>         \
+  <span class="o">-</span><span class="n">tintype</span>     <span class="n">nc</span>                  \
+  <span class="o">-</span><span class="n">flist_traj</span>  <span class="n">flist</span>               \
+  <span class="o">-</span><span class="n">fhead</span>       <span class="n">run_nc</span>              \
+  <span class="o">-</span><span class="n">judgeup</span>     <span class="n">coord</span>               \
+  <span class="o">-</span><span class="n">dx</span>          <span class="mf">0.1</span>                 \
+  <span class="o">-</span><span class="n">dt</span>          <span class="mf">0.1</span>                 \
+  <span class="o">-</span><span class="n">sel0</span>        <span class="n">name</span> <span class="n">P</span>              \
+  <span class="o">-</span><span class="n">sel1</span>        <span class="n">name</span> <span class="n">N</span>              \
+  <span class="o">-</span><span class="n">sel2</span>        <span class="n">segid</span> <span class="n">MEMB</span> <span class="ow">and</span> <span class="n">noh</span>  \
+  <span class="o">-</span><span class="n">mode0</span>       <span class="n">residue</span>             \
+  <span class="o">-</span><span class="n">mode1</span>       <span class="n">residue</span>             \
+  <span class="o">-</span><span class="n">mode2</span>       <span class="n">whole</span>               \
+  <span class="o">-</span><span class="n">bottom_selid</span> <span class="mi">0</span>                  \
+  <span class="o">-</span><span class="n">head_selid</span>   <span class="mi">1</span>                  \
+  <span class="o">-</span><span class="n">center_selid</span> <span class="mi">2</span>                  \
+  <span class="o">-</span><span class="n">prep_only</span>   <span class="n">false</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

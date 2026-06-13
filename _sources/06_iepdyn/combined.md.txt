@@ -1,0 +1,1430 @@
+# Integral-Equation Formalism of Population DYNamics (IEPDYN)
+
+The Integral-Equation Formalism of Population DYNamics (IEPDYN) is a theoretical framework for describing transitions between discrete states.
+
+A key feature of this method is that it represents state dynamics as a continuous-time process. Unlike conventional approaches such as the Markov State Model (MSM), IEPDYN does not require the introduction of a discrete time scale (lag time), enabling a description of dynamics without the lag-time dependence.
+
+The IEPDYN requires the calculation of time-correlation functions associated with local state transitions. Since these quantities contain only information on local state-to-state transitions, they can be evaluated from short MD simulations. Accordingly, IEPDYN enables the prediction of long-time population dynamics using information obtained from short-time MD simulations.
+
+In ANATRA, the IEPDYN method is implemented as one of the analysis modes of ``fanatra``.
+
+## Theoretical Background
+
+### Theoretical Framework of IEPDYN
+
+Let $\boldsymbol{\Gamma}$ denote the set of atomic coordinates and momenta (a phase point) of the system, and divide the corresponding phase space into multiple structural states.
+
+If $\mathcal{L}$ is the Liouville operator of the system, the exact time evolution of the probability density of state $j$, denoted by $\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right)$, is given by
+
+\begin{align}
+\dfrac{\partial}{\partial t}\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right) =& -\mathcal{L}\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right) -\sum_{i\in\mathcal{N}_{j}}S_{ij}\left(\boldsymbol{\Gamma}\right)\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right) +\sum_{k\in\mathcal{N}_{j}}S_{jk}\left(\boldsymbol{\Gamma}\right)\hat{f}_{k}\left(\boldsymbol{\Gamma},t\right).
+\end{align}
+
+Here, $\mathcal{N}_{j}$ is the set of states adjacent to state $j$, and $S_{ij}$ is called the **reaction sink function**. It is defined such that
+
+\begin{align}
+S_{ij}\left(\boldsymbol{\Gamma}\right)\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right)
+\end{align}
+
+represents the probability that the system transitions from state $j$ to state $i$ during the time interval from $t$ to $t+dt$.
+
+The probability that the system is in state $j$ at time $t$, denoted by $P_{j}\left(t\right)$, is obtained by integrating $\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right)$ over the phase space.
+
+From the formal solution of the above equation, the following approximate expression for $P_{j}\left(t\right)$ is obtained:
+
+\begin{align}
+P_{j}\left(t\right) & =P_{j}^{0}\left(t\right)+\sum_{k\in\mathcal{N}_{j}}\int_{0}^{t}d\tau\,M_{jk}\left(t-\tau\right)Q_{jk}\left(\tau\right),
+\end{align}
+
+where
+
+- $P_{j}^{0}\left(t\right)$ is the probability that a system initially in state $j$ remains in state $j$ without making any transition to neighboring states up to time $t$.
+- $Q_{jk}\left(t\right)$ is the probability that the system transitions from state $k$ to state $j$ during the time interval from $t$ to $t+dt$.
+- $M_{jk}\left(t\right)$ is the probability that a system that entered state $j$ from state $k$ at time zero remains in state $j$ without any further transitions to neighboring states up to time $t$.
+
+Since $P_j^0(t)$ and $M_{jk}(t)$ involve only a single transition event, they can be evaluated from short MD simulations.
+
+Furthermore, $Q_{jk}\left(t\right)$ can also be represented by an integral equation whose kernel decays on a short time scale:
+
+\begin{align}
+Q_{ij}\left(t\right) = R_{ij}\left(t\right) + \sum_{k\in \mathcal{N}_{j}}\int_{0}^{t}d\tau\, K_{ijk}\left(t-\tau\right) Q_{jk}\left(\tau\right),
+\end{align}
+
+where
+
+- $R_{ij}\left(t\right)$ is the probability that a system initially in state $j$ transitions to state $i$ during the time interval from $t$ to $t+dt$.
+- $K_{ijk}\left(t\right)$ is the probability that a system that transitioned from state $k$ to state $j$ during the interval $0 \sim dt$ subsequently transitions to state $i$ during the time interval from $t$ to $t+dt$.
+
+Like $P_{j}^{0}\left(t\right)$ and $M_{jk}\left(t\right)$, both $R_{ij}\left(t\right)$ and $K_{ijk}\left(t\right)$ can be computed from short MD simulations. Moreover, $P_{j}^{0}\left(t\right)$ and $M_{jk}\left(t\right)$ can be constructed from $R_{ij}\left(t\right)$ and $K_{ijk}\left(t\right)$.
+Therefore, by performing short MD simulations and evaluating $R_{ij}\left(t\right)$ and $K_{ijk}\left(t\right)$, one can predict long-time population dynamics $P_{j}\left(t\right)$.
+
+In the IEPDYN framework, the initial population of each state, $w_{j}$, must be specified.
+If the system is assumed to be in equilibrium at the initial time, let $\mathcal{M}_{\mathrm{I}}$ be the set of states that have nonzero initial populations and let $P_{j}^{\mathrm{eq}}$ be the equilibrium population of state $j$. Thus,
+
+\begin{align}
+\forall j\in \mathcal{M}_{\mathrm{I}},~ w_{j} = \dfrac{P_{j}^{\mathrm{eq}}}{\displaystyle\sum_{k\in\mathcal{M}_{\mathrm{I}}} P_{k}^{\mathrm{eq}}}
+\end{align}
+
+The equilibrium populations $P_j^{\mathrm{eq}}$ may be obtained from free energy calculations such as umbrella sampling. Alternatively, as described later, they can also be evaluated analytically within the IEPDYN framework.
+
+```{figure} ./figures/Pj_Qij_scheme.png
+:name: Pj_Qij_scheme.png
+:scale: 100
+:align: center
+
+Schematic illustration of the IEPDYN.
+```
+
+### Introducing Boundary Conditions
+
+In the IEPDYN framework, reflecting and absorbing boundary conditions can be introduced into the coarse-grained reaction dynamics. These boundary conditions are imposed directly on the state-to-state transition probabilities, $Q_{ij}(t)$, and are particularly useful for analyzing molecular binding processes based on the recurrence probability (RP) theory.
+
+For the **reflecting boundary condition**, any population entering a reflecting state is immediately redistributed to neighboring states without remaining in that state. Let $\mathcal{M}_{\mathrm{reflect}}$ denote the set of reflecting states. The reflecting boundary condition is expressed as
+
+\begin{align}
+& \forall i\in\mathcal{M}_{\mathrm{reflect}},~\forall j\in\mathcal{N}_{i}, \notag \\
+& Q_{ji}\left(t\right)=R_{ij}\left(t\right) + \sum_{k\in\mathcal{N}_{j}}\int_{0}^{t}d\tau\,K_{ijk}\left(t-\tau\right)Q_{jk}\left(\tau\right),\\
+& Q_{ij}\left(t\right)=0,
+\end{align}
+
+which represents that a population flowing from state $j$ into a reflecting state $i\in\mathcal{M}_{\mathrm{reflect}}$ is instantaneously reflected back to state $j$.
+
+In contrast, under the **absorbing boundary condition**, a population that reaches an absorbing state never transitions to any other state thereafter. Let $\mathcal{M}_{\mathrm{absorb}}$ denote the set of absorbing states. The absorbing boundary condition is given by
+
+\begin{align}
+\forall i\in\mathcal{M}_{\mathrm{absorb}},~\forall j \in\mathcal{N}_{i},\quad Q_{ji}\left(t\right) =0,
+\end{align}
+
+which means that no population can flow out of an absorbing state. Once the population reaches an absorbing state, it is treated as having reached the final state.
+
+In this way, the IEPDYN framework can treat both reflecting and absorbing boundaries in a unified manner by directly imposing boundary conditions on the state-to-state transition probabilities.
+
+### Incorporating Returning Probability (RP) Theory
+
+The Returning probability (RP) theory is a rigorous framework of diffusion-influenced reactions. This theory characterizes molecular binding processes in terms of the thermodynamic and kinetic properties of the **reactive state** existing during binding processes. In the IEPDYN framework, the dynamical quantities required by the RP theory can be efficiently evaluated from short MD simulations.
+
+In the RP theory, the association rate constant, $k_{\mathrm{on}}$, is given by
+
+\begin{align}
+k_{\mathrm{on}}
+=
+k_{\mathrm{ins}}K^{*}
+\left(
+1+k_{\mathrm{ins}}
+\int_{0}^{\infty}
+dt\,
+P_{\mathrm{RET}}\left(t\right)
+\right)^{-1},
+\label{kon_rp}
+\end{align}
+
+where $K^{*}$ is the equilibrium constant between the reactive and unbound states, $k_{\mathrm{ins}}$ is the transition rate constant from the reactive state to the bound state, and $P_{\mathrm{RET}}\left(t\right)$ is the conditional probability (returning probability) that a system initially in the reactive state is still in the reactive state at time $t$.
+
+In the IEPDYN framework, let $\mathcal{M}_{\mathrm{R}}$ denote the set of reactive states, and set the initial-state set as
+
+\begin{align}
+\mathcal{M}_{\mathrm{I}}=\mathcal{M}_{\mathrm{R}}.
+\end{align}
+
+By introducing appropriate boundary conditions, both $k_{\mathrm{ins}}$ and $P_{\mathrm{RET}}(t)$ can be evaluated from the state populations $P_j(t)$.
+
+For the calculation of $k_{\mathrm{ins}}$, an absorbing boundary condition is introduced to define the completion of the binding process, while a reflecting boundary condition is imposed on the neighboring states located on the unbound side of the reactive state. Under these conditions,
+
+\begin{align}
+\dfrac{1}{k_{\mathrm{ins}}}
+=
+\int_{0}^{\infty}
+dt\,
+\sum_{j\notin\mathcal{M}_{\mathrm{absorb}}}
+P_{j}\left(t\right),
+\label{kins}
+\end{align}
+
+holds. The right-hand side corresponds to the **Mean First Passage Time (MFPT)** from the reactive state to the absorbing state, and its inverse gives $k_{\mathrm{ins}}$.
+
+On the other hand, for the calculation of $P_{\mathrm{RET}}(t)$, the neighboring states located on the bound side of the reactive state are treated as reflecting boundaries. In this case,
+
+\begin{align}
+P_{\mathrm{RET}}\left(t\right)
+=
+\sum_{j\in\mathcal{M}_{\mathrm{R}}}
+P_{j}\left(t\right),
+\end{align}
+
+gives the returning probability.
+
+Thus, by appropriately introducing boundary conditions, the IEPDYN framework enables efficient evaluation of both $k_{\mathrm{ins}}$ and $P_{\mathrm{RET}}(t)$ from short MD simulations. Furthermore, by combining these quantities with the equilibrium constant $K^{*}$, the association rate constant $k_{\mathrm{on}}$ for long-time-scale molecular binding processes can be determined.
+
+### Analytical Estimation of the Time Integral of $P_{j}\left(t\right)$
+
+Kinetic parameters, including $k_{\mathrm{ins}}$ in the RP theory, are expressed in terms of the time integral of the state population,
+
+\begin{align}
+\tau_j=\int_0^\infty dt\,P_j(t).
+\end{align}
+
+By introducing absorbing boundary conditions or states corresponding to infinite separation, $P_j(t)$ converges to zero as $t\to\infty$.
+A straightforward approach is to solve the integral equations for the time evolution of $P_j(t)$ followed by its numerical integration.
+Instead of the numerical integration, the IEPDYN enables us to directly evaluate $\tau_j$ through the Laplace transform.
+
+The Laplace transform of a function $f(t)$ is defined as
+
+\begin{align}
+\widetilde{f}(s)=\int_0^\infty dt\,e^{-st}f(t).
+\end{align}
+
+Applying the Laplace transform to the integral equation for the state population yields
+
+\begin{align}
+\widetilde{P}_{j}\left(s\right)
+=
+\widetilde{P}_{j}^{0}\left(s\right)
++
+\sum_{k\in\mathcal{N}_{j}}
+\widetilde{M}_{jk}\left(s\right)
+\widetilde{Q}_{jk}\left(s\right).
+\end{align}
+
+Taking the limit $s\rightarrow 0$, we obtain
+
+\begin{align}
+\tau_{j}
+=
+\widetilde{P}_{j}^{0}\left(0\right)
++
+\sum_{k\in\mathcal{N}_{j}}
+\widetilde{M}_{jk}\left(0\right)
+\widetilde{Q}_{jk}\left(0\right).
+\end{align}
+
+Therefore, the evaluation of $\tau_j$ reduces to the calculation of $\widetilde{Q}_{jk}(0)$.
+To this end, we introduce
+
+\begin{align}
+\mathcal{K}_{ij,j^{\prime}k}\left(t\right)
+=
+\delta_{jj^{\prime}}
+K_{ijk}\left(t\right).
+\end{align}
+
+The integral equation for $Q_{ij}(t)$ can then be written in Laplace space as
+
+\begin{align}
+\widetilde{Q}_{ij}\left(s\right)
+=
+\widetilde{R}_{ij}\left(s\right)
++
+\sum_{j^{\prime},k}
+\widetilde{\mathcal{K}}_{ij,j^{\prime}k}\left(s\right)
+\widetilde{Q}_{j^{\prime}k}\left(s\right).
+\end{align}
+
+By introducing a composite index $\lambda$ for the state pair $(ij)$, the above equation can be expressed in matrix form as
+
+\begin{align}
+\widetilde{\mathbf{Q}}(s)
+=
+\widetilde{\mathbf{R}}(s)
++
+\widetilde{\boldsymbol{\mathcal{K}}}(s)
+\widetilde{\mathbf{Q}}(s).
+\end{align}
+
+Taking the limit $s\to0$ gives
+
+\begin{align}
+\widetilde{\mathbf{Q}}\left(0\right)
+=
+\left[
+\mathbf{I}
+-
+\widetilde{\boldsymbol{\mathcal{K}}}\left(0\right)
+\right]^{-1}
+\widetilde{\mathbf{R}}\left(0\right),
+\end{align}
+
+where $\mathbf{I}$ is the identity matrix and
+
+\begin{align}
+\left(
+\mathbf{I}
+-
+\widetilde{\boldsymbol{\mathcal{K}}}\left(0\right)
+\right)_{\lambda\mu}
+=
+\delta_{\lambda\mu}
+-
+\int_0^\infty dt\,
+\mathcal{K}_{\lambda\mu}(t).
+\end{align}
+
+Thus, the time-integrated transition probability,
+$\widetilde{\mathbf{Q}}(0)$, can be obtained directly by matrix operations, and $\tau_j$ can be evaluated analytically.
+This approach eliminates the need to explicitly compute the long-time evolution of $P_j(t)$ and enables efficient evaluation of kinetic quantities such as the MFPT.
+
+### Analytical Evaluation of the Equilibrium Population $P_{j}\left(\infty\right)$
+
+For systems in which the total population is conserved, the equilibrium population of state $j$,
+
+\begin{align}
+P_j^{\mathrm{eq}}\equiv P_j(\infty),
+\end{align}
+
+can be evaluated without numerically integrating the time evolution of $P_j(t)$.
+
+First, the state-transition probability $Q_{ij}(t)$ is decomposed into its equilibrium and time-dependent components as
+
+\begin{align}
+Q_{ij}(t)=Q_{ij}^{\mathrm{eq}}+\delta Q_{ij}(t).
+\end{align}
+
+where
+
+\begin{align}
+Q_{ij}^{\mathrm{eq}}\equiv Q_{ij}(\infty)
+\end{align}
+
+represents the equilibrium population flux from state $j$ to state $i$.
+
+Substituting this decomposition into the IEPDYN integral equation and taking the limit $t\to\infty$, we obtain
+
+\begin{align}
+P_{j}^{\mathrm{eq}}
+&=
+\lim_{t\to\infty}
+\left[
+\sum_{k\in\mathcal{N}_{j}}
+\int_{0}^{t}
+d\tau\,
+M_{jk}(t-\tau)
+\delta Q_{jk}(\tau)
+\right]
+\notag\\
+&\quad
++
+\sum_{k\in\mathcal{N}_{j}}
+I_{jk}
+Q_{jk}^{\mathrm{eq}},
+\end{align}
+
+where $I_{jk}$ is defined as
+
+\begin{align}
+I_{jk}
+=
+\int_{0}^{\infty}
+dt\,
+M_{jk}(t).
+\end{align}
+
+Since both $M_{jk}(t)$ and $\delta Q_{jk}(t)$ vanish in the limit $t\to\infty$, the first term disappears, yielding
+
+\begin{align}
+P_{j}^{\mathrm{eq}}
+=
+\sum_{k\in\mathcal{N}_{j}}
+I_{jk}
+Q_{jk}^{\mathrm{eq}}.
+\end{align}
+
+Therefore, once the equilibrium transition fluxes $Q_{jk}^{\mathrm{eq}}$ are determined, the equilibrium populations of all states can be calculated directly.
+
+Furthermore, the integral equation can be written in matrix form as
+
+\begin{align}
+\boldsymbol{\delta}{\bf Q}(t)
+&=
+{\bf R}(t)
++
+\int_{0}^{t}
+d\tau\,
+\boldsymbol{\mathcal{K}}(t-\tau)
+\boldsymbol{\delta}{\bf Q}(\tau)
+\notag\\
+&\quad
+-
+{\bf Q}^{\mathrm{eq}}
++
+{\bf J}
+{\bf Q}^{\mathrm{eq}},
+\end{align}
+
+where
+
+\begin{align}
+J_{\lambda\mu}
+=
+\int_{0}^{\infty}
+dt\,
+\mathcal{K}_{\lambda\mu}(t).
+\end{align}
+
+In the limit $t\to\infty$, the time-dependent terms vanish, leading to
+
+\begin{align}
+{\bf J}
+{\bf Q}^{\mathrm{eq}}
+=
+{\bf Q}^{\mathrm{eq}}.
+\end{align}
+
+Thus, ${\bf Q}^{\mathrm{eq}}$ is given by the eigenvector of the matrix ${\bf J}$ corresponding to the eigenvalue of unity.
+By solving this eigenvalue problem, the equilibrium transition fluxes can be obtained, and the equilibrium populations are then evaluated from
+
+\begin{align}
+P_{j}^{\mathrm{eq}}
+=
+\sum_{k\in\mathcal{N}_{j}}
+I_{jk}
+Q_{jk}^{\mathrm{eq}}.
+\end{align}
+
+The resulting equilibrium populations are also used to determine the initial statistical weights in the IEPDYN formalism:
+
+\begin{align}
+\forall j\in\mathcal{M}_{\mathrm{I}},
+\quad
+w_j
+=
+\frac{P_j^{\mathrm{eq}}}
+{\displaystyle
+\sum_{k\in\mathcal{M}_{\mathrm{I}}}
+P_k^{\mathrm{eq}}
+}.
+\end{align}
+
+In binding and dissociation processes, a population-conserving system can be constructed by introducing reflecting boundary conditions at the outermost states.
+This enables the present method to efficiently evaluate the equilibrium populations required for IEPDYN calculations.
+
+## Parameter List
+
+**Namelist**      | **Parameter**          | **Description**
+:-----------------|:-----------------------|:-----------------------------------------------------------------------
+`&input_param`    | `fcv`                  | Time-series CV data file
+`&input_param`    | `flist_cv`             | List of CV data files
+`&output_param`   | `fhead`                | Output file header
+`&option_param`   | `input_type`           | Input file format
+`&option_param`   | `output_histogram`     | Output restart file
+`&option_param`   | `use_perturbed_traj`   | Whether the data are generated from MD simulations under a bias potential
+`&option_param`   | `f_unperturbed_id`     | State ID that remains unperturbed in each dataset
+`&option_param`   | `use_dissociate_state` | Whether to define dissociated states
+`&option_param`   | `use_reflection_state` | Whether to define reflecting states
+`&option_param`   | `use_product_state`    | Whether to define product states
+`&option_param`   | `calc_steady`          | Whether to calculate the steady-state distribution
+`&option_param`   | `calc_Pint`            | Whether to analytically evaluate the time integral
+`&option_param`   | `extrapolate`          | Evaluate time evolution based on the integral equations
+`&option_param`   | `nstate`               | Number of states
+`&option_param`   | `ndim`                 | Number of CV dimensions
+`&option_param`   | `nmol`                 | Number of target molecules
+`&option_param`   | `dt`                   | Time grid spacing
+`&option_param`   | `t_sparse`             | Coarse time grid spacing for TCF calculations
+`&option_param`   | `t_range`              | Time range for calculating the K, M, R, and P0 functions
+`&option_param`   | `t_extend`             | Output time range for the P and Q functions
+`&option_param`   | `dt_tcfout`            | Output time interval for the P and Q functions
+`&option_param`   | `initial_state_ids`    | Initial state IDs
+`&option_param`   | `reflection_state_ids` | Reflecting state IDs
+`&option_param`   | `product_state_ids`    | Product state IDs
+`&state`          | `state definition`     | State boundaries and initial populations for each state
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|fcv|      & Time-series CV data file \\
+                     & \verb|flist_cv| & List of CV data files \\
+\hline
+\verb|&output_param| & \verb|fhead|    & Output file header \\
+\hline
+\verb|&option_param| & \verb|input_type|           & Input file format \\
+                     & \verb|output_histogram|     & Output restart file \\
+                     & \verb|use_perturbed_traj|   & Whether the data are generated from MD simulations under a bias potential \\
+                     & \verb|f_unperturbed_id|     & State ID that remains unperturbed in each dataset \\
+                     & \verb|use_dissociate_state| & Whether to define dissociated states \\
+                     & \verb|use_reflection_state| & Whether to define reflecting states \\
+                     & \verb|use_product_state|    & Whether to define product states \\
+                     & \verb|calc_steady|          & Whether to calculate the steady-state distribution \\
+                     & \verb|calc_Pint|            & Whether to analytically evaluate the time integral \\
+                     & \verb|extrapolate|          & Evaluate time evolution based on the integral equations \\
+                     & \verb|nstate|               & Number of states \\
+                     & \verb|ndim|                 & Number of CV dimensions \\
+                     & \verb|nmol|                 & Number of target molecules \\
+                     & \verb|dt|                   & Time grid spacing \\
+                     & \verb|t_sparse|             & Coarse time grid spacing for TCF calculations \\
+                     & \verb|t_range|              & Time range for calculating the K, M, R, and P0 functions \\
+                     & \verb|t_extend|             & Output time range for the P and Q functions \\
+                     & \verb|dt_tcfout|            & Output time interval for the P and Q functions \\
+                     & \verb|initial_state_ids|    & Initial state IDs \\
+                     & \verb|reflection_state_ids| & Reflecting state IDs \\
+                     & \verb|product_state_ids|    & Product state IDs \\
+\hline
+\verb|&state| & state definition & State boundaries and initial populations for each state \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+## `&option_param`
+
+* **`input_type`**
+    * Default: `"TIMESERIES"`
+    * Example: `input_type = "TIMESERIES"`
+
+    Specifies the format of the input files.
+
+    Available formats are:
+
+    * `TIMESERIES` : ANATRA standard time-series data
+    * `HISTOGRAM` : Histogram restart files (`*.krhist`) generated with `output_histogram = .true.`
+
+----
+* **`output_histogram`**
+    * Default: `.false.`
+    * Example: `output_histogram = .true.`
+
+    Specifies whether histogram-format restart files (`*.krhist`) are generated from the calculation results.
+
+----
+* **`use_perturbed_traj`**
+    * Default: `.false.`
+    * Example: `use_perturbed_traj = .true.`
+
+    Specifies whether the input time-series data were obtained from MD simulations under a bias potential.
+    The bias potential should not perturb the dynamics within a particular state, such as a flat-bottom potential.
+    If `.true.` is specified, `f_unperturbed_id` must also be provided.
+
+----
+* **`f_unperturbed_id`**
+    * Default: N/A
+    * Example: `f_unperturbed_id = "funp.list"`
+
+    This parameter is required when `use_perturbed_traj = .true.`.
+    It specifies a list file that describes, for each time-series dataset,
+
+    1. which state's dynamics are not perturbed by the bias potential, and
+    2. whether the dataset is used for calculating $R_{ij}(t)$.
+
+    The entries should correspond to the order of files specified by `flist_cv` or `fcv`.
+
+    Each line should contain:
+
+    * Column 1: Unperturbed state ID
+    * Column 2: Whether the dataset is used for calculating $R_{ij}(t)$ (`1`: yes, `0`: no)
+
+    For example, if the file specified by `f_unperturbed_id` is
+
+    ```
+    1 1
+    1 1
+    2 0
+    2 0
+    ```
+
+    the first two datasets correspond to trajectories whose state 1 dynamics are unperturbed and are used for calculating $R_{ij}(t)$, whereas the next two datasets correspond to trajectories whose state 2 dynamics are unperturbed but are not used for calculating $R_{ij}(t)$.
+
+----
+* **`use_dissociate_state`**
+    * Default: `.false.`
+    * Example: `use_dissociate_state = .true.`
+
+    Specifies whether a dissociated state is defined.
+
+----
+* **`use_reflection_state`**
+    * Default: `.false.`
+    * Example: `use_reflection_state = .true.`
+
+    Specifies whether reflecting states are defined.
+
+----
+* **`use_product_state`**
+    * Default: `.false.`
+    * Example: `use_product_state = .true.`
+
+    Specifies whether absorbing (product) states are defined.
+
+----
+* **`calc_steady`**
+    * Default: `.false.`
+    * Example: `calc_steady = .true.`
+
+    Specifies whether the equilibrium (steady-state) populations are evaluated analytically.
+
+----
+* **`calc_Pint`**
+    * Default: `.false.`
+    * Example: `calc_Pint = .true.`
+
+    Specifies whether the time integrals of the state populations are evaluated analytically.
+
+----
+* **`extrapolate`**
+    * Default: `.false.`
+    * Example: `extrapolate = .true.`
+
+    Specifies whether the time evolution of the state populations $P_{j}(t)$ is evaluated using the integral equations.
+
+----
+* **`nstate`**
+    * Default: None
+    * Example: `nstate = 4`
+
+    Specifies the number of states.
+
+----
+* **`ndim`**
+    * Default: `1`
+    * Example: `ndim = 2`
+
+    Specifies the dimensionality of the Collective Variables (CVs).
+
+----
+* **`nmol`**
+    * Default: `1`
+    * Example: `nmol = 1`
+
+    Specifies the number of target molecules.
+
+----
+* **`dt`**
+    * Default: None
+    * Example: `dt = 0.1d0`
+
+    Specifies the time grid interval.
+
+----
+* **`t_sparse`**
+    * Default: None
+    * Example: `t_sparse = 0.1d0`
+
+    Specifies the coarse time grid interval used for calculating time correlation functions (TCFs), such as $K_{ijk}(t)$.
+
+----
+* **`t_range`**
+    * Default: None
+    * Example: `t_range = 10.0`
+
+    Specifies the time range over which $K_{ijk}(t)$, $M_{jk}(t)$, $R_{ij}(t)$, and $P_{j}^{0}(t)$ are calculated.
+
+----
+* **`t_extend`**
+    * Default: None
+    * Example: `t_extend = 100.0`
+
+    Specifies the time range over which $P_{j}(t)$ and $Q_{ij}(t)$ are output.
+
+----
+* **`dt_tcfout`**
+    * Default: None
+    * Example: `dt_tcfout = 1.0`
+
+    Specifies the output interval for $P_{j}(t)$ and $Q_{ij}(t)$.
+
+----
+* **`initial_state_ids`**
+    * Default: None
+    * Example: `initial_state_ids = 2 3`
+
+    Specifies the state IDs used as initial states.
+
+----
+* **`reflection_state_ids`**
+    * Default: None
+    * Example: `reflection_state_ids = 4`
+
+    Specifies the state IDs treated as reflecting states.
+
+----
+* **`product_state_ids`**
+    * Default: None
+    * Example: `product_state_ids = 1`
+
+    Specifies the state IDs treated as absorbing (product) states.
+
+## `&state`
+
+In the `&state` section, the CV ranges and initial populations of each state are specified line by line as
+
+```text
+lower_bound(CV1)  upper_bound(CV1) lower_bound(CV2) upper_bound(CV2) ... lower_bound(CVndim) upper_bound(CVndim) weight
+```
+
+* Column 1: Lower bound of CV1
+* Column 2: Upper bound of CV1
+* Column 3: Lower bound of CV2
+* Column 4: Upper bound of CV2
+
+...
+
+* Final column: Initial population of the state
+
+Thus, a pair of lower and upper bounds must be provided for each CV dimension specified by `ndim`.
+
+For example, when `ndim = 1`,
+
+```text
+&state
+-500.0  -16.0  0.5
+ -16.0  -15.0  0.5
+ -15.0   -2.0  0.0
+  -2.0  500.0  0.0
+/
+```
+
+defines four states, where the first two states are assigned an initial population of 0.5.
+
+## Auxiliary Tools
+
+`iepdyn` provides many configuration options.
+To simplify the preparation of input files, the following Python utilities are available:
+
+```text
+$ANATRA_PATH/utility/iepdyn_util
+```
+
+Both of the following scripts are interactive and can be executed without any command-line arguments.
+
+* `iepdyn_setup.py`
+
+    A utility for generating input files for `iepdyn`.
+
+* `cvlist_generator.py`
+
+    A utility for generating a list of time-series data files.
+
+    When time-series data obtained from biased MD simulations are used (`use_perturbed_traj = .true.`), this script can classify the datasets according to the directory hierarchy.
+
+## Output Files
+
+* `*.krhist` (`output_histogram = .true.`)
+
+    Stores the information of $K_{ijk}(t)$ and $R_{ij}(t)$ for restart calculations.
+    Multiple `krhist` files can be loaded simultaneously during a restart calculation.
+    The information stored in this file corresponds to the state before applying boundary conditions. Therefore, it can be reused even if the boundary conditions are changed, without recalculating the time correlation functions.
+
+* `*.P0`
+
+    * Column 1: Time
+    * Column 2 and later: $P^{0}_{j}(t)$
+
+    The correspondence between columns and state indices is given in the file header.
+
+* `*.Rij`
+
+    * Column 1: Time
+    * Column 2 and later: $R_{ij}(t)$
+
+    The correspondence between columns and $R_{ij}(t)$ is given in the file header.
+
+* `*.Mij`
+
+    * Column 1: Time
+    * Column 2 and later: $M_{ij}(t)$
+
+    The correspondence between columns and $M_{ij}(t)$ is given in the file header.
+
+* `*.Kijk`
+
+    * Column 1: Time
+    * Column 2 and later: $K_{ijk}(t)$
+
+    The correspondence between columns and $K_{ijk}(t)$ is given in the file header.
+
+* `*.pj` (`extrapolate = .true.`)
+
+    * Column 1: Time
+    * Column 2 and later: $P_{j}(t)$
+
+    The correspondence between columns and $P_{j}(t)$ is given in the file header.
+
+* `*.tcf` (`extrapolate = .true.`)
+
+    * Column 1: Time
+    * Column 2 and later: $\displaystyle\sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}(t)$
+
+* `*.q` (`extrapolate = .true.`)
+
+    * Column 1: Time
+    * Column 2 and later: $Q_{ij}(t)$
+
+    The correspondence between columns and $Q_{ij}(t)$ is given in the file header.
+
+* `*.int` (`calc_Pint = .true.`)
+
+    Stores
+
+    \begin{align}
+    \tau_{j} = \int_{0}^{\infty} dt\, P_{j}\left(t\right),
+    \end{align}
+
+    in the following format:
+
+    ```
+    Pint InitTotal    0.5549862E+02
+    Pint         1    0.5474586E+02
+    Pint         2    0.6403562E+00
+    Pint         3    0.9158297E-01
+    Pint         4    0.1578925E-01
+    Pint         5    0.5035148E-02
+    Pint         6    0.7000565E-02
+    Pint         7    0.3941343E-01
+    Pint         8    0.6599485E-01
+    ```
+
+    The second column represents the state index, and the third column gives the value of $\tau_j$.
+    `InitTotal` denotes the sum of $\tau_j$ over all states belonging to the initial-state set $\mathcal{M}_{\mathrm{I}}$.
+
+* `*.steady` (`calc_steady = .true.`)
+
+    * Column 1: Time
+    * Column 2: State index ($j$)
+    * Column 3: $P_{j}^{\mathrm{eq}}$
+    * Column 4: $-k_{\mathrm{B}}T \log \dfrac{P_{j}^{\mathrm{eq}}}{\displaystyle\sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}^{\mathrm{eq}}}$
+
+## Examples
+
+As an example, we describe the application procedure of the IEPDYN method to a molecular binding/dissociation process characterized by the intermolecular distance $r$.
+
+The states are defined as follows:
+
+* State 1 (bound state): $0 \leq r < 2$
+* State 2 (bound state): $2 \leq r < 3.5$
+* State 3: $3.5 \leq r < 4$
+* State 4 (including the dissociated state): $4 \leq r$
+
+The target quantity is defined as the residence time correlation function,
+
+\begin{align}
+P_{\mathrm{B}}\left(t\right)
+=
+\dfrac{\displaystyle \sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}\left(t\right)}
+{\displaystyle \sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}\left(0\right)},
+\end{align}
+
+and its time integral, $\tau_{\mathrm{B}}$.
+
+$\tau_{\mathrm{B}}$ represents the lifetime of the bound state.
+In this example, States 1 and 2 are treated as the initial states.
+
+### Using Unbiased MD Trajectories (``use_perturbed_traj = .false.``)
+
+#### Generating Restart Files (``krhist``)
+
+First, a restart file (``krhist``) is generated for each time-series dataset.
+The following example reads the time-series file ``0001.ts`` and generates
+``krhist/0001.krhist``.
+
+Although States 1 and 2 are the bound (initial) states,
+their initial population values are not used when generating the ``krhist`` file.
+Therefore, the initial populations in the ``&state`` section may simply be set to ``1.0``.
+
+```bash
+#!/usr/bin/env bash
+
+mkdir -p krhist
+
+cat << EOF > run0001.inp
+&input_param
+ fcv = "0001.ts"
+/
+&output_param
+ fhead = "krhist/0001"
+/
+&option_param
+ input_type           = "TIMESERIES"
+ output_histogram     = .true.
+ use_perturbed_traj   = .false.
+ use_dissociate_state = .true.
+ use_reflection_state = .false.
+ use_product_state    = .false.
+ calc_steady          = .false.
+ calc_Pint            = .false.
+ extrapolate          = .false.
+ nstate               = 4
+ ndim                 = 1
+ nmol                 = 1
+ dt                   = 2e-05
+ t_sparse             = 2e-05
+ t_range              = 1.0
+ initial_state_ids    = 1 2
+ dissociate_state_ids = 4
+/
+&state
+ 0.0     2.0      1.0
+ 2.0     3.5      1.0
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+
+fanatra iepdyn run0001.inp
+```
+
+#### Calculation of Equilibrium Populations 
+
+To compute $P_{\mathrm{B}}\left(t\right)$ using the IEPDYN method, initial population values for states 1 and 2 are required.  
+Therefore, by defining dissociation state 4 as a reflection state, the population is conserved among states 1–3, and the equilibrium populations ($P_{j}^{\mathrm{eq}}$) are computed using the previously generated restart file (``krhist``).  
+For this purpose, the following options are set:
+
+* ``calc_Pint            = .true.``
+* ``use_reflection_state = .true.``
+* ``reflection_state_ids = 4``
+
+and additionally,
+
+* ``use_dissociate_state = .false.``
+
+is specified.
+
+```bash
+#!/usr/bin/env bash
+
+mkdir -p steady
+
+# Create list of krhist files
+ls krhist/*.krhist > krhist.list
+
+# Create input file
+cat << EOF > steady.inp
+&input_param
+ flist_cv = "krhist.list"
+/
+&output_param
+ fhead = "steady/out"
+/
+&option_param
+ input_type           = "HISTOGRAM"
+ output_histogram     = .false.
+ use_perturbed_traj   = .false.
+ use_dissociate_state = .false.
+ use_reflection_state = .true.
+ use_product_state    = .false.
+ calc_steady          = .true.
+ calc_Pint            = .false.
+ extrapolate          = .false.
+ nstate               = 4
+ ndim                 = 1
+ nmol                 = 1
+ dt                   = 2e-05
+ t_sparse             = 2e-05
+ t_range              = 1.0
+ initial_state_ids    = 1 2
+ reflection_state_ids = 4
+/
+&state
+ 0.0     2.0      1.0
+ 2.0     3.5      1.0
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+
+fanatra iepdyn steady.inp
+```
+
+When this is executed, ``steady/out.int`` is obtained, and its contents are, for example, as follows:
+```
+    1    0.9874940E+00    0.7502598E-02
+    2    0.1066799E-01    0.2706875E+01
+    3    0.1489986E-02    0.3880407E+01
+```
+The second column corresponds to the equilibrium population values.
+
+#### Calculation of $P_{\mathrm{B}}(t)$
+
+Using the equilibrium population values obtained in the previous step, the values for states 1 and 2 are provided in the ``&state`` section.
+
+Then, the following options are specified:
+
+* ``extrapolate = .true.``
+* ``t_extend    = 10.0``
+
+The parameter ``t_extend`` defines the time range over which $P_{j}\left(t\right)$ is evaluated.
+
+In addition, the following settings are used:
+
+* ``use_dissociate_state = .true.``
+* ``use_reflection_state = .false.``
+* ``dissociate_state_ids = 4``
+
+It should be noted that the sum of the initial equilibrium populations is automatically normalized to 1 within the program.
+
+```bash
+#!/usr/bin/env bash
+
+mkdir -p extrapolate
+
+Create list of krhist files
+
+ls krhist/*.krhist > krhist.list
+
+Create input file
+
+cat << EOF > extrapolate.inp
+&input_param
+ flist_cv = "krhist.list"
+/
+&output_param
+ fhead = "extrapolate/out"
+/
+&option_param
+ input_type           = "HISTOGRAM"
+ output_histogram     = .false.
+ use_perturbed_traj   = .false.
+ use_dissociate_state = .true.
+ use_reflection_state = .false.
+ use_product_state    = .false.
+ calc_steady          = .false.
+ calc_Pint            = .false.
+ extrapolate          = .true.
+ nstate               = 4
+ ndim                 = 1
+ nmol                 = 1
+ dt                   = 2e-05
+ t_sparse             = 2e-05
+ t_range              = 1.0
+ t_extend             = 10.0
+ dt_tcfout            = 2e-05
+ initial_state_ids    = 1 2
+ dissociate_state_ids = 4
+/
+&state
+ 0.0     2.0        0.9874940E+00
+ 2.0     3.5        0.1066799E-01
+ 3.5     4.0        0.0
+ 4.0     1.0d10     0.0
+/
+EOF
+
+fanatra iepdyn extrapolate.inp
+```
+
+Running this produces the file ``extrapolate/out.tcf``, 
+which contains the time-dependent information of $P_{\mathrm{B}}(t)$.
+
+#### Analytical Estimation of the Time Integral of $P_{\mathrm{B}}(t)$
+
+Next, the time integral of $P_{\mathrm{B}}\left(t\right)$ is evaluated analytically.
+In this case, the following parameters in the previous input file are modified:
+
+* ``extrapolate = .false.``
+* ``calc_Pint   = .true.``
+
+In addition, parameters such as ``t_extend`` and ``dt_tcfout`` do not affect the result and are removed.
+
+```bash
+#!/usr/bin/env bash
+
+mkdir -p Pint
+
+# Create list of krhist files
+#
+ls krhist/*.krhist > krhist.list
+
+# Create input file
+#
+cat << EOF > Pint.inp
+&input_param
+ flist_cv = "krhist.list"
+/
+&output_param
+ fhead = "Pint/out"
+/
+&option_param
+ input_type           = "HISTOGRAM"
+ output_histogram     = .false.
+ use_perturbed_traj   = .false.
+ use_dissociate_state = .true.
+ use_reflection_state = .false.
+ use_product_state    = .false.
+ calc_steady          = .false.
+ calc_Pint            = .true.
+ extrapolate          = .false.
+ nstate               = 4
+ ndim                 = 1
+ nmol                 = 1
+ dt                   = 2e-05
+ t_sparse             = 2e-05
+ t_range              = 1.0
+ initial_state_ids    = 1 2
+ dissociate_state_ids = 4
+/
+&state
+ 0.0     2.0        0.9874940E+00
+ 2.0     3.5        0.1066799E-01
+ 3.5     4.0        0.0
+ 4.0     1.0d10     0.0
+/
+EOF
+
+fanatra iepdyn Pint.inp
+```
+
+When this is executed, the file ``Pint/out.int`` is obtained.  
+The third column of the first line in this file corresponds to the time-integrated value of $P_{\mathrm{B}}\left(t\right)$.
+
+### Using Biased MD Trajectories (using ``use_perturbed_id = .true.``)
+
+The procedure is almost the same as in the unbiased case, 
+but it becomes slightly more complicated because it is necessary to prepare a list specified by ``f_unperturbed_id``.
+
+#### Generating Restart Files (``krhist``)
+
+Here, a ``krhist`` file is generated for each time-series dataset.  
+It is assumed that the time-series data in which the dynamics of state $j$ are not perturbed are organized in directories such as:
+```
+ts/0001/run0001.dis
+ts/0001/run0002.dis
+...
+```
+Based on this directory structure, first the lists corresponding to ``flist_cv`` and ``f_unperturbed_id`` are generated using the following Python script:
+```
+$ $ANATRA_PATH/utility/iepdyn_util/cvlist_generator.py
+```
+
+When executed, the script prompts the user for input as follows:
+```
+=== File Search Utility ===
+
+(1) Enter the root directory to search: ts
+(2) Enter the target extension (e.g., txt): dis
+(3) Enter the maximum search directory depth: 2
+
+Searching files...
+
+=== Matched Files ===
+
+/path/to/ts/0001/run0001.dis
+/path/to/ts/0001/run0002.dis
+/path/to/ts/0002/run0001.dis
+/path/to/ts/0002/run0002.dis
+/path/to/ts/0003/run0001.dis
+/path/to/ts/0003/run0002.dis
+/path/to/ts/0004/run0001.dis
+/path/to/ts/0004/run0002.dis
+
+(4) Enter directory level counted from the deepest directory for grouping (default: 1): 1
+
+=== Grouped Files ===
+
+--- State 1: 0001 ---
+/path/to/ts/0001/run0001.dis
+/path/to/ts/0001/run0002.dis
+
+--- State 2: 0002 ---
+/path/to/ts/0002/run0001.dis
+/path/to/ts/0002/run0002.dis
+
+--- State 3: 0003 ---
+/path/to/ts/0003/run0001.dis
+/path/to/ts/0003/run0002.dis
+
+--- State 4: 0004 ---
+/path/to/ts/0004/run0001.dis
+/path/to/ts/0004/run0002.dis
+
+Did these files come from perturbed dynamics? (y/n): y
+
+Available states:
+1 : 0001
+2 : 0002
+3 : 0003
+4 : 0004
+
+Enter state numbers used for Rij calculation (space-separated, empty input allowed): 1 2
+
+Enter fraction of files to be listed from each state (default: 1.0 (corresponding to all the files)): 1.0
+
+=== Output Preview ===
+
+/path/to/ts/0001/run0001.dis
+1 1
+/path/to/ts/0001/run0002.dis
+1 1
+/path/to/ts/0002/run0001.dis
+2 1
+/path/to/ts/0002/run0002.dis
+2 1
+/path/to/ts/0003/run0001.dis
+3 0
+/path/to/ts/0003/run0002.dis
+3 0
+/path/to/ts/0004/run0001.dis
+4 0
+/path/to/ts/0004/run0002.dis
+4 0
+
+Enter filename to save the file list: flist
+Enter filename to save state_id and Rij_flag: funp
+```
+
+This produces a trajectory list ``flist`` and a file ``funp`` that describes which region is unperturbed in terms of dynamics in each time-series data.
+
+Next, in order to generate ``krhist`` for each time-series dataset, the previously created ``flist`` and ``funp`` are split into per-line files using the following Python script:
+
+```
+$ $ANATRA_PATH/utility/iepdyn_util/split_cv.py --flist flist --funp funp
+```
+
+Executing this command generates the following directory structure:
+
+```
+0001/0001.flist
+0001/0001.funp
+0001/0002.flist
+0001/0002.funp
+0002/0001.flist
+0002/0001.funp
+0002/0002.flist
+0002/0002.funp
+0003/0001.flist
+0003/0001.funp
+0003/0002.flist
+0003/0002.funp
+0004/0001.flist
+0004/0001.funp
+0004/0002.flist
+0004/0002.funp
+```
+
+The generated ``XXXX.flist`` and ``XXXX.funp`` files correspond to ``flist_cv`` and ``f_unperturbed_id`` for each time-series data.  
+Therefore, ``krhist`` files can be generated sequentially using these inputs.
+
+```
+#!/usr/bin/env bash
+
+for i in {0001..0004};do
+  for f in `ls $i/*.flist`;do
+    num=`basename $f | sed -e "s/.flist//g"`
+    flist=$i/${num}.flist
+    funp=$i/${num}.funp
+
+cat << EOF > $i/run${num}.inp
+&input_param
+ flist_cv = "$i/${num}.flist"
+/
+&output_param
+ fhead = "$i/run${num}"
+/
+&option_param
+ use_perturbed_traj   = .true.
+ f_unperturbed_id     = "$i/${num}.funp"
+ 
+ output_histogram     = .true.
+ use_dissociate_state = .true.
+ use_reflection_state = .false.
+ use_product_state    = .false.
+ calc_steady          = .false.
+ calc_Pint            = .false.
+ extrapolate          = .false.
+ nstate               = 4
+ ndim                 = 1
+ nmol                 = 1
+ dt                   = 2e-05
+ t_sparse             = 2e-05
+ t_range              = 1.0
+ initial_state_ids    = 1 2
+ dissociate_state_ids = 4
+/
+&state
+ 0.0     2.0      1.0
+ 2.0     3.5      1.0
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+    fanatra iepdyn $i/run${num}.inp >& $i/run${num}.out
+  done
+done
+```
+
+Executing this produces the ``krhist`` files:
+
+```
+0001/run0001.krhist
+0001/run0002.krhist
+0002/run0001.krhist
+0002/run0002.krhist
+0003/run0001.krhist
+0003/run0002.krhist
+0004/run0001.krhist
+0004/run0002.krhist
+```
+
+#### Calculation of Equilibrium Populations
+
+As in the case without a bias potential, the initial population values for states 1 and 2 are computed by introducing reflecting boundary conditions.  
+The list of ``krhist`` files and related inputs are obtained again using ``cvlist_generator.py``.  
+The following excerpt shows only the parts where user input is required:
+
+```
+(1) Enter the root directory to search: .
+(2) Enter the target extension (e.g., txt): krhist
+(3) Enter the maximum search directory depth: 2
+(4) Enter directory level counted from the deepest directory for grouping (default: 1): 1
+Did these files come from perturbed dynamics? (y/n): y
+Enter state numbers used for Rij calculation (space-separated, empty input allowed): 1 2
+Enter fraction of files to be listed from each state (default: 1.0 (corresponding to all the files)): 1.0
+Enter filename to save the file list: fkrhist.list
+Enter filename to save state_id and Rij_flag: fkrhist.unp
+```
+
+```
+#!/usr/bin/env bash
+
+mkdir -p steady
+
+# Create input file
+#
+cat << EOF > steady.inp
+&input_param
+  flist_cv = "fkrhist.list"
+/
+&output_param
+  fhead = "steady/out"
+/
+&option_param
+  use_perturbed_traj = .false.
+  f_unperturbed_id = "fkrhist.unp"
+  
+  input_type = "HISTOGRAM"
+  output_histogram = .false.
+  use_dissociate_state = .false.
+  use_reflection_state = .true.
+  use_product_state = .false.
+  calc_steady = .true.
+  calc_Pint = .false.
+  extrapolate = .false.
+  nstate = 4
+  ndim = 1
+  nmol = 1
+  dt = 2e-05
+  t_sparse = 2e-05
+  t_range = 1.0
+  initial_state_ids = 1 2
+  reflection_state_ids = 4
+/
+&state
+ 0.0     2.0      1.0
+ 2.0     3.5      1.0
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+
+fanatra iepdyn steady.inp
+```
+
+Executing this produces the equilibrium population file ``steady/out.steady``, which contains the equilibrium population values.
+
+#### Calculation of $P_{\mathrm{B}}(t)$
+
+The time evolution of $P_{\mathrm{B}}\left(t\right)$ is computed by setting ``extrapolate = .true.``.
+
+```
+#!/usr/bin/env bash
+
+mkdir -p extrapolate
+
+# Create input file
+#
+cat << EOF > extrapolate.inp
+&input_param
+  flist_cv = "fkrhist.list"
+/
+&output_param
+  fhead = "extrapolate/out"
+/
+&option_param
+  use_perturbed_traj   = .true.
+  f_unperturbed_id     = "fkrhist.unp"
+  
+  input_type           = "HISTOGRAM"
+  output_histogram     = .false.
+  use_dissociate_state = .true.
+  use_reflection_state = .false.
+  use_product_state    = .false.
+  calc_steady          = .false.
+  calc_Pint            = .false.
+  extrapolate          = .true.
+  nstate               = 4
+  ndim                 = 1
+  nmol                 = 1
+  dt                   = 2e-05
+  t_sparse             = 2e-05
+  t_range              = 1.0
+  t_extend             = 10.0
+  dt_tcfout            = 2e-05
+  initial_state_ids    = 1 2
+  dissociate_state_ids = 4
+/
+&state
+ 0.0     2.0      0.9874940E+00
+ 2.0     3.5      0.1066799E-01
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+
+fanatra iepdyn extrapolate.inp
+```
+
+#### Analytical Estimation of the Time Integral of $P_{\mathrm{B}}(t)$
+
+This can be executed as follows:
+
+```
+#!/usr/bin/env bash
+
+mkdir -p Pint
+
+# Create input file
+#
+cat << EOF > Pint.inp
+&input_param
+  flist_cv = "fkrhist.list"
+/
+&output_param
+  fhead = "Pint/out"
+/
+&option_param
+  use_perturbed_traj   = .true.
+  f_unperturbed_id     = "fkrhist.unp"
+  
+  input_type           = "HISTOGRAM"
+  output_histogram     = .false.
+  use_dissociate_state = .true.
+  use_reflection_state = .false.
+  use_product_state    = .false.
+  calc_steady          = .false.
+  calc_Pint            = .false.
+  extrapolate          = .true.
+  nstate               = 4
+  ndim                 = 1
+  nmol                 = 1
+  dt                   = 2e-05
+  t_sparse             = 2e-05
+  t_range              = 1.0
+  t_extend             = 10.0
+  dt_tcfout            = 2e-05
+  initial_state_ids    = 1 2
+  dissociate_state_ids = 4
+/
+&state
+ 0.0     2.0      0.9874940E+00
+ 2.0     3.5      0.1066799E-01
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+
+fanatra iepdyn Pint.inp
+```
+
+After execution, the file ``Pint/out.int`` is obtained.

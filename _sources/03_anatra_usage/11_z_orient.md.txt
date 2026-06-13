@@ -1,0 +1,187 @@
+## Molecular Orientation Along a Specific Direction (`z_orient`, `zori`)
+
+The `z_orient` (`zori`) mode computes the orientation distribution of molecules relative to a reference direction, typically the $z$-axis.  
+To define the orientation of a molecule, two parts of the molecule are selected: the *bottom* and the *head*. The centers of mass of these two parts are denoted by ${\bf R}_{\mathrm{B}}$ and ${\bf R}_{\mathrm{H}}$, respectively. The molecular axis ${\bf u}$ is then defined as
+
+\begin{align}
+{\bf u} = {\bf R}_{\mathrm{H}} - {\bf R}_{\mathrm{B}}. \label{uvec}
+\end{align}
+
+Let $\theta$ be the angle between the $z$-axis (unit vector ${\bf e}_z$) and the molecular axis (unit vector ${\bf e}_{\mathrm{u}}$). Then
+
+\begin{align}
+\cos \theta = {\bf e}_z \cdot {\bf e}_{\mathrm{u}}.
+\end{align}
+
+The orientation distribution function is defined by
+
+\begin{align}
+P(\chi) = C \left\langle \delta(\chi - \cos \theta) \right\rangle,
+\end{align}
+
+where $C$ is a normalization constant determined such that
+
+\begin{align}
+\int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) = 1.
+\end{align}
+
+By changing variables from $\theta$ to $\chi = \cos \theta$, the left hand side of the above equation becomes
+
+\begin{align}
+\int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) &= \int_{0}^{1} d\chi\, P(\chi) \notag \\
+& = CN  
+\end{align}
+
+where $N$ is the number of targer molecules. Thus, $C$ is set to $C=1/N$. 
+The `z_orient` mode calculates $P(\chi) = P(\cos \theta)$.
+
+Additionally, the reference $z$-axis does not have to be fixed in the laboratory frame; it can also be defined by the orientation of a particular molecule. If four points ${\bf x}_{\mathrm{B}_0}, {\bf x}_{\mathrm{H}_0}, {\bf x}_{\mathrm{B}_1}, {\bf x}_{\mathrm{H}_1}$ are chosen from this reference molecule, the two vectors:
+
+\begin{align}
+{\bf v}_0 = {\bf x}_{\mathrm{H}_0} - {\bf x}_{\mathrm{B}_0}, \quad
+{\bf v}_1 = {\bf x}_{\mathrm{H}_1} - {\bf x}_{\mathrm{B}_1}
+\end{align}
+
+can be used to define the $z$-axis unit vector via the cross product:
+
+\begin{align}
+{\bf e}_z = \frac{ {\bf v}_1 \times {\bf v}_2 }{ \left| {\bf v}_1 \times {\bf v}_2 \right| }.
+\end{align}
+
+The orientation distribution $P(\cos \theta)$ is then computed based on the angle between this ${\bf e}_z$ and the molecular axis ${\bf u}$.
+
+### List of Options
+
+**Option**         | **Remarks**          | **Option**                | **Remarks**
+:-----------------:|:--------------------:|:--------------------------:|:-----------------------:
+``-stype``         | Common               | ``-sfile``                 | Common
+``-tintype``       | Common               | ``-tin``                   | Common
+``-flist_traj``    | Common               | ``-fhead``                 | Common
+``-sel``$x$        | Common               | ``-mode``$x$               | Common
+``-zdef_type``     | Mode specific        | ``-vecX_bottom_selid``     | Mode specific
+``-vecX_head_selid`` | Mode specific      | ``-bottom_selid``          | Mode specific
+``-head_selid``    | Mode specific        | ``-judgeup``               | Mode specific
+``-nmolup``        | Mode specific        | ``-center_selid``          | Mode specific
+``-dx``            | Mode specific        | ``-dt``                    | Mode specific
+``-prep_only``     | Common               | --                         | --
+
+---
+
+* **-sel$x$ \<selection\>** (up to 7 selections)  
+  * Default: N/A  
+  * Example: ``-sel0 name P -sel1 name N``
+
+  Specify the atomic groups used to define the bottom and head parts of the molecule. If using a reference molecular orientation to define the $z$-axis (`-zdef_type outerprod`), additional selections for ${\bf v}_0$ and ${\bf v}_1$ must also be provided. If you use ``-judgeup``, selection of reference molecules to determine direction is also necessary.
+
+---
+
+* **-head_selid**, **-bottom_selid**  
+  * Default: N/A  
+  * Example: ``-head_selid 0 -bottom_selid 1``
+
+  Specify which selections correspond to the head and bottom of the molecule used to compute the orientation vector ${\bf u}$.
+
+---
+
+* **-zdef_type \<coord or outerprod\>**,  
+  * Default: N/A  
+  * Example: ``-zdef_type coord``  
+
+  Required for specifying the definition of the $z$-direction.
+
+  - ``coord``: Use laboratory frame $z$-axis  
+  - ``outerprod``: Use cross product of vectors ${\bf v}_0$ and ${\bf v}_1$ to define $z$-axis
+
+  If ``outerprod``, the following options smust be set. 
+  - ``-vec0_bottom_selid`` $\rightarrow$ ${\bf x}_{\mathrm{B}_0}$  
+  - ``-vec0_head_selid`` $\rightarrow$ ${\bf x}_{\mathrm{H}_0}$  
+  - ``-vec1_bottom_selid`` $\rightarrow$ ${\bf x}_{\mathrm{B}_1}$  
+  - ``-vec1_head_selid`` $\rightarrow$ ${\bf x}_{\mathrm{H}_1}$
+
+---
+
+* **-judgeup \<nmolup coord or none\>**  
+  * Default: ``coord``  
+  * Example: ``-judgeup coord``
+
+* **-nmolup \<# of target molecules in upper leaflet\>**  
+  * Default: 0  
+  * Example: ``-nmolup 100``
+
+* **-center_selid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-center_selid 2``
+
+This option specifies the orientation of ${\bf e}_{z}$ when taking the laboratory coordinate system$^{\prime}$s $z$-axis as the reference. The unit vector pointing in the positive $z$-axis direction is denoted as ${\bf e}_{z}^{\prime}$.
+
+- In the case of ``-judgeup nmolup``: Let $N_{\mathrm{up}}$ be the number specified by the ``-nmolup`` option. Then, the first $N_{\mathrm{up}}$ molecules are assigned ${\bf e}_{z} = {\bf e}_{z}^{\prime}$ for calculating $\cos \theta$, and the remaining molecules are assigned ${\bf e}_{z} = -{\bf e}_{z}^{\prime}$ for calculating $\cos \theta$.
+
+- In the case of ``-judgeup coord``: Let $z_{\mathrm{c}}$ be the $z$-coordinate of the center of mass of the molecule specified by ``-center_selid``, and $z_{\mathrm{B}}$ and $z_{\mathrm{H}}$ be the $z$-coordinates of the centers of mass of the regions specified by ``-bottom_selid`` and ``-head_selid``, respectively. Then,
+
+\begin{align}
+{\bf e}_{z} =
+\begin{cases}
+{\bf e}_{z}^{\prime}  & \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} > 0\\[.2cm]
+-{\bf e}_{z}^{\prime} & \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} \leq  0\\
+\end{cases}
+\end{align}
+
+---
+
+* **-dx \<grid width for $\cos\theta$\>**  
+  * Default: ``0.1``  
+  * Example: ``-dx 0.1``
+
+  Grid width $\Delta\chi$ used for computing $P(\cos\theta)$.
+
+---
+
+* **-dt \<time step\>**  
+  * Default: ``1.0``  
+  * Example: ``-dt 0.1``
+
+  Time increment for the output time series data.
+
+### Output File Format
+
+* `*.costheta`  
+  Time series data of $\cos \theta$:
+
+  * Column 1: Time  
+  * Column 2: $\cos \theta$ of molecule 1  
+  * Column 3: $\cos \theta$ of molecule 2  
+    ...
+
+* `*.distr`  
+  Probability distribution $P(\cos \theta)$:
+
+  * Column 1: $\cos \theta$  
+  * Column 2: $P(\cos \theta)$
+
+### Examples of Analysis
+
+#### Orientation Distribution of Lipids in a Bilayer
+
+```
+#!/usr/bin/env bash
+
+anatra z_orient                    \
+  -stype       psf                 \
+  -sfile       complex.psf         \
+  -tintype     nc                  \
+  -flist_traj  flist               \
+  -fhead       run_nc              \
+  -judgeup     coord               \
+  -dx          0.1                 \
+  -dt          0.1                 \
+  -sel0        name P              \
+  -sel1        name N              \
+  -sel2        segid MEMB and noh  \
+  -mode0       residue             \
+  -mode1       residue             \
+  -mode2       whole               \
+  -bottom_selid 0                  \
+  -head_selid   1                  \
+  -center_selid 2                  \
+  -prep_only   false
+```

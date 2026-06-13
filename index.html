@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANATRA User Guide &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="What is ANATRA?" href="01_about_anatra/main.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ANATRA User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="anatra-user-guide">
+<h1>ANATRA User Guide<a class="headerlink" href="#anatra-user-guide" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Installation/main.html">Installation of ANATRA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02_Installation/main.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_Installation/main.html#installing-from-source">Installing from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02_Installation/main.html#building-the-hdf5-library">Building the HDF5 library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02_Installation/main.html#using-openblas">Using OpenBLAS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_anatra_usage/combined.html">Usage of anatra</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#common-options">Common Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#trajectory-conversion-trjconv">Trajectory Conversion (<code class="docutils literal notranslate"><span class="pre">trjconv</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#list-of-options">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#examples-of-analysis">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#removing-water-from-trajectory">Removing Water from Trajectory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#pbc-wrapping">PBC Wrapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#fitting">Fitting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#centering">Centering</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#pbc-wrapping-and-fitting">PBC Wrapping and Fitting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#pbc-wrapping-and-centering">PBC Wrapping and Centering</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#distance-calculation-distance-dis">Distance Calculation (<code class="docutils literal notranslate"><span class="pre">distance</span></code>, <code class="docutils literal notranslate"><span class="pre">dis</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id1">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#output-file-format">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#example-of-analysis">Example of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#standard-atom-to-region-distance">Standard Atom-to-Region Distance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#center-of-mass-analysis-and-mean-square-displacement-center-of-mass-com">Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#theoretical-background">Theoretical Background</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#mean-square-displacement">Mean Square Displacement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id2">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#output-file-formats">Output File Formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id3">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#msd-calculation-for-a-protein">MSD Calculation for a Protein</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#msd-calculation-for-multiple-small-molecules">MSD Calculation for Multiple Small Molecules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#radial-distribution-function-radial-distr-rdf">Radial Distribution Function (radial_distr, rdf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id4">Theoretical Background</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#rdf-for-identical-particles">RDF for Identical Particles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#rdf-for-heterogeneous-particles">RDF for Heterogeneous Particles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#option-list">Option List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id5">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id6">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#rdf-between-oxygen-atoms-of-water-molecules">RDF between Oxygen Atoms of Water Molecules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#rdf-between-oxygen-and-hydrogen-atoms-in-water-molecules">RDF between Oxygen and Hydrogen Atoms in Water Molecules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#rdf-between-protein-c-alpha-atoms-and-water-oxygen-atoms">RDF between Protein C<span class="math notranslate nohighlight">\(\alpha\)</span> Atoms and Water Oxygen Atoms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#spatial-distribution-function-spatial-distr-sdf">Spatial Distribution Function (<code class="docutils literal notranslate"><span class="pre">spatial_distr</span></code>, <code class="docutils literal notranslate"><span class="pre">sdf</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id7">Theoretical Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id8">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id9">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id10">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#sdf-of-water-molecules-around-a-protein">SDF of Water Molecules Around a Protein</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#root-mean-square-deviation-rmsd">Root-Mean-Square Deviation (<code class="docutils literal notranslate"><span class="pre">rmsd</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id11">Theoretical Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id12">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id13">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id14">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#rmsd-from-the-crystal-structure-of-a-protein-in-solution">RMSD from the Crystal Structure of a Protein in Solution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#interaction-energy-interaction-energy-ene">Interaction Energy (<code class="docutils literal notranslate"><span class="pre">interaction_energy</span></code>, <code class="docutils literal notranslate"><span class="pre">ene</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id15">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id16">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id17">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#electrostatic-lj-interaction-between-solute-molecules">Electrostatic + LJ Interaction Between Solute Molecules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#lj-interaction-between-solute-molecules">LJ Interaction Between Solute Molecules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#lipid-order-parameter-lipid-order-scd">Lipid Order Parameter (<code class="docutils literal notranslate"><span class="pre">lipid_order</span></code>, <code class="docutils literal notranslate"><span class="pre">scd</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id18">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id19">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id20">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#calculation-of-s-mathrm-cd-in-a-dppc-lipid-bilayer">Calculation of <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> in a DPPC Lipid Bilayer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#distribution-function-along-the-membrane-normal-z-axis-z-profile-zprof">Distribution Function Along the Membrane Normal (<span class="math notranslate nohighlight">\(z\)</span>-axis) (<code class="docutils literal notranslate"><span class="pre">z_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">zprof</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id21">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id22">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id23">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#number-density-profile-of-water-in-a-lipid-membrane-system">Number Density Profile of Water in a Lipid Membrane System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#molecular-orientation-along-a-specific-direction-z-orient-zori">Molecular Orientation Along a Specific Direction (<code class="docutils literal notranslate"><span class="pre">z_orient</span></code>, <code class="docutils literal notranslate"><span class="pre">zori</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id24">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id25">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id26">Examples of Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#orientation-distribution-of-lipids-in-a-bilayer">Orientation Distribution of Lipids in a Bilayer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03_anatra_usage/combined.html#free-volume-profile-free-volume">Free Volume Profile (free_volume)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#id27">List of Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#format-of-output-files">Format of Output Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03_anatra_usage/combined.html#example">Example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03_anatra_usage/combined.html#free-volume-profile-in-a-lipid-membrane-system">Free volume profile in a lipid membrane system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_fanatra_usage/combined.html">Usage of fanatra</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#common-parameters">Common Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#input-param">&amp;input_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#format-of-time-series-data">Format of Time-series Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#format-of-statistical-weight-data">Format of Statistical Weight Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#output-param">&amp;output_param</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#histogram-histogram-hist">Histogram (histogram, hist)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#list-of-parameters">List of Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#option-param">&amp;option_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#format-of-output-file">Format of Output File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#potential-of-mean-force-potential-of-mean-force-pmf">Potential of Mean Force (potential_of_mean_force, pmf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#theoretical-background">Theoretical Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id1">List of Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id2">&amp;option_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#matplotlib-param">&amp;matplotlib_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#format-of-output-files">Format of Output Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#restricted-radial-potential-of-mean-force-restricted-radial-rrpmf">Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id4">Theoretical Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#parameter-list">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#format-of-the-input-file-time-series-data">Format of the Input File (Time-Series Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id5"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#bootopt-param"><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#output-file-format">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id6">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#frame-extraction-extract-frame-extf">Frame Extraction (extract_frame, extf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id7">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id8"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id9">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id10">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#random-frame-extraction-random-frame-randf">Random Frame Extraction (random_frame, randf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id11">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id12"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id13">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id14">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#moving-average-moving-average-movave">Moving Average (moving_average, movave)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id15">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id16"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id17">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id18">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05_fanatra_usage/combined.html#average-function-average-function-avef">Average Function (average_function, avef)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id19">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id20"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id21"><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id22">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05_fanatra_usage/combined.html#id23">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#theoretical-background">Theoretical Background</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#theoretical-framework-of-iepdyn">Theoretical Framework of IEPDYN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#introducing-boundary-conditions">Introducing Boundary Conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#incorporating-returning-probability-rp-theory">Incorporating Returning Probability (RP) Theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#analytical-estimation-of-the-time-integral-of-p-j-left-t-right">Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#analytical-evaluation-of-the-equilibrium-population-p-j-left-infty-right">Analytical Evaluation of the Equilibrium Population <span class="math notranslate nohighlight">\(P_{j}\left(\infty\right)\)</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#parameter-list">Parameter List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#option-param"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#state"><code class="docutils literal notranslate"><span class="pre">&amp;state</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#auxiliary-tools">Auxiliary Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#output-files">Output Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06_iepdyn/combined.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#using-unbiased-md-trajectories-use-perturbed-traj-false">Using Unbiased MD Trajectories (<code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span> <span class="pre">=</span> <span class="pre">.false.</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#generating-restart-files-krhist">Generating Restart Files (<code class="docutils literal notranslate"><span class="pre">krhist</span></code>)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#calculation-of-equilibrium-populations">Calculation of Equilibrium Populations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#calculation-of-p-mathrm-b-t">Calculation of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span></a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#analytical-estimation-of-the-time-integral-of-p-mathrm-b-t">Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="06_iepdyn/combined.html#using-biased-md-trajectories-using-use-perturbed-id-true">Using Biased MD Trajectories (using <code class="docutils literal notranslate"><span class="pre">use_perturbed_id</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#id1">Generating Restart Files (<code class="docutils literal notranslate"><span class="pre">krhist</span></code>)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#id2">Calculation of Equilibrium Populations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#id3">Calculation of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span></a></li>
+<li class="toctree-l4"><a class="reference internal" href="06_iepdyn/combined.html#id4">Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01_about_anatra/main.html" class="btn btn-neutral float-right" title="What is ANATRA?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

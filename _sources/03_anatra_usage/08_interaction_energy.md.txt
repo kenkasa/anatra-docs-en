@@ -1,0 +1,241 @@
+## Interaction Energy (`interaction_energy`, `ene`)
+
+The `interaction_energy` (`ene`) mode allows the calculation of interaction energies between selected molecules, groups of molecules, or specific regions. Currently, **ANATRA** supports the following three types of interactions:
+
+* **Electrostatic Interaction**  
+    Electrostatic interaction energy $U_{\mathrm{elec}}$ between molecules A and B can be computed using two schemes. The first is the bare interaction,
+
+    \begin{align}
+    U_{\mathrm{elec}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} \frac{q_i q_j}{r_{ij}},
+    \end{align}
+
+    where $i$ and $j$ denote atomic indices in molecules A and B, respectively. The second scheme uses the Smooth Particle Mesh Ewald (SPME) method, which is the standard approach for accounting for long-range electrostatic interactions in MD simulations. If consistency with MD simulations is required, the SPME method should be employed.
+
+* **Lennard-Jones (LJ) Interaction**  
+    The LJ interaction, which empirically describes van der Waals interactions, is given by
+
+    \begin{align}
+    U_{\mathrm{LJ}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right].
+    \end{align}
+
+    Here, $\epsilon_{ij}$ and $\sigma_{ij}$ are the LJ parameters between atom $i$ in molecule A and atom $j$ in molecule B.
+
+* **Attractive LJ Interaction**  
+    The attractive component of the LJ interaction is defined as:
+
+    \begin{align}
+    U_{\mathrm{attr}} &= \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} u_{\mathrm{attr},ij}, \\
+    u_{\mathrm{attr},ij} &= \begin{cases}
+    4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right] & r_{ij} \geq 2^{1/6} \sigma, \\
+    -\epsilon_{ij} & r_{ij} < 2^{1/6} \sigma.
+    \end{cases}
+    \end{align}
+
+    This formulation removes the repulsive part of the LJ potential, eliminating the multivalued nature of energy with respect to distance (see Fig. 3.3). When constructing a PMF for molecular binding, using the attractive LJ interaction as a reaction coordinate can more clearly distinguish between bound and unbound states than the standard LJ potential.
+
+In addition to the individual components above, the sum of electrostatic and LJ can also be calculated.
+
+### List of Options
+
+**Option**           | **Remarks**       | **Option**          | **Remarks**
+:-------------------:|:-----------------:|:-------------------:|:-----------------:
+``-stype``           | Common            | ``-sfile``          | Common
+``-tintype``         | Common            | ``-tin``            | Common
+``-flist_traj``      | Common            | ``-fhead``          | Common
+``-sel0``            | Common            | ``-sel1``           | Common
+``-mode0``           | Common            | ``-mode1``          | Common
+``-parmformat``      | Mode specific     | ``-fanaparm``       | Mode specific
+``-pbc``             | Mode specific     | ``-calc_vdw``       | Mode specific
+``-calc_elec``       | Mode specific     | ``-vdw_type``       | Mode specific
+``-elec_type``       | Mode specific     | ``-dt``             | Mode specific
+``-rvdwcut``         | Mode specific     | ``-relcut``         | Mode specific
+``-pme_alpha``       | Mode specific     | ``-pme_grids``      | Mode specific
+``-pme_rigid``       | Mode specific     | ``-pme_dual``       | Mode specific
+``-pme_fprm``        | Mode specific     | ``-prep_only``      | Common
+
+---
+
+* **-parmformat \<prmtop or anaparm\>**  
+  * Default: ``prmtop``  
+  * Example: ``-parmformat anaparm``  
+  * Note: When set to `anaparm`, ``-fanaparm`` must also be specified.
+
+  Specifies the parameter file for atomic charges. When using `prmtop`, the file given by ``-sfile`` will be automatically used.
+
+---
+
+* **-fanaparm \<filename\>**  
+  * Default: N/A  
+  * Example: ``-fanaparm complex.anaparm``
+
+  Specifies the `anaparm` file containing LJ parameters and atomic charges. Required when ``-parmformat anaparm`` is used.
+
+---
+
+* **-pbc \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-pbc true``
+
+  Enables periodic boundary condition treatment, including image interactions from adjacent periodic boxes.
+
+---
+
+* **-calc_vdw \<true or false\>**  
+  * Default: ``true``  
+  * Example: ``-calc_vdw false``
+
+  Specifies whether to compute van der Waals (LJ) interactions.
+
+---
+
+* **-calc_elec \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-calc_elec true``
+
+  Specifies whether to compute electrostatic interactions.
+
+---
+
+* **-vdw_type \<standard or attractive\>**  
+  * Default: ``standard``  
+  * Example: ``-vdw_type attractive``
+
+  Specifies which LJ interaction function to use.  
+  ``standard`` computes the standard LJ (Eq. \eqref{LJ}), and ``attractive`` computes the attractive LJ (Eq. \eqref{Uattr}).
+
+---
+
+* **-elec_type \<bare or pme\>**  
+  * Default: ``bare``  
+  * Example: ``-elec_type bare``
+
+  Specifies the method for electrostatic interaction calculation:  
+  ``bare`` for Eq. \eqref{elec}, ``pme`` for the PME method.
+
+---
+
+* **-dt \<time interval\>**  
+  * Default: ``0.1``  
+  * Example: ``-dt 1.0``
+
+  Sets the time resolution (first column) of the time-series output.
+
+---
+
+* **-rvdwcut \<cutoff distance (Å)\>**  
+  * Default: ``12.0``  
+  * Example: ``-rvdwcut 20.0``
+
+  Cutoff distance for van der Waals interactions.
+
+---
+
+* **-relcut \<cutoff distance (Å)\>**  
+  * Default: ``1.0e10``  
+  * Example: ``-relcut 1.0e10``
+
+  Cutoff distance for electrostatic interactions.
+
+---
+
+* **-pme_alpha \<PME screening parameter (ANGSTROM$^{-1}$)\>**  
+  * Default: ``0.35``  
+  * Example: ``-pme_alpha 0.35``
+
+  Specifies the screening parameter used in PME. Only used when ``-elec_type pme``.
+
+---
+
+* **-pme_grids \<grid size in $x,y,z$\>**  
+  * Default: ``64 64 64``  
+  * Example: ``-pme_grids 64 64 64``
+
+  Grid size $n_x, n_y, n_z$ used in PME. Total number of grid points is $n_x n_y n_z$.
+
+---
+
+* **-pme_rigid \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-pme_rigid false``
+
+  If the region specified by ``-sel0`` is spatially fixed, set to `true` to reduce PME computational cost.
+
+---
+
+### Output File Format
+
+* `*.uij` file
+
+  This file contains pairwise interaction energies between selected regions. If selections 0 and 1 are divided into $n_1$ and $n_2$ molecules, respectively (via ``-mode0`` and ``-mode1``), the output contains $n_1 n_2$ interaction terms:
+
+  * Column 1: Time  
+  * Column 2: Interaction between pair (1, 1)  
+  * Column 3: Interaction between pair (1, 2)  
+    ...  
+  * Column $n_2$: Interaction between pair (1, $n_2$)  
+  * Column $n_2+1$: Interaction between pair (2, 1)  
+    ...
+
+### Examples of Analysis
+
+The following are minimal examples for common types of interaction energy analysis.
+
+#### Electrostatic + LJ Interaction Between Solute Molecules
+
+This example computes the total of electrostatic and LJ interactions between a protein (`resid 1 to 161`) and ligand molecules (`resname LIG`), using the SPME method for electrostatics:
+
+```
+#!/bin/bash
+
+anatra energy                                 \
+  -stype       parm7                          \
+  -sfile       complex.prmtop                 \
+  -tintype     dcd                            \
+  -tin         INP.dcd                        \
+  -fhead       out                            \
+  -parmformat  prmtop                         \
+  -pbc         true                           \
+  -calc_vdw    true                           \
+  -calc_elec   true                           \
+  -vdw_type    standard                       \
+  -elec_type   pme                            \
+  -mode0       whole                          \
+  -mode1       residue                        \
+  -dt          0.1                            \
+  -rvdwcut     12.0                           \
+  -relcut      12.0                           \
+  -pme_alpha   0.35                           \
+  -pme_grids   64 64 64                       \
+  -pme_rigid   false                          \
+  -sel0        resid 1 to 161                 \
+  -sel1        resname LIG                    \
+  -prep_only   false
+```
+
+#### LJ Interaction Between Solute Molecules
+
+This example computes only the LJ interactions between a protein and ligand molecules:
+
+```
+#!/bin/bash
+
+anatra energy                                 \
+  -stype       parm7                          \
+  -sfile       complex.prmtop                 \
+  -tintype     dcd                            \
+  -tin         INP.dcd                        \
+  -fhead       out                            \
+  -parmformat  prmtop                         \
+  -pbc         true                           \
+  -calc_vdw    true                           \
+  -calc_elec   false                          \
+  -vdw_type    standard                       \
+  -mode0       whole                          \
+  -mode1       residue                        \
+  -dt          0.1                            \
+  -rvdwcut     12.0                           \
+  -relcut      1.0e10                         \
+  -sel0        resid 1 to 161                 \
+  -sel1        resname LIG                    \
+  -prep_only   false
+```

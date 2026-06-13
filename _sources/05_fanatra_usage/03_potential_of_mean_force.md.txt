@@ -1,0 +1,419 @@
+## Potential of Mean Force (potential_of_mean_force, pmf)
+
+In this analysis mode, the free-energy profile $W\left(\bm{\zeta}\right)$ along the reaction coordinate $\bm{\zeta}$ is calculated from the time-series data of the reaction coordinate, $\bm{\xi}\left(t\right)$. The function $W\left(\bm{\zeta}\right)$ is also referred to as the **potential of mean force (PMF)**.
+
+### Theoretical Background
+
+Let ${\bf X}$ denote the configuration of the system and $U\left({\bf X}\right)$ its potential energy. The configurational integral $Z$ is given by
+
+\begin{align}
+Z =\int d{\bf X}\,\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+where $\beta$ is the inverse temperature.
+
+Similarly, the partition function corresponding to the state in which the system is trapped within the infinitesimal region $\bm{\zeta} - \bm{\zeta}+\Delta \bm{\zeta}$ in the reaction coordinate space ($\bm{\zeta}\left({\bf X}\right)$) is
+
+\begin{align}
+Z\left(\bm{\zeta}\right) =\Delta\bm{\zeta}\int d{\bf X}\,\delta\left(\bm{\zeta}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+Defining the probability density corresponding to $\bm{\zeta}$ as
+
+\begin{align}
+\rho\left(\bm{\zeta}\right) = \Braket{\delta\left(\bm{\zeta} - \bm{\xi}\left({\bf X}\right)\right)} = \dfrac{1}{Z}\int d{\bf X}\,\delta\left(\bm{\zeta}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+we obtain
+
+\begin{align}
+\dfrac{Z\left(\bm{\zeta}\right)}{Z} =\rho\left(\bm{\zeta}\right)\Delta\bm{\zeta}
+\end{align}
+
+Therefore, the free-energy difference $\Delta F\left(\bm{\zeta}\right)$ between the unrestricted state and the state confined to the region $\bm{\zeta}-\bm{\zeta} + \Delta \bm{\zeta}$ is expressed as
+
+\begin{align}
+\Delta F\left(\bm{\zeta}\right) =-\dfrac{1}{\beta}\log\dfrac{Z\left(\bm{\zeta}\right)}{Z}
+ = -\dfrac{1}{\beta}\log \left(\rho\left(\bm{\zeta}\right)\Delta \bm{\zeta}\right)
+\end{align}
+
+The free energy relative to a reference point $\bm{\zeta}_{0}$ is
+
+\begin{align}
+W\left(\bm{\zeta}\right) =\Delta F\left(\bm{\zeta}\right)-\Delta F\left(\bm{\zeta}_{0}\right)\notag\\
+ =-\dfrac{1}{\beta}\log\dfrac{\rho\left(\bm{\zeta}\right)}{\rho\left(\bm{\zeta}_{0}\right)}
+ \label{pmf:pmf}
+\end{align}
+
+This quantity $W$ is called the **potential of mean force**. The choice of $\bm{\zeta}_{0}$ is arbitrary, but in most cases it is chosen such that the minimum value of $W\left(\bm{\zeta}\right)$ becomes zero.
+
+By calculating $W\left(\bm{\zeta}\right)$, it becomes possible to discuss the change in thermodynamic stability as a function of $\bm{\zeta}$.
+
+Equation EQREF(pmf:pmfEQREF) can also be rewritten by separating the $\bm{\zeta}$-dependent part and a constant $C$:
+
+\begin{align}
+W\left(\bm{\zeta}\right) =-\dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\bm{\zeta}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)+C
+\label{pmf:pmf2}
+\end{align}
+
+where
+
+\begin{align}
+C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\bm{\zeta}_{0}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+### List of Parameters
+
+**Namelist**         | **Parameter**          | **Remarks**
+:--------------------|:-----------------------|:-------------------------------------------------------------------
+`&input_param`       | `flist_cv`             | Filename containing a list of CV files
+`&input_param`       | `flist_weight`         | Filename containing a list of weight files (optional)
+`&input_param`       | `fcv`                  | CV filename
+`&input_param`       | `fweight`              | Weight filename (optional)
+`&output_param`      | `fhead`                | Header of the output filename
+`&option_param`      | `ndim`                 | Number of CV dimensions
+`&option_param`      | `xyzcol`               | Column indices of the CV data
+`&option_param`      | `ng3`                  | Number of grid points for each CV direction
+`&option_param`      | `del`                  | Grid spacing for each CV direction
+`&option_param`      | `origin`               | Grid origin for each CV direction
+`&option_param`      | `temperature`          | Temperature [K]
+`&option_param`      | `use_radial`           | Whether radial CVs are included
+`&option_param`      | `radcol`               | Column indices corresponding to radial CVs
+`&option_param`      | `box_system`           | Simulation box size (used only when `ndim=3`)
+`&option_param`      | `use_spline`           | Enable spline interpolation
+`&option_param`      | `spline_resolution`    | Resolution of spline interpolation
+`&option_param`      | `gen_script_mpl2d`     | Generate a Python script for 2D PMF visualization
+`&option_param`      | `skip_calc`            | Skip PMF calculation
+`&matplotlib_param`  | `fpdf`                 | Output PDF filename
+`&matplotlib_param`  | `labels`               | Axis labels and colorbar label
+`&matplotlib_param`  | `ranges`               | Plotting range
+`&matplotlib_param`  | `tics`                 | Axis tick intervals
+`&matplotlib_param`  | `scales`               | Unit conversion factors for each axis
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Remarks}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|     & Filename containing a list of CV files \\
+                     & \verb|flist_weight| & Filename containing a list of weight files (optional) \\
+                     & \verb|fcv|          & CV filename \\
+                     & \verb|fweight|      & Weight filename (optional) \\
+\hline
+\verb|&output_param| & \verb|fhead|        & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|ndim|               & Number of CV dimensions \\
+                     & \verb|xyzcol|             & Column indices of the CV data \\
+                     & \verb|ng3|                & Number of grid points for each CV direction \\
+                     & \verb|del|                & Grid spacing for each CV direction \\
+                     & \verb|origin|             & Grid origin for each CV direction \\
+                     & \verb|temperature|        & Temperature [K] \\
+                     & \verb|use_radial|         & Whether radial CVs are included \\
+                     & \verb|radcol|             & Column indices corresponding to radial CVs \\
+                     & \verb|box_system|         & Simulation box size (used only when \verb|ndim=3|) \\
+                     & \verb|use_spline|         & Enable spline interpolation \\
+                     & \verb|spline_resolution|  & Resolution of spline interpolation \\
+                     & \verb|gen_script_mpl2d|   & Generate a Python script for 2D PMF visualization \\
+                     & \verb|skip_calc|          & Skip PMF calculation \\
+\hline
+\verb|&matplotlib_param| & \verb|fpdf|    & Output PDF filename \\
+                         & \verb|labels|  & Axis labels and colorbar label \\
+                         & \verb|ranges|  & Plotting range \\
+                         & \verb|tics|    & Axis tick intervals \\
+                         & \verb|scales|  & Unit conversion factors for each axis \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### &option_param
+
+* **``ndim``**
+    * Default: None
+    * Example: ``ndim = 2``
+
+    Specifies the number of dimensions of the Collective Variable (CV).
+
+    For example, ``ndim = 2`` calculates a two-dimensional PMF, while ``ndim = 3`` calculates a three-dimensional PMF.
+
+----
+* **``xyzcol``**
+    * Default: ``1``
+    * Example: ``xyzcol = 1 2``
+
+    Specifies the column indices corresponding to each CV in the CV data file.
+
+    The first column is ignored because it is treated as the time or step index.
+
+    For example, if the data are stored as
+
+    ```
+    time  cv1  cv2  cv3
+    ```
+
+    then
+
+    ```
+    xyzcol = 1 2
+    ```
+
+    calculates a two-dimensional PMF using ``cv1`` and ``cv2``.
+
+----
+* **``ng3``**
+    * Default: ``1 1 1``
+    * Example: ``ng3 = 10 20``
+
+    Specifies the number of grid points for each CV direction.
+
+    When ``ndim = N``, the grid numbers for each dimension should be specified sequentially in ``ng3``.
+
+----
+* **``del``**
+    * Default: ``1.0 1.0 1.0``
+    * Example: ``del = 0.1d0 0.2d0``
+
+    Specifies the grid spacing for each CV direction.
+
+    For the $i$-th CV, if the grid spacing is denoted by $\Delta_i$, the distance between adjacent grid points is $\Delta_i$.
+
+----
+* **``origin``**
+    * Default: ``0.0 0.0 0.0``
+    * Example: ``origin = 0.0d0 1.0d0``
+
+    Specifies the grid origin for each CV direction.
+
+    For the $k$-th CV, let the origin be $x_k^{(0)}$ and the grid spacing be $\Delta_k$. Then the position of the $i$-th grid point is given by
+
+    \begin{align}
+    x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
+    \end{align}
+
+----
+* **``temperature``**
+    * Default: ``300.0d0``
+    * Example: ``temperature = 298.0d0``
+
+    Specifies the temperature $T$ [K] used for the PMF calculation.
+
+----
+* **``use_radial``**
+    * Default: ``.false.``
+    * Example: ``use_radial = .true.``
+
+    Specifies whether the CV contains a radial component.
+
+    If ``.true.``, the distribution function for the CV component $x_k$ specified by ``radcol`` is calculated using the bin volume
+
+    \begin{align}
+    4\pi x_{k}^{2} \Delta_{k}^{2}
+    \end{align}
+
+----
+* **``radcol``**
+    * Default: N/A
+    * Example: ``radcol = 1``
+
+    Specifies which CV corresponds to the radial component.
+
+    This parameter is effective only when ``use_radial = .true.``.
+
+----
+* **``box_system``**
+    * Default: ``0.0 0.0 0.0``
+    * Example: ``box_system = 50.0d0 50.0d0 50.0d0``
+
+    Specifies the simulation box size.
+
+    This parameter is used only when ``ndim = 3``.
+    The box lengths in each direction should be specified in order.
+
+----
+* **``use_spline``**
+    * Default: ``.false.``
+    * Example: ``use_spline = .true.``
+
+    Specifies whether spline interpolation is performed after the PMF calculation.
+
+    If ``.true.``, spline interpolation is applied; otherwise, the original grid is used.
+
+----
+* **``spline_resolution``**
+    * Default: ``4``
+    * Example: ``spline_resolution = 8``
+
+    Specifies the resolution used for spline interpolation.
+
+    Larger values generate a finer interpolation grid.
+
+----
+* **``gen_script_mpl2d``**
+    * Default: ``.false.``
+    * Example: ``gen_script_mpl2d = .true.``
+
+    Specifies whether a Python script for visualizing a two-dimensional PMF is generated.
+
+    Currently, this option is supported only when ``ndim = 2``.
+
+----
+* **``skip_calc``**
+    * Default: ``.false.``
+    * Example: ``skip_calc = .true.``
+
+    Specifies whether the PMF calculation is skipped.
+
+    If ``.true.``, the PMF calculation is omitted and only auxiliary files are generated.
+    If ``.false.``, the PMF calculation is performed normally.
+
+    This option is convenient when recreating the Matplotlib (Python) script after modifying its settings.
+
+### &matplotlib_param
+
+Options for generating a Python (Matplotlib) script for visualizing a two-dimensional PMF.
+
+These options are enabled when ``gen_script_mpl2d = .true.`` is specified in ``&option_param``.
+
+* **``fpdf``**
+    * Default: None
+    * Example: ``fpdf = "pmf.pdf"``
+
+    Specifies the name of the output PDF file.
+
+----
+* **``labels``**
+    * Default: None
+    * Example: ``labels = "$x$" "$y$" "PMF"``
+
+    Specifies the axis labels displayed in the plot.
+
+    When ``ndim = 2``,
+
+    ```
+    labels = "xlabel" "ylabel" "zlabel"
+    ```
+
+    specifies the labels for the $x$-axis, the $y$-axis, and the color bar corresponding to the PMF values, respectively.
+
+    LaTeX-style mathematical expressions can be used.
+
+----
+* **``ranges``**
+    * Default: None
+    * Example: ``ranges = -10.0 10.0 -5.0 5.0 0.0 10.0``
+
+    Specifies the plotting range.
+
+    When ``ndim = 2``,
+
+    ```
+    ranges = xmin xmax ymin ymax zmin zmax
+    ```
+
+    should be specified in this order.
+
+    Here,
+
+    * ``xmin``, ``xmax`` : Display range of the $x$-axis
+    * ``ymin``, ``ymax`` : Display range of the $y$-axis
+    * ``zmin``, ``zmax`` : Display range of the PMF values
+
+----
+* **``tics``**
+    * Default: None
+    * Example: ``tics = 1.0 1.0 0.5``
+
+    Specifies the intervals of the axis ticks.
+
+    When ``ndim = 2``,
+
+    ```
+    tics = xtic ytic ztic
+    ```
+
+    should be specified in this order.
+
+    Here,
+
+    * ``xtic`` : Tick interval of the $x$-axis
+    * ``ytic`` : Tick interval of the $y$-axis
+    * ``ztic`` : Tick interval of the color bar corresponding to the PMF values
+
+----
+* **``scales``**
+    * Default: ``1.0 1.0 1.0``
+    * Example: ``scales = 10.0 10.0 0.239006``
+
+    Specifies the unit conversion factors for the axes.
+
+    When ``ndim = 2``,
+
+    ```
+    scales = xscale yscale zscale
+    ```
+
+    should be specified in this order.
+
+    The loaded data values are multiplied by these factors when they are plotted.
+
+    For example,
+
+    ```
+    scales = 10.0 10.0 1.0
+    ```
+
+    displays the values of the $x$- and $y$-axes multiplied by 10.
+
+### Format of Output Files
+
+* ``*_original.gnplt``
+
+    The PMF ($W(\bm{\zeta})$) is written to this file.
+
+    * 1st column: Coordinate
+    * 2nd column: PMF
+
+* ``*_g_original.gnplt``
+
+    The distribution function ($\rho\left(\bm{\zeta}\right)/\rho_{0}\left(\bm{\zeta}_{0}\right)$) is written to this file.
+
+    * 1st column: Coordinate
+    * 2nd column: Distribution function
+
+When ``use_spline = .true.``, the spline-interpolated PMF and distribution function are written to ``*_spline.gnplt`` and ``*_g_spline.gnplt``, respectively.
+
+### Example
+
+The following example calculates the PMF ($W\left(x\right)$) with a grid spacing of $\Delta x = 0.1$ over the range $5 \leq x \leq 10$ from a time-series data file ``inp.ts`` containing a single data column.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ fcv     = "inp.ts"
+/
+&output_param
+ fhead = "out"
+/
+&option_param
+  ndim        = 1
+  xyzcol      = 1
+  ng3         = 50
+  del         = 0.1
+  origin      = 5.0
+  temperature = 300.0d0
+  use_spline  = .false.
+  use_radial  = .false.
+/
+EOF
+
+fanatra potential_of_mean_force run.inp
+
+```

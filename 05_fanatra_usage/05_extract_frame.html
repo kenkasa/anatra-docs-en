@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frame Extraction (extract_frame, extf) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Frame Extraction (extract_frame, extf)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/05_fanatra_usage/05_extract_frame.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="frame-extraction-extract-frame-extf">
+<h1>Frame Extraction (extract_frame, extf)<a class="headerlink" href="#frame-extraction-extract-frame-extf" title="Link to this heading"></a></h1>
+<p>In this analysis mode, snapshots (frames) that satisfy specified CV ranges are extracted.</p>
+<section id="parameter-list">
+<h2>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_traj</span></code></p></td>
+<td class="text-left"><p>Filename containing the list of trajectory files</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>Filename containing the list of CV files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ftraj</span></code></p></td>
+<td class="text-left"><p>Trajectory filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>CV filename</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dt</span></code></p></td>
+<td class="text-left"><p>Time interval of the trajectory</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ndim</span></code></p></td>
+<td class="text-left"><p>Number of CV dimensions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">extract_range</span></code></p></td>
+<td class="text-left"><p>CV range for frame extraction</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_traj| & Filename containing the list of trajectory files \\
+                     & \verb|flist_cv|   & Filename containing the list of CV files \\
+                     & \verb|ftraj|      & Trajectory filename \\
+                     & \verb|fcv|        & CV filename \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|dt|            & Time interval of the trajectory \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|extract_range| & CV range for frame extraction \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="option-param">
+<h2><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#option-param" title="Link to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ndim</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the number of dimensions of the time-series CV data.</p>
+<p>The ranges specified in <code class="docutils literal notranslate"><span class="pre">extract_range</span></code> must correspond to this dimensionality.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">extract_range</span></code></strong></p>
+<ul>
+<li><p>Default: None</p></li>
+<li><p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extract_range</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span><span class="n">d0</span> <span class="mf">5.0</span><span class="n">d0</span>
+                 <span class="mf">1.0</span><span class="n">d0</span> <span class="mf">0.0</span><span class="n">d0</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Specifies the CV region from which frames are extracted.</p>
+<p>For each CV, a pair of lower and upper bounds should be provided.</p>
+<p>In the above example, frames satisfying</p>
+<ul class="simple">
+<li><p>CV1: <span class="math notranslate nohighlight">\(-5.0 \leq \mathrm{CV}_1 \leq 5.0\)</span></p></li>
+<li><p>CV2: <span class="math notranslate nohighlight">\(0.0 \leq \mathrm{CV}_2 \leq 1.0\)</span></p></li>
+</ul>
+<p>are extracted.</p>
+<p>By specifying <code class="docutils literal notranslate"><span class="pre">ndim</span></code> ranges, multidimensional extraction conditions can be defined.</p>
+</li>
+</ul>
+</section>
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<p>The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>The following example extracts frames satisfying the condition <span class="math notranslate nohighlight">\(5 \leq \zeta \leq 10\)</span> from an input trajectory, using a time-series CV data file <code class="docutils literal notranslate"><span class="pre">inp.ts</span></code> containing a single CV.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> ftraj    = &quot;input.dcd&quot;</span>
+<span class="s"> fcv      = &quot;inp.ts&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead         = &quot;out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> ndim          =  1</span>
+<span class="s"> extract_range =  5.0  10.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>extract_frame<span class="w"> </span>run.inp
+</pre></div>
+</div>
+<p>After execution, the extracted trajectory is written to <code class="docutils literal notranslate"><span class="pre">out.dcd</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

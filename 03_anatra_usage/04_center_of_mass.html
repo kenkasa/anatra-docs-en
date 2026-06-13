@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Center of Mass Analysis and Mean Square Displacement (center_of_mass, com) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/04_center_of_mass.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="center-of-mass-analysis-and-mean-square-displacement-center-of-mass-com">
+<h1>Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)<a class="headerlink" href="#center-of-mass-analysis-and-mean-square-displacement-center-of-mass-com" title="Link to this heading"></a></h1>
+<p>The program <code class="docutils literal notranslate"><span class="pre">center_of_mass</span></code> (<code class="docutils literal notranslate"><span class="pre">com</span></code>) computes the temporal variation of molecular centers of mass and the mean square displacement (MSD). To support two-dimensional diffusion (lateral diffusion) within lipid membranes, it also allows for MSD calculations restricted to the <span class="math notranslate nohighlight">\(xy\)</span>-plane.</p>
+<section id="theoretical-background">
+<h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
+<section id="mean-square-displacement">
+<h3>Mean Square Displacement<a class="headerlink" href="#mean-square-displacement" title="Link to this heading"></a></h3>
+<p>Here, we introduce the definition of the mean square displacement (MSD) <span class="math notranslate nohighlight">\(\chi(t)\)</span> and discuss its significance based on the diffusion equation.</p>
+<p>Let <span class="math notranslate nohighlight">\({\bf r}(t)\)</span> denote the position of a molecule at time <span class="math notranslate nohighlight">\(t\)</span>. The MSD is defined as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1c744397-ee3a-4997-8eaa-ebc4676547d4">
+<span class="eqno">()<a class="headerlink" href="#equation-1c744397-ee3a-4997-8eaa-ebc4676547d4" title="Permalink to this equation"></a></span>\[\begin{align}
+\chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
+\end{align}\]</div>
+<p>That is, <span class="math notranslate nohighlight">\(\chi(t)\)</span> represents the time-averaged squared displacement of a molecule after a time interval <span class="math notranslate nohighlight">\(t\)</span>. To understand how MSD is described by the diffusion equation, let us consider a probability density <span class="math notranslate nohighlight">\(\rho({\bf r},t)\)</span> representing the location of a molecule, and a diffusion coefficient <span class="math notranslate nohighlight">\(D\)</span>. The diffusion equation is written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c6540eeb-8ab9-42ae-af89-38ff0f1bb773">
+<span class="eqno">()<a class="headerlink" href="#equation-c6540eeb-8ab9-42ae-af89-38ff0f1bb773" title="Permalink to this equation"></a></span>\[\begin{align}
+\dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
+\end{align}\]</div>
+<p>Assuming that the molecule was initially located at <span class="math notranslate nohighlight">\({\bf 0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, the initial condition is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8e8874e2-92aa-45f7-928a-00ec4251b356">
+<span class="eqno">()<a class="headerlink" href="#equation-8e8874e2-92aa-45f7-928a-00ec4251b356" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
+\end{align}\]</div>
+<p>Solving the diffusion equation under this condition yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-67dd57ba-7d4b-4e8d-bd6b-dd41e66ebea7">
+<span class="eqno">()<a class="headerlink" href="#equation-67dd57ba-7d4b-4e8d-bd6b-dd41e66ebea7" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
+\end{align}\]</div>
+<p>Using this solution, the MSD can be expressed as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-779fef5b-5e0e-4a10-a94f-328beeaba085">
+<span class="eqno">()<a class="headerlink" href="#equation-779fef5b-5e0e-4a10-a94f-328beeaba085" title="Permalink to this equation"></a></span>\[\begin{align}
+\chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
+                   = 6Dt,
+\end{align}\]</div>
+<p>indicating that MSD increases linearly with time, with a slope of <span class="math notranslate nohighlight">\(6D\)</span>. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f3fd913a-eccf-42b0-995b-e31f70ed522e">
+<span class="eqno">()<a class="headerlink" href="#equation-f3fd913a-eccf-42b0-995b-e31f70ed522e" title="Permalink to this equation"></a></span>\[\begin{align}
+D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
+\end{align}\]</div>
+<p>This expression is known as Einstein<span class="math notranslate nohighlight">\(^\prime\)</span>s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.</p>
+</section>
+</section>
+<section id="list-of-options">
+<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Description</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fhead</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel0</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-outmsd</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-unwarp</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-msddim</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-dt</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-t_sparse</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-t_range</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-prep_only</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-outmsd &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-outmsd</span> <span class="pre">true</span></code></p></li>
+<li><p>Note: If set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, both <code class="docutils literal notranslate"><span class="pre">-msddim</span></code> and <code class="docutils literal notranslate"><span class="pre">-msdrange</span></code> must also be specified.</p></li>
+</ul>
+<p>Specifies whether or not to compute the MSD.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-unwrap &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-unwrap</span> <span class="pre">false</span></code></p></li>
+</ul>
+<p>Specifies whether to unwrap the trajectory. Since wrapped trajectories cannot yield accurate MSD values, it is necessary to set this option to <code class="docutils literal notranslate"><span class="pre">true</span></code>. Note that trajectories segmented by periodic boundary conditions (PBC) — as in GROMACS — are not supported by this option. In such cases, preprocessing with GROMACS <code class="docutils literal notranslate"><span class="pre">trjconv</span></code> is required.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-msddim &lt;2 or 3&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">3</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-msddim</span> <span class="pre">3</span></code></p></li>
+</ul>
+<p>Specifies the dimensionality of the MSD calculation. Use <code class="docutils literal notranslate"><span class="pre">3</span></code> for general diffusion analysis and <code class="docutils literal notranslate"><span class="pre">2</span></code> for lateral diffusion within lipid bilayers.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-dt <time interval></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-dt</span> <span class="pre">0.1</span></code></p></li>
+</ul>
+<p>Specifies the time interval between snapshots.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-t_range <MSD calculation time scale></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">10</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-t_range</span> <span class="pre">10</span></code></p></li>
+</ul>
+<p>Specifies the time scale over which MSD is computed.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-t_sparse <output time interval for MSD></strong></p>
+<p>Specifies the time interval for MSD output. For example, with <code class="docutils literal notranslate"><span class="pre">-dt</span> <span class="pre">0.1</span></code> (<span class="math notranslate nohighlight">\(=\delta t\)</span>) and <code class="docutils literal notranslate"><span class="pre">-t_sparse</span> <span class="pre">1</span></code> (<span class="math notranslate nohighlight">\(=\Delta t\)</span>), the MSD (in ANGSTROM<span class="math notranslate nohighlight">\(^{2}\)</span>) is computed at time intervals:</p>
+<div class="math notranslate nohighlight">
+\[
+  \Delta T = \mathrm{nint}\left(\dfrac{\Delta t}{\delta t}\right) \delta t
+  \]</div>
+</li>
+</ul>
+</section>
+<section id="output-file-formats">
+<h2>Output File Formats<a class="headerlink" href="#output-file-formats" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.com</span></code></p>
+<p>This file contains the center-of-mass coordinates of each molecule within the selected region, in <code class="docutils literal notranslate"><span class="pre">xyz</span></code> format.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.msd</span></code></p>
+<p>This file stores the MSD values for individual molecules. Output is generated only when <code class="docutils literal notranslate"><span class="pre">-outmsd</span> <span class="pre">true</span></code> is specified.</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2: MSD of molecule 1</p></li>
+<li><p>Column 3: MSD of molecule 2<br />
+…</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.msdave</span></code></p>
+<p>This file contains the averaged MSD across all molecules. Output is generated only when <code class="docutils literal notranslate"><span class="pre">-outmsd</span> <span class="pre">true</span></code> is specified.</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2: Mean MSD</p></li>
+<li><p>Column 3: Standard deviation of MSD</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="msd-calculation-for-a-protein">
+<h3>MSD Calculation for a Protein<a class="headerlink" href="#msd-calculation-for-a-protein" title="Link to this heading"></a></h3>
+<p>The following is an example of calculating the MSD of a single protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">192</span></code>) dissolved in aqueous solution. Since the protein consists of multiple amino acid residues, it is necessary to specify the mode as “<code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">whole</span></code>”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">center_of_mass</span>        \
+  <span class="o">-</span><span class="n">stype</span>     <span class="n">parm7</span>           \
+  <span class="o">-</span><span class="n">sfile</span>     <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>  \
+  <span class="o">-</span><span class="n">tintype</span>   <span class="n">dcd</span>             \
+  <span class="o">-</span><span class="n">tin</span>       <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>         \
+  <span class="o">-</span><span class="n">fhead</span>     <span class="n">out</span>             \
+  <span class="o">-</span><span class="n">outmsd</span>    <span class="n">true</span>            \
+  <span class="o">-</span><span class="n">sel0</span>      <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span>  \
+  <span class="o">-</span><span class="n">mode</span>      <span class="n">whole</span>           \
+  <span class="o">-</span><span class="n">msddim</span>    <span class="mi">3</span>               \
+  <span class="o">-</span><span class="n">dt</span>        <span class="mf">0.01</span>            \
+  <span class="o">-</span><span class="n">t_range</span>   <span class="mi">100</span>             \
+  <span class="o">-</span><span class="n">t_sparse</span>  <span class="mf">0.1</span>
+</pre></div>
+</div>
+</section>
+<section id="msd-calculation-for-multiple-small-molecules">
+<h3>MSD Calculation for Multiple Small Molecules<a class="headerlink" href="#msd-calculation-for-multiple-small-molecules" title="Link to this heading"></a></h3>
+<p>Consider a system containing 100 ligand molecules (<code class="docutils literal notranslate"><span class="pre">resname</span> <span class="pre">LIG</span></code>) dissolved in aqueous solution. The following example computes both the MSD of each molecule and their average. In this case, molecular boundaries can be determined based on residue numbers, so the mode is set to “<code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">residue</span></code>”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">center_of_mass</span>        \
+  <span class="o">-</span><span class="n">stype</span>     <span class="n">parm7</span>           \
+  <span class="o">-</span><span class="n">sfile</span>     <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>  \
+  <span class="o">-</span><span class="n">tintype</span>   <span class="n">dcd</span>             \
+  <span class="o">-</span><span class="n">tin</span>       <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>         \
+  <span class="o">-</span><span class="n">fhead</span>     <span class="n">out</span>             \
+  <span class="o">-</span><span class="n">outmsd</span>    <span class="n">true</span>            \
+  <span class="o">-</span><span class="n">sel0</span>      <span class="n">resname</span> <span class="n">LIG</span>     \
+  <span class="o">-</span><span class="n">mode</span>      <span class="n">residue</span>         \
+  <span class="o">-</span><span class="n">msddim</span>    <span class="mi">3</span>               \
+  <span class="o">-</span><span class="n">dt</span>        <span class="mf">0.01</span>            \
+  <span class="o">-</span><span class="n">t_range</span>   <span class="mi">100</span>             \
+  <span class="o">-</span><span class="n">t_sparse</span>  <span class="mf">0.01</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

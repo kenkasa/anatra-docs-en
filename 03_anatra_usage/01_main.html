@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage of anatra &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage of anatra</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/01_main.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="usage-of-anatra">
+<h1>Usage of anatra<a class="headerlink" href="#usage-of-anatra" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p><strong>anatra</strong> is a post-processing analysis suite that combines the use of VMD and Fortran programs. This chapter provides a detailed guide on how to use <strong>anatra</strong>.
+As described previously, the standard workflow in <strong>anatra</strong>-based analysis proceeds in two stages. First, atom or residue selection and preprocessing are carried out using VMD, resulting in intermediate files. These files are subsequently analyzed via Fortran executables.</p>
+<!---
+A related utility, **anatra_wo_vmd**, is available for executing only the analysis phase after the VMD preprocessing has been completed using **anatra**. Furthermore, **fanatra** provides analysis functionality independent of VMD. These are described in subsequent chapters.
+--->
+<p>A list of available analysis modes can be obtained by executing the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ anatra -h
+Available analysis in ANATRA
+trjconv             (trj)   : Convert trajectory
+distance            (dis)   : Distance Analysis
+center_of_mass      (com)   : Center-of-Mass Analysis
+radial_distr        (rdf)   : Radial-Distribution Analysis
+spatial_distr       (sdf)   : Spatial-Distribution Analysis
+rmsd                (rmsd)  : Root-Mean-Square-Deviation Analysis
+interaction_energy  (ene)   : Interaction Energy Analysis
+lipid_order         (scd)   : Lipid S_CD order-parameter Analysis
+area_per_lipid      (apl)   : Area Per Lipid Analysis
+z_profile           (zprof) : Z-profile Analysis
+z_orient            (zori)  : Orientation Analysis along z
+rotation            (rot)   : Rotation Analysis
+cluster_size        (cls)   : Cluster-size Analysis
+free_volume         (fvol)  : Free-Volume Analysis
+species_info        (spec)  : Get Species information
+gauqm_prepper       (gau)   : Gaussian QM input prepper
+</pre></div>
+</div>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">trjconv</span></code> analysis mode may be invoked as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ anatra trjconv -option1 ...
+</pre></div>
+</div>
+<p>Abbreviated mode names, as shown in parentheses (e.g., <code class="docutils literal notranslate"><span class="pre">trj</span></code> for <code class="docutils literal notranslate"><span class="pre">trjconv</span></code>), can also be used:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ anatra trj -option1 ...
+</pre></div>
+</div>
+<p>To display available options and example usage for each mode, one can execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ anatra &lt;analysis_mode&gt; -h
+</pre></div>
+</div>
+<p>This help message is generally sufficient for basic usage. However, for more advanced configurations or clarification, this manual should be consulted.<br />
+An example help output for <code class="docutils literal notranslate"><span class="pre">trjconv</span></code> is shown below (VMD-related output is omitted for brevity):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ anatra trjconv -h
+============================================================
+
+                    Trajectory Convert
+
+============================================================
+Usage:
+anatra trjconv                                                            \
+  -stype      &lt;structure file type&gt;                                       \
+  -sfile      &lt;structure file name&gt;                                       \
+  -tintype    &lt;input trajectory file type&gt;                                \
+  -tin        &lt;input trajectory file name&gt;                                \
+  -totype     &lt;output trajectory file type&gt;                               \
+  -to         &lt;output trajectory file name&gt;                               \
+  -beg        &lt;first frame to be read&gt; (default: 1)                       \
+  -end        &lt;last frame to be read&gt;                                     \
+              (default: 0, corresponding to the final frame)              \
+  -selX       &lt;X-th VMD selection&gt; (X = 0,1,2...)                         \
+  -fit        &lt;whether to apply fitting (true or false)&gt;                  \
+  -centering  &lt;whether to apply centering (true or false)&gt;                \
+              (default: false)                                            \
+  -wrap       &lt;whether to apply wrapping (true or false)&gt;                 \
+              (default: false)                                            \
+  -wrapcenter &lt;wrapping center: origin or com (default: fragment)&gt;        \
+  -wrapcomp   &lt;wrapping unit: residue, segid, chain, fragment, or nomp&gt;   \
+              (default: fragment)                                         \
+  -refpdb     &lt;reference PDB file name&gt;                                   \
+              (required if fit = true)                                    \
+  -outselid   &lt;selection ID for output molecules&gt;                         \
+  -fitselid   &lt;selection ID for fitting or centering&gt;                     \
+  -refselid   &lt;selection ID for reference&gt;
+
+Remark:
+o If both fit = true and wrap = true are specified, wrapcomp is automatically set to &#39;com&#39;
+
+Example (fitting):
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      str.prmtop                 \
+  -tintype    dcd                        \
+  -tin        inp.dcd                    \
+  -totype     dcd                        \
+  -to         out.dcd                    \
+  -beg        1                          \
+  -end        150                        \
+  -sel0       not water                  \
+  -sel1       resid 1 to 275 and name CA \
+  -sel2       resid 1 to 275 and name CA \
+  -fit        true                       \
+  -centering  false                      \
+  -wrap       true                       \
+  -wrapcenter origin                     \
+  -wrapcomp   fragment                   \
+  -refpdb     ref.pdb                    \
+  -outselid   0                          \
+  -fitselid   1                          \
+  -refselid   2
+</pre></div>
+</div>
+<p>As illustrated above, <strong>anatra</strong> accepts a considerable number of options, making it well-suited for use within <code class="docutils literal notranslate"><span class="pre">bash</span></code> scripts. An example script is provided below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">trjconv</span>            \
+  <span class="o">-</span><span class="n">stype</span>    <span class="n">parm7</span>         \
+  <span class="o">-</span><span class="n">sfile</span>    <span class="nb">str</span><span class="o">.</span><span class="n">prmtop</span>    \
+  <span class="o">-</span><span class="n">tintype</span>  <span class="n">dcd</span>           \
+  <span class="o">-</span><span class="n">tin</span>      <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>       \
+  <span class="o">-</span><span class="n">totype</span>   <span class="n">dcd</span>           \
+  <span class="o">-</span><span class="n">to</span>       <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>       \
+  <span class="o">-</span><span class="n">sel0</span>     <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">20</span> \
+  <span class="o">-</span><span class="n">outselid</span> <span class="mi">0</span> 
+</pre></div>
+</div>
+</section>
+<section id="common-options">
+<h2>Common Options<a class="headerlink" href="#common-options" title="Link to this heading"></a></h2>
+<p>While <strong>anatra</strong> offers various analysis modes, many of them share a common set of command-line options. A summary of these shared options is presented below, followed by detailed descriptions of each.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Option</strong></p></th>
+<th class="head"><p><strong>Function</strong></p></th>
+<th class="head"><p><strong>Example</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td><p>Specifies the structure file type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-stype</span> <span class="pre">parm7</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td><p>Specifies the structure file name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-sfile</span> <span class="pre">A.prmtop</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td><p>Specifies the input trajectory file type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-tintype</span> <span class="pre">dcd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td><p>Specifies the input trajectory file name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-tin</span> <span class="pre">in.dcd</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code></p></td>
+<td><p>Specifies a file listing multiple trajectory files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span> <span class="pre">list.txt</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-totype</span></code></p></td>
+<td><p>Specifies the output trajectory file type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-totype</span> <span class="pre">dcd</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-to</span></code></p></td>
+<td><p>Specifies the output trajectory file name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-to</span> <span class="pre">out.dcd</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-sel</span></code><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td><p>Specifies a selection using VMD syntax</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-sel0</span> <span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">20</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">or</span> <span class="pre">-mode</span></code><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td><p>Specifies how to group the selected atoms</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">residue</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">-fhead</span></code></p></td>
+<td><p>Header for output file names</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-fhead</span> <span class="pre">out</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">-prep_only</span></code></p></td>
+<td><p>If true, only preprocessing is performed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-prep_only</span> <span class="pre">true</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<hr class="docutils" />
+<ul>
+<li><p><strong>-stype &lt;structure file type&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-stype</span> <span class="pre">parm7</span></code></p></li>
+</ul>
+<p>Specifies the structure file type. Structure files contain information such as atom types and possibly bonding details. Since many trajectory formats (e.g., <code class="docutils literal notranslate"><span class="pre">dcd</span></code> or <code class="docutils literal notranslate"><span class="pre">xtc</span></code>) store only atomic coordinates, a structure file is required for analysis. Most of the structure file types supported by VMD can be specified. Representative examples include:</p>
+<ul class="simple">
+<li><p><strong>pdb</strong>: PDB file</p></li>
+<li><p><strong>gro</strong>: GRO file</p></li>
+<li><p><strong>psf</strong>: CHARMM PSF file</p></li>
+<li><p><strong>parm7</strong>: AMBER parameter file (usually with extension <code class="docutils literal notranslate"><span class="pre">.prmtop</span></code>)</p></li>
+</ul>
+<p>Among these, <code class="docutils literal notranslate"><span class="pre">psf</span></code> (for CHARMM) and <code class="docutils literal notranslate"><span class="pre">parm7</span></code> (for AMBER) provide the most complete information and are recommended when available.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-sfile &lt;structure file&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-sfile</span> <span class="pre">complex.prmtop</span></code></p></li>
+</ul>
+<p>Specifies the name of the structure file.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-tintype &lt;input trajectory file type&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">dcd</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-tintype</span> <span class="pre">dcd</span></code></p></li>
+</ul>
+<p>Specifies the type of the input trajectory file. Currently, with the exception of <code class="docutils literal notranslate"><span class="pre">trjconv</span></code>, supported formats are limited to <code class="docutils literal notranslate"><span class="pre">dcd</span></code>, <code class="docutils literal notranslate"><span class="pre">xtc</span></code>, and <code class="docutils literal notranslate"><span class="pre">netcdf</span></code>. <code class="docutils literal notranslate"><span class="pre">trjconv</span></code> supports all trajectory formats recognized by VMD.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-tin &lt;input trajectory file&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-tin</span> <span class="pre">INP.dcd</span></code></p></li>
+</ul>
+<p>Specifies the filename of the input trajectory. When using multiple files, list them as: <code class="docutils literal notranslate"><span class="pre">-tin</span> <span class="pre">run1.dcd</span> <span class="pre">run2.dcd</span></code>. Wildcards (e.g., <code class="docutils literal notranslate"><span class="pre">run*.dcd</span></code>) are also supported. Alternatively, you can use the <code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code> option described below.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-flist_traj &lt;text file&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-flist_traj</span> <span class="pre">trajlist.txt</span></code></p></li>
+</ul>
+<p>Specifies a text file listing the input trajectories. If both <code class="docutils literal notranslate"><span class="pre">-tin</span></code> and <code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code> are given, <code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code> takes precedence. The file should contain one trajectory filename per line, as shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">traj1</span><span class="o">.</span><span class="n">dcd</span>
+<span class="n">traj2</span><span class="o">.</span><span class="n">dcd</span>
+<span class="n">traj3</span><span class="o">.</span><span class="n">dcd</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-totype &lt;output trajectory file type&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">dcd</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-totype</span> <span class="pre">dcd</span></code></p></li>
+</ul>
+<p>Specifies the type of the output trajectory file. As with input, all VMD-supported formats can be used in <code class="docutils literal notranslate"><span class="pre">trjconv</span></code>. Other modes support only <code class="docutils literal notranslate"><span class="pre">dcd</span></code> and <code class="docutils literal notranslate"><span class="pre">xtc</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-to &lt;output trajectory file&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-to</span> <span class="pre">OUT.dcd</span></code></p></li>
+</ul>
+<p>Specifies the name of the output trajectory file.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-sel<span class="math notranslate nohighlight">\(x\)</span> &lt;selection&gt;</strong> (<span class="math notranslate nohighlight">\(x=0,1,\cdots\)</span>)</p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-sel0</span> <span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">20</span> <span class="pre">and</span> <span class="pre">name</span> <span class="pre">CA</span></code></p></li>
+</ul>
+<p>Specifies an atomic selection using VMD<span class="math notranslate nohighlight">\(^{\prime}\)</span>s Atomselection syntax. The index <span class="math notranslate nohighlight">\(x\)</span> is referred to as the selection ID (<em>selid</em>).<br />
+Most analysis modes perform calculations on the region specified by each <code class="docutils literal notranslate"><span class="pre">-sel$x$</span></code>.  In some cases, you must explicitly assign which <code class="docutils literal notranslate"><span class="pre">selid</span></code> is used for which purpose (e.g., <code class="docutils literal notranslate"><span class="pre">-outselid</span></code> in <code class="docutils literal notranslate"><span class="pre">trjconv</span></code>).</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-mode<span class="math notranslate nohighlight">\(x\)</span> &lt;residue or whole or atom&gt;</strong> (<span class="math notranslate nohighlight">\(x=0,1,\cdots\)</span>)</p>
+<ul class="simple">
+<li><p>Default: Mode-dependent</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-mode0</span> <span class="pre">residue</span></code></p></li>
+</ul>
+<p>Specifies how to group the atoms selected by <code class="docutils literal notranslate"><span class="pre">-sel$x$</span></code> (see <a class="reference internal" href="combined.html#figuremode"><span class="std std-numref">Fig. 1</span></a>). Some analysis modes only require a single selection, using <code class="docutils literal notranslate"><span class="pre">-mode</span></code> to define grouping. Others require multiple selections, each needing a corresponding <code class="docutils literal notranslate"><span class="pre">-mode$x$</span></code>. See the mode-specific descriptions for details.</p>
+<ul class="simple">
+<li><p><strong>residue</strong>: Treat each residue in the selection as a separate molecule.</p></li>
+<li><p><strong>whole</strong>: Treat the entire selection as a single molecule.</p></li>
+<li><p><strong>atom</strong>: Treat each atom in the selection as an individual molecule.</p></li>
+</ul>
+<p>For example, if <code class="docutils literal notranslate"><span class="pre">-sel0</span> <span class="pre">resname</span> <span class="pre">LIG</span></code> selects multiple ligand molecules and you wish to compute each center of mass, set <code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">residue</span></code>. Conversely, to treat a full protein selected via <code class="docutils literal notranslate"><span class="pre">-sel0</span> <span class="pre">protein</span></code> as one object (e.g., for center of mass tracking), set <code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">whole</span></code>.</p>
+</li>
+</ul>
+<figure class="align-default" id="figuremode">
+<img alt="../_images/mode.eps" src="../_images/mode.eps" />
+<figcaption>
+<p><span class="caption-text">Usage of the <code class="docutils literal notranslate"><span class="pre">-mode</span></code> option. In <code class="docutils literal notranslate"><span class="pre">residue</span></code>, the selected region is split by residue. In <code class="docutils literal notranslate"><span class="pre">whole</span></code>, the entire selection is treated as one molecule. In <code class="docutils literal notranslate"><span class="pre">atom</span></code>, each atom in the selection is treated as a separate molecule.</span><a class="headerlink" href="#figuremode" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fhead <output file header></strong></p>
+<ul class="simple">
+<li><p>Default: Mode-dependent</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fhead</span> <span class="pre">out</span></code></p></li>
+</ul>
+<p>Specifies the prefix for output filenames. For example, if set to <code class="docutils literal notranslate"><span class="pre">out</span></code>, output files like <code class="docutils literal notranslate"><span class="pre">out.XXX</span></code>, <code class="docutils literal notranslate"><span class="pre">out.YYY</span></code> will be generated.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-prep_only <true or false></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-prep_only</span> <span class="pre">true</span></code></p></li>
+</ul>
+<p>Specifies whether to stop after preprocessing (e.g., generating input parameter files) without running the analysis itself.</p>
+</li>
+</ul>
+<!---
+  This is mainly used in conjunction with the **anatra_wo_vmd** command for parallel execution.  
+  For example, setting ``-prep_only true`` results in the generation of files such as ``*.molinfo``.
+--->
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

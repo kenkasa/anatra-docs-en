@@ -1,0 +1,198 @@
+# Installation of ANATRA
+
+This chapter describes how to install ANATRA.
+
+## Requirements
+
+* VMD (> 1.7.3) 
+* Intel compiler (Intel OneAPI) or GCC (> 8.5.0)
+* bash
+
+ANATRA assumes that `bash` is used as the login shell.[^footnote_bash]
+
+[^footnote_bash]: As described in the next section, users of other shells such as `zsh` can also use ANATRA by adding the appropriate settings to their own rc files (e.g., `~/.zshrc`).
+
+VMD can be downloaded free of charge from
+
+```
+https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD
+```
+
+although account registration is required.[^footnote_vmd]
+
+[^footnote_vmd]: A brief installation guide for VMD is given here. After extracting the downloaded `vmd-XXX.tar.gz` archive, move to the generated `vmd-XXX` directory. Open the `configure` file with a text editor and set `install_bin_dir=` near the beginning of the file to the directory where you want to install VMD. On Linux, run `./configure LINUXAMD64`, move to the `src` directory, and execute `make install`. The `vmd` executable will be installed into the directory specified by `install_bin_dir=`. Add this directory to your `PATH` to complete the installation.
+
+## Installing from source
+
+The latest ANATRA source code is managed on GitHub.
+
+```
+https://github.com/kenkasa/anatra
+```
+
+First, clone the repository. Assuming that ANATRA will be installed under `/home/USER/software`:
+
+```sh
+$ cd /home/USER/software
+$ git clone https://github.com/kenkasa/anatra.git
+$ ls
+anatra
+
+$ cd anatra
+$ ls
+README.md
+install.sh
+bin/
+tcl/
+f90/
+docs/
+utility/
+```
+
+Installation is started by executing `install.sh`. If you have installed ANATRA previously, check `~/.bashrc` or `~/.zshrc` and remove the following three lines before installation:
+
+```sh
+export ANATRA_PATH=...
+export PATH=$ANATRA_PATH/bin:$PATH
+export LD_LIBRARY_PATH=$ANATRA_PATH/f90/lib/external/netcdf/netcdf/lib:$LD_LIBRARY_PATH
+```
+
+If `$ANATRA_PATH` already points to the same ANATRA directory that you are installing, these lines may be left unchanged. If you are unsure, simply remove them.
+
+<!---
+When using a login shell other than bash or zsh, add the corresponding settings to your own rc file. For example, for `zsh`:
+
+```sh
+export ANATRA_PATH=/path/to/vmd_scripts/anatra
+export PATH=$ANATRA_PATH/bin:$PATH
+export LD_LIBRARY_PATH=$ANATRA_PATH/f90/lib/external/netcdf/netcdf/lib
+```
+--->
+
+The available command-line options for ``install.sh`` are listed below.
+
+**Option**               | **Value**         | **Description**
+:------------------------|:-----------------:|:--------------------------------------------------------------------
+`--compiler=<type>`      | `gcc`, `intel`   | Specifies the compiler to be used.
+`--install-hdf5`         | ---              | Installs the HDF5 library.
+`--skip-install-lib`     | ---              | Skips the installation of external libraries.
+`--with-openblas`        | ---              | Uses OpenBLAS instead of Intel MKL.<br>The environment variable `OPENBLAS_ROOT` must be defined in advance to specify the OpenBLAS installation directory.
+`--with-ffte`            | ---              | Uses the FFTE library instead of the FFT implementation provided by Intel MKL.
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{4cm}p{3cm}p{8cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Option} & \textbf{Value} & \textbf{Description}\\
+\hline
+\verb|--compiler=<type>|
+& \verb|gcc|, \verb|intel| & Specifies the compiler to be used.\\
+\hline
+\verb|--install-hdf5| & --- & Installs the HDF5 library.\\
+\hline
+\verb|--skip-install-lib| & --- & Skips the installation of external libraries.\\
+\hline
+\verb|--with-openblas| & --- & Uses OpenBLAS instead of Intel MKL.
+The environment variable \verb|OPENBLAS_ROOT| must be defined in advance to specify the OpenBLAS installation directory.\\
+\hline
+\verb|--with-ffte| & --- & Uses the FFTE library instead of the FFT implementation provided by Intel MKL.\\
+\hline
+\end{tabular}
+}
+```
+--->
+
+The compiler can be specified with a command-line option:
+
+```sh
+$ ./install.sh --compiler=<gcc or intel>
+```
+
+The default is `intel`. If the Intel compiler is available, its use is recommended. 
+
+For Intel OneAPI:
+
+```sh
+$ ./install.sh --compiler=intel
+```
+
+Because ANATRA supports NetCDF trajectories, the HDF5 library is required. Many Linux distributions already provide HDF5. If HDF5 is not installed or you are unsure, add the `--install-hdf5` option to build the bundled HDF5 package:
+
+```sh
+$ ./install.sh --compiler=<gcc or intel> --install-hdf5
+```
+
+During installation, build logs are displayed. If the following message appears near the end of the build process, all Fortran analysis programs have been compiled successfully:
+
+```text
+Installation of ANATRA fortran programs have been
+succesfully finished!!
+```
+
+The installation is complete if the `ANATRA_PATH` environment variable is defined and the `anatra` command is available in your `PATH`:
+
+```sh
+$ echo $ANATRA_PATH
+/home/USER/software/anatra
+
+$ which anatra
+/home/USER/software/anatra/bin/anatra
+```
+
+When rebuilding ANATRA after modifying the Fortran source code, executing ``install.sh`` with the standard options rebuilds all external libraries from scratch, which can be time-consuming.
+To avoid this, the ``--skip-install-lib`` option can be added to skip rebuilding the external libraries.
+However, if the compiler has been changed since the previous build, all external libraries must also be rebuilt.
+
+Depending on the environment of the machine where ANATRA is installed, the installation may fail because some required libraries are missing.
+If this happens, please refer to the instructions below.
+
+### Building the HDF5 library
+
+ANATRA requires the HDF5 library because it supports NetCDF-format trajectories.
+
+Many Linux distributions provide HDF5 as a pre-installed system library.
+If HDF5 is not installed, or if you are unsure whether it is available, you can install the bundled HDF5 library by adding the ``--install-hdf5`` option:
+
+```bash
+$ ./install.sh --compiler=<gcc or intel> --install-hdf5
+```
+
+### Using OpenBLAS
+
+By default, ``install.sh`` compiles ANATRA using the Intel Math Kernel Library (MKL) included in Intel OneAPI.
+However, if Intel OneAPI is not installed, OpenBLAS can be used as an alternative.
+
+OpenBLAS can be downloaded from GitHub:
+
+```bash
+$ git clone https://github.com/OpenMathLib/OpenBLAS.git
+```
+
+This command creates a directory named ``OpenBLAS`` containing the source code.
+Enter this directory and execute ``make`` followed by ``make install``.
+
+The following example installs the library under the ``OpenBLAS`` directory:
+
+```bash
+$ cd OpenBLAS
+$ make
+$ make PREFIX=/path/to/OpenBLAS install
+```
+
+After installation, define the global environment variable ``OPENBLAS_ROOT`` in ``~/.bashrc`` or ``~/.zshrc`` as follows:
+
+```bash
+export OPENBLAS_ROOT=/path/to/OpenBLAS
+```
+
+Then, run ANATRA's ``install.sh`` script with the ``--with-openblas`` option:
+
+```bash
+$ ./install.sh --compiler=gcc --with-openblas
+```
+
+When OpenBLAS is selected as the mathematical library, ANATRA automatically uses ``ffte`` as the Fast Fourier Transform (FFT) library.

@@ -1,0 +1,161 @@
+## Average Function (average_function, avef)
+
+In this analysis mode, one-dimensional functions stored in multiple input files are averaged.
+For example, let $f_{i}\left(x\right)$ be the function stored in the $i$-th file and let $N$ be the total number of files.
+The averaged function $f_{\mathrm{ave}}\left(x\right)$ is given by
+
+\begin{align}
+f_{\mathrm{ave}}\left(x\right) = \dfrac{1}{N}\sum_{i=1}^{N}f_{i}\left(x\right),
+\end{align}
+
+### Parameter List
+
+**Namelist**      | **Parameter**     | **Description**
+:-----------------|:------------------|:-------------------------------------------------------------
+`&input_param`    | `flist_cv`        | File containing a list of function data files
+`&output_param`   | `fhead`           | Output file header
+`&option_param`   | `use_bootstrap`   | Enable bootstrap analysis
+`&option_param`   | `xsta`            | Starting position of the grid
+`&option_param`   | `dx`              | Grid spacing
+`&bootopt_param`  | `duplicate`       | Whether duplicate sampling is allowed
+`&bootopt_param`  | `iseed`           | Random seed
+`&bootopt_param`  | `nsample`         | Number of samples drawn in each trial
+`&bootopt_param`  | `ntrial`          | Number of bootstrap trials
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|      & File containing a list of function data files \\
+\hline
+\verb|&output_param| & \verb|fhead|         & Output file header \\
+\hline
+\verb|&option_param| & \verb|use_bootstrap| & Enable bootstrap analysis \\
+                     & \verb|xsta|          & Starting position of the grid \\
+                     & \verb|dx|            & Grid spacing \\
+\hline
+\verb|&bootopt_param| & \verb|duplicate|    & Whether duplicate sampling is allowed \\
+                      & \verb|iseed|        & Random seed \\
+                      & \verb|nsample|      & Number of samples drawn in each trial \\
+                      & \verb|ntrial|       & Number of bootstrap trials \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``use_bootstrap``**
+    * Default: ``.false.``
+    * Example: ``use_bootstrap = .true.``
+
+    Specifies whether to perform error estimation using the bootstrap method.
+
+    If ``.true.``, bootstrap analysis is carried out according to the settings in ``&bootopt_param``.
+
+----
+* **``xsta``**
+    * Default: ``0.0d0``
+    * Example: ``xsta = 0.0d0``
+
+    Specifies the starting position of the grid.
+
+    If the position of the $i$-th grid point is denoted by $x_i$,
+
+    \begin{align}
+    x_i = x_0 + (i-1)\Delta x
+    \end{align} 
+
+    where $x_0$ is the grid origin.
+
+----
+* **``dx``**
+    * Default: ``0.1d0``
+    * Example: ``dx = 0.1d0``
+
+    Specifies the grid spacing of the function data.
+
+### ``&bootopt_param``
+
+This section defines the settings for bootstrap error analysis.
+
+It is effective only when ``use_bootstrap = .true.``.
+
+* **``iseed``**
+    * Default: Automatically generated
+    * Example: ``iseed = 3141592``
+
+    Specifies the random seed used for bootstrap analysis.
+
+    If ``iseed <= 0``, the program automatically generates a seed.
+
+----
+* **``nsample``**
+    * Default: None
+    * Example: ``nsample = 1000``
+
+    Specifies the number of samples drawn in each bootstrap trial.
+
+----
+* **``duplicate``**
+    * Default: ``.true.``
+    * Example: ``duplicate = .false.``
+
+    Specifies whether duplicate sampling is allowed during bootstrap sampling.
+
+----
+* **``ntrial``**
+    * Default: None
+    * Example: ``ntrial = 100``
+
+    Specifies the number of bootstrap trials.
+
+    Increasing the number of trials improves the accuracy of the estimated statistical error, but also increases the computational cost.
+
+### Output File Format
+
+* ``*.ave``
+    * Column 1: $x$ coordinate
+    * Column 2: Function value
+    * Column 3: Standard error (when ``use_bootstrap = .true.``)
+
+### Example
+
+Suppose that one-dimensional functions $f\left(x\right)$ (grid origin ``0``, grid spacing ``0.1``) are stored in multiple files, and the list of these files is stored in ``list``.
+The following example calculates the average function and its standard error using the bootstrap method.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ flist_cv = "list"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ use_bootstrap =  .false.
+ xsta          =  0.0d0  
+ dx            =  0.1d0  
+/
+
+&bootopt_param
+ duplicate     = .true.   
+ iseed         =  3141592 
+ nsample       =  1000    
+ ntrial        =  100     
+/
+EOF
+
+fanatra average_function run.inp 
+```
+
+Executing this command generates the averaged function data file ``out.ave``.

@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Root-Mean-Square Deviation (rmsd) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Root-Mean-Square Deviation (<code class="docutils literal notranslate"><span class="pre">rmsd</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/07_rmsd.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="root-mean-square-deviation-rmsd">
+<h1>Root-Mean-Square Deviation (<code class="docutils literal notranslate"><span class="pre">rmsd</span></code>)<a class="headerlink" href="#root-mean-square-deviation-rmsd" title="Link to this heading"></a></h1>
+<section id="theoretical-background">
+<h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
+<p>This section explains the definition of the root-mean-square deviation (RMSD). RMSD quantitatively evaluates the structural deviation of a molecule or a specific region of interest from a reference structure at a given time during an MD simulation. It is commonly used to assess how much a structure deviates from, for example, an experimental crystal structure during the equilibration phase, and whether or not it relaxes over time.</p>
+<p>Consider a molecule composed of <span class="math notranslate nohighlight">\(N_{\mathrm{sel}}\)</span> atoms. Let <span class="math notranslate nohighlight">\({\bf r}_i\)</span> denote the position of the <span class="math notranslate nohighlight">\(i\)</span>-th atom, <span class="math notranslate nohighlight">\({\bf r}^{\mathrm{ref}}_i\)</span> the corresponding coordinate in the reference structure, and <span class="math notranslate nohighlight">\({\bf r}_i(t)\)</span> the position at time <span class="math notranslate nohighlight">\(t\)</span>. Then, the RMSD <span class="math notranslate nohighlight">\(\chi(t)\)</span> is defined as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ce083276-415c-4358-935f-2ee14bce13f6">
+<span class="eqno">()<a class="headerlink" href="#equation-ce083276-415c-4358-935f-2ee14bce13f6" title="Permalink to this equation"></a></span>\[\begin{align}
+\chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
+\end{align}\]</div>
+</section>
+<section id="list-of-options">
+<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fout</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel0</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel1</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel2</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel3</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fit</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-refpdb</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fitselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-refselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-rmsdselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-rmsdrefselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p></p></td>
+<td class="text-center"><p></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fout &lt;output file name&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">out.rmsd</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fout</span> <span class="pre">out.rmsd</span></code></p></li>
+</ul>
+<p>Specifies the filename for the output of RMSD results.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-refpdb &lt;reference structure in PDB format&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-refpdb</span> <span class="pre">ref.pdb</span></code></p></li>
+</ul>
+<p>Specifies the reference structure used for RMSD calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fit &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fit</span> <span class="pre">true</span></code></p></li>
+<li><p>Note: If set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">-refselid</span></code> and <code class="docutils literal notranslate"><span class="pre">-fitselid</span></code> must be specified.</p></li>
+</ul>
+<p>Indicates whether to perform structural fitting prior to RMSD calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fitselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fitselid</span> <span class="pre">1</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>-refselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-refselid</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specify the selection IDs of the fitting regions in the trajectory and the reference structure, respectively. These options are required when <code class="docutils literal notranslate"><span class="pre">-fit</span> <span class="pre">true</span></code> is set.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-rmsdselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-rmsdselid</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the selid corresponding to the region used in the trajectory for RMSD calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-rmsdrefselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-rmsdrefselid</span> <span class="pre">3</span></code></p></li>
+</ul>
+<p>Specifies the selid corresponding to the region in the reference structure for RMSD calculation.</p>
+</li>
+</ul>
+</section>
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.rmsd</span></code> file</p>
+<p>This file contains the time evolution of RMSD values.</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2: RMSD</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="rmsd-from-the-crystal-structure-of-a-protein-in-solution">
+<h3>RMSD from the Crystal Structure of a Protein in Solution<a class="headerlink" href="#rmsd-from-the-crystal-structure-of-a-protein-in-solution" title="Link to this heading"></a></h3>
+<p>This example calculates the RMSD of the C<span class="math notranslate nohighlight">\(\alpha\)</span> atoms of a protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">161</span></code>) with respect to a crystal structure.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">rmsd</span>                                   \
+  <span class="o">-</span><span class="n">stype</span>        <span class="n">parm7</span>                         \
+  <span class="o">-</span><span class="n">sfile</span>        <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>                \
+  <span class="o">-</span><span class="n">tintype</span>      <span class="n">dcd</span>                           \
+  <span class="o">-</span><span class="n">tin</span>          <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                       \
+  <span class="o">-</span><span class="n">fout</span>         <span class="n">out</span><span class="o">.</span><span class="n">rmsd</span>                      \
+  <span class="o">-</span><span class="n">sel0</span>         <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">161</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span>    \
+  <span class="o">-</span><span class="n">sel1</span>         <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">161</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span>    \
+  <span class="o">-</span><span class="n">sel2</span>         <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">161</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span>    \
+  <span class="o">-</span><span class="n">sel3</span>         <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">161</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span>    \
+  <span class="o">-</span><span class="n">fit</span>          <span class="n">true</span>                          \
+  <span class="o">-</span><span class="n">refpdb</span>       <span class="n">ref</span><span class="o">.</span><span class="n">pdb</span>                       \
+  <span class="o">-</span><span class="n">fitselid</span>     <span class="mi">0</span>                             \
+  <span class="o">-</span><span class="n">refselid</span>     <span class="mi">1</span>                             \
+  <span class="o">-</span><span class="n">rmsdselid</span>    <span class="mi">2</span>                             \
+  <span class="o">-</span><span class="n">rmsdrefselid</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

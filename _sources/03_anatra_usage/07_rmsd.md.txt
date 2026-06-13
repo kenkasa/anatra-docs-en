@@ -1,0 +1,111 @@
+## Root-Mean-Square Deviation (`rmsd`)
+
+### Theoretical Background
+
+This section explains the definition of the root-mean-square deviation (RMSD). RMSD quantitatively evaluates the structural deviation of a molecule or a specific region of interest from a reference structure at a given time during an MD simulation. It is commonly used to assess how much a structure deviates from, for example, an experimental crystal structure during the equilibration phase, and whether or not it relaxes over time.
+
+Consider a molecule composed of $N_{\mathrm{sel}}$ atoms. Let ${\bf r}_i$ denote the position of the $i$-th atom, ${\bf r}^{\mathrm{ref}}_i$ the corresponding coordinate in the reference structure, and ${\bf r}_i(t)$ the position at time $t$. Then, the RMSD $\chi(t)$ is defined as:
+
+\begin{align}
+\chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
+\end{align}
+
+### List of Options
+
+**Option**         | **Remarks**        | **Option**         | **Remarks**
+:-----------------:|:------------------:|:------------------:|:------------------:
+``-stype``         | Common             | ``-sfile``         | Common
+``-tintype``       | Common             | ``-tin``           | Common
+``-fout``          | Common             | ``-sel0``          | Common
+``-sel1``          | Common             | ``-sel2``          | Common
+``-sel3``          | Common             | ``-fit``           | Mode specific
+``-refpdb``        | Common             | ``-fitselid``      | Mode specific
+``-refselid``      | Mode specific      | ``-rmsdselid``     | Mode specific
+``-rmsdrefselid``  | Mode specific      |
+
+---
+
+* **-fout \<output file name\>**
+  * Default: `out.rmsd`  
+  * Example: ``-fout out.rmsd``
+
+  Specifies the filename for the output of RMSD results.
+
+---
+
+* **-refpdb \<reference structure in PDB format\>**
+  * Default: N/A  
+  * Example: ``-refpdb ref.pdb``
+
+  Specifies the reference structure used for RMSD calculation.
+
+---
+
+* **-fit \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-fit true``  
+  * Note: If set to `true`, ``-refselid`` and ``-fitselid`` must be specified.
+
+  Indicates whether to perform structural fitting prior to RMSD calculation.
+
+---
+
+* **-fitselid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-fitselid 1``
+
+* **-refselid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-refselid 2``
+
+  Specify the selection IDs of the fitting regions in the trajectory and the reference structure, respectively. These options are required when ``-fit true`` is set.
+
+---
+
+* **-rmsdselid \<selid\>**
+  * Default: N/A  
+  * Example: ``-rmsdselid 2``
+
+  Specifies the selid corresponding to the region used in the trajectory for RMSD calculation.
+
+---
+
+* **-rmsdrefselid \<selid\>**
+  * Default: N/A  
+  * Example: ``-rmsdrefselid 3``
+
+  Specifies the selid corresponding to the region in the reference structure for RMSD calculation.
+
+### Output File Format
+
+* `*.rmsd` file
+
+  This file contains the time evolution of RMSD values.
+
+  * Column 1: Time  
+  * Column 2: RMSD
+
+### Examples of Analysis
+
+#### RMSD from the Crystal Structure of a Protein in Solution
+
+This example calculates the RMSD of the C$\alpha$ atoms of a protein (`resid 1 to 161`) with respect to a crystal structure.
+
+```
+anatra rmsd                                   \
+  -stype        parm7                         \
+  -sfile        complex.prmtop                \
+  -tintype      dcd                           \
+  -tin          INP.dcd                       \
+  -fout         out.rmsd                      \
+  -sel0         resid 1 to 161 and name CA    \
+  -sel1         resid 1 to 161 and name CA    \
+  -sel2         resid 1 to 161 and name CA    \
+  -sel3         resid 1 to 161 and name CA    \
+  -fit          true                          \
+  -refpdb       ref.pdb                       \
+  -fitselid     0                             \
+  -refselid     1                             \
+  -rmsdselid    2                             \
+  -rmsdrefselid 3
+```

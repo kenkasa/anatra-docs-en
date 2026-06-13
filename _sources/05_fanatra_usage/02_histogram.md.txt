@@ -1,0 +1,111 @@
+## Histogram (histogram, hist)
+
+In this analysis mode, the distribution function $P\left(x\right)$ is calculated from a given time-series data set $\xi\left(t\right)$.
+
+\begin{align}
+P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
+\end{align}
+
+where $N$ is the number of data points. The above expression satisfies the normalization condition
+
+\begin{align}
+\int_{-\infty}^{\infty} dx P\left(x\right) = 1
+\end{align}
+
+### List of Parameters
+
+**Namelist**     | **Parameter**    | **Remarks**
+:----------------|:-----------------|:--------------------------------------------------------
+`&input_param`   | `flist_cv`       | --
+`&input_param`   | `fcv`            | --
+`&output_param`  | `fhead`          | --
+`&output_param`  | `file_extension` | --
+`&option_param`  | `dx`             | Grid spacing of the distribution function
+`&option_param`  | `xsta`           | Starting position of the grid
+`&option_param`  | `nx`             | Number of grid points
+`&option_param`  | `ncol`           | Number of data columns per file
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Remarks}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|  & -- \\
+                     & \verb|fcv|        & -- \\
+\hline
+\verb|&output_param| & \verb|fhead|      & -- \\
+                     & \verb|file_extension| & -- \\
+\hline
+\verb|&option_param| & \verb|dx|         & Grid spacing of the distribution function \\
+                     & \verb|xsta|       & Starting position of the grid \\
+                     & \verb|nx|         & Number of grid points \\
+                     & \verb|ncol|       & Number of data columns per file \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### &option_param
+
+* **``dx``**
+    * Default: 0.1
+    * Example: ``dx = 0.1``
+
+    Specifies the grid spacing $\Delta x$ used to calculate the distribution function.
+
+----
+* **``xsta``**
+    * Default: 0.0
+    * Example: ``xsta = 0.0``
+
+    Specifies the starting position of the grid, $x_{0}$. If the position of the $i$-th grid point is denoted by $x_{i}$,
+
+    \begin{align}
+    x_{i} = x_{0} + \left(i - 1 \right) \Delta x
+    \end{align}
+
+    holds.
+
+----
+* **``ncol``**
+    * Default: 1
+    * Example: ``ncol = 10``
+
+    Specifies the number of data columns contained in each time-series data file.
+
+### Format of Output File
+
+* ``*.dat`` (the extension can be changed by ``file_extension``)
+    * 1st column: $x$ coordinate
+    * 2nd column: Distribution function $P\left(x\right)$
+
+### Example
+
+The following example calculates the distribution function $P\left(x\right)$ in the range $5 \leq x \leq 10$ from a time-series data file ``inp.ts`` containing three data columns.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+fcv = "inp.ts"
+/
+&output_param
+fhead = "run"
+/
+&option_param
+dx   = 0.1d0
+xsta = 5.0d0
+nx   = 50
+ncol = 3
+/
+EOF
+
+fanatra hist run.inp
+```

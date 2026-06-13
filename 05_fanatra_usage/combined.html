@@ -1,0 +1,2330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage of fanatra &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Integral-Equation Formalism of Population DYNamics (IEPDYN)" href="../06_iepdyn/combined.html" />
+    <link rel="prev" title="Usage of anatra" href="../03_anatra_usage/combined.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage of fanatra</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-parameters">Common Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input-param">&amp;input_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#format-of-time-series-data">Format of Time-series Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#format-of-statistical-weight-data">Format of Statistical Weight Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-param">&amp;output_param</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#histogram-histogram-hist">Histogram (histogram, hist)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-parameters">List of Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-param">&amp;option_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#format-of-output-file">Format of Output File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#potential-of-mean-force-potential-of-mean-force-pmf">Potential of Mean Force (potential_of_mean_force, pmf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#theoretical-background">Theoretical Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">List of Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">&amp;option_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matplotlib-param">&amp;matplotlib_param</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#format-of-output-files">Format of Output Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#restricted-radial-potential-of-mean-force-restricted-radial-rrpmf">Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Theoretical Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-list">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#format-of-the-input-file-time-series-data">Format of the Input File (Time-Series Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bootopt-param"><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-file-format">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#frame-extraction-extract-frame-extf">Frame Extraction (extract_frame, extf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#random-frame-extraction-random-frame-randf">Random Frame Extraction (random_frame, randf)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#moving-average-moving-average-movave">Moving Average (moving_average, movave)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#average-function-average-function-avef">Average Function (average_function, avef)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Parameter List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20"><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21"><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage of fanatra</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/05_fanatra_usage/combined.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="usage-of-fanatra">
+<h1>Usage of fanatra<a class="headerlink" href="#usage-of-fanatra" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p><strong>fanatra</strong> stands for <strong>“Fortran ANATRA”</strong> and, as its name suggests, is a collection of analysis programs written in Fortran. This chapter describes how to use <strong>fanatra</strong>. Since <strong>fanatra</strong> performs analyses without invoking VMD, it can also be used on computing systems where the use of VMD on compute nodes is difficult. A list of available analysis modes can be displayed by executing <code class="docutils literal notranslate"><span class="pre">fanatra</span> <span class="pre">-h</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ fanatra -h
+Available analysis in Fortran ANATRA
+histogram               (hist)   : Histogram Analysis
+potential_of_mean_force (pmf)    : Free-energy Profile Analysis
+restricted_radial       (rrpmf)  : Restricted Radial Analysis
+extract_frame           (extf)   : Extract Frames Using CV
+random_frame            (randf)  : Randomly Extract Frames
+state_define            (sdef)   : Define States From Time-series Data
+moving_average          (movave) : Moving Average Analysis
+average_function        (avef)   : Function Average Analysis
+bootstrap_prepper       (boot)   : Bootstrap Sample Generator
+return_prob             (rp)     : Returning Probability Analysis
+rprate                  (rprate) : Rate Constant Analysis based on RP theory
+iepdyn                  (iepdyn) : Integral-equation Formalism of Population Dynamics
+</pre></div>
+</div>
+<p>Among the above, entries such as <code class="docutils literal notranslate"><span class="pre">histogram</span></code> are analysis modes, and their abbreviated names (e.g., <code class="docutils literal notranslate"><span class="pre">hist</span></code>) can also be used.</p>
+<p>While <strong>anatra</strong> performs analyses by specifying parameters directly on the command line, <strong>fanatra</strong> uses a separate parameter file. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ fanatra hist control_file
+</pre></div>
+</div>
+<p>The parameter file must be written in the Fortran namelist format.</p>
+<p>In addition, the format and contents of the parameter file for each analysis mode can be displayed together with a brief explanation and a sample input by executing <code class="docutils literal notranslate"><span class="pre">fanatra</span> <span class="pre">&lt;analysis_mode&gt;</span> <span class="pre">-h</span></code>. Therefore, the basic usage of each analysis mode can be understood from the help message. An example for <code class="docutils literal notranslate"><span class="pre">histogram</span></code> is shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ fanatra histogram -h
+
+==================================================
+
+              Histogram Analysis
+
+==================================================
+&amp;input_param
+ fcv      = &quot;cvdata1&quot; &quot;cvdata2&quot; ! Time-series CV data
+ flist_cv = &quot;list&quot; ! CV-file list (Either fcv or flist_cv should be specified)
+/
+&amp;output_param
+ fhead = &quot;run&quot; ! header of output filename
+/
+&amp;option_param
+  dx       = 0.1d0  ! grid spacing
+  xsta     = 0.0d0  ! minimum value of the coordinate
+  nx       = 100    ! number of grids
+  ncol     = 1      ! number of data column
+/
+
+
+:::
+1st column: time (arbitrary), Nth column (N&gt;1): data
+example)
+
+0.00   0.02120
+0.01   0.03140
+0.02   0.22310
+....   .......
+</pre></div>
+</div>
+</section>
+<section id="common-parameters">
+<h2>Common Parameters<a class="headerlink" href="#common-parameters" title="Link to this heading"></a></h2>
+<p>Most parameter files in <strong>fanatra</strong> are based on the Fortran namelist format. Parameters are specified in the <strong>input_param</strong>, <strong>output_param</strong>, and <strong>option_param</strong> sections.</p>
+<p>The <strong>input_param</strong> and <strong>output_param</strong> sections, which are common to all analysis modes, are described below.</p>
+<section id="input-param">
+<h3>&amp;input_param<a class="headerlink" href="#input-param" title="Link to this heading"></a></h3>
+<p>This namelist specifies parameters related to input files.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-center"><p><strong>Function</strong></p></th>
+<th class="head text-center"><p><strong>Example</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>ftraj</p></td>
+<td class="text-center"><p>Specify input trajectory file(s) (multiple files allowed)</p></td>
+<td class="text-center"><p>ftraj      = “inp1.dcd”, “inp2.dcd”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>fcv</p></td>
+<td class="text-center"><p>Specify input time-series data file(s) (multiple files allowed)</p></td>
+<td class="text-center"><p>fcv        = “cv1.txt”, “cv2.txt”</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>fweight</p></td>
+<td class="text-center"><p>Specify statistical weight file(s) corresponding to the input time-series data (multiple files allowed)</p></td>
+<td class="text-center"><p>fweight = “weight1.txt”, “weight2.txt”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>flist_traj<span class="math notranslate nohighlight">\(^{1}\)</span></p></td>
+<td class="text-center"><p>Specify a file containing a list of input trajectory files</p></td>
+<td class="text-center"><p>flist_traj = “list.txt”</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>flist_cv<span class="math notranslate nohighlight">\(^{2}\)</span></p></td>
+<td class="text-center"><p>Specify a file containing a list of input time-series data files</p></td>
+<td class="text-center"><p>flist_cv   = “list.txt”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>flist_weight<span class="math notranslate nohighlight">\(^{3}\)</span></p></td>
+<td class="text-center"><p>Specify a file containing a list of statistical weight files</p></td>
+<td class="text-center"><p>flist_weight = “list.txt”</p></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math notranslate nohighlight">\(^{1}\)</span> If both <code class="docutils literal notranslate"><span class="pre">ftraj</span></code> and <code class="docutils literal notranslate"><span class="pre">flist_traj</span></code> are specified, the contents of <code class="docutils literal notranslate"><span class="pre">flist_traj</span></code> take precedence.<br />
+<span class="math notranslate nohighlight">\(^{2}\)</span> If both <code class="docutils literal notranslate"><span class="pre">fcv</span></code> and <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> are specified, the contents of <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> take precedence.<br />
+<span class="math notranslate nohighlight">\(^{3}\)</span> If both <code class="docutils literal notranslate"><span class="pre">fweight</span></code> and <code class="docutils literal notranslate"><span class="pre">flist_weight</span></code> are specified, the contents of <code class="docutils literal notranslate"><span class="pre">flist_weight</span></code> take precedence.</p>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ftraj</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ftraj</span> <span class="pre">=</span> <span class="pre">&quot;inp1.dcd&quot;,</span> <span class="pre">&quot;inp2.dcd&quot;</span></code></p></li>
+</ul>
+<p>Specifies the input trajectory file(s). As shown in the example, multiple files can be specified.
+If the number of files is large, they can instead be specified using <code class="docutils literal notranslate"><span class="pre">flist_traj</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fcv</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">fcv</span> <span class="pre">=</span> <span class="pre">&quot;cv1.txt&quot;,</span> <span class="pre">&quot;cv2.txt&quot;</span></code></p></li>
+</ul>
+<p>Specifies the input time-series data file(s). As shown in the example, multiple files can be specified.
+If the number of files is large, they can instead be specified using <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fweight</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">fweight</span> <span class="pre">=</span> <span class="pre">&quot;weight1.txt&quot;,</span> <span class="pre">&quot;weight2.txt&quot;</span></code></p></li>
+</ul>
+<p>Specifies the input statistical weight file(s).</p>
+<p>Statistical weight files provide a statistical weight for each step of the corresponding time-series data. Statistical weights obtained from enhanced sampling methods or the Multistate Bennett Acceptance Ratio (MBAR) method can be used. The total weight is automatically normalized to unity within the program.</p>
+<p>As shown in the example, multiple files can be specified.
+If the number of files is large, they can instead be specified using <code class="docutils literal notranslate"><span class="pre">flist_weight</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">flist_traj</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">flist_traj</span> <span class="pre">=</span> <span class="pre">&quot;list.txt&quot;</span></code></p></li>
+</ul>
+<p>Specifies a file containing a list of input trajectory files. The contents specified by <code class="docutils literal notranslate"><span class="pre">flist_traj</span></code> take precedence over those specified by <code class="docutils literal notranslate"><span class="pre">ftraj</span></code>.</p>
+<p>The list file must contain one input trajectory filename per line, as shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inp1</span><span class="o">.</span><span class="n">dcd</span>
+<span class="n">inp2</span><span class="o">.</span><span class="n">dcd</span>
+<span class="n">inp3</span><span class="o">.</span><span class="n">dcd</span>
+<span class="n">inp4</span><span class="o">.</span><span class="n">dcd</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">flist_cv</span> <span class="pre">=</span> <span class="pre">&quot;list.txt&quot;</span></code></p></li>
+</ul>
+<p>Specifies a file containing a list of input time-series data files. The contents specified by <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> take precedence over those specified by <code class="docutils literal notranslate"><span class="pre">fcv</span></code>.</p>
+<p>The list file must contain one input time-series data filename per line, as shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inp1</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">inp2</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">inp3</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">inp4</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">flist_weight</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">flist_weight</span> <span class="pre">=</span> <span class="pre">&quot;list.txt&quot;</span></code></p></li>
+</ul>
+<p>Specifies a file containing a list of input statistical weight files. The contents specified by <code class="docutils literal notranslate"><span class="pre">flist_weight</span></code> take precedence over those specified by <code class="docutils literal notranslate"><span class="pre">fweight</span></code>.</p>
+<p>The list file must contain one input statistical weight filename per line, as shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">inp1</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">inp2</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">inp3</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">inp4</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="format-of-time-series-data">
+<h3>Format of Time-series Data<a class="headerlink" href="#format-of-time-series-data" title="Link to this heading"></a></h3>
+<p>The format of the time-series data is as follows.</p>
+<ul class="simple">
+<li><p>1st column: Time axis</p></li>
+<li><p>2nd column: First time-series data</p></li>
+<li><p>3rd column: Second time-series data</p></li>
+</ul>
+<p>The first column is ignored in all analysis modes, and the second column is treated as the first data column.</p>
+</section>
+<section id="format-of-statistical-weight-data">
+<h3>Format of Statistical Weight Data<a class="headerlink" href="#format-of-statistical-weight-data" title="Link to this heading"></a></h3>
+<p>The format of the statistical weight data is as follows.</p>
+<ul class="simple">
+<li><p>1st column: Time axis</p></li>
+<li><p>2nd column: Statistical weight</p></li>
+</ul>
+<p>The first column is ignored in all analysis modes, and only the second column is used.</p>
+<p>The number of rows in the statistical weight data file must be identical to that of the corresponding time-series data file.</p>
+</section>
+<section id="output-param">
+<h3>&amp;output_param<a class="headerlink" href="#output-param" title="Link to this heading"></a></h3>
+<p>This namelist specifies parameters related to output files.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-center"><p><strong>Function</strong></p></th>
+<th class="head text-center"><p><strong>Example</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>fhead</p></td>
+<td class="text-center"><p>Specify the basename of the output file</p></td>
+<td class="text-center"><p>fhead          = “run”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>file_extension<span class="math notranslate nohighlight">\(^{1}\)</span></p></td>
+<td class="text-center"><p>Specify the extension of the output file</p></td>
+<td class="text-center"><p>file_extension = “dat”</p></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math notranslate nohighlight">\(^{1}\)</span> This parameter is enabled only for a limited number of analysis modes.</p>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fhead</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">run</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">fhead</span> <span class="pre">=</span> <span class="pre">&quot;run&quot;</span></code></p></li>
+</ul>
+<p>Specifies the basename of the output file.</p>
+<p>For example, if <code class="docutils literal notranslate"><span class="pre">fhead</span> <span class="pre">=</span> <span class="pre">&quot;run&quot;</span></code> is specified, the analysis mode <code class="docutils literal notranslate"><span class="pre">histogram</span></code>, which is described next, outputs a file named <code class="docutils literal notranslate"><span class="pre">run.dat</span></code> by default.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">file_extension</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">dat</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">file_extension</span> <span class="pre">=</span> <span class="pre">&quot;dat&quot;</span></code></p></li>
+</ul>
+<p>Specifies the extension of the output file. However, this parameter is enabled only for a limited number of analysis modes, such as <code class="docutils literal notranslate"><span class="pre">histogram</span></code>.</p>
+</li>
+</ul>
+<!---
+ **Section**                           | **Option**                          | **Function**                                           | **Example**
+:--------------------------------------|:-----------------------------------:|:------------------------------------------------------:|---------------:
+``&input_param``                       | ``flist``                           | Specify an input file containing the names of the data files to be analyzed | ``flist = "input_list.txt"``
+``&output_param``                      | ``fhead``                           | Specify the header of the output filename              | ``fhead = "out"``
+ 
+An example of the input file specified by ``flist`` is shown below.
+
+In **fanatra**, a file containing the names of the target data files is given as input. This design allows multiple data files to be analyzed at once.
+
+```
+$ cat input_list.txt
+
+../../../06_2d/02_2dene/03_atr/combined_0001.dat
+../../../06_2d/02_2dene/03_atr/combined_0002.dat
+../../../06_2d/02_2dene/03_atr/combined_0003.dat
+../../../06_2d/02_2dene/03_atr/combined_0004.dat
+../../../06_2d/02_2dene/03_atr/combined_0005.dat
+../../../06_2d/02_2dene/03_atr/combined_0006.dat
+../../../06_2d/02_2dene/03_atr/combined_0007.dat
+../../../06_2d/02_2dene/03_atr/combined_0008.dat
+../../../06_2d/02_2dene/03_atr/combined_0009.dat
+../../../06_2d/02_2dene/03_atr/combined_0010.dat
+../../../06_2d/02_2dene/03_atr/combined_0011.dat
+../../../06_2d/02_2dene/03_atr/combined_0012.dat
+../../../06_2d/02_2dene/03_atr/combined_0013.dat
+../../../06_2d/02_2dene/03_atr/combined_0014.dat
+../../../06_2d/02_2dene/03_atr/combined_0015.dat
+../../../06_2d/02_2dene/03_atr/combined_0016.dat
+```
+
+## Format of Input Data Files
+
+The format of the input data files specified in ``flist`` is the same as that of the files generated by **anatra**:
+
+* 1st column: Time-series data
+* 2nd column: Data to be analyzed
+
+That is, the input data file must have the above structure.
+--->
+</section>
+</section>
+<section id="histogram-histogram-hist">
+<h2>Histogram (histogram, hist)<a class="headerlink" href="#histogram-histogram-hist" title="Link to this heading"></a></h2>
+<p>In this analysis mode, the distribution function <span class="math notranslate nohighlight">\(P\left(x\right)\)</span> is calculated from a given time-series data set <span class="math notranslate nohighlight">\(\xi\left(t\right)\)</span>.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-73e13515-71a6-479b-b5ce-c74155499939">
+<span class="eqno">(46)<a class="headerlink" href="#equation-73e13515-71a6-479b-b5ce-c74155499939" title="Permalink to this equation"></a></span>\[\begin{align}
+P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of data points. The above expression satisfies the normalization condition</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0f881148-d60e-4a89-b783-083c8d0d58b0">
+<span class="eqno">(47)<a class="headerlink" href="#equation-0f881148-d60e-4a89-b783-083c8d0d58b0" title="Permalink to this equation"></a></span>\[\begin{align}
+\int_{-\infty}^{\infty} dx P\left(x\right) = 1
+\end{align}\]</div>
+<section id="list-of-parameters">
+<h3>List of Parameters<a class="headerlink" href="#list-of-parameters" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>–</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>–</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>–</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">file_extension</span></code></p></td>
+<td class="text-left"><p>–</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dx</span></code></p></td>
+<td class="text-left"><p>Grid spacing of the distribution function</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">xsta</span></code></p></td>
+<td class="text-left"><p>Starting position of the grid</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nx</span></code></p></td>
+<td class="text-left"><p>Number of grid points</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ncol</span></code></p></td>
+<td class="text-left"><p>Number of data columns per file</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Remarks}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|  & -- \\
+                     & \verb|fcv|        & -- \\
+\hline
+\verb|&output_param| & \verb|fhead|      & -- \\
+                     & \verb|file_extension| & -- \\
+\hline
+\verb|&option_param| & \verb|dx|         & Grid spacing of the distribution function \\
+                     & \verb|xsta|       & Starting position of the grid \\
+                     & \verb|nx|         & Number of grid points \\
+                     & \verb|ncol|       & Number of data columns per file \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="option-param">
+<h3>&amp;option_param<a class="headerlink" href="#option-param" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dx</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: 0.1</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dx</span> <span class="pre">=</span> <span class="pre">0.1</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing <span class="math notranslate nohighlight">\(\Delta x\)</span> used to calculate the distribution function.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">xsta</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: 0.0</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsta</span> <span class="pre">=</span> <span class="pre">0.0</span></code></p></li>
+</ul>
+<p>Specifies the starting position of the grid, <span class="math notranslate nohighlight">\(x_{0}\)</span>. If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_{i}\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b7ac743a-005f-4bc9-b9f1-2776d7cae6a6">
+<span class="eqno">(48)<a class="headerlink" href="#equation-b7ac743a-005f-4bc9-b9f1-2776d7cae6a6" title="Permalink to this equation"></a></span>\[\begin{align}
+x_{i} = x_{0} + \left(i - 1 \right) \Delta x
+\end{align}\]</div>
+<p>holds.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ncol</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: 1</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ncol</span> <span class="pre">=</span> <span class="pre">10</span></code></p></li>
+</ul>
+<p>Specifies the number of data columns contained in each time-series data file.</p>
+</li>
+</ul>
+</section>
+<section id="format-of-output-file">
+<h3>Format of Output File<a class="headerlink" href="#format-of-output-file" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*.dat</span></code> (the extension can be changed by <code class="docutils literal notranslate"><span class="pre">file_extension</span></code>)</p>
+<ul>
+<li><p>1st column: <span class="math notranslate nohighlight">\(x\)</span> coordinate</p></li>
+<li><p>2nd column: Distribution function <span class="math notranslate nohighlight">\(P\left(x\right)\)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h3>
+<p>The following example calculates the distribution function <span class="math notranslate nohighlight">\(P\left(x\right)\)</span> in the range <span class="math notranslate nohighlight">\(5 \leq x \leq 10\)</span> from a time-series data file <code class="docutils literal notranslate"><span class="pre">inp.ts</span></code> containing three data columns.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+<span class="n">fcv</span> <span class="o">=</span> <span class="s2">&quot;inp.ts&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+<span class="n">fhead</span> <span class="o">=</span> <span class="s2">&quot;run&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+<span class="n">dx</span>   <span class="o">=</span> <span class="mf">0.1</span><span class="n">d0</span>
+<span class="n">xsta</span> <span class="o">=</span> <span class="mf">5.0</span><span class="n">d0</span>
+<span class="n">nx</span>   <span class="o">=</span> <span class="mi">50</span>
+<span class="n">ncol</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">hist</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="potential-of-mean-force-potential-of-mean-force-pmf">
+<h2>Potential of Mean Force (potential_of_mean_force, pmf)<a class="headerlink" href="#potential-of-mean-force-potential-of-mean-force-pmf" title="Link to this heading"></a></h2>
+<p>In this analysis mode, the free-energy profile <span class="math notranslate nohighlight">\(W\left(\boldsymbol{\zeta}\right)\)</span> along the reaction coordinate <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span> is calculated from the time-series data of the reaction coordinate, <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\left(t\right)\)</span>. The function <span class="math notranslate nohighlight">\(W\left(\boldsymbol{\zeta}\right)\)</span> is also referred to as the <strong>potential of mean force (PMF)</strong>.</p>
+<section id="theoretical-background">
+<h3>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h3>
+<p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system and <span class="math notranslate nohighlight">\(U\left({\bf X}\right)\)</span> its potential energy. The configurational integral <span class="math notranslate nohighlight">\(Z\)</span> is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-68ef784f-1c00-4a3e-92cd-57a2a81ec436">
+<span class="eqno">(49)<a class="headerlink" href="#equation-68ef784f-1c00-4a3e-92cd-57a2a81ec436" title="Permalink to this equation"></a></span>\[\begin{align}
+Z =\int d{\bf X}\,\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta\)</span> is the inverse temperature.</p>
+<p>Similarly, the partition function corresponding to the state in which the system is trapped within the infinitesimal region <span class="math notranslate nohighlight">\(\boldsymbol{\zeta} - \boldsymbol{\zeta}+\Delta \boldsymbol{\zeta}\)</span> in the reaction coordinate space (<span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\left({\bf X}\right)\)</span>) is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-82b8ece8-4b1b-4ed6-896d-84d4f56fa9ab">
+<span class="eqno">(50)<a class="headerlink" href="#equation-82b8ece8-4b1b-4ed6-896d-84d4f56fa9ab" title="Permalink to this equation"></a></span>\[\begin{align}
+Z\left(\boldsymbol{\zeta}\right) =\Delta\boldsymbol{\zeta}\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}\]</div>
+<p>Defining the probability density corresponding to <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span> as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5c21eddd-cd47-4adf-bc9f-231b10e06756">
+<span class="eqno">(51)<a class="headerlink" href="#equation-5c21eddd-cd47-4adf-bc9f-231b10e06756" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho\left(\boldsymbol{\zeta}\right) = \Braket{\delta\left(\boldsymbol{\zeta} - \boldsymbol{\xi}\left({\bf X}\right)\right)} = \dfrac{1}{Z}\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}\]</div>
+<p>we obtain</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2e987056-b823-4f79-88b4-844c058fe69c">
+<span class="eqno">(52)<a class="headerlink" href="#equation-2e987056-b823-4f79-88b4-844c058fe69c" title="Permalink to this equation"></a></span>\[\begin{align}
+\dfrac{Z\left(\boldsymbol{\zeta}\right)}{Z} =\rho\left(\boldsymbol{\zeta}\right)\Delta\boldsymbol{\zeta}
+\end{align}\]</div>
+<p>Therefore, the free-energy difference <span class="math notranslate nohighlight">\(\Delta F\left(\boldsymbol{\zeta}\right)\)</span> between the unrestricted state and the state confined to the region <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}-\boldsymbol{\zeta} + \Delta \boldsymbol{\zeta}\)</span> is expressed as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3e9c4008-3c81-4d99-a36e-cc009d0ef34e">
+<span class="eqno">(53)<a class="headerlink" href="#equation-3e9c4008-3c81-4d99-a36e-cc009d0ef34e" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta F\left(\boldsymbol{\zeta}\right) =-\dfrac{1}{\beta}\log\dfrac{Z\left(\boldsymbol{\zeta}\right)}{Z}
+ = -\dfrac{1}{\beta}\log \left(\rho\left(\boldsymbol{\zeta}\right)\Delta \boldsymbol{\zeta}\right)
+\end{align}\]</div>
+<p>The free energy relative to a reference point <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}_{0}\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ee1aeccb-6890-4e94-b3c8-236d6865c1ee">
+<span class="eqno">(54)<a class="headerlink" href="#equation-ee1aeccb-6890-4e94-b3c8-236d6865c1ee" title="Permalink to this equation"></a></span>\[\begin{align}
+W\left(\boldsymbol{\zeta}\right) =\Delta F\left(\boldsymbol{\zeta}\right)-\Delta F\left(\boldsymbol{\zeta}_{0}\right)\notag\\
+ =-\dfrac{1}{\beta}\log\dfrac{\rho\left(\boldsymbol{\zeta}\right)}{\rho\left(\boldsymbol{\zeta}_{0}\right)}
+ \label{pmf:pmf}
+\end{align}\]</div>
+<p>This quantity <span class="math notranslate nohighlight">\(W\)</span> is called the <strong>potential of mean force</strong>. The choice of <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}_{0}\)</span> is arbitrary, but in most cases it is chosen such that the minimum value of <span class="math notranslate nohighlight">\(W\left(\boldsymbol{\zeta}\right)\)</span> becomes zero.</p>
+<p>By calculating <span class="math notranslate nohighlight">\(W\left(\boldsymbol{\zeta}\right)\)</span>, it becomes possible to discuss the change in thermodynamic stability as a function of <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span>.</p>
+<p>Equation \eqref{pmf:pmf} can also be rewritten by separating the <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span>-dependent part and a constant <span class="math notranslate nohighlight">\(C\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2869c06c-6093-4473-9d9f-b0ea824aad9d">
+<span class="eqno">(55)<a class="headerlink" href="#equation-2869c06c-6093-4473-9d9f-b0ea824aad9d" title="Permalink to this equation"></a></span>\[\begin{align}
+W\left(\boldsymbol{\zeta}\right) =-\dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)+C
+\label{pmf:pmf2}
+\end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-78415ef0-3095-4aa8-ba8c-d5e74c097aa4">
+<span class="eqno">(56)<a class="headerlink" href="#equation-78415ef0-3095-4aa8-ba8c-d5e74c097aa4" title="Permalink to this equation"></a></span>\[\begin{align}
+C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}_{0}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}\]</div>
+</section>
+<section id="id1">
+<h3>List of Parameters<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>Filename containing a list of CV files</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_weight</span></code></p></td>
+<td class="text-left"><p>Filename containing a list of weight files (optional)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>CV filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fweight</span></code></p></td>
+<td class="text-left"><p>Weight filename (optional)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ndim</span></code></p></td>
+<td class="text-left"><p>Number of CV dimensions</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">xyzcol</span></code></p></td>
+<td class="text-left"><p>Column indices of the CV data</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ng3</span></code></p></td>
+<td class="text-left"><p>Number of grid points for each CV direction</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">del</span></code></p></td>
+<td class="text-left"><p>Grid spacing for each CV direction</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">origin</span></code></p></td>
+<td class="text-left"><p>Grid origin for each CV direction</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></td>
+<td class="text-left"><p>Temperature [K]</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_radial</span></code></p></td>
+<td class="text-left"><p>Whether radial CVs are included</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">radcol</span></code></p></td>
+<td class="text-left"><p>Column indices corresponding to radial CVs</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">box_system</span></code></p></td>
+<td class="text-left"><p>Simulation box size (used only when <code class="docutils literal notranslate"><span class="pre">ndim=3</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_spline</span></code></p></td>
+<td class="text-left"><p>Enable spline interpolation</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">spline_resolution</span></code></p></td>
+<td class="text-left"><p>Resolution of spline interpolation</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">gen_script_mpl2d</span></code></p></td>
+<td class="text-left"><p>Generate a Python script for 2D PMF visualization</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">skip_calc</span></code></p></td>
+<td class="text-left"><p>Skip PMF calculation</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;matplotlib_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fpdf</span></code></p></td>
+<td class="text-left"><p>Output PDF filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;matplotlib_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">labels</span></code></p></td>
+<td class="text-left"><p>Axis labels and colorbar label</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;matplotlib_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ranges</span></code></p></td>
+<td class="text-left"><p>Plotting range</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;matplotlib_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">tics</span></code></p></td>
+<td class="text-left"><p>Axis tick intervals</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;matplotlib_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">scales</span></code></p></td>
+<td class="text-left"><p>Unit conversion factors for each axis</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Remarks}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|     & Filename containing a list of CV files \\
+                     & \verb|flist_weight| & Filename containing a list of weight files (optional) \\
+                     & \verb|fcv|          & CV filename \\
+                     & \verb|fweight|      & Weight filename (optional) \\
+\hline
+\verb|&output_param| & \verb|fhead|        & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|ndim|               & Number of CV dimensions \\
+                     & \verb|xyzcol|             & Column indices of the CV data \\
+                     & \verb|ng3|                & Number of grid points for each CV direction \\
+                     & \verb|del|                & Grid spacing for each CV direction \\
+                     & \verb|origin|             & Grid origin for each CV direction \\
+                     & \verb|temperature|        & Temperature [K] \\
+                     & \verb|use_radial|         & Whether radial CVs are included \\
+                     & \verb|radcol|             & Column indices corresponding to radial CVs \\
+                     & \verb|box_system|         & Simulation box size (used only when \verb|ndim=3|) \\
+                     & \verb|use_spline|         & Enable spline interpolation \\
+                     & \verb|spline_resolution|  & Resolution of spline interpolation \\
+                     & \verb|gen_script_mpl2d|   & Generate a Python script for 2D PMF visualization \\
+                     & \verb|skip_calc|          & Skip PMF calculation \\
+\hline
+\verb|&matplotlib_param| & \verb|fpdf|    & Output PDF filename \\
+                         & \verb|labels|  & Axis labels and colorbar label \\
+                         & \verb|ranges|  & Plotting range \\
+                         & \verb|tics|    & Axis tick intervals \\
+                         & \verb|scales|  & Unit conversion factors for each axis \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="id2">
+<h3>&amp;option_param<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ndim</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the number of dimensions of the Collective Variable (CV).</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code> calculates a two-dimensional PMF, while <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">3</span></code> calculates a three-dimensional PMF.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">xyzcol</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">xyzcol</span> <span class="pre">=</span> <span class="pre">1</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the column indices corresponding to each CV in the CV data file.</p>
+<p>The first column is ignored because it is treated as the time or step index.</p>
+<p>For example, if the data are stored as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span>  <span class="n">cv1</span>  <span class="n">cv2</span>  <span class="n">cv3</span>
+</pre></div>
+</div>
+<p>then</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xyzcol</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>calculates a two-dimensional PMF using <code class="docutils literal notranslate"><span class="pre">cv1</span></code> and <code class="docutils literal notranslate"><span class="pre">cv2</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ng3</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">1</span> <span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ng3</span> <span class="pre">=</span> <span class="pre">10</span> <span class="pre">20</span></code></p></li>
+</ul>
+<p>Specifies the number of grid points for each CV direction.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">N</span></code>, the grid numbers for each dimension should be specified sequentially in <code class="docutils literal notranslate"><span class="pre">ng3</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">del</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1.0</span> <span class="pre">1.0</span> <span class="pre">1.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">del</span> <span class="pre">=</span> <span class="pre">0.1d0</span> <span class="pre">0.2d0</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing for each CV direction.</p>
+<p>For the <span class="math notranslate nohighlight">\(i\)</span>-th CV, if the grid spacing is denoted by <span class="math notranslate nohighlight">\(\Delta_i\)</span>, the distance between adjacent grid points is <span class="math notranslate nohighlight">\(\Delta_i\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">origin</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">origin</span> <span class="pre">=</span> <span class="pre">0.0d0</span> <span class="pre">1.0d0</span></code></p></li>
+</ul>
+<p>Specifies the grid origin for each CV direction.</p>
+<p>For the <span class="math notranslate nohighlight">\(k\)</span>-th CV, let the origin be <span class="math notranslate nohighlight">\(x_k^{(0)}\)</span> and the grid spacing be <span class="math notranslate nohighlight">\(\Delta_k\)</span>. Then the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0428c37d-4e65-431c-bb5d-d5026bc4bcb1">
+<span class="eqno">(57)<a class="headerlink" href="#equation-0428c37d-4e65-431c-bb5d-d5026bc4bcb1" title="Permalink to this equation"></a></span>\[\begin{align}
+x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
+\end{align}\]</div>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">temperature</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">300.0d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">=</span> <span class="pre">298.0d0</span></code></p></li>
+</ul>
+<p>Specifies the temperature <span class="math notranslate nohighlight">\(T\)</span> [K] used for the PMF calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_radial</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_radial</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the CV contains a radial component.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the distribution function for the CV component <span class="math notranslate nohighlight">\(x_k\)</span> specified by <code class="docutils literal notranslate"><span class="pre">radcol</span></code> is calculated using the bin volume</p>
+<div class="amsmath math notranslate nohighlight" id="equation-10c056c0-46d0-4eba-9ed1-ddc67038432c">
+<span class="eqno">(58)<a class="headerlink" href="#equation-10c056c0-46d0-4eba-9ed1-ddc67038432c" title="Permalink to this equation"></a></span>\[\begin{align}
+4\pi x_{k}^{2} \Delta_{k}^{2}
+\end{align}\]</div>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">radcol</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">radcol</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies which CV corresponds to the radial component.</p>
+<p>This parameter is effective only when <code class="docutils literal notranslate"><span class="pre">use_radial</span> <span class="pre">=</span> <span class="pre">.true.</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">box_system</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">box_system</span> <span class="pre">=</span> <span class="pre">50.0d0</span> <span class="pre">50.0d0</span> <span class="pre">50.0d0</span></code></p></li>
+</ul>
+<p>Specifies the simulation box size.</p>
+<p>This parameter is used only when <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">3</span></code>.
+The box lengths in each direction should be specified in order.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_spline</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_spline</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether spline interpolation is performed after the PMF calculation.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, spline interpolation is applied; otherwise, the original grid is used.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">spline_resolution</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">4</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">spline_resolution</span> <span class="pre">=</span> <span class="pre">8</span></code></p></li>
+</ul>
+<p>Specifies the resolution used for spline interpolation.</p>
+<p>Larger values generate a finer interpolation grid.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">gen_script_mpl2d</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">gen_script_mpl2d</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether a Python script for visualizing a two-dimensional PMF is generated.</p>
+<p>Currently, this option is supported only when <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">skip_calc</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">skip_calc</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the PMF calculation is skipped.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the PMF calculation is omitted and only auxiliary files are generated.
+If <code class="docutils literal notranslate"><span class="pre">.false.</span></code>, the PMF calculation is performed normally.</p>
+<p>This option is convenient when recreating the Matplotlib (Python) script after modifying its settings.</p>
+</li>
+</ul>
+</section>
+<section id="matplotlib-param">
+<h3>&amp;matplotlib_param<a class="headerlink" href="#matplotlib-param" title="Link to this heading"></a></h3>
+<p>Options for generating a Python (Matplotlib) script for visualizing a two-dimensional PMF.</p>
+<p>These options are enabled when <code class="docutils literal notranslate"><span class="pre">gen_script_mpl2d</span> <span class="pre">=</span> <span class="pre">.true.</span></code> is specified in <code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code>.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">fpdf</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">fpdf</span> <span class="pre">=</span> <span class="pre">&quot;pmf.pdf&quot;</span></code></p></li>
+</ul>
+<p>Specifies the name of the output PDF file.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">labels</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">labels</span> <span class="pre">=</span> <span class="pre">&quot;$x$&quot;</span> <span class="pre">&quot;$y$&quot;</span> <span class="pre">&quot;PMF&quot;</span></code></p></li>
+</ul>
+<p>Specifies the axis labels displayed in the plot.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code>,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;xlabel&quot;</span> <span class="s2">&quot;ylabel&quot;</span> <span class="s2">&quot;zlabel&quot;</span>
+</pre></div>
+</div>
+<p>specifies the labels for the <span class="math notranslate nohighlight">\(x\)</span>-axis, the <span class="math notranslate nohighlight">\(y\)</span>-axis, and the color bar corresponding to the PMF values, respectively.</p>
+<p>LaTeX-style mathematical expressions can be used.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ranges</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ranges</span> <span class="pre">=</span> <span class="pre">-10.0</span> <span class="pre">10.0</span> <span class="pre">-5.0</span> <span class="pre">5.0</span> <span class="pre">0.0</span> <span class="pre">10.0</span></code></p></li>
+</ul>
+<p>Specifies the plotting range.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code>,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ranges</span> <span class="o">=</span> <span class="n">xmin</span> <span class="n">xmax</span> <span class="n">ymin</span> <span class="n">ymax</span> <span class="n">zmin</span> <span class="n">zmax</span>
+</pre></div>
+</div>
+<p>should be specified in this order.</p>
+<p>Here,</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code> : Display range of the <span class="math notranslate nohighlight">\(x\)</span>-axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code> : Display range of the <span class="math notranslate nohighlight">\(y\)</span>-axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zmin</span></code>, <code class="docutils literal notranslate"><span class="pre">zmax</span></code> : Display range of the PMF values</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tics</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">tics</span> <span class="pre">=</span> <span class="pre">1.0</span> <span class="pre">1.0</span> <span class="pre">0.5</span></code></p></li>
+</ul>
+<p>Specifies the intervals of the axis ticks.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code>,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tics</span> <span class="o">=</span> <span class="n">xtic</span> <span class="n">ytic</span> <span class="n">ztic</span>
+</pre></div>
+</div>
+<p>should be specified in this order.</p>
+<p>Here,</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xtic</span></code> : Tick interval of the <span class="math notranslate nohighlight">\(x\)</span>-axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ytic</span></code> : Tick interval of the <span class="math notranslate nohighlight">\(y\)</span>-axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ztic</span></code> : Tick interval of the color bar corresponding to the PMF values</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">scales</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1.0</span> <span class="pre">1.0</span> <span class="pre">1.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">scales</span> <span class="pre">=</span> <span class="pre">10.0</span> <span class="pre">10.0</span> <span class="pre">0.239006</span></code></p></li>
+</ul>
+<p>Specifies the unit conversion factors for the axes.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code>,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scales</span> <span class="o">=</span> <span class="n">xscale</span> <span class="n">yscale</span> <span class="n">zscale</span>
+</pre></div>
+</div>
+<p>should be specified in this order.</p>
+<p>The loaded data values are multiplied by these factors when they are plotted.</p>
+<p>For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scales</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="mf">10.0</span> <span class="mf">1.0</span>
+</pre></div>
+</div>
+<p>displays the values of the <span class="math notranslate nohighlight">\(x\)</span>- and <span class="math notranslate nohighlight">\(y\)</span>-axes multiplied by 10.</p>
+</li>
+</ul>
+</section>
+<section id="format-of-output-files">
+<h3>Format of Output Files<a class="headerlink" href="#format-of-output-files" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_original.gnplt</span></code></p>
+<p>The PMF (<span class="math notranslate nohighlight">\(W(\boldsymbol{\zeta})\)</span>) is written to this file.</p>
+<ul class="simple">
+<li><p>1st column: Coordinate</p></li>
+<li><p>2nd column: PMF</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_g_original.gnplt</span></code></p>
+<p>The distribution function (<span class="math notranslate nohighlight">\(\rho\left(\boldsymbol{\zeta}\right)/\rho_{0}\left(\boldsymbol{\zeta}_{0}\right)\)</span>) is written to this file.</p>
+<ul class="simple">
+<li><p>1st column: Coordinate</p></li>
+<li><p>2nd column: Distribution function</p></li>
+</ul>
+</li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">use_spline</span> <span class="pre">=</span> <span class="pre">.true.</span></code>, the spline-interpolated PMF and distribution function are written to <code class="docutils literal notranslate"><span class="pre">*_spline.gnplt</span></code> and <code class="docutils literal notranslate"><span class="pre">*_g_spline.gnplt</span></code>, respectively.</p>
+</section>
+<section id="id3">
+<h3>Example<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<p>The following example calculates the PMF (<span class="math notranslate nohighlight">\(W\left(x\right)\)</span>) with a grid spacing of <span class="math notranslate nohighlight">\(\Delta x = 0.1\)</span> over the range <span class="math notranslate nohighlight">\(5 \leq x \leq 10\)</span> from a time-series data file <code class="docutils literal notranslate"><span class="pre">inp.ts</span></code> containing a single data column.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+ <span class="n">fcv</span>     <span class="o">=</span> <span class="s2">&quot;inp.ts&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+ <span class="n">fhead</span> <span class="o">=</span> <span class="s2">&quot;out&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+  <span class="n">ndim</span>        <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">xyzcol</span>      <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">ng3</span>         <span class="o">=</span> <span class="mi">50</span>
+  <span class="k">del</span>         <span class="o">=</span> <span class="mf">0.1</span>
+  <span class="n">origin</span>      <span class="o">=</span> <span class="mf">5.0</span>
+  <span class="n">temperature</span> <span class="o">=</span> <span class="mf">300.0</span><span class="n">d0</span>
+  <span class="n">use_spline</span>  <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_radial</span>  <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">potential_of_mean_force</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+
+</pre></div>
+</div>
+</section>
+</section>
+<section id="restricted-radial-potential-of-mean-force-restricted-radial-rrpmf">
+<h2>Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)<a class="headerlink" href="#restricted-radial-potential-of-mean-force-restricted-radial-rrpmf" title="Link to this heading"></a></h2>
+<p>This analysis mode calculates the free energy profile along the radial direction under a condition defined by one or more reaction coordinates (collective variables).</p>
+<p>Using this profile, the free energy change associated with the binding of a host molecule and a guest molecule (binding free energy) can also be evaluated.</p>
+<section id="id4">
+<h3>Theoretical Background<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system.
+The intermolecular distance between the host and guest molecules and the reaction coordinates defining the binding state are denoted by <span class="math notranslate nohighlight">\(d\left({\bf X}\right)\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\left({\bf X}\right)\)</span>, respectively.</p>
+<p>The potential of mean force along the intermolecular distance is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-41eab4cf-bd30-4ec9-8126-e2e0e138eab1">
+<span class="eqno">(59)<a class="headerlink" href="#equation-41eab4cf-bd30-4ec9-8126-e2e0e138eab1" title="Permalink to this equation"></a></span>\[\begin{align}
+w\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
+\end{align}\]</div>
+<p>Furthermore, let <span class="math notranslate nohighlight">\(\boldsymbol{\Upsilon}\)</span> be the region in the reaction coordinate space corresponding to the bound state, and introduce the characteristic function <span class="math notranslate nohighlight">\(\Theta\left(\boldsymbol{\xi}\right)\)</span> defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7577e9ac-57a9-4a6a-b7e5-88d046dafea4">
+<span class="eqno">(60)<a class="headerlink" href="#equation-7577e9ac-57a9-4a6a-b7e5-88d046dafea4" title="Permalink to this equation"></a></span>\[\begin{align}
+\Theta_{\mathrm{B}}\left(\boldsymbol{\xi}\right) =\begin{cases}
+1 &amp; \boldsymbol{\xi}\in\boldsymbol{\Upsilon}\\
+0 &amp; \boldsymbol{\xi}\notin\boldsymbol{\Upsilon}
+\end{cases}
+\end{align}\]</div>
+<p>Using this function, the PMF for configurations belonging to the bound state is expressed as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-49df10ab-5b5d-4f3c-80ad-2a709e5093a0">
+<span class="eqno">(61)<a class="headerlink" href="#equation-49df10ab-5b5d-4f3c-80ad-2a709e5093a0" title="Permalink to this equation"></a></span>\[\begin{align}
+w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\Theta_{\mathrm{B}}\left(\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
+\end{align}\]</div>
+<p>The constant <span class="math notranslate nohighlight">\(C\)</span> appearing in both <span class="math notranslate nohighlight">\(w\left(r\right)\)</span> and <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> is taken to be the same value, and is chosen such that the minimum value of <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> becomes zero.</p>
+<p>Since <span class="math notranslate nohighlight">\(w\left(r\right)\)</span> becomes constant when <span class="math notranslate nohighlight">\(r\)</span> is sufficiently large, let this constant be <span class="math notranslate nohighlight">\(\Delta w\)</span>, and define the region satisfying <span class="math notranslate nohighlight">\(w\left(r\right)=\Delta w\)</span> as <span class="math notranslate nohighlight">\(r_{0}\leq r\leq r_{1}\)</span>.
+The choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span> is arbitrary as long as this condition is satisfied.
+This point will be discussed later.</p>
+<p>The probability ratio between the unbound state U, where the two molecules are separated by <span class="math notranslate nohighlight">\(r_{0}\leq r \leq r_{1}\)</span>, and the bound state B is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-444f8687-6010-4d7d-b278-44ffaf615292">
+<span class="eqno">(62)<a class="headerlink" href="#equation-444f8687-6010-4d7d-b278-44ffaf615292" title="Permalink to this equation"></a></span>\[\begin{align}
+\dfrac{{\displaystyle \int_{\boldsymbol{\Upsilon}}dr\,\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,\exp\left(-\beta w\left(r\right)\right)}}
+\end{align}\]</div>
+<p>Therefore, the free energy change <span class="math notranslate nohighlight">\(\Delta G_{\mathrm{PMF}}\)</span> associated with the transition from U to B is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5e865f69-d124-4dfb-b388-694ab3fbfc68">
+<span class="eqno">(63)<a class="headerlink" href="#equation-5e865f69-d124-4dfb-b388-694ab3fbfc68" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G_{\mathrm{PMF}} =-\dfrac{1}{\beta}\log\dfrac{{\displaystyle \int_{\boldsymbol{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}\exp\left(-\beta w\left(r\right)\right)}}
+\end{align}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(w\left(r\right)=\Delta w\)</span> within the range <span class="math notranslate nohighlight">\(r_{0}\leq r\leq r_{1}\)</span>, this equation can be rewritten as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-96e6d5f0-f0da-40dc-9f3e-fc455acfc8c5">
+<span class="eqno">(64)<a class="headerlink" href="#equation-96e6d5f0-f0da-40dc-9f3e-fc455acfc8c5" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G_{\mathrm{PMF}} =-\Delta w-\dfrac{1}{\beta}\log\dfrac{V_{\mathrm{B}}}{V_{\mathrm{U}}}
+\label{pmf:dGpmf}
+\end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3050c867-ee02-4ae3-a376-248d8517e1a1">
+<span class="eqno">(65)<a class="headerlink" href="#equation-3050c867-ee02-4ae3-a376-248d8517e1a1" title="Permalink to this equation"></a></span>\[\begin{align}
+V_{\mathrm{B}} =\int_{\boldsymbol{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)\\
+V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
+\end{align}\]</div>
+<p>The second term in Eq. \eqref{pmf:dGpmf} represents the free energy change associated with the transition of the guest molecule from a concentration of <span class="math notranslate nohighlight">\(1/V_{\mathrm{U}}\)</span> to a concentration of <span class="math notranslate nohighlight">\(1/V_{\mathrm{B}}\)</span>.</p>
+<p>The experimentally measured binding free energy is the free energy change associated with binding a guest molecule at the standard-state concentration (typically <span class="math notranslate nohighlight">\(c^{\circ} = 1~\mathrm{mol~L^{-1}}\)</span>), and is therefore different from <span class="math notranslate nohighlight">\(\Delta G_{\mathrm{PMF}}\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(V^{\circ}\)</span> be the volume corresponding to a concentration of <span class="math notranslate nohighlight">\(c^{\circ}\)</span> for a single guest molecule.
+Then <span class="math notranslate nohighlight">\(V^{\circ} = 1661\)</span> Angstrom<span class="math notranslate nohighlight">\(^{3}\)</span>.</p>
+<p>The free energy change <span class="math notranslate nohighlight">\(\Delta G^{\circ}_{\mathrm{corr}}\)</span> associated with the transition from concentration <span class="math notranslate nohighlight">\(c^{\circ}=1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{U}}\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a747e2c6-e041-4b8e-9a2f-ab64c1b81ec4">
+<span class="eqno">(66)<a class="headerlink" href="#equation-a747e2c6-e041-4b8e-9a2f-ab64c1b81ec4" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G^{\circ}_{\mathrm{corr}} = - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{U}}}{V^{\circ}}
+\label{pmf:dGcorr}
+\end{align}\]</div>
+<p>Thus, by decomposing the transition from <span class="math notranslate nohighlight">\(1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{B}}\)</span> into the two steps,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a3dc6ea2-1815-4412-92da-001d3d10bd6f">
+<span class="eqno">(67)<a class="headerlink" href="#equation-a3dc6ea2-1815-4412-92da-001d3d10bd6f" title="Permalink to this equation"></a></span>\[\begin{align}
+1/V^{\circ} \to 1/V_{\mathrm{U}}
+\end{align}\]</div>
+<p>and</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ad2cf6ef-3420-4a99-b7ad-368d697091ce">
+<span class="eqno">(68)<a class="headerlink" href="#equation-ad2cf6ef-3420-4a99-b7ad-368d697091ce" title="Permalink to this equation"></a></span>\[\begin{align}
+1/V_{\mathrm{U}} \to 1/V_{\mathrm{B}}
+\end{align}\]</div>
+<p>we obtain</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d5a7190b-c02e-4826-9c03-6d64a2472ef0">
+<span class="eqno">(69)<a class="headerlink" href="#equation-d5a7190b-c02e-4826-9c03-6d64a2472ef0" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G^{\circ} = \Delta G_{\mathrm{PMF}} + \Delta G_{\mathrm{corr}}^{\circ}
+\end{align}\]</div>
+<p>Substituting Eqs. \eqref{pmf:dGpmf} and \eqref{pmf:dGcorr} into the above equation yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a8a1e491-a827-4aa1-8cec-418a7da6365c">
+<span class="eqno">(70)<a class="headerlink" href="#equation-a8a1e491-a827-4aa1-8cec-418a7da6365c" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G^{\circ} = - \Delta w - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{B}}}{V^{\circ}}
+\end{align}\]</div>
+<p>Since this expression does not contain <span class="math notranslate nohighlight">\(V_{\mathrm{U}}\)</span>, the value of <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)</span> is independent of the choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span>.</p>
+</section>
+<section id="parameter-list">
+<h3>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>File containing the list of CV files</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_weight</span></code></p></td>
+<td class="text-left"><p>File containing the list of weight files (optional)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>CV filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fweight</span></code></p></td>
+<td class="text-left"><p>Weight filename</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">calcfe</span></code></p></td>
+<td class="text-left"><p>Whether to calculate the standard free energy</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ndim</span></code></p></td>
+<td class="text-left"><p>Number of CV dimensions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">only_r</span></code></p></td>
+<td class="text-left"><p>Whether the intermolecular distance is the only CV</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></td>
+<td class="text-left"><p>Temperature [K]</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dr</span></code></p></td>
+<td class="text-left"><p>Distance grid spacing</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ngrid</span></code></p></td>
+<td class="text-left"><p>Number of distance grids</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsta</span></code></p></td>
+<td class="text-left"><p>Starting frame number for the analysis</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_bootstrap</span></code></p></td>
+<td class="text-left"><p>Whether to perform bootstrap analysis</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">vol0</span></code></p></td>
+<td class="text-left"><p>Standard-state volume</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">urange</span></code></p></td>
+<td class="text-left"><p>Distance range of the unbound state</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">bound_range</span></code></p></td>
+<td class="text-left"><p>Distance range of the bound state</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">iseed</span></code></p></td>
+<td class="text-left"><p>Random number seed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsample</span></code></p></td>
+<td class="text-left"><p>Number of samples drawn in each trial</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></p></td>
+<td class="text-left"><p>Whether duplicate sampling is allowed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ntrial</span></code></p></td>
+<td class="text-left"><p>Number of bootstrap trials</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|      & File containing the list of CV files \\
+                     & \verb|flist_weight|  & File containing the list of weight files (optional) \\
+                     & \verb|fcv|           & CV filename \\
+                     & \verb|fweight|       & Weight filename \\
+\hline
+\verb|&output_param| & \verb|fhead|         & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|calcfe|        & Whether to calculate the standard free energy \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|only_r|        & Whether the intermolecular distance is the only CV \\
+                     & \verb|temperature|   & Temperature [K] \\
+                     & \verb|dr|            & Distance grid spacing \\
+                     & \verb|ngrid|         & Number of distance grids \\
+                     & \verb|nsta|          & Starting frame number for the analysis \\
+                     & \verb|use_bootstrap| & Whether to perform bootstrap analysis \\
+                     & \verb|vol0|          & Standard-state volume \\
+                     & \verb|urange|        & Distance range of the unbound state \\
+                     & \verb|bound_range|   & Distance range of the bound state \\
+\hline
+\verb|&bootopt_param| & \verb|iseed|        & Random number seed \\
+                      & \verb|nsample|      & Number of samples drawn in each trial \\
+                      & \verb|duplicate|    & Whether duplicate sampling is allowed \\
+                      & \verb|ntrial|       & Number of bootstrap trials \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="format-of-the-input-file-time-series-data">
+<h3>Format of the Input File (Time-Series Data)<a class="headerlink" href="#format-of-the-input-file-time-series-data" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>1st column: Time</p></li>
+<li><p>2nd to <span class="math notranslate nohighlight">\((N+1)\)</span>-th columns: CV values</p></li>
+<li><p>Last column: Intermolecular distance</p></li>
+</ul>
+<p>The first column is ignored, and the second column is treated as the first data column.</p>
+<p>If the intermolecular distance is the only CV, i.e.,</p>
+<ul class="simple">
+<li><p>1st column: Time</p></li>
+<li><p>2nd column: Intermolecular distance</p></li>
+</ul>
+<p>then simply specify</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">only_r</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>in <code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code>.</p>
+</section>
+<section id="id5">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calcfe</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.true.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">calcfe</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the standard binding free energy should be calculated.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the standard binding free energy is calculated.
+If <code class="docutils literal notranslate"><span class="pre">.false.</span></code>, only the PMF profile is generated.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ndim</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies the number of CV dimensions.</p>
+<p>Currently, both one-dimensional and multidimensional PMF calculations are supported.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">only_r</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">only_r</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>Set this option to <code class="docutils literal notranslate"><span class="pre">.true.</span></code> when the intermolecular distance is the only CV and no additional CVs are present.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">temperature</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">298.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">=</span> <span class="pre">300.0</span></code></p></li>
+</ul>
+<p>Specifies the temperature <span class="math notranslate nohighlight">\(T\)</span> [K] used for the free energy calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dr</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dr</span> <span class="pre">=</span> <span class="pre">0.1d0</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing along the distance coordinate.</p>
+<p>This value is used as the grid interval <span class="math notranslate nohighlight">\(\Delta r\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ngrid</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ngrid</span> <span class="pre">=</span> <span class="pre">1000</span></code></p></li>
+</ul>
+<p>Specifies the number of grid points along the distance coordinate.</p>
+<p>The PMF is evaluated on <code class="docutils literal notranslate"><span class="pre">ngrid</span></code> grid points.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsta</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsta</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the frame number from which the analysis starts.</p>
+<p>Frames before <code class="docutils literal notranslate"><span class="pre">nsta</span></code> are excluded from the analysis.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_bootstrap</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether bootstrap error analysis is performed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, bootstrap analysis is carried out according to the settings in <code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">vol0</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1661.0d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">vol0</span> <span class="pre">=</span> <span class="pre">1661.0d0</span></code></p></li>
+</ul>
+<p>Specifies the standard-state volume <span class="math notranslate nohighlight">\(V^\circ\)</span>.</p>
+<p>The default value corresponds to the volume for a concentration of 1 mol/L in Angstrom units (1661 Angstrom<span class="math notranslate nohighlight">\(^3\)</span>).</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">urange</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">urange</span> <span class="pre">=</span> <span class="pre">25.0</span> <span class="pre">30.0</span></code></p></li>
+</ul>
+<p>Specifies the distance range regarded as the unbound state.</p>
+<p>The first value represents the lower bound, and the second value represents the upper bound.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">bound_range</span></code></strong></p>
+<ul>
+<li><p>Default: None</p></li>
+<li><p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">react_range</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="mf">10.0</span>
+              <span class="mf">5.0</span> <span class="mf">20.0</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Specifies the CV range corresponding to the bound state.</p>
+<p>For each line, the first value represents the lower bound and the second value represents the upper bound.</p>
+<p>By specifying <code class="docutils literal notranslate"><span class="pre">ndim</span></code> ranges, a multidimensional bound region can be defined.</p>
+</li>
+</ul>
+</section>
+<section id="bootopt-param">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code><a class="headerlink" href="#bootopt-param" title="Link to this heading"></a></h3>
+<p>This namelist controls the settings for bootstrap error analysis.</p>
+<p>It is enabled only when <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code>.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">iseed</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: Automatically generated</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">=</span> <span class="pre">3141592</span></code></p></li>
+</ul>
+<p>Specifies the random seed used for bootstrap analysis.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>, the program automatically generates a seed.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsample</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsample</span> <span class="pre">=</span> <span class="pre">1000</span></code></p></li>
+</ul>
+<p>Specifies the number of samples drawn in each bootstrap trial.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.true.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">duplicate</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>Specifies whether duplicate sampling is allowed during bootstrap sampling.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ntrial</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ntrial</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the number of bootstrap trials.</p>
+<p>Increasing the number of trials improves the accuracy of the statistical error estimate, but also increases the computational cost.</p>
+</li>
+</ul>
+</section>
+<section id="output-file-format">
+<h3>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*.rd</span></code></p>
+<ul>
+<li><p>1st column: Intermolecular distance <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p>2nd column: Conventional PMF along <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p>3rd column: PMF corresponding to the bound state</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h3>Example<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p>The following example calculates the binding free energy from a time-series data file <code class="docutils literal notranslate"><span class="pre">inp.ts</span></code> that contains one CV and the intermolecular distance in the last column.</p>
+<p>The range <span class="math notranslate nohighlight">\(18 \leq r/\)</span>Angstrom<span class="math notranslate nohighlight">\(\leq 20\)</span> is treated as the unbound state, and the bound state is defined by the CV range <span class="math notranslate nohighlight">\(5.0 \leq \zeta \leq 10.0\)</span>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> fcv      = &quot;inp.ts&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead         = &quot;out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> calcfe        = .true.</span>
+<span class="s"> only_r        = .false.</span>
+<span class="s"> ndim          =  1</span>
+<span class="s"> temperature   =  300.0</span>
+<span class="s"> dr            =  0.1d0</span>
+<span class="s"> ngrid         =  1000</span>
+<span class="s"> nsta          =  1</span>
+<span class="s"> use_bootstrap = .false.</span>
+<span class="s"> vol0          = 1661.0d0</span>
+<span class="s"> urange        =  18.0  20.0</span>
+<span class="s"> bound_range   =  5.0  10.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>restricted_radial<span class="w"> </span>run.inp
+</pre></div>
+</div>
+<p>After execution, the results are printed near the end of the log file.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>... Thermodynamic analysis ...
+vb      (A^3)      =      21.5444908
+wu      (kcal/mol) =      -1.3486059
+wb      (kcal/mol) =       0.0000000
+dw      (kcal/mol) =      -1.3486059
+dGv     (kcal/mol) =       2.5903536
+dGzero  (kcal/mol) =       3.9389595
+Keq     (M^-1)     =   1.3506025E-03
+</pre></div>
+</div>
+</section>
+</section>
+<section id="frame-extraction-extract-frame-extf">
+<h2>Frame Extraction (extract_frame, extf)<a class="headerlink" href="#frame-extraction-extract-frame-extf" title="Link to this heading"></a></h2>
+<p>In this analysis mode, snapshots (frames) that satisfy specified CV ranges are extracted.</p>
+<section id="id7">
+<h3>Parameter List<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_traj</span></code></p></td>
+<td class="text-left"><p>Filename containing the list of trajectory files</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>Filename containing the list of CV files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ftraj</span></code></p></td>
+<td class="text-left"><p>Trajectory filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>CV filename</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dt</span></code></p></td>
+<td class="text-left"><p>Time interval of the trajectory</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ndim</span></code></p></td>
+<td class="text-left"><p>Number of CV dimensions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">extract_range</span></code></p></td>
+<td class="text-left"><p>CV range for frame extraction</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_traj| & Filename containing the list of trajectory files \\
+                     & \verb|flist_cv|   & Filename containing the list of CV files \\
+                     & \verb|ftraj|      & Trajectory filename \\
+                     & \verb|fcv|        & CV filename \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|dt|            & Time interval of the trajectory \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|extract_range| & CV range for frame extraction \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="id8">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ndim</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the number of dimensions of the time-series CV data.</p>
+<p>The ranges specified in <code class="docutils literal notranslate"><span class="pre">extract_range</span></code> must correspond to this dimensionality.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">extract_range</span></code></strong></p>
+<ul>
+<li><p>Default: None</p></li>
+<li><p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extract_range</span> <span class="o">=</span> <span class="o">-</span><span class="mf">5.0</span><span class="n">d0</span> <span class="mf">5.0</span><span class="n">d0</span>
+                 <span class="mf">1.0</span><span class="n">d0</span> <span class="mf">0.0</span><span class="n">d0</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Specifies the CV region from which frames are extracted.</p>
+<p>For each CV, a pair of lower and upper bounds should be provided.</p>
+<p>In the above example, frames satisfying</p>
+<ul class="simple">
+<li><p>CV1: <span class="math notranslate nohighlight">\(-5.0 \leq \mathrm{CV}_1 \leq 5.0\)</span></p></li>
+<li><p>CV2: <span class="math notranslate nohighlight">\(0.0 \leq \mathrm{CV}_2 \leq 1.0\)</span></p></li>
+</ul>
+<p>are extracted.</p>
+<p>By specifying <code class="docutils literal notranslate"><span class="pre">ndim</span></code> ranges, multidimensional extraction conditions can be defined.</p>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>Output File Format<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).</p>
+</section>
+<section id="id10">
+<h3>Example<a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+<p>The following example extracts frames satisfying the condition <span class="math notranslate nohighlight">\(5 \leq \zeta \leq 10\)</span> from an input trajectory, using a time-series CV data file <code class="docutils literal notranslate"><span class="pre">inp.ts</span></code> containing a single CV.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> ftraj    = &quot;input.dcd&quot;</span>
+<span class="s"> fcv      = &quot;inp.ts&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead         = &quot;out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> ndim          =  1</span>
+<span class="s"> extract_range =  5.0  10.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>extract_frame<span class="w"> </span>run.inp
+</pre></div>
+</div>
+<p>After execution, the extracted trajectory is written to <code class="docutils literal notranslate"><span class="pre">out.dcd</span></code>.</p>
+</section>
+</section>
+<section id="random-frame-extraction-random-frame-randf">
+<h2>Random Frame Extraction (random_frame, randf)<a class="headerlink" href="#random-frame-extraction-random-frame-randf" title="Link to this heading"></a></h2>
+<p>In this analysis mode, snapshots (frames) are randomly extracted from a trajectory.</p>
+<section id="id11">
+<h3>Parameter List<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ftraj</span></code></p></td>
+<td class="text-left"><p>Input trajectory filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_traj</span></code></p></td>
+<td class="text-left"><p>Filename containing the list of trajectory files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsample</span></code></p></td>
+<td class="text-left"><p>Number of randomly extracted frames</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">iseed</span></code></p></td>
+<td class="text-left"><p>Random seed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">output_trajtype</span></code></p></td>
+<td class="text-left"><p>Output trajectory format</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></p></td>
+<td class="text-left"><p>Whether duplicate sampling is allowed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">out_rst7</span></code></p></td>
+<td class="text-left"><p>Whether to output AMBER rst7 files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code></p></td>
+<td class="text-left"><p>Whether to shuffle the extracted frames</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|ftraj|      & Input trajectory filename \\
+                     & \verb|flist_traj| & Filename containing the list of trajectory files \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|nsample|         & Number of randomly extracted frames \\
+                     & \verb|iseed|           & Random seed \\
+                     & \verb|output_trajtype| & Output trajectory format \\
+                     & \verb|duplicate|       & Whether duplicate sampling is allowed \\
+                     & \verb|out_rst7|        & Whether to output AMBER rst7 files \\
+                     & \verb|shuffle|         & Whether to shuffle the extracted frames \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="id12">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsample</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">100</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsample</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the number of frames to be randomly extracted.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">iseed</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code> (automatically generated)</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">=</span> <span class="pre">3141592</span></code></p></li>
+</ul>
+<p>Specifies the random seed used for frame extraction.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>, the program automatically generates a seed.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">output_trajtype</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">dcd</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">output_trajtype</span> <span class="pre">=</span> <span class="pre">&quot;dcd&quot;</span></code></p></li>
+</ul>
+<p>Specifies the output trajectory format.</p>
+<p>Currently, the following formats are supported:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dcd</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xtc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">netcdf</span></code></p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">duplicate</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the same frame can be extracted multiple times.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">out_rst7</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">out_rst7</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether each extracted frame should also be output in AMBER rst7 format.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">shuffle</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">shuffle</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the extracted frames should be shuffled before output.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, all extracted frames are written in a random order.</p>
+</li>
+</ul>
+</section>
+<section id="id13">
+<h3>Output File Format<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<p>The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).</p>
+</section>
+<section id="id14">
+<h3>Example<a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<p>The following example extracts 100 random frames from the trajectory file <code class="docutils literal notranslate"><span class="pre">input.dcd</span></code>.
+In addition to the trajectory, the structure of each extracted frame is also written in <code class="docutils literal notranslate"><span class="pre">rst7</span></code> (<code class="docutils literal notranslate"><span class="pre">inpcrd</span></code>) format.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> ftraj    = &quot;input.dcd&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead         = &quot;out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> nsample = 100</span>
+<span class="s"> output_trajtype = &quot;dcd&quot;</span>
+<span class="s"> duplicate       = .false.</span>
+<span class="s"> out_rst7        = .true.</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>random_frame<span class="w"> </span>run.inp
+</pre></div>
+</div>
+<p>After execution, <code class="docutils literal notranslate"><span class="pre">out.dcd</span></code> and <code class="docutils literal notranslate"><span class="pre">outXXXXX.inpcrd</span></code> (<code class="docutils literal notranslate"><span class="pre">XXXXX</span> <span class="pre">=</span> <span class="pre">00001,</span> <span class="pre">...,</span> <span class="pre">00100</span></code>) are generated.</p>
+</section>
+</section>
+<section id="moving-average-moving-average-movave">
+<h2>Moving Average (moving_average, movave)<a class="headerlink" href="#moving-average-moving-average-movave" title="Link to this heading"></a></h2>
+<p>In this analysis mode, one-dimensional data (e.g., distribution functions) are smoothed using a moving average.</p>
+<section id="id15">
+<h3>Parameter List<a class="headerlink" href="#id15" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>Function data file</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>File containing a list of function data files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Output file header</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dx</span></code></p></td>
+<td class="text-left"><p>Grid spacing</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">xsta</span></code></p></td>
+<td class="text-left"><p>Starting position of the grid</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">xsep</span></code></p></td>
+<td class="text-left"><p>Boundary position between regions</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nregion</span></code></p></td>
+<td class="text-left"><p>Number of regions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">npoint</span></code></p></td>
+<td class="text-left"><p>Number of points used for moving average in each region</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">include_zero</span></code></p></td>
+<td class="text-left"><p>Whether to preserve the value at the origin</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|fcv|      & Function data file \\
+                     & \verb|flist_cv| & File containing a list of function data files \\
+\hline
+\verb|&output_param| & \verb|fhead|    & Output file header \\
+\hline
+\verb|&option_param| & \verb|dx|            & Grid spacing \\
+                     & \verb|xsta|          & Starting position of the grid \\
+                     & \verb|xsep|          & Boundary position between regions \\
+                     & \verb|nregion|       & Number of regions \\
+                     & \verb|npoint|        & Number of points used for moving average in each region \\
+                     & \verb|include_zero|  & Whether to preserve the value at the origin \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="id16">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#id16" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dx</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dx</span> <span class="pre">=</span> <span class="pre">0.1d0</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing of the function data.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">xsta</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.0d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsta</span> <span class="pre">=</span> <span class="pre">0.0d0</span></code></p></li>
+</ul>
+<p>Specifies the starting position of the grid.</p>
+<p>If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_i\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bcfea958-41ed-47ed-93a0-624755b9fc05">
+<span class="eqno">(71)<a class="headerlink" href="#equation-bcfea958-41ed-47ed-93a0-624755b9fc05" title="Permalink to this equation"></a></span>\[\begin{align}
+x_i = x_0 + (i-1)\Delta x
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_0\)</span> is the starting position.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nregion</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nregion</span> <span class="pre">=</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the number of regions to which different moving-average conditions are applied.</p>
+<p>The number of values given to <code class="docutils literal notranslate"><span class="pre">npoint</span></code> must match this number of regions.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">xsep</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.0d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsep</span> <span class="pre">=</span> <span class="pre">1.0d0</span></code></p></li>
+</ul>
+<p>Specifies the boundary positions between regions with different moving-average widths.</p>
+<p>This parameter is not used when <code class="docutils literal notranslate"><span class="pre">nregion</span> <span class="pre">=</span> <span class="pre">1</span></code>, in which case <code class="docutils literal notranslate"><span class="pre">xsep</span> <span class="pre">=</span> <span class="pre">0.0d0</span></code> should be specified.</p>
+<p>For example, when dividing the domain into <span class="math notranslate nohighlight">\(N\)</span> regions, <span class="math notranslate nohighlight">\(N-1\)</span> boundary values must be specified.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">npoint</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">npoint</span> <span class="pre">=</span> <span class="pre">3</span> <span class="pre">5</span></code></p></li>
+</ul>
+<p>Specifies the number of data points used for the moving average in each region.</p>
+<p>An odd number must be specified.</p>
+<p>In the above example,</p>
+<ul class="simple">
+<li><p>Region 1: 3-point moving average</p></li>
+<li><p>Region 2: 5-point moving average</p></li>
+</ul>
+<p>are applied.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">include_zero</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.true.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">include_zero</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>Specifies whether to preserve the value at the origin after smoothing.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the value at the origin is kept unchanged from the input data.</p>
+</li>
+</ul>
+</section>
+<section id="id17">
+<h3>Output File Format<a class="headerlink" href="#id17" title="Link to this heading"></a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*XXXX.dat</span></code></p>
+<ul class="simple">
+<li><p>Column 1: <span class="math notranslate nohighlight">\(x\)</span> coordinate</p></li>
+<li><p>Column 2: Function value</p></li>
+</ul>
+<p>A smoothed data file is generated for each input file specified by <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> or related options.</p>
+</li>
+</ul>
+</section>
+<section id="id18">
+<h3>Example<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<p>The following example smooths a one-dimensional function <span class="math notranslate nohighlight">\(f\left(x\right)\)</span> stored in <code class="docutils literal notranslate"><span class="pre">input.dat</span></code> (grid origin <code class="docutils literal notranslate"><span class="pre">0</span></code>, grid spacing <code class="docutils literal notranslate"><span class="pre">0.1</span></code>).</p>
+<p>The domain is divided into two regions, <span class="math notranslate nohighlight">\(x\leq 1.0\)</span> and <span class="math notranslate nohighlight">\(x&gt;1.0\)</span>, and 3-point and 5-point moving averages are applied to the first and second regions, respectively.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+ <span class="n">fcv</span>      <span class="o">=</span> <span class="s2">&quot;input.dat&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+ <span class="n">fhead</span> <span class="o">=</span> <span class="s2">&quot;out&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+  <span class="n">dx</span>           <span class="o">=</span> <span class="mf">0.1</span><span class="n">d0</span>
+  <span class="n">xsta</span>         <span class="o">=</span> <span class="mf">0.0</span><span class="n">d0</span>
+  <span class="n">xsep</span>         <span class="o">=</span> <span class="mf">1.0</span><span class="n">d0</span>
+  <span class="n">nregion</span>      <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">npoint</span>       <span class="o">=</span> <span class="mi">3</span> <span class="mi">5</span>
+  <span class="n">include_zero</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">moving_average</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+</pre></div>
+</div>
+<p>Executing this command generates the smoothed function data file <code class="docutils literal notranslate"><span class="pre">out0001.dat</span></code>.</p>
+</section>
+</section>
+<section id="average-function-average-function-avef">
+<h2>Average Function (average_function, avef)<a class="headerlink" href="#average-function-average-function-avef" title="Link to this heading"></a></h2>
+<p>In this analysis mode, one-dimensional functions stored in multiple input files are averaged.
+For example, let <span class="math notranslate nohighlight">\(f_{i}\left(x\right)\)</span> be the function stored in the <span class="math notranslate nohighlight">\(i\)</span>-th file and let <span class="math notranslate nohighlight">\(N\)</span> be the total number of files.
+The averaged function <span class="math notranslate nohighlight">\(f_{\mathrm{ave}}\left(x\right)\)</span> is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ede21a92-2044-4897-96b3-84df3f45870e">
+<span class="eqno">(72)<a class="headerlink" href="#equation-ede21a92-2044-4897-96b3-84df3f45870e" title="Permalink to this equation"></a></span>\[\begin{align}
+f_{\mathrm{ave}}\left(x\right) = \dfrac{1}{N}\sum_{i=1}^{N}f_{i}\left(x\right),
+\end{align}\]</div>
+<section id="id19">
+<h3>Parameter List<a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>File containing a list of function data files</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Output file header</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_bootstrap</span></code></p></td>
+<td class="text-left"><p>Enable bootstrap analysis</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">xsta</span></code></p></td>
+<td class="text-left"><p>Starting position of the grid</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dx</span></code></p></td>
+<td class="text-left"><p>Grid spacing</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></p></td>
+<td class="text-left"><p>Whether duplicate sampling is allowed</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">iseed</span></code></p></td>
+<td class="text-left"><p>Random seed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsample</span></code></p></td>
+<td class="text-left"><p>Number of samples drawn in each trial</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ntrial</span></code></p></td>
+<td class="text-left"><p>Number of bootstrap trials</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|      & File containing a list of function data files \\
+\hline
+\verb|&output_param| & \verb|fhead|         & Output file header \\
+\hline
+\verb|&option_param| & \verb|use_bootstrap| & Enable bootstrap analysis \\
+                     & \verb|xsta|          & Starting position of the grid \\
+                     & \verb|dx|            & Grid spacing \\
+\hline
+\verb|&bootopt_param| & \verb|duplicate|    & Whether duplicate sampling is allowed \\
+                      & \verb|iseed|        & Random seed \\
+                      & \verb|nsample|      & Number of samples drawn in each trial \\
+                      & \verb|ntrial|       & Number of bootstrap trials \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="id20">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#id20" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_bootstrap</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether to perform error estimation using the bootstrap method.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, bootstrap analysis is carried out according to the settings in <code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">xsta</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.0d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsta</span> <span class="pre">=</span> <span class="pre">0.0d0</span></code></p></li>
+</ul>
+<p>Specifies the starting position of the grid.</p>
+<p>If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_i\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-32b6cf62-5aab-4252-a103-fd1bb859184e">
+<span class="eqno">(73)<a class="headerlink" href="#equation-32b6cf62-5aab-4252-a103-fd1bb859184e" title="Permalink to this equation"></a></span>\[\begin{align}
+x_i = x_0 + (i-1)\Delta x
+\end{align} \]</div>
+<p>where <span class="math notranslate nohighlight">\(x_0\)</span> is the grid origin.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dx</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.1d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dx</span> <span class="pre">=</span> <span class="pre">0.1d0</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing of the function data.</p>
+</li>
+</ul>
+</section>
+<section id="id21">
+<h3><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code><a class="headerlink" href="#id21" title="Link to this heading"></a></h3>
+<p>This section defines the settings for bootstrap error analysis.</p>
+<p>It is effective only when <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code>.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">iseed</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: Automatically generated</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">=</span> <span class="pre">3141592</span></code></p></li>
+</ul>
+<p>Specifies the random seed used for bootstrap analysis.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>, the program automatically generates a seed.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsample</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsample</span> <span class="pre">=</span> <span class="pre">1000</span></code></p></li>
+</ul>
+<p>Specifies the number of samples drawn in each bootstrap trial.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.true.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">duplicate</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>Specifies whether duplicate sampling is allowed during bootstrap sampling.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ntrial</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ntrial</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the number of bootstrap trials.</p>
+<p>Increasing the number of trials improves the accuracy of the estimated statistical error, but also increases the computational cost.</p>
+</li>
+</ul>
+</section>
+<section id="id22">
+<h3>Output File Format<a class="headerlink" href="#id22" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*.ave</span></code></p>
+<ul>
+<li><p>Column 1: <span class="math notranslate nohighlight">\(x\)</span> coordinate</p></li>
+<li><p>Column 2: Function value</p></li>
+<li><p>Column 3: Standard error (when <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id23">
+<h3>Example<a class="headerlink" href="#id23" title="Link to this heading"></a></h3>
+<p>Suppose that one-dimensional functions <span class="math notranslate nohighlight">\(f\left(x\right)\)</span> (grid origin <code class="docutils literal notranslate"><span class="pre">0</span></code>, grid spacing <code class="docutils literal notranslate"><span class="pre">0.1</span></code>) are stored in multiple files, and the list of these files is stored in <code class="docutils literal notranslate"><span class="pre">list</span></code>.
+The following example calculates the average function and its standard error using the bootstrap method.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+ <span class="n">flist_cv</span> <span class="o">=</span> <span class="s2">&quot;list&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+ <span class="n">fhead</span>         <span class="o">=</span> <span class="s2">&quot;out&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+ <span class="n">use_bootstrap</span> <span class="o">=</span>  <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+ <span class="n">xsta</span>          <span class="o">=</span>  <span class="mf">0.0</span><span class="n">d0</span>  
+ <span class="n">dx</span>            <span class="o">=</span>  <span class="mf">0.1</span><span class="n">d0</span>  
+<span class="o">/</span>
+
+<span class="o">&amp;</span><span class="n">bootopt_param</span>
+ <span class="n">duplicate</span>     <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>   
+ <span class="n">iseed</span>         <span class="o">=</span>  <span class="mi">3141592</span> 
+ <span class="n">nsample</span>       <span class="o">=</span>  <span class="mi">1000</span>    
+ <span class="n">ntrial</span>        <span class="o">=</span>  <span class="mi">100</span>     
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">average_function</span> <span class="n">run</span><span class="o">.</span><span class="n">inp</span> 
+</pre></div>
+</div>
+<p>Executing this command generates the averaged function data file <code class="docutils literal notranslate"><span class="pre">out.ave</span></code>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../03_anatra_usage/combined.html" class="btn btn-neutral float-left" title="Usage of anatra" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../06_iepdyn/combined.html" class="btn btn-neutral float-right" title="Integral-Equation Formalism of Population DYNamics (IEPDYN)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

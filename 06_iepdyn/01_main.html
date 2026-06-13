@@ -1,0 +1,1595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integral-Equation Formalism of Population DYNamics (IEPDYN) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Integral-Equation Formalism of Population DYNamics (IEPDYN)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/06_iepdyn/01_main.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="integral-equation-formalism-of-population-dynamics-iepdyn">
+<h1>Integral-Equation Formalism of Population DYNamics (IEPDYN)<a class="headerlink" href="#integral-equation-formalism-of-population-dynamics-iepdyn" title="Link to this heading"></a></h1>
+<p>The Integral-Equation Formalism of Population DYNamics (IEPDYN) is a theoretical framework for describing transitions between discrete states.</p>
+<p>A key feature of this method is that it represents state dynamics as a continuous-time process. Unlike conventional approaches such as the Markov State Model (MSM), IEPDYN does not require the introduction of a discrete time scale (lag time), enabling a description of dynamics without the lag-time dependence.</p>
+<p>The IEPDYN requires the calculation of time-correlation functions associated with local state transitions. Since these quantities contain only information on local state-to-state transitions, they can be evaluated from short MD simulations. Accordingly, IEPDYN enables the prediction of long-time population dynamics using information obtained from short-time MD simulations.</p>
+<p>In ANATRA, the IEPDYN method is implemented as one of the analysis modes of <code class="docutils literal notranslate"><span class="pre">fanatra</span></code>.</p>
+<section id="theoretical-background">
+<h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
+<section id="theoretical-framework-of-iepdyn">
+<h3>Theoretical Framework of IEPDYN<a class="headerlink" href="#theoretical-framework-of-iepdyn" title="Link to this heading"></a></h3>
+<p>Let <span class="math notranslate nohighlight">\(\bm{\Gamma}\)</span> denote the set of atomic coordinates and momenta (a phase point) of the system, and divide the corresponding phase space into multiple structural states.</p>
+<p>If <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is the Liouville operator of the system, the exact time evolution of the probability density of state <span class="math notranslate nohighlight">\(j\)</span>, denoted by <span class="math notranslate nohighlight">\(\hat{f}_{j}\left(\bm{\Gamma},t\right)\)</span>, is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cf65dda4-0854-42dd-8c16-2d989eb6154b">
+<span class="eqno">()<a class="headerlink" href="#equation-cf65dda4-0854-42dd-8c16-2d989eb6154b" title="Permalink to this equation"></a></span>\[\begin{align}
+\dfrac{\partial}{\partial t}\hat{f}_{j}\left(\bm{\Gamma},t\right) =&amp; -\mathcal{L}\hat{f}_{j}\left(\bm{\Gamma},t\right) -\sum_{i\in\mathcal{N}_{j}}S_{ij}\left(\bm{\Gamma}\right)\hat{f}_{j}\left(\bm{\Gamma},t\right) +\sum_{k\in\mathcal{N}_{j}}S_{jk}\left(\bm{\Gamma}\right)\hat{f}_{k}\left(\bm{\Gamma},t\right).
+\end{align}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\mathcal{N}_{j}\)</span> is the set of states adjacent to state <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(S_{ij}\)</span> is called the <strong>reaction sink function</strong>. It is defined such that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6a576ce6-8612-440a-9c4f-f21b4a27de59">
+<span class="eqno">()<a class="headerlink" href="#equation-6a576ce6-8612-440a-9c4f-f21b4a27de59" title="Permalink to this equation"></a></span>\[\begin{align}
+S_{ij}\left(\bm{\Gamma}\right)\hat{f}_{j}\left(\bm{\Gamma},t\right)
+\end{align}\]</div>
+<p>represents the probability that the system transitions from state <span class="math notranslate nohighlight">\(j\)</span> to state <span class="math notranslate nohighlight">\(i\)</span> during the time interval from <span class="math notranslate nohighlight">\(t\)</span> to <span class="math notranslate nohighlight">\(t+dt\)</span>.</p>
+<p>The probability that the system is in state <span class="math notranslate nohighlight">\(j\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>, denoted by <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span>, is obtained by integrating <span class="math notranslate nohighlight">\(\hat{f}_{j}\left(\bm{\Gamma},t\right)\)</span> over the phase space.</p>
+<p>From the formal solution of the above equation, the following approximate expression for <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span> is obtained:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5b660ae4-eb1a-4c4c-a798-349a3a5d73ce">
+<span class="eqno">()<a class="headerlink" href="#equation-5b660ae4-eb1a-4c4c-a798-349a3a5d73ce" title="Permalink to this equation"></a></span>\[\begin{align}
+P_{j}\left(t\right) &amp; =P_{j}^{0}\left(t\right)+\sum_{k\in\mathcal{N}_{j}}\int_{0}^{t}d\tau\,M_{jk}\left(t-\tau\right)Q_{jk}\left(\tau\right),
+\end{align}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P_{j}^{0}\left(t\right)\)</span> is the probability that a system initially in state <span class="math notranslate nohighlight">\(j\)</span> remains in state <span class="math notranslate nohighlight">\(j\)</span> without making any transition to neighboring states up to time <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q_{jk}\left(t\right)\)</span> is the probability that the system transitions from state <span class="math notranslate nohighlight">\(k\)</span> to state <span class="math notranslate nohighlight">\(j\)</span> during the time interval from <span class="math notranslate nohighlight">\(t\)</span> to <span class="math notranslate nohighlight">\(t+dt\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(M_{jk}\left(t\right)\)</span> is the probability that a system that entered state <span class="math notranslate nohighlight">\(j\)</span> from state <span class="math notranslate nohighlight">\(k\)</span> at time zero remains in state <span class="math notranslate nohighlight">\(j\)</span> without any further transitions to neighboring states up to time <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+</ul>
+<p>Since <span class="math notranslate nohighlight">\(P_j^0(t)\)</span> and <span class="math notranslate nohighlight">\(M_{jk}(t)\)</span> involve only a single transition event, they can be evaluated from short MD simulations.</p>
+<p>Furthermore, <span class="math notranslate nohighlight">\(Q_{jk}\left(t\right)\)</span> can also be represented by an integral equation whose kernel decays on a short time scale:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2bb2c756-b914-4d9e-a005-a3a1896f1108">
+<span class="eqno">()<a class="headerlink" href="#equation-2bb2c756-b914-4d9e-a005-a3a1896f1108" title="Permalink to this equation"></a></span>\[\begin{align}
+Q_{ij}\left(t\right) = R_{ij}\left(t\right) + \sum_{k\in \mathcal{N}_{j}}\int_{0}^{t}d\tau\, K_{ijk}\left(t-\tau\right) Q_{jk}\left(\tau\right),
+\end{align}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(R_{ij}\left(t\right)\)</span> is the probability that a system initially in state <span class="math notranslate nohighlight">\(j\)</span> transitions to state <span class="math notranslate nohighlight">\(i\)</span> during the time interval from <span class="math notranslate nohighlight">\(t\)</span> to <span class="math notranslate nohighlight">\(t+dt\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(K_{ijk}\left(t\right)\)</span> is the probability that a system that transitioned from state <span class="math notranslate nohighlight">\(k\)</span> to state <span class="math notranslate nohighlight">\(j\)</span> during the interval <span class="math notranslate nohighlight">\(0 \sim dt\)</span> subsequently transitions to state <span class="math notranslate nohighlight">\(i\)</span> during the time interval from <span class="math notranslate nohighlight">\(t\)</span> to <span class="math notranslate nohighlight">\(t+dt\)</span>.</p></li>
+</ul>
+<p>Like <span class="math notranslate nohighlight">\(P_{j}^{0}\left(t\right)\)</span> and <span class="math notranslate nohighlight">\(M_{jk}\left(t\right)\)</span>, both <span class="math notranslate nohighlight">\(R_{ij}\left(t\right)\)</span> and <span class="math notranslate nohighlight">\(K_{ijk}\left(t\right)\)</span> can be computed from short MD simulations. Moreover, <span class="math notranslate nohighlight">\(P_{j}^{0}\left(t\right)\)</span> and <span class="math notranslate nohighlight">\(M_{jk}\left(t\right)\)</span> can be constructed from <span class="math notranslate nohighlight">\(R_{ij}\left(t\right)\)</span> and <span class="math notranslate nohighlight">\(K_{ijk}\left(t\right)\)</span>.
+Therefore, by performing short MD simulations and evaluating <span class="math notranslate nohighlight">\(R_{ij}\left(t\right)\)</span> and <span class="math notranslate nohighlight">\(K_{ijk}\left(t\right)\)</span>, one can predict long-time population dynamics <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span>.</p>
+<p>In the IEPDYN framework, the initial population of each state, <span class="math notranslate nohighlight">\(w_{j}\)</span>, must be specified.
+If the system is assumed to be in equilibrium at the initial time, let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{I}}\)</span> be the set of states that have nonzero initial populations and let <span class="math notranslate nohighlight">\(P_{j}^{\mathrm{eq}}\)</span> be the equilibrium population of state <span class="math notranslate nohighlight">\(j\)</span>. Thus,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a6a76e94-e97a-4ef2-8a0e-a3ce55e3c52c">
+<span class="eqno">()<a class="headerlink" href="#equation-a6a76e94-e97a-4ef2-8a0e-a3ce55e3c52c" title="Permalink to this equation"></a></span>\[\begin{align}
+\forall j\in \mathcal{M}_{\mathrm{I}},~ w_{j} = \dfrac{P_{j}^{\mathrm{eq}}}{\displaystyle\sum_{k\in\mathcal{M}_{\mathrm{I}}} P_{k}^{\mathrm{eq}}}
+\end{align}\]</div>
+<p>The equilibrium populations <span class="math notranslate nohighlight">\(P_j^{\mathrm{eq}}\)</span> may be obtained from free energy calculations such as umbrella sampling. Alternatively, as described later, they can also be evaluated analytically within the IEPDYN framework.</p>
+<figure class="align-center" id="pj-qij-scheme-eps">
+<a class="reference internal image-reference" href="../_images/Pj_Qij_scheme.eps"><img alt="../_images/Pj_Qij_scheme.eps" src="../_images/Pj_Qij_scheme.eps" style="width: 464.0px; height: 158.0px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Schematic illustration of the IEPDYN.</span><a class="headerlink" href="#pj-qij-scheme-eps" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="introducing-boundary-conditions">
+<h3>Introducing Boundary Conditions<a class="headerlink" href="#introducing-boundary-conditions" title="Link to this heading"></a></h3>
+<p>In the IEPDYN framework, reflecting and absorbing boundary conditions can be introduced into the coarse-grained reaction dynamics. These boundary conditions are imposed directly on the state-to-state transition probabilities, <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span>, and are particularly useful for analyzing molecular binding processes based on the recurrence probability (RP) theory.</p>
+<p>For the <strong>reflecting boundary condition</strong>, any population entering a reflecting state is immediately redistributed to neighboring states without remaining in that state. Let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{reflect}}\)</span> denote the set of reflecting states. The reflecting boundary condition is expressed as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c011105f-948f-4a57-b3d1-81ede7830ac3">
+<span class="eqno">()<a class="headerlink" href="#equation-c011105f-948f-4a57-b3d1-81ede7830ac3" title="Permalink to this equation"></a></span>\[\begin{align}
+&amp; \forall i\in\mathcal{M}_{\mathrm{reflect}},~\forall j\in\mathcal{N}_{i}, \notag \\
+&amp; Q_{ji}\left(t\right)=R_{ij}\left(t\right) + \sum_{k\in\mathcal{N}_{j}}\int_{0}^{t}d\tau\,K_{ijk}\left(t-\tau\right)Q_{jk}\left(\tau\right),\\
+&amp; Q_{ij}\left(t\right)=0,
+\end{align}\]</div>
+<p>which represents that a population flowing from state <span class="math notranslate nohighlight">\(j\)</span> into a reflecting state <span class="math notranslate nohighlight">\(i\in\mathcal{M}_{\mathrm{reflect}}\)</span> is instantaneously reflected back to state <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<p>In contrast, under the <strong>absorbing boundary condition</strong>, a population that reaches an absorbing state never transitions to any other state thereafter. Let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{absorb}}\)</span> denote the set of absorbing states. The absorbing boundary condition is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fd892e7b-1a2e-4ca5-a2f1-c9ba82634e95">
+<span class="eqno">()<a class="headerlink" href="#equation-fd892e7b-1a2e-4ca5-a2f1-c9ba82634e95" title="Permalink to this equation"></a></span>\[\begin{align}
+\forall i\in\mathcal{M}_{\mathrm{absorb}},~\forall j \in\mathcal{N}_{i},\quad Q_{ji}\left(t\right) =0,
+\end{align}\]</div>
+<p>which means that no population can flow out of an absorbing state. Once the population reaches an absorbing state, it is treated as having reached the final state.</p>
+<p>In this way, the IEPDYN framework can treat both reflecting and absorbing boundaries in a unified manner by directly imposing boundary conditions on the state-to-state transition probabilities.</p>
+</section>
+<section id="incorporating-returning-probability-rp-theory">
+<h3>Incorporating Returning Probability (RP) Theory<a class="headerlink" href="#incorporating-returning-probability-rp-theory" title="Link to this heading"></a></h3>
+<p>The Returning probability (RP) theory is a rigorous framework of diffusion-influenced reactions. This theory characterizes molecular binding processes in terms of the thermodynamic and kinetic properties of the <strong>reactive state</strong> existing during binding processes. In the IEPDYN framework, the dynamical quantities required by the RP theory can be efficiently evaluated from short MD simulations.</p>
+<p>In the RP theory, the association rate constant, <span class="math notranslate nohighlight">\(k_{\mathrm{on}}\)</span>, is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ebb7a41a-6b98-459f-a8f7-95fb022b8430">
+<span class="eqno">()<a class="headerlink" href="#equation-ebb7a41a-6b98-459f-a8f7-95fb022b8430" title="Permalink to this equation"></a></span>\[\begin{align}
+k_{\mathrm{on}}
+=
+k_{\mathrm{ins}}K^{*}
+\left(
+1+k_{\mathrm{ins}}
+\int_{0}^{\infty}
+dt\,
+P_{\mathrm{RET}}\left(t\right)
+\right)^{-1},
+\label{kon_rp}
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(K^{*}\)</span> is the equilibrium constant between the reactive and unbound states, <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> is the transition rate constant from the reactive state to the bound state, and <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}\left(t\right)\)</span> is the conditional probability (returning probability) that a system initially in the reactive state is still in the reactive state at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p>In the IEPDYN framework, let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{R}}\)</span> denote the set of reactive states, and set the initial-state set as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7cb7efa5-6cfc-4956-9465-e2ac0010979f">
+<span class="eqno">()<a class="headerlink" href="#equation-7cb7efa5-6cfc-4956-9465-e2ac0010979f" title="Permalink to this equation"></a></span>\[\begin{align}
+\mathcal{M}_{\mathrm{I}}=\mathcal{M}_{\mathrm{R}}.
+\end{align}\]</div>
+<p>By introducing appropriate boundary conditions, both <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> and <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}(t)\)</span> can be evaluated from the state populations <span class="math notranslate nohighlight">\(P_j(t)\)</span>.</p>
+<p>For the calculation of <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span>, an absorbing boundary condition is introduced to define the completion of the binding process, while a reflecting boundary condition is imposed on the neighboring states located on the unbound side of the reactive state. Under these conditions,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3fb8a165-bb2a-4ac8-a270-a45a135f1a10">
+<span class="eqno">()<a class="headerlink" href="#equation-3fb8a165-bb2a-4ac8-a270-a45a135f1a10" title="Permalink to this equation"></a></span>\[\begin{align}
+\dfrac{1}{k_{\mathrm{ins}}}
+=
+\int_{0}^{\infty}
+dt\,
+\sum_{j\notin\mathcal{M}_{\mathrm{absorb}}}
+P_{j}\left(t\right),
+\label{kins}
+\end{align}\]</div>
+<p>holds. The right-hand side corresponds to the <strong>Mean First Passage Time (MFPT)</strong> from the reactive state to the absorbing state, and its inverse gives <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span>.</p>
+<p>On the other hand, for the calculation of <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}(t)\)</span>, the neighboring states located on the bound side of the reactive state are treated as reflecting boundaries. In this case,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1bf2a361-21c7-4c31-8d52-e0e9a1896d07">
+<span class="eqno">()<a class="headerlink" href="#equation-1bf2a361-21c7-4c31-8d52-e0e9a1896d07" title="Permalink to this equation"></a></span>\[\begin{align}
+P_{\mathrm{RET}}\left(t\right)
+=
+\sum_{j\in\mathcal{M}_{\mathrm{R}}}
+P_{j}\left(t\right),
+\end{align}\]</div>
+<p>gives the returning probability.</p>
+<p>Thus, by appropriately introducing boundary conditions, the IEPDYN framework enables efficient evaluation of both <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> and <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}(t)\)</span> from short MD simulations. Furthermore, by combining these quantities with the equilibrium constant <span class="math notranslate nohighlight">\(K^{*}\)</span>, the association rate constant <span class="math notranslate nohighlight">\(k_{\mathrm{on}}\)</span> for long-time-scale molecular binding processes can be determined.</p>
+</section>
+<section id="analytical-estimation-of-the-time-integral-of-p-j-left-t-right">
+<h3>Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span><a class="headerlink" href="#analytical-estimation-of-the-time-integral-of-p-j-left-t-right" title="Link to this heading"></a></h3>
+<p>Kinetic parameters, including <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> in the RP theory, are expressed in terms of the time integral of the state population,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-02568a89-4b5a-4029-b198-2698d181da35">
+<span class="eqno">()<a class="headerlink" href="#equation-02568a89-4b5a-4029-b198-2698d181da35" title="Permalink to this equation"></a></span>\[\begin{align}
+\tau_j=\int_0^\infty dt\,P_j(t).
+\end{align}\]</div>
+<p>By introducing absorbing boundary conditions or states corresponding to infinite separation, <span class="math notranslate nohighlight">\(P_j(t)\)</span> converges to zero as <span class="math notranslate nohighlight">\(t\to\infty\)</span>.
+A straightforward approach is to solve the integral equations for the time evolution of <span class="math notranslate nohighlight">\(P_j(t)\)</span> followed by its numerical integration.
+Instead of the numerical integration, the IEPDYN enables us to directly evaluate <span class="math notranslate nohighlight">\(\tau_j\)</span> through the Laplace transform.</p>
+<p>The Laplace transform of a function <span class="math notranslate nohighlight">\(f(t)\)</span> is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-22b5a57d-b6e8-452a-ab5c-bd49434afc72">
+<span class="eqno">()<a class="headerlink" href="#equation-22b5a57d-b6e8-452a-ab5c-bd49434afc72" title="Permalink to this equation"></a></span>\[\begin{align}
+\widetilde{f}(s)=\int_0^\infty dt\,e^{-st}f(t).
+\end{align}\]</div>
+<p>Applying the Laplace transform to the integral equation for the state population yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-848af729-7dfe-4009-811e-d58697ea7f2a">
+<span class="eqno">()<a class="headerlink" href="#equation-848af729-7dfe-4009-811e-d58697ea7f2a" title="Permalink to this equation"></a></span>\[\begin{align}
+\widetilde{P}_{j}\left(s\right)
+=
+\widetilde{P}_{j}^{0}\left(s\right)
++
+\sum_{k\in\mathcal{N}_{j}}
+\widetilde{M}_{jk}\left(s\right)
+\widetilde{Q}_{jk}\left(s\right).
+\end{align}\]</div>
+<p>Taking the limit <span class="math notranslate nohighlight">\(s\rightarrow 0\)</span>, we obtain</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fe123330-7b3d-4d1d-939a-8c0695774ebd">
+<span class="eqno">()<a class="headerlink" href="#equation-fe123330-7b3d-4d1d-939a-8c0695774ebd" title="Permalink to this equation"></a></span>\[\begin{align}
+\tau_{j}
+=
+\widetilde{P}_{j}^{0}\left(0\right)
++
+\sum_{k\in\mathcal{N}_{j}}
+\widetilde{M}_{jk}\left(0\right)
+\widetilde{Q}_{jk}\left(0\right).
+\end{align}\]</div>
+<p>Therefore, the evaluation of <span class="math notranslate nohighlight">\(\tau_j\)</span> reduces to the calculation of <span class="math notranslate nohighlight">\(\widetilde{Q}_{jk}(0)\)</span>.
+To this end, we introduce</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4715cc2e-4918-4518-9bae-079d87f80087">
+<span class="eqno">()<a class="headerlink" href="#equation-4715cc2e-4918-4518-9bae-079d87f80087" title="Permalink to this equation"></a></span>\[\begin{align}
+\mathcal{K}_{ij,j^{\prime}k}\left(t\right)
+=
+\delta_{jj^{\prime}}
+K_{ijk}\left(t\right).
+\end{align}\]</div>
+<p>The integral equation for <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span> can then be written in Laplace space as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b1b8a679-5f55-4a51-ab00-7ecc7af75d5b">
+<span class="eqno">()<a class="headerlink" href="#equation-b1b8a679-5f55-4a51-ab00-7ecc7af75d5b" title="Permalink to this equation"></a></span>\[\begin{align}
+\widetilde{Q}_{ij}\left(s\right)
+=
+\widetilde{R}_{ij}\left(s\right)
++
+\sum_{j^{\prime},k}
+\widetilde{\mathcal{K}}_{ij,j^{\prime}k}\left(s\right)
+\widetilde{Q}_{j^{\prime}k}\left(s\right).
+\end{align}\]</div>
+<p>By introducing a composite index <span class="math notranslate nohighlight">\(\lambda\)</span> for the state pair <span class="math notranslate nohighlight">\((ij)\)</span>, the above equation can be expressed in matrix form as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fae87180-f9f9-4e28-85aa-8aa846eb3e57">
+<span class="eqno">()<a class="headerlink" href="#equation-fae87180-f9f9-4e28-85aa-8aa846eb3e57" title="Permalink to this equation"></a></span>\[\begin{align}
+\widetilde{\mathbf{Q}}(s)
+=
+\widetilde{\mathbf{R}}(s)
++
+\widetilde{\boldsymbol{\mathcal{K}}}(s)
+\widetilde{\mathbf{Q}}(s).
+\end{align}\]</div>
+<p>Taking the limit <span class="math notranslate nohighlight">\(s\to0\)</span> gives</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fcf33758-9cff-4748-84e6-7f810905797e">
+<span class="eqno">()<a class="headerlink" href="#equation-fcf33758-9cff-4748-84e6-7f810905797e" title="Permalink to this equation"></a></span>\[\begin{align}
+\widetilde{\mathbf{Q}}\left(0\right)
+=
+\left[
+\mathbf{I}
+-
+\widetilde{\boldsymbol{\mathcal{K}}}\left(0\right)
+\right]^{-1}
+\widetilde{\mathbf{R}}\left(0\right),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> is the identity matrix and</p>
+<div class="amsmath math notranslate nohighlight" id="equation-685ac9f4-5aa9-459c-b5ab-d1242c37e0e3">
+<span class="eqno">()<a class="headerlink" href="#equation-685ac9f4-5aa9-459c-b5ab-d1242c37e0e3" title="Permalink to this equation"></a></span>\[\begin{align}
+\left(
+\mathbf{I}
+-
+\widetilde{\boldsymbol{\mathcal{K}}}\left(0\right)
+\right)_{\lambda\mu}
+=
+\delta_{\lambda\mu}
+-
+\int_0^\infty dt\,
+\mathcal{K}_{\lambda\mu}(t).
+\end{align}\]</div>
+<p>Thus, the time-integrated transition probability,
+<span class="math notranslate nohighlight">\(\widetilde{\mathbf{Q}}(0)\)</span>, can be obtained directly by matrix operations, and <span class="math notranslate nohighlight">\(\tau_j\)</span> can be evaluated analytically.
+This approach eliminates the need to explicitly compute the long-time evolution of <span class="math notranslate nohighlight">\(P_j(t)\)</span> and enables efficient evaluation of kinetic quantities such as the MFPT.</p>
+</section>
+<section id="analytical-evaluation-of-the-equilibrium-population-p-j-left-infty-right">
+<h3>Analytical Evaluation of the Equilibrium Population <span class="math notranslate nohighlight">\(P_{j}\left(\infty\right)\)</span><a class="headerlink" href="#analytical-evaluation-of-the-equilibrium-population-p-j-left-infty-right" title="Link to this heading"></a></h3>
+<p>For systems in which the total population is conserved, the equilibrium population of state <span class="math notranslate nohighlight">\(j\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-28ccf317-ed5d-4d09-bbff-7c6f79d972a7">
+<span class="eqno">()<a class="headerlink" href="#equation-28ccf317-ed5d-4d09-bbff-7c6f79d972a7" title="Permalink to this equation"></a></span>\[\begin{align}
+P_j^{\mathrm{eq}}\equiv P_j(\infty),
+\end{align}\]</div>
+<p>can be evaluated without numerically integrating the time evolution of <span class="math notranslate nohighlight">\(P_j(t)\)</span>.</p>
+<p>First, the state-transition probability <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span> is decomposed into its equilibrium and time-dependent components as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-649eb90a-14b1-46a2-b095-e471ad77ac80">
+<span class="eqno">()<a class="headerlink" href="#equation-649eb90a-14b1-46a2-b095-e471ad77ac80" title="Permalink to this equation"></a></span>\[\begin{align}
+Q_{ij}(t)=Q_{ij}^{\mathrm{eq}}+\delta Q_{ij}(t).
+\end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b3cd9863-f0bc-4770-8fd1-1b9d2f8f63bd">
+<span class="eqno">()<a class="headerlink" href="#equation-b3cd9863-f0bc-4770-8fd1-1b9d2f8f63bd" title="Permalink to this equation"></a></span>\[\begin{align}
+Q_{ij}^{\mathrm{eq}}\equiv Q_{ij}(\infty)
+\end{align}\]</div>
+<p>represents the equilibrium population flux from state <span class="math notranslate nohighlight">\(j\)</span> to state <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p>Substituting this decomposition into the IEPDYN integral equation and taking the limit <span class="math notranslate nohighlight">\(t\to\infty\)</span>, we obtain</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7fe207d9-936f-4a9c-8ccc-3ea30c24dd26">
+<span class="eqno">()<a class="headerlink" href="#equation-7fe207d9-936f-4a9c-8ccc-3ea30c24dd26" title="Permalink to this equation"></a></span>\[\begin{align}
+P_{j}^{\mathrm{eq}}
+&amp;=
+\lim_{t\to\infty}
+\left[
+\sum_{k\in\mathcal{N}_{j}}
+\int_{0}^{t}
+d\tau\,
+M_{jk}(t-\tau)
+\delta Q_{jk}(\tau)
+\right]
+\notag\\
+&amp;\quad
++
+\sum_{k\in\mathcal{N}_{j}}
+I_{jk}
+Q_{jk}^{\mathrm{eq}},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(I_{jk}\)</span> is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f526fc72-a462-47a4-97f4-6b4947f7e9bd">
+<span class="eqno">()<a class="headerlink" href="#equation-f526fc72-a462-47a4-97f4-6b4947f7e9bd" title="Permalink to this equation"></a></span>\[\begin{align}
+I_{jk}
+=
+\int_{0}^{\infty}
+dt\,
+M_{jk}(t).
+\end{align}\]</div>
+<p>Since both <span class="math notranslate nohighlight">\(M_{jk}(t)\)</span> and <span class="math notranslate nohighlight">\(\delta Q_{jk}(t)\)</span> vanish in the limit <span class="math notranslate nohighlight">\(t\to\infty\)</span>, the first term disappears, yielding</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a0c6cda3-7b4e-4cf8-968a-77cdb61d31ec">
+<span class="eqno">()<a class="headerlink" href="#equation-a0c6cda3-7b4e-4cf8-968a-77cdb61d31ec" title="Permalink to this equation"></a></span>\[\begin{align}
+P_{j}^{\mathrm{eq}}
+=
+\sum_{k\in\mathcal{N}_{j}}
+I_{jk}
+Q_{jk}^{\mathrm{eq}}.
+\end{align}\]</div>
+<p>Therefore, once the equilibrium transition fluxes <span class="math notranslate nohighlight">\(Q_{jk}^{\mathrm{eq}}\)</span> are determined, the equilibrium populations of all states can be calculated directly.</p>
+<p>Furthermore, the integral equation can be written in matrix form as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4f826127-0f3d-4ccf-808e-4923cb97c06c">
+<span class="eqno">()<a class="headerlink" href="#equation-4f826127-0f3d-4ccf-808e-4923cb97c06c" title="Permalink to this equation"></a></span>\[\begin{align}
+\bm{\delta}{\bf Q}(t)
+&amp;=
+{\bf R}(t)
++
+\int_{0}^{t}
+d\tau\,
+\bm{\mathcal{K}}(t-\tau)
+\bm{\delta}{\bf Q}(\tau)
+\notag\\
+&amp;\quad
+-
+{\bf Q}^{\mathrm{eq}}
++
+{\bf J}
+{\bf Q}^{\mathrm{eq}},
+\end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c5c85f6c-6358-4086-bd94-9d0e990d81f9">
+<span class="eqno">()<a class="headerlink" href="#equation-c5c85f6c-6358-4086-bd94-9d0e990d81f9" title="Permalink to this equation"></a></span>\[\begin{align}
+J_{\lambda\mu}
+=
+\int_{0}^{\infty}
+dt\,
+\mathcal{K}_{\lambda\mu}(t).
+\end{align}\]</div>
+<p>In the limit <span class="math notranslate nohighlight">\(t\to\infty\)</span>, the time-dependent terms vanish, leading to</p>
+<div class="amsmath math notranslate nohighlight" id="equation-95cf1a89-74ba-4f23-b1ea-09f4af37abf3">
+<span class="eqno">()<a class="headerlink" href="#equation-95cf1a89-74ba-4f23-b1ea-09f4af37abf3" title="Permalink to this equation"></a></span>\[\begin{align}
+{\bf J}
+{\bf Q}^{\mathrm{eq}}
+=
+{\bf Q}^{\mathrm{eq}}.
+\end{align}\]</div>
+<p>Thus, <span class="math notranslate nohighlight">\({\bf Q}^{\mathrm{eq}}\)</span> is given by the eigenvector of the matrix <span class="math notranslate nohighlight">\({\bf J}\)</span> corresponding to the eigenvalue of unity.
+By solving this eigenvalue problem, the equilibrium transition fluxes can be obtained, and the equilibrium populations are then evaluated from</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e65d0a59-95df-466b-a1d6-9e9bd0b80f6b">
+<span class="eqno">()<a class="headerlink" href="#equation-e65d0a59-95df-466b-a1d6-9e9bd0b80f6b" title="Permalink to this equation"></a></span>\[\begin{align}
+P_{j}^{\mathrm{eq}}
+=
+\sum_{k\in\mathcal{N}_{j}}
+I_{jk}
+Q_{jk}^{\mathrm{eq}}.
+\end{align}\]</div>
+<p>The resulting equilibrium populations are also used to determine the initial statistical weights in the IEPDYN formalism:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5f2eac8d-34d0-44fa-b827-0eb56ada588c">
+<span class="eqno">()<a class="headerlink" href="#equation-5f2eac8d-34d0-44fa-b827-0eb56ada588c" title="Permalink to this equation"></a></span>\[\begin{align}
+\forall j\in\mathcal{M}_{\mathrm{I}},
+\quad
+w_j
+=
+\frac{P_j^{\mathrm{eq}}}
+{\displaystyle
+\sum_{k\in\mathcal{M}_{\mathrm{I}}}
+P_k^{\mathrm{eq}}
+}.
+\end{align}\]</div>
+<p>In binding and dissociation processes, a population-conserving system can be constructed by introducing reflecting boundary conditions at the outermost states.
+This enables the present method to efficiently evaluate the equilibrium populations required for IEPDYN calculations.</p>
+</section>
+</section>
+<section id="parameter-list">
+<h2>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>Time-series CV data file</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>List of CV data files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Output file header</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">input_type</span></code></p></td>
+<td class="text-left"><p>Input file format</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">output_histogram</span></code></p></td>
+<td class="text-left"><p>Output restart file</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span></code></p></td>
+<td class="text-left"><p>Whether the data are generated from MD simulations under a bias potential</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code></p></td>
+<td class="text-left"><p>State ID that remains unperturbed in each dataset</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_dissociate_state</span></code></p></td>
+<td class="text-left"><p>Whether to define dissociated states</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_reflection_state</span></code></p></td>
+<td class="text-left"><p>Whether to define reflecting states</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_product_state</span></code></p></td>
+<td class="text-left"><p>Whether to define product states</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">calc_steady</span></code></p></td>
+<td class="text-left"><p>Whether to calculate the steady-state distribution</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">calc_Pint</span></code></p></td>
+<td class="text-left"><p>Whether to analytically evaluate the time integral</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">extrapolate</span></code></p></td>
+<td class="text-left"><p>Evaluate time evolution based on the integral equations</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nstate</span></code></p></td>
+<td class="text-left"><p>Number of states</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ndim</span></code></p></td>
+<td class="text-left"><p>Number of CV dimensions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nmol</span></code></p></td>
+<td class="text-left"><p>Number of target molecules</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dt</span></code></p></td>
+<td class="text-left"><p>Time grid spacing</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">t_sparse</span></code></p></td>
+<td class="text-left"><p>Coarse time grid spacing for TCF calculations</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">t_range</span></code></p></td>
+<td class="text-left"><p>Time range for calculating the K, M, R, and P0 functions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">t_extend</span></code></p></td>
+<td class="text-left"><p>Output time range for the P and Q functions</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dt_tcfout</span></code></p></td>
+<td class="text-left"><p>Output time interval for the P and Q functions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">initial_state_ids</span></code></p></td>
+<td class="text-left"><p>Initial state IDs</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">reflection_state_ids</span></code></p></td>
+<td class="text-left"><p>Reflecting state IDs</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">product_state_ids</span></code></p></td>
+<td class="text-left"><p>Product state IDs</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;state</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">definition</span></code></p></td>
+<td class="text-left"><p>State boundaries and initial populations for each state</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|fcv|      & Time-series CV data file \\
+                     & \verb|flist_cv| & List of CV data files \\
+\hline
+\verb|&output_param| & \verb|fhead|    & Output file header \\
+\hline
+\verb|&option_param| & \verb|input_type|           & Input file format \\
+                     & \verb|output_histogram|     & Output restart file \\
+                     & \verb|use_perturbed_traj|   & Whether the data are generated from MD simulations under a bias potential \\
+                     & \verb|f_unperturbed_id|     & State ID that remains unperturbed in each dataset \\
+                     & \verb|use_dissociate_state| & Whether to define dissociated states \\
+                     & \verb|use_reflection_state| & Whether to define reflecting states \\
+                     & \verb|use_product_state|    & Whether to define product states \\
+                     & \verb|calc_steady|          & Whether to calculate the steady-state distribution \\
+                     & \verb|calc_Pint|            & Whether to analytically evaluate the time integral \\
+                     & \verb|extrapolate|          & Evaluate time evolution based on the integral equations \\
+                     & \verb|nstate|               & Number of states \\
+                     & \verb|ndim|                 & Number of CV dimensions \\
+                     & \verb|nmol|                 & Number of target molecules \\
+                     & \verb|dt|                   & Time grid spacing \\
+                     & \verb|t_sparse|             & Coarse time grid spacing for TCF calculations \\
+                     & \verb|t_range|              & Time range for calculating the K, M, R, and P0 functions \\
+                     & \verb|t_extend|             & Output time range for the P and Q functions \\
+                     & \verb|dt_tcfout|            & Output time interval for the P and Q functions \\
+                     & \verb|initial_state_ids|    & Initial state IDs \\
+                     & \verb|reflection_state_ids| & Reflecting state IDs \\
+                     & \verb|product_state_ids|    & Product state IDs \\
+\hline
+\verb|&state| & state definition & State boundaries and initial populations for each state \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="option-param">
+<h2><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#option-param" title="Link to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">input_type</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">&quot;TIMESERIES&quot;</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">input_type</span> <span class="pre">=</span> <span class="pre">&quot;TIMESERIES&quot;</span></code></p></li>
+</ul>
+<p>Specifies the format of the input files.</p>
+<p>Available formats are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TIMESERIES</span></code> : ANATRA standard time-series data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HISTOGRAM</span></code> : Histogram restart files (<code class="docutils literal notranslate"><span class="pre">*.krhist</span></code>) generated with <code class="docutils literal notranslate"><span class="pre">output_histogram</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">output_histogram</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">output_histogram</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether histogram-format restart files (<code class="docutils literal notranslate"><span class="pre">*.krhist</span></code>) are generated from the calculation results.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the input time-series data were obtained from MD simulations under a bias potential.
+The bias potential should not perturb the dynamics within a particular state, such as a flat-bottom potential.
+If <code class="docutils literal notranslate"><span class="pre">.true.</span></code> is specified, <code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code> must also be provided.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span> <span class="pre">=</span> <span class="pre">&quot;funp.list&quot;</span></code></p></li>
+</ul>
+<p>This parameter is required when <code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span> <span class="pre">=</span> <span class="pre">.true.</span></code>.
+It specifies a list file that describes, for each time-series dataset,</p>
+<ol class="arabic simple">
+<li><p>which state’s dynamics are not perturbed by the bias potential, and</p></li>
+<li><p>whether the dataset is used for calculating <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span>.</p></li>
+</ol>
+<p>The entries should correspond to the order of files specified by <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> or <code class="docutils literal notranslate"><span class="pre">fcv</span></code>.</p>
+<p>Each line should contain:</p>
+<ul class="simple">
+<li><p>Column 1: Unperturbed state ID</p></li>
+<li><p>Column 2: Whether the dataset is used for calculating <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span> (<code class="docutils literal notranslate"><span class="pre">1</span></code>: yes, <code class="docutils literal notranslate"><span class="pre">0</span></code>: no)</p></li>
+</ul>
+<p>For example, if the file specified by <code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code> is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="mi">0</span>
+<span class="mi">2</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>the first two datasets correspond to trajectories whose state 1 dynamics are unperturbed and are used for calculating <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span>, whereas the next two datasets correspond to trajectories whose state 2 dynamics are unperturbed but are not used for calculating <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_dissociate_state</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_dissociate_state</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether a dissociated state is defined.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_reflection_state</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_reflection_state</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether reflecting states are defined.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_product_state</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_product_state</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether absorbing (product) states are defined.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_steady</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">calc_steady</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the equilibrium (steady-state) populations are evaluated analytically.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calc_Pint</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">calc_Pint</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the time integrals of the state populations are evaluated analytically.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">extrapolate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the time evolution of the state populations <span class="math notranslate nohighlight">\(P_{j}(t)\)</span> is evaluated using the integral equations.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nstate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nstate</span> <span class="pre">=</span> <span class="pre">4</span></code></p></li>
+</ul>
+<p>Specifies the number of states.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ndim</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the dimensionality of the Collective Variables (CVs).</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nmol</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nmol</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies the number of target molecules.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dt</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">=</span> <span class="pre">0.1d0</span></code></p></li>
+</ul>
+<p>Specifies the time grid interval.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">t_sparse</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">t_sparse</span> <span class="pre">=</span> <span class="pre">0.1d0</span></code></p></li>
+</ul>
+<p>Specifies the coarse time grid interval used for calculating time correlation functions (TCFs), such as <span class="math notranslate nohighlight">\(K_{ijk}(t)\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">t_range</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">t_range</span> <span class="pre">=</span> <span class="pre">10.0</span></code></p></li>
+</ul>
+<p>Specifies the time range over which <span class="math notranslate nohighlight">\(K_{ijk}(t)\)</span>, <span class="math notranslate nohighlight">\(M_{jk}(t)\)</span>, <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span>, and <span class="math notranslate nohighlight">\(P_{j}^{0}(t)\)</span> are calculated.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">t_extend</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">t_extend</span> <span class="pre">=</span> <span class="pre">100.0</span></code></p></li>
+</ul>
+<p>Specifies the time range over which <span class="math notranslate nohighlight">\(P_{j}(t)\)</span> and <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span> are output.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dt_tcfout</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dt_tcfout</span> <span class="pre">=</span> <span class="pre">1.0</span></code></p></li>
+</ul>
+<p>Specifies the output interval for <span class="math notranslate nohighlight">\(P_{j}(t)\)</span> and <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">initial_state_ids</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">initial_state_ids</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">3</span></code></p></li>
+</ul>
+<p>Specifies the state IDs used as initial states.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">reflection_state_ids</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">reflection_state_ids</span> <span class="pre">=</span> <span class="pre">4</span></code></p></li>
+</ul>
+<p>Specifies the state IDs treated as reflecting states.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">product_state_ids</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">product_state_ids</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies the state IDs treated as absorbing (product) states.</p>
+</li>
+</ul>
+</section>
+<section id="state">
+<h2><code class="docutils literal notranslate"><span class="pre">&amp;state</span></code><a class="headerlink" href="#state" title="Link to this heading"></a></h2>
+<p>In the <code class="docutils literal notranslate"><span class="pre">&amp;state</span></code> section, the CV ranges and initial populations of each state are specified line by line as</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>lower_bound(CV1)  upper_bound(CV1) lower_bound(CV2) upper_bound(CV2) ... lower_bound(CVndim) upper_bound(CVndim) weight
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Column 1: Lower bound of CV1</p></li>
+<li><p>Column 2: Upper bound of CV1</p></li>
+<li><p>Column 3: Lower bound of CV2</p></li>
+<li><p>Column 4: Upper bound of CV2</p></li>
+</ul>
+<p>…</p>
+<ul class="simple">
+<li><p>Final column: Initial population of the state</p></li>
+</ul>
+<p>Thus, a pair of lower and upper bounds must be provided for each CV dimension specified by <code class="docutils literal notranslate"><span class="pre">ndim</span></code>.</p>
+<p>For example, when <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">1</span></code>,</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&amp;state
+-500.0  -16.0  0.5
+ -16.0  -15.0  0.5
+ -15.0   -2.0  0.0
+  -2.0  500.0  0.0
+/
+</pre></div>
+</div>
+<p>defines four states, where the first two states are assigned an initial population of 0.5.</p>
+</section>
+<section id="auxiliary-tools">
+<h2>Auxiliary Tools<a class="headerlink" href="#auxiliary-tools" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">iepdyn</span></code> provides many configuration options.
+To simplify the preparation of input files, the following Python utilities are available:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ANATRA_PATH/utility/iepdyn_util
+</pre></div>
+</div>
+<p>Both of the following scripts are interactive and can be executed without any command-line arguments.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">iepdyn_setup.py</span></code></p>
+<p>A utility for generating input files for <code class="docutils literal notranslate"><span class="pre">iepdyn</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cvlist_generator.py</span></code></p>
+<p>A utility for generating a list of time-series data files.</p>
+<p>When time-series data obtained from biased MD simulations are used (<code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span> <span class="pre">=</span> <span class="pre">.true.</span></code>), this script can classify the datasets according to the directory hierarchy.</p>
+</li>
+</ul>
+</section>
+<section id="output-files">
+<h2>Output Files<a class="headerlink" href="#output-files" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.krhist</span></code> (<code class="docutils literal notranslate"><span class="pre">output_histogram</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
+<p>Stores the information of <span class="math notranslate nohighlight">\(K_{ijk}(t)\)</span> and <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span> for restart calculations.
+Multiple <code class="docutils literal notranslate"><span class="pre">krhist</span></code> files can be loaded simultaneously during a restart calculation.
+The information stored in this file corresponds to the state before applying boundary conditions. Therefore, it can be reused even if the boundary conditions are changed, without recalculating the time correlation functions.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.P0</span></code></p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(P^{0}_{j}(t)\)</span></p></li>
+</ul>
+<p>The correspondence between columns and state indices is given in the file header.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.Rij</span></code></p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span></p></li>
+</ul>
+<p>The correspondence between columns and <span class="math notranslate nohighlight">\(R_{ij}(t)\)</span> is given in the file header.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.Mij</span></code></p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(M_{ij}(t)\)</span></p></li>
+</ul>
+<p>The correspondence between columns and <span class="math notranslate nohighlight">\(M_{ij}(t)\)</span> is given in the file header.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.Kijk</span></code></p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(K_{ijk}(t)\)</span></p></li>
+</ul>
+<p>The correspondence between columns and <span class="math notranslate nohighlight">\(K_{ijk}(t)\)</span> is given in the file header.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.pj</span></code> (<code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(P_{j}(t)\)</span></p></li>
+</ul>
+<p>The correspondence between columns and <span class="math notranslate nohighlight">\(P_{j}(t)\)</span> is given in the file header.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.tcf</span></code> (<code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(\displaystyle\sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}(t)\)</span></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.q</span></code> (<code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2 and later: <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span></p></li>
+</ul>
+<p>The correspondence between columns and <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span> is given in the file header.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.int</span></code> (<code class="docutils literal notranslate"><span class="pre">calc_Pint</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
+<p>Stores</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6703b36d-cbca-4958-9175-16ec6b7adf09">
+<span class="eqno">()<a class="headerlink" href="#equation-6703b36d-cbca-4958-9175-16ec6b7adf09" title="Permalink to this equation"></a></span>\[\begin{align}
+\tau_{j} = \int_{0}^{\infty} dt\, P_{j}\left(t\right),
+\end{align}\]</div>
+<p>in the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Pint</span> <span class="n">InitTotal</span>    <span class="mf">0.5549862E+02</span>
+<span class="n">Pint</span>         <span class="mi">1</span>    <span class="mf">0.5474586E+02</span>
+<span class="n">Pint</span>         <span class="mi">2</span>    <span class="mf">0.6403562E+00</span>
+<span class="n">Pint</span>         <span class="mi">3</span>    <span class="mf">0.9158297E-01</span>
+<span class="n">Pint</span>         <span class="mi">4</span>    <span class="mf">0.1578925E-01</span>
+<span class="n">Pint</span>         <span class="mi">5</span>    <span class="mf">0.5035148E-02</span>
+<span class="n">Pint</span>         <span class="mi">6</span>    <span class="mf">0.7000565E-02</span>
+<span class="n">Pint</span>         <span class="mi">7</span>    <span class="mf">0.3941343E-01</span>
+<span class="n">Pint</span>         <span class="mi">8</span>    <span class="mf">0.6599485E-01</span>
+</pre></div>
+</div>
+<p>The second column represents the state index, and the third column gives the value of <span class="math notranslate nohighlight">\(\tau_j\)</span>.
+<code class="docutils literal notranslate"><span class="pre">InitTotal</span></code> denotes the sum of <span class="math notranslate nohighlight">\(\tau_j\)</span> over all states belonging to the initial-state set <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{I}}\)</span>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.steady</span></code> (<code class="docutils literal notranslate"><span class="pre">calc_steady</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2: State index (<span class="math notranslate nohighlight">\(j\)</span>)</p></li>
+<li><p>Column 3: <span class="math notranslate nohighlight">\(P_{j}^{\mathrm{eq}}\)</span></p></li>
+<li><p>Column 4: <span class="math notranslate nohighlight">\(-k_{\mathrm{B}}T \log \dfrac{P_{j}^{\mathrm{eq}}}{\displaystyle\sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}^{\mathrm{eq}}}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<p>As an example, we describe the application procedure of the IEPDYN method to a molecular binding/dissociation process characterized by the intermolecular distance <span class="math notranslate nohighlight">\(r\)</span>.</p>
+<p>The states are defined as follows:</p>
+<ul class="simple">
+<li><p>State 1 (bound state): <span class="math notranslate nohighlight">\(0 \leq r &lt; 2\)</span></p></li>
+<li><p>State 2 (bound state): <span class="math notranslate nohighlight">\(2 \leq r &lt; 3.5\)</span></p></li>
+<li><p>State 3: <span class="math notranslate nohighlight">\(3.5 \leq r &lt; 4\)</span></p></li>
+<li><p>State 4 (including the dissociated state): <span class="math notranslate nohighlight">\(4 \leq r\)</span></p></li>
+</ul>
+<p>The target quantity is defined as the residence time correlation function,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cb6d8c7d-103e-42fc-8216-30b8d3bc09d0">
+<span class="eqno">()<a class="headerlink" href="#equation-cb6d8c7d-103e-42fc-8216-30b8d3bc09d0" title="Permalink to this equation"></a></span>\[\begin{align}
+P_{\mathrm{B}}\left(t\right)
+=
+\dfrac{\displaystyle \sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}\left(t\right)}
+{\displaystyle \sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}\left(0\right)},
+\end{align}\]</div>
+<p>and its time integral, <span class="math notranslate nohighlight">\(\tau_{\mathrm{B}}\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\tau_{\mathrm{B}}\)</span> represents the lifetime of the bound state.
+In this example, States 1 and 2 are treated as the initial states.</p>
+<section id="using-unbiased-md-trajectories-use-perturbed-traj-false">
+<h3>Using Unbiased MD Trajectories (<code class="docutils literal notranslate"><span class="pre">use_perturbed_traj</span> <span class="pre">=</span> <span class="pre">.false.</span></code>)<a class="headerlink" href="#using-unbiased-md-trajectories-use-perturbed-traj-false" title="Link to this heading"></a></h3>
+<section id="generating-restart-files-krhist">
+<h4>Generating Restart Files (<code class="docutils literal notranslate"><span class="pre">krhist</span></code>)<a class="headerlink" href="#generating-restart-files-krhist" title="Link to this heading"></a></h4>
+<p>First, a restart file (<code class="docutils literal notranslate"><span class="pre">krhist</span></code>) is generated for each time-series dataset.
+The following example reads the time-series file <code class="docutils literal notranslate"><span class="pre">0001.ts</span></code> and generates
+<code class="docutils literal notranslate"><span class="pre">krhist/0001.krhist</span></code>.</p>
+<p>Although States 1 and 2 are the bound (initial) states,
+their initial population values are not used when generating the <code class="docutils literal notranslate"><span class="pre">krhist</span></code> file.
+Therefore, the initial populations in the <code class="docutils literal notranslate"><span class="pre">&amp;state</span></code> section may simply be set to <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>krhist
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run0001.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> fcv = &quot;0001.ts&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead = &quot;krhist/0001&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> input_type           = &quot;TIMESERIES&quot;</span>
+<span class="s"> output_histogram     = .true.</span>
+<span class="s"> use_perturbed_traj   = .false.</span>
+<span class="s"> use_dissociate_state = .true.</span>
+<span class="s"> use_reflection_state = .false.</span>
+<span class="s"> use_product_state    = .false.</span>
+<span class="s"> calc_steady          = .false.</span>
+<span class="s"> calc_Pint            = .false.</span>
+<span class="s"> extrapolate          = .false.</span>
+<span class="s"> nstate               = 4</span>
+<span class="s"> ndim                 = 1</span>
+<span class="s"> nmol                 = 1</span>
+<span class="s"> dt                   = 2e-05</span>
+<span class="s"> t_sparse             = 2e-05</span>
+<span class="s"> t_range              = 1.0</span>
+<span class="s"> initial_state_ids    = 1 2</span>
+<span class="s"> dissociate_state_ids = 4</span>
+<span class="s">/</span>
+<span class="s">&amp;state</span>
+<span class="s"> 0.0     2.0      1.0</span>
+<span class="s"> 2.0     3.5      1.0</span>
+<span class="s"> 3.5     4.0      0.0</span>
+<span class="s"> 4.0     1.0d10   0.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>iepdyn<span class="w"> </span>run0001.inp
+</pre></div>
+</div>
+</section>
+<section id="calculation-of-equilibrium-populations">
+<h4>Calculation of Equilibrium Populations<a class="headerlink" href="#calculation-of-equilibrium-populations" title="Link to this heading"></a></h4>
+<p>To compute <span class="math notranslate nohighlight">\(P_{\mathrm{B}}\left(t\right)\)</span> using the IEPDYN method, initial population values for states 1 and 2 are required.<br />
+Therefore, by defining dissociation state 4 as a reflection state, the population is conserved among states 1–3, and the equilibrium populations (<span class="math notranslate nohighlight">\(P_{j}^{\mathrm{eq}}\)</span>) are computed using the previously generated restart file (<code class="docutils literal notranslate"><span class="pre">krhist</span></code>).<br />
+For this purpose, the following options are set:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">calc_Pint</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_reflection_state</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reflection_state_ids</span> <span class="pre">=</span> <span class="pre">4</span></code></p></li>
+</ul>
+<p>and additionally,</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use_dissociate_state</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>is specified.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>steady
+
+<span class="c1"># Create list of krhist files</span>
+ls<span class="w"> </span>krhist/*.krhist<span class="w"> </span>&gt;<span class="w"> </span>krhist.list
+
+<span class="c1"># Create input file</span>
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; steady.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> flist_cv = &quot;krhist.list&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead = &quot;steady/out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> input_type           = &quot;HISTOGRAM&quot;</span>
+<span class="s"> output_histogram     = .false.</span>
+<span class="s"> use_perturbed_traj   = .false.</span>
+<span class="s"> use_dissociate_state = .false.</span>
+<span class="s"> use_reflection_state = .true.</span>
+<span class="s"> use_product_state    = .false.</span>
+<span class="s"> calc_steady          = .true.</span>
+<span class="s"> calc_Pint            = .false.</span>
+<span class="s"> extrapolate          = .false.</span>
+<span class="s"> nstate               = 4</span>
+<span class="s"> ndim                 = 1</span>
+<span class="s"> nmol                 = 1</span>
+<span class="s"> dt                   = 2e-05</span>
+<span class="s"> t_sparse             = 2e-05</span>
+<span class="s"> t_range              = 1.0</span>
+<span class="s"> initial_state_ids    = 1 2</span>
+<span class="s"> reflection_state_ids = 4</span>
+<span class="s">/</span>
+<span class="s">&amp;state</span>
+<span class="s"> 0.0     2.0      1.0</span>
+<span class="s"> 2.0     3.5      1.0</span>
+<span class="s"> 3.5     4.0      0.0</span>
+<span class="s"> 4.0     1.0d10   0.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>iepdyn<span class="w"> </span>steady.inp
+</pre></div>
+</div>
+<p>When this is executed, <code class="docutils literal notranslate"><span class="pre">steady/out.int</span></code> is obtained, and its contents are, for example, as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="mi">1</span>    <span class="mf">0.9874940E+00</span>    <span class="mf">0.7502598E-02</span>
+    <span class="mi">2</span>    <span class="mf">0.1066799E-01</span>    <span class="mf">0.2706875E+01</span>
+    <span class="mi">3</span>    <span class="mf">0.1489986E-02</span>    <span class="mf">0.3880407E+01</span>
+</pre></div>
+</div>
+<p>The second column corresponds to the equilibrium population values.</p>
+</section>
+<section id="calculation-of-p-mathrm-b-t">
+<h4>Calculation of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span><a class="headerlink" href="#calculation-of-p-mathrm-b-t" title="Link to this heading"></a></h4>
+<p>Using the equilibrium population values obtained in the previous step, the values for states 1 and 2 are provided in the <code class="docutils literal notranslate"><span class="pre">&amp;state</span></code> section.</p>
+<p>Then, the following options are specified:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_extend</span>&#160;&#160;&#160; <span class="pre">=</span> <span class="pre">10.0</span></code></p></li>
+</ul>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">t_extend</span></code> defines the time range over which <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span> is evaluated.</p>
+<p>In addition, the following settings are used:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">use_dissociate_state</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_reflection_state</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dissociate_state_ids</span> <span class="pre">=</span> <span class="pre">4</span></code></p></li>
+</ul>
+<p>It should be noted that the sum of the initial equilibrium populations is automatically normalized to 1 within the program.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>extrapolate
+
+Create<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>krhist<span class="w"> </span>files
+
+ls<span class="w"> </span>krhist/*.krhist<span class="w"> </span>&gt;<span class="w"> </span>krhist.list
+
+Create<span class="w"> </span>input<span class="w"> </span>file
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; extrapolate.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> flist_cv = &quot;krhist.list&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead = &quot;extrapolate/out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> input_type           = &quot;HISTOGRAM&quot;</span>
+<span class="s"> output_histogram     = .false.</span>
+<span class="s"> use_perturbed_traj   = .false.</span>
+<span class="s"> use_dissociate_state = .true.</span>
+<span class="s"> use_reflection_state = .false.</span>
+<span class="s"> use_product_state    = .false.</span>
+<span class="s"> calc_steady          = .false.</span>
+<span class="s"> calc_Pint            = .false.</span>
+<span class="s"> extrapolate          = .true.</span>
+<span class="s"> nstate               = 4</span>
+<span class="s"> ndim                 = 1</span>
+<span class="s"> nmol                 = 1</span>
+<span class="s"> dt                   = 2e-05</span>
+<span class="s"> t_sparse             = 2e-05</span>
+<span class="s"> t_range              = 1.0</span>
+<span class="s"> t_extend             = 10.0</span>
+<span class="s"> dt_tcfout            = 2e-05</span>
+<span class="s"> initial_state_ids    = 1 2</span>
+<span class="s"> dissociate_state_ids = 4</span>
+<span class="s">/</span>
+<span class="s">&amp;state</span>
+<span class="s"> 0.0     2.0        0.9874940E+00</span>
+<span class="s"> 2.0     3.5        0.1066799E-01</span>
+<span class="s"> 3.5     4.0        0.0</span>
+<span class="s"> 4.0     1.0d10     0.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>iepdyn<span class="w"> </span>extrapolate.inp
+</pre></div>
+</div>
+<p>Running this produces the file <code class="docutils literal notranslate"><span class="pre">extrapolate/out.tcf</span></code>,
+which contains the time-dependent information of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span>.</p>
+</section>
+<section id="analytical-estimation-of-the-time-integral-of-p-mathrm-b-t">
+<h4>Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span><a class="headerlink" href="#analytical-estimation-of-the-time-integral-of-p-mathrm-b-t" title="Link to this heading"></a></h4>
+<p>Next, the time integral of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}\left(t\right)\)</span> is evaluated analytically.
+In this case, the following parameters in the previous input file are modified:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">calc_Pint</span>&#160;&#160; <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>In addition, parameters such as <code class="docutils literal notranslate"><span class="pre">t_extend</span></code> and <code class="docutils literal notranslate"><span class="pre">dt_tcfout</span></code> do not affect the result and are removed.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+mkdir<span class="w"> </span>-p<span class="w"> </span>Pint
+
+<span class="c1"># Create list of krhist files</span>
+<span class="c1">#</span>
+ls<span class="w"> </span>krhist/*.krhist<span class="w"> </span>&gt;<span class="w"> </span>krhist.list
+
+<span class="c1"># Create input file</span>
+<span class="c1">#</span>
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; Pint.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> flist_cv = &quot;krhist.list&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead = &quot;Pint/out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> input_type           = &quot;HISTOGRAM&quot;</span>
+<span class="s"> output_histogram     = .false.</span>
+<span class="s"> use_perturbed_traj   = .false.</span>
+<span class="s"> use_dissociate_state = .true.</span>
+<span class="s"> use_reflection_state = .false.</span>
+<span class="s"> use_product_state    = .false.</span>
+<span class="s"> calc_steady          = .false.</span>
+<span class="s"> calc_Pint            = .true.</span>
+<span class="s"> extrapolate          = .false.</span>
+<span class="s"> nstate               = 4</span>
+<span class="s"> ndim                 = 1</span>
+<span class="s"> nmol                 = 1</span>
+<span class="s"> dt                   = 2e-05</span>
+<span class="s"> t_sparse             = 2e-05</span>
+<span class="s"> t_range              = 1.0</span>
+<span class="s"> initial_state_ids    = 1 2</span>
+<span class="s"> dissociate_state_ids = 4</span>
+<span class="s">/</span>
+<span class="s">&amp;state</span>
+<span class="s"> 0.0     2.0        0.9874940E+00</span>
+<span class="s"> 2.0     3.5        0.1066799E-01</span>
+<span class="s"> 3.5     4.0        0.0</span>
+<span class="s"> 4.0     1.0d10     0.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>iepdyn<span class="w"> </span>Pint.inp
+</pre></div>
+</div>
+<p>When this is executed, the file <code class="docutils literal notranslate"><span class="pre">Pint/out.int</span></code> is obtained.<br />
+The third column of the first line in this file corresponds to the time-integrated value of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}\left(t\right)\)</span>.</p>
+</section>
+</section>
+<section id="using-biased-md-trajectories-using-use-perturbed-id-true">
+<h3>Using Biased MD Trajectories (using <code class="docutils literal notranslate"><span class="pre">use_perturbed_id</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)<a class="headerlink" href="#using-biased-md-trajectories-using-use-perturbed-id-true" title="Link to this heading"></a></h3>
+<p>The procedure is almost the same as in the unbiased case,
+but it becomes slightly more complicated because it is necessary to prepare a list specified by <code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code>.</p>
+<section id="id1">
+<h4>Generating Restart Files (<code class="docutils literal notranslate"><span class="pre">krhist</span></code>)<a class="headerlink" href="#id1" title="Link to this heading"></a></h4>
+<p>Here, a <code class="docutils literal notranslate"><span class="pre">krhist</span></code> file is generated for each time-series dataset.<br />
+It is assumed that the time-series data in which the dynamics of state <span class="math notranslate nohighlight">\(j\)</span> are not perturbed are organized in directories such as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ts</span><span class="o">/</span><span class="mi">0001</span><span class="o">/</span><span class="n">run0001</span><span class="o">.</span><span class="n">dis</span>
+<span class="n">ts</span><span class="o">/</span><span class="mi">0001</span><span class="o">/</span><span class="n">run0002</span><span class="o">.</span><span class="n">dis</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Based on this directory structure, first the lists corresponding to <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> and <code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code> are generated using the following Python script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ $ANATRA_PATH/utility/iepdyn_util/cvlist_generator.py
+</pre></div>
+</div>
+<p>When executed, the script prompts the user for input as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>=== File Search Utility ===
+
+(1) Enter the root directory to search: ts
+(2) Enter the target extension (e.g., txt): dis
+(3) Enter the maximum search directory depth: 2
+
+Searching files...
+
+=== Matched Files ===
+
+/path/to/ts/0001/run0001.dis
+/path/to/ts/0001/run0002.dis
+/path/to/ts/0002/run0001.dis
+/path/to/ts/0002/run0002.dis
+/path/to/ts/0003/run0001.dis
+/path/to/ts/0003/run0002.dis
+/path/to/ts/0004/run0001.dis
+/path/to/ts/0004/run0002.dis
+
+(4) Enter directory level counted from the deepest directory for grouping (default: 1): 1
+
+=== Grouped Files ===
+
+--- State 1: 0001 ---
+/path/to/ts/0001/run0001.dis
+/path/to/ts/0001/run0002.dis
+
+--- State 2: 0002 ---
+/path/to/ts/0002/run0001.dis
+/path/to/ts/0002/run0002.dis
+
+--- State 3: 0003 ---
+/path/to/ts/0003/run0001.dis
+/path/to/ts/0003/run0002.dis
+
+--- State 4: 0004 ---
+/path/to/ts/0004/run0001.dis
+/path/to/ts/0004/run0002.dis
+
+Did these files come from perturbed dynamics? (y/n): y
+
+Available states:
+1 : 0001
+2 : 0002
+3 : 0003
+4 : 0004
+
+Enter state numbers used for Rij calculation (space-separated, empty input allowed): 1 2
+
+Enter fraction of files to be listed from each state (default: 1.0 (corresponding to all the files)): 1.0
+
+=== Output Preview ===
+
+/path/to/ts/0001/run0001.dis
+1 1
+/path/to/ts/0001/run0002.dis
+1 1
+/path/to/ts/0002/run0001.dis
+2 1
+/path/to/ts/0002/run0002.dis
+2 1
+/path/to/ts/0003/run0001.dis
+3 0
+/path/to/ts/0003/run0002.dis
+3 0
+/path/to/ts/0004/run0001.dis
+4 0
+/path/to/ts/0004/run0002.dis
+4 0
+
+Enter filename to save the file list: flist
+Enter filename to save state_id and Rij_flag: funp
+</pre></div>
+</div>
+<p>This produces a trajectory list <code class="docutils literal notranslate"><span class="pre">flist</span></code> and a file <code class="docutils literal notranslate"><span class="pre">funp</span></code> that describes which region is unperturbed in terms of dynamics in each time-series data.</p>
+<p>Next, in order to generate <code class="docutils literal notranslate"><span class="pre">krhist</span></code> for each time-series dataset, the previously created <code class="docutils literal notranslate"><span class="pre">flist</span></code> and <code class="docutils literal notranslate"><span class="pre">funp</span></code> are split into per-line files using the following Python script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ $ANATRA_PATH/utility/iepdyn_util/split_cv.py --flist flist --funp funp
+</pre></div>
+</div>
+<p>Executing this command generates the following directory structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0001</span><span class="o">/</span><span class="mf">0001.</span><span class="n">flist</span>
+<span class="mi">0001</span><span class="o">/</span><span class="mf">0001.</span><span class="n">funp</span>
+<span class="mi">0001</span><span class="o">/</span><span class="mf">0002.</span><span class="n">flist</span>
+<span class="mi">0001</span><span class="o">/</span><span class="mf">0002.</span><span class="n">funp</span>
+<span class="mi">0002</span><span class="o">/</span><span class="mf">0001.</span><span class="n">flist</span>
+<span class="mi">0002</span><span class="o">/</span><span class="mf">0001.</span><span class="n">funp</span>
+<span class="mi">0002</span><span class="o">/</span><span class="mf">0002.</span><span class="n">flist</span>
+<span class="mi">0002</span><span class="o">/</span><span class="mf">0002.</span><span class="n">funp</span>
+<span class="mi">0003</span><span class="o">/</span><span class="mf">0001.</span><span class="n">flist</span>
+<span class="mi">0003</span><span class="o">/</span><span class="mf">0001.</span><span class="n">funp</span>
+<span class="mi">0003</span><span class="o">/</span><span class="mf">0002.</span><span class="n">flist</span>
+<span class="mi">0003</span><span class="o">/</span><span class="mf">0002.</span><span class="n">funp</span>
+<span class="mi">0004</span><span class="o">/</span><span class="mf">0001.</span><span class="n">flist</span>
+<span class="mi">0004</span><span class="o">/</span><span class="mf">0001.</span><span class="n">funp</span>
+<span class="mi">0004</span><span class="o">/</span><span class="mf">0002.</span><span class="n">flist</span>
+<span class="mi">0004</span><span class="o">/</span><span class="mf">0002.</span><span class="n">funp</span>
+</pre></div>
+</div>
+<p>The generated <code class="docutils literal notranslate"><span class="pre">XXXX.flist</span></code> and <code class="docutils literal notranslate"><span class="pre">XXXX.funp</span></code> files correspond to <code class="docutils literal notranslate"><span class="pre">flist_cv</span></code> and <code class="docutils literal notranslate"><span class="pre">f_unperturbed_id</span></code> for each time-series data.<br />
+Therefore, <code class="docutils literal notranslate"><span class="pre">krhist</span></code> files can be generated sequentially using these inputs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+
+for i in {0001..0004};do
+  for f in `ls $i/*.flist`;do
+    num=`basename $f | sed -e &quot;s/.flist//g&quot;`
+    flist=$i/${num}.flist
+    funp=$i/${num}.funp
+
+cat &lt;&lt; EOF &gt; $i/run${num}.inp
+&amp;input_param
+ flist_cv = &quot;$i/${num}.flist&quot;
+/
+&amp;output_param
+ fhead = &quot;$i/run${num}&quot;
+/
+&amp;option_param
+ use_perturbed_traj   = .true.
+ f_unperturbed_id     = &quot;$i/${num}.funp&quot;
+ 
+ output_histogram     = .true.
+ use_dissociate_state = .true.
+ use_reflection_state = .false.
+ use_product_state    = .false.
+ calc_steady          = .false.
+ calc_Pint            = .false.
+ extrapolate          = .false.
+ nstate               = 4
+ ndim                 = 1
+ nmol                 = 1
+ dt                   = 2e-05
+ t_sparse             = 2e-05
+ t_range              = 1.0
+ initial_state_ids    = 1 2
+ dissociate_state_ids = 4
+/
+&amp;state
+ 0.0     2.0      1.0
+ 2.0     3.5      1.0
+ 3.5     4.0      0.0
+ 4.0     1.0d10   0.0
+/
+EOF
+    fanatra iepdyn $i/run${num}.inp &gt;&amp; $i/run${num}.out
+  done
+done
+</pre></div>
+</div>
+<p>Executing this produces the <code class="docutils literal notranslate"><span class="pre">krhist</span></code> files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0001</span><span class="o">/</span><span class="n">run0001</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0001</span><span class="o">/</span><span class="n">run0002</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0002</span><span class="o">/</span><span class="n">run0001</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0002</span><span class="o">/</span><span class="n">run0002</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0003</span><span class="o">/</span><span class="n">run0001</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0003</span><span class="o">/</span><span class="n">run0002</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0004</span><span class="o">/</span><span class="n">run0001</span><span class="o">.</span><span class="n">krhist</span>
+<span class="mi">0004</span><span class="o">/</span><span class="n">run0002</span><span class="o">.</span><span class="n">krhist</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>Calculation of Equilibrium Populations<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<p>As in the case without a bias potential, the initial population values for states 1 and 2 are computed by introducing reflecting boundary conditions.<br />
+The list of <code class="docutils literal notranslate"><span class="pre">krhist</span></code> files and related inputs are obtained again using <code class="docutils literal notranslate"><span class="pre">cvlist_generator.py</span></code>.<br />
+The following excerpt shows only the parts where user input is required:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) Enter the root directory to search: .
+(2) Enter the target extension (e.g., txt): krhist
+(3) Enter the maximum search directory depth: 2
+(4) Enter directory level counted from the deepest directory for grouping (default: 1): 1
+Did these files come from perturbed dynamics? (y/n): y
+Enter state numbers used for Rij calculation (space-separated, empty input allowed): 1 2
+Enter fraction of files to be listed from each state (default: 1.0 (corresponding to all the files)): 1.0
+Enter filename to save the file list: fkrhist.list
+Enter filename to save state_id and Rij_flag: fkrhist.unp
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">steady</span>
+
+<span class="c1"># Create input file</span>
+<span class="c1">#</span>
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">steady</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+  <span class="n">flist_cv</span> <span class="o">=</span> <span class="s2">&quot;fkrhist.list&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+  <span class="n">fhead</span> <span class="o">=</span> <span class="s2">&quot;steady/out&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+  <span class="n">use_perturbed_traj</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">f_unperturbed_id</span> <span class="o">=</span> <span class="s2">&quot;fkrhist.unp&quot;</span>
+  
+  <span class="n">input_type</span> <span class="o">=</span> <span class="s2">&quot;HISTOGRAM&quot;</span>
+  <span class="n">output_histogram</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_dissociate_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_reflection_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">use_product_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">calc_steady</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">calc_Pint</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">extrapolate</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">nstate</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">ndim</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">nmol</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">dt</span> <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">t_sparse</span> <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">t_range</span> <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="n">initial_state_ids</span> <span class="o">=</span> <span class="mi">1</span> <span class="mi">2</span>
+  <span class="n">reflection_state_ids</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">state</span>
+ <span class="mf">0.0</span>     <span class="mf">2.0</span>      <span class="mf">1.0</span>
+ <span class="mf">2.0</span>     <span class="mf">3.5</span>      <span class="mf">1.0</span>
+ <span class="mf">3.5</span>     <span class="mf">4.0</span>      <span class="mf">0.0</span>
+ <span class="mf">4.0</span>     <span class="mf">1.0</span><span class="n">d10</span>   <span class="mf">0.0</span>
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">iepdyn</span> <span class="n">steady</span><span class="o">.</span><span class="n">inp</span>
+</pre></div>
+</div>
+<p>Executing this produces the equilibrium population file <code class="docutils literal notranslate"><span class="pre">steady/out.steady</span></code>, which contains the equilibrium population values.</p>
+</section>
+<section id="id3">
+<h4>Calculation of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span><a class="headerlink" href="#id3" title="Link to this heading"></a></h4>
+<p>The time evolution of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}\left(t\right)\)</span> is computed by setting <code class="docutils literal notranslate"><span class="pre">extrapolate</span> <span class="pre">=</span> <span class="pre">.true.</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">extrapolate</span>
+
+<span class="c1"># Create input file</span>
+<span class="c1">#</span>
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">extrapolate</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+  <span class="n">flist_cv</span> <span class="o">=</span> <span class="s2">&quot;fkrhist.list&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+  <span class="n">fhead</span> <span class="o">=</span> <span class="s2">&quot;extrapolate/out&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+  <span class="n">use_perturbed_traj</span>   <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">f_unperturbed_id</span>     <span class="o">=</span> <span class="s2">&quot;fkrhist.unp&quot;</span>
+  
+  <span class="n">input_type</span>           <span class="o">=</span> <span class="s2">&quot;HISTOGRAM&quot;</span>
+  <span class="n">output_histogram</span>     <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_dissociate_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">use_reflection_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_product_state</span>    <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">calc_steady</span>          <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">calc_Pint</span>            <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">extrapolate</span>          <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">nstate</span>               <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">ndim</span>                 <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">nmol</span>                 <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">dt</span>                   <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">t_sparse</span>             <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">t_range</span>              <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="n">t_extend</span>             <span class="o">=</span> <span class="mf">10.0</span>
+  <span class="n">dt_tcfout</span>            <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">initial_state_ids</span>    <span class="o">=</span> <span class="mi">1</span> <span class="mi">2</span>
+  <span class="n">dissociate_state_ids</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">state</span>
+ <span class="mf">0.0</span>     <span class="mf">2.0</span>      <span class="mf">0.9874940E+00</span>
+ <span class="mf">2.0</span>     <span class="mf">3.5</span>      <span class="mf">0.1066799E-01</span>
+ <span class="mf">3.5</span>     <span class="mf">4.0</span>      <span class="mf">0.0</span>
+ <span class="mf">4.0</span>     <span class="mf">1.0</span><span class="n">d10</span>   <span class="mf">0.0</span>
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">iepdyn</span> <span class="n">extrapolate</span><span class="o">.</span><span class="n">inp</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h4>Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{\mathrm{B}}(t)\)</span><a class="headerlink" href="#id4" title="Link to this heading"></a></h4>
+<p>This can be executed as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">Pint</span>
+
+<span class="c1"># Create input file</span>
+<span class="c1">#</span>
+<span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span> <span class="o">&gt;</span> <span class="n">Pint</span><span class="o">.</span><span class="n">inp</span>
+<span class="o">&amp;</span><span class="n">input_param</span>
+  <span class="n">flist_cv</span> <span class="o">=</span> <span class="s2">&quot;fkrhist.list&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">output_param</span>
+  <span class="n">fhead</span> <span class="o">=</span> <span class="s2">&quot;Pint/out&quot;</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">option_param</span>
+  <span class="n">use_perturbed_traj</span>   <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">f_unperturbed_id</span>     <span class="o">=</span> <span class="s2">&quot;fkrhist.unp&quot;</span>
+  
+  <span class="n">input_type</span>           <span class="o">=</span> <span class="s2">&quot;HISTOGRAM&quot;</span>
+  <span class="n">output_histogram</span>     <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_dissociate_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">use_reflection_state</span> <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">use_product_state</span>    <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">calc_steady</span>          <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">calc_Pint</span>            <span class="o">=</span> <span class="o">.</span><span class="n">false</span><span class="o">.</span>
+  <span class="n">extrapolate</span>          <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+  <span class="n">nstate</span>               <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">ndim</span>                 <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">nmol</span>                 <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">dt</span>                   <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">t_sparse</span>             <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">t_range</span>              <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="n">t_extend</span>             <span class="o">=</span> <span class="mf">10.0</span>
+  <span class="n">dt_tcfout</span>            <span class="o">=</span> <span class="mf">2e-05</span>
+  <span class="n">initial_state_ids</span>    <span class="o">=</span> <span class="mi">1</span> <span class="mi">2</span>
+  <span class="n">dissociate_state_ids</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="o">/</span>
+<span class="o">&amp;</span><span class="n">state</span>
+ <span class="mf">0.0</span>     <span class="mf">2.0</span>      <span class="mf">0.9874940E+00</span>
+ <span class="mf">2.0</span>     <span class="mf">3.5</span>      <span class="mf">0.1066799E-01</span>
+ <span class="mf">3.5</span>     <span class="mf">4.0</span>      <span class="mf">0.0</span>
+ <span class="mf">4.0</span>     <span class="mf">1.0</span><span class="n">d10</span>   <span class="mf">0.0</span>
+<span class="o">/</span>
+<span class="n">EOF</span>
+
+<span class="n">fanatra</span> <span class="n">iepdyn</span> <span class="n">Pint</span><span class="o">.</span><span class="n">inp</span>
+</pre></div>
+</div>
+<p>After execution, the file <code class="docutils literal notranslate"><span class="pre">Pint/out.int</span></code> is obtained.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

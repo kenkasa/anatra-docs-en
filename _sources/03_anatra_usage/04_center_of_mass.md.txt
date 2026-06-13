@@ -1,0 +1,175 @@
+## Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)
+
+The program ``center_of_mass`` (``com``) computes the temporal variation of molecular centers of mass and the mean square displacement (MSD). To support two-dimensional diffusion (lateral diffusion) within lipid membranes, it also allows for MSD calculations restricted to the $xy$-plane.
+
+### Theoretical Background
+
+#### Mean Square Displacement
+
+Here, we introduce the definition of the mean square displacement (MSD) $\chi(t)$ and discuss its significance based on the diffusion equation.
+
+Let ${\bf r}(t)$ denote the position of a molecule at time $t$. The MSD is defined as follows:
+
+\begin{align}
+\chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
+\end{align}
+
+That is, $\chi(t)$ represents the time-averaged squared displacement of a molecule after a time interval $t$. To understand how MSD is described by the diffusion equation, let us consider a probability density $\rho({\bf r},t)$ representing the location of a molecule, and a diffusion coefficient $D$. The diffusion equation is written as
+
+\begin{align}
+\dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
+\end{align}
+
+Assuming that the molecule was initially located at ${\bf 0}$ at time $t=0$, the initial condition is given by
+
+\begin{align}
+\rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
+\end{align}
+
+Solving the diffusion equation under this condition yields
+
+\begin{align}
+\rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
+\end{align}
+
+Using this solution, the MSD can be expressed as
+
+\begin{align}
+\chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
+                   = 6Dt,
+\end{align}
+
+indicating that MSD increases linearly with time, with a slope of $6D$. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as
+
+\begin{align}
+D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
+\end{align}
+
+This expression is known as Einstein$^\prime$s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.
+
+### List of Options
+
+**Option**           |  **Description**       | **Option**          | **Description**
+|:------------------:|:----------------------:|:-------------------:|:------------------:|
+``-stype``           | Common                 | ``-sfile``          | Common
+``-tintype``         | Common                 | ``-tin``            | Common
+``-flist_traj``      | Common                 | ``-fhead``          | Common             
+``-sel0``            | Common                 | ``-mode``           | Common             
+``-outmsd``          | Mode specific          | ``-unwarp``         | Mode specific      
+``-msddim``          | Mode specific          | ``-dt``             | Mode specific      
+``-t_sparse``        | Mode specific          | ``-t_range``        | Mode specific 
+``-prep_only``       | Common
+
+---
+* **-outmsd \<true or false\>**
+  * Default: ``false``
+  * Example: ``-outmsd true``
+  * Note: If set to ``true``, both ``-msddim`` and ``-msdrange`` must also be specified.
+
+  Specifies whether or not to compute the MSD.
+
+---
+* **-unwrap \<true or false\>**
+  * Default: ``false``
+  * Example: ``-unwrap false``
+
+  Specifies whether to unwrap the trajectory. Since wrapped trajectories cannot yield accurate MSD values, it is necessary to set this option to ``true``. Note that trajectories segmented by periodic boundary conditions (PBC) — as in GROMACS — are not supported by this option. In such cases, preprocessing with GROMACS `trjconv` is required.
+
+---
+* **-msddim \<2 or 3\>**
+  * Default: ``3``
+  * Example: ``-msddim 3``
+
+  Specifies the dimensionality of the MSD calculation. Use ``3`` for general diffusion analysis and ``2`` for lateral diffusion within lipid bilayers.
+
+---
+* **-dt <time interval>**
+  * Default: ``0.1``
+  * Example: ``-dt 0.1``
+
+  Specifies the time interval between snapshots.
+
+---
+* **-t_range <MSD calculation time scale>**
+  * Default: ``10``
+  * Example: ``-t_range 10``
+
+  Specifies the time scale over which MSD is computed.
+
+---
+* **-t_sparse <output time interval for MSD>**
+
+  Specifies the time interval for MSD output. For example, with ``-dt 0.1`` ($=\delta t$) and ``-t_sparse 1`` ($=\Delta t$), the MSD (in ANGSTROM$^{2}$) is computed at time intervals:
+
+  $$
+  \Delta T = \mathrm{nint}\left(\dfrac{\Delta t}{\delta t}\right) \delta t
+  $$
+
+### Output File Formats
+
+* ``*.com``
+
+  This file contains the center-of-mass coordinates of each molecule within the selected region, in ``xyz`` format.
+   
+* ``*.msd``
+
+  This file stores the MSD values for individual molecules. Output is generated only when ``-outmsd true`` is specified.
+
+  * Column 1: Time
+  * Column 2: MSD of molecule 1
+  * Column 3: MSD of molecule 2  
+    ...
+
+* ``*.msdave``
+
+  This file contains the averaged MSD across all molecules. Output is generated only when ``-outmsd true`` is specified.
+
+  * Column 1: Time
+  * Column 2: Mean MSD
+  * Column 3: Standard deviation of MSD
+
+### Examples of Analysis
+
+#### MSD Calculation for a Protein
+
+The following is an example of calculating the MSD of a single protein (`resid 1 to 192`) dissolved in aqueous solution. Since the protein consists of multiple amino acid residues, it is necessary to specify the mode as "``-mode whole``".
+
+```
+#!/bin/bash
+
+anatra center_of_mass        \
+  -stype     parm7           \
+  -sfile     complex.prmtop  \
+  -tintype   dcd             \
+  -tin       INP.dcd         \
+  -fhead     out             \
+  -outmsd    true            \
+  -sel0      resid 1 to 192  \
+  -mode      whole           \
+  -msddim    3               \
+  -dt        0.01            \
+  -t_range   100             \
+  -t_sparse  0.1
+```
+
+#### MSD Calculation for Multiple Small Molecules
+
+Consider a system containing 100 ligand molecules (`resname LIG`) dissolved in aqueous solution. The following example computes both the MSD of each molecule and their average. In this case, molecular boundaries can be determined based on residue numbers, so the mode is set to "``-mode residue``".
+
+```
+#!/bin/bash
+
+anatra center_of_mass        \
+  -stype     parm7           \
+  -sfile     complex.prmtop  \
+  -tintype   dcd             \
+  -tin       INP.dcd         \
+  -fhead     out             \
+  -outmsd    true            \
+  -sel0      resname LIG     \
+  -mode      residue         \
+  -msddim    3               \
+  -dt        0.01            \
+  -t_range   100             \
+  -t_sparse  0.01
+```

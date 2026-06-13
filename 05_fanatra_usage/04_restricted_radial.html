@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restricted Radial Potential of Mean Force (restricted_radial, rrpmf) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/05_fanatra_usage/04_restricted_radial.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="restricted-radial-potential-of-mean-force-restricted-radial-rrpmf">
+<h1>Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)<a class="headerlink" href="#restricted-radial-potential-of-mean-force-restricted-radial-rrpmf" title="Link to this heading"></a></h1>
+<p>This analysis mode calculates the free energy profile along the radial direction under a condition defined by one or more reaction coordinates (collective variables).</p>
+<p>Using this profile, the free energy change associated with the binding of a host molecule and a guest molecule (binding free energy) can also be evaluated.</p>
+<section id="theoretical-background">
+<h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
+<p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system.
+The intermolecular distance between the host and guest molecules and the reaction coordinates defining the binding state are denoted by <span class="math notranslate nohighlight">\(d\left({\bf X}\right)\)</span> and <span class="math notranslate nohighlight">\(\bm{\xi}\left({\bf X}\right)\)</span>, respectively.</p>
+<p>The potential of mean force along the intermolecular distance is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-648350fa-29e2-4515-80ff-d11977489c4e">
+<span class="eqno">()<a class="headerlink" href="#equation-648350fa-29e2-4515-80ff-d11977489c4e" title="Permalink to this equation"></a></span>\[\begin{align}
+w\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
+\end{align}\]</div>
+<p>Furthermore, let <span class="math notranslate nohighlight">\(\bm{\Upsilon}\)</span> be the region in the reaction coordinate space corresponding to the bound state, and introduce the characteristic function <span class="math notranslate nohighlight">\(\Theta\left(\bm{\xi}\right)\)</span> defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d90e51fb-8297-4d67-8a96-20363643c7b3">
+<span class="eqno">()<a class="headerlink" href="#equation-d90e51fb-8297-4d67-8a96-20363643c7b3" title="Permalink to this equation"></a></span>\[\begin{align}
+\Theta_{\mathrm{B}}\left(\bm{\xi}\right) =\begin{cases}
+1 &amp; \bm{\xi}\in\bm{\Upsilon}\\
+0 &amp; \bm{\xi}\notin\bm{\Upsilon}
+\end{cases}
+\end{align}\]</div>
+<p>Using this function, the PMF for configurations belonging to the bound state is expressed as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-26861872-5df6-45c2-9863-a5465f818994">
+<span class="eqno">()<a class="headerlink" href="#equation-26861872-5df6-45c2-9863-a5465f818994" title="Permalink to this equation"></a></span>\[\begin{align}
+w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\Theta_{\mathrm{B}}\left(\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
+\end{align}\]</div>
+<p>The constant <span class="math notranslate nohighlight">\(C\)</span> appearing in both <span class="math notranslate nohighlight">\(w\left(r\right)\)</span> and <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> is taken to be the same value, and is chosen such that the minimum value of <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> becomes zero.</p>
+<p>Since <span class="math notranslate nohighlight">\(w\left(r\right)\)</span> becomes constant when <span class="math notranslate nohighlight">\(r\)</span> is sufficiently large, let this constant be <span class="math notranslate nohighlight">\(\Delta w\)</span>, and define the region satisfying <span class="math notranslate nohighlight">\(w\left(r\right)=\Delta w\)</span> as <span class="math notranslate nohighlight">\(r_{0}\leq r\leq r_{1}\)</span>.
+The choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span> is arbitrary as long as this condition is satisfied.
+This point will be discussed later.</p>
+<p>The probability ratio between the unbound state U, where the two molecules are separated by <span class="math notranslate nohighlight">\(r_{0}\leq r \leq r_{1}\)</span>, and the bound state B is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8a6355a4-8cff-48fa-bd1e-111be46b284c">
+<span class="eqno">()<a class="headerlink" href="#equation-8a6355a4-8cff-48fa-bd1e-111be46b284c" title="Permalink to this equation"></a></span>\[\begin{align}
+\dfrac{{\displaystyle \int_{\bm{\Upsilon}}dr\,\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,\exp\left(-\beta w\left(r\right)\right)}}
+\end{align}\]</div>
+<p>Therefore, the free energy change <span class="math notranslate nohighlight">\(\Delta G_{\mathrm{PMF}}\)</span> associated with the transition from U to B is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8c8fdbb0-c4f2-4f3c-a724-0308bd558f2d">
+<span class="eqno">()<a class="headerlink" href="#equation-8c8fdbb0-c4f2-4f3c-a724-0308bd558f2d" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G_{\mathrm{PMF}} =-\dfrac{1}{\beta}\log\dfrac{{\displaystyle \int_{\bm{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}\exp\left(-\beta w\left(r\right)\right)}}
+\end{align}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(w\left(r\right)=\Delta w\)</span> within the range <span class="math notranslate nohighlight">\(r_{0}\leq r\leq r_{1}\)</span>, this equation can be rewritten as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ca944697-b940-4a85-be62-ec17c7d19a26">
+<span class="eqno">()<a class="headerlink" href="#equation-ca944697-b940-4a85-be62-ec17c7d19a26" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G_{\mathrm{PMF}} =-\Delta w-\dfrac{1}{\beta}\log\dfrac{V_{\mathrm{B}}}{V_{\mathrm{U}}}
+\label{pmf:dGpmf}
+\end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-199a269f-61fc-4563-83c2-d524deceaedf">
+<span class="eqno">()<a class="headerlink" href="#equation-199a269f-61fc-4563-83c2-d524deceaedf" title="Permalink to this equation"></a></span>\[\begin{align}
+V_{\mathrm{B}} =\int_{\bm{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)\\
+V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
+\end{align}\]</div>
+<p>The second term in Eq. EQREF(pmf:dGpmfEQREF) represents the free energy change associated with the transition of the guest molecule from a concentration of <span class="math notranslate nohighlight">\(1/V_{\mathrm{U}}\)</span> to a concentration of <span class="math notranslate nohighlight">\(1/V_{\mathrm{B}}\)</span>.</p>
+<p>The experimentally measured binding free energy is the free energy change associated with binding a guest molecule at the standard-state concentration (typically <span class="math notranslate nohighlight">\(c^{\circ} = 1~\mathrm{mol~L^{-1}}\)</span>), and is therefore different from <span class="math notranslate nohighlight">\(\Delta G_{\mathrm{PMF}}\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(V^{\circ}\)</span> be the volume corresponding to a concentration of <span class="math notranslate nohighlight">\(c^{\circ}\)</span> for a single guest molecule.
+Then <span class="math notranslate nohighlight">\(V^{\circ} = 1661\)</span> ANGSTROM<span class="math notranslate nohighlight">\(^{3}\)</span>.</p>
+<p>The free energy change <span class="math notranslate nohighlight">\(\Delta G^{\circ}_{\mathrm{corr}}\)</span> associated with the transition from concentration <span class="math notranslate nohighlight">\(c^{\circ}=1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{U}}\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d04279ee-150c-4bf9-9b93-117d11e30ef0">
+<span class="eqno">()<a class="headerlink" href="#equation-d04279ee-150c-4bf9-9b93-117d11e30ef0" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G^{\circ}_{\mathrm{corr}} = - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{U}}}{V^{\circ}}
+\label{pmf:dGcorr}
+\end{align}\]</div>
+<p>Thus, by decomposing the transition from <span class="math notranslate nohighlight">\(1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{B}}\)</span> into the two steps,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8f46ce63-efc8-4773-bf94-ecc56ffe55dd">
+<span class="eqno">()<a class="headerlink" href="#equation-8f46ce63-efc8-4773-bf94-ecc56ffe55dd" title="Permalink to this equation"></a></span>\[\begin{align}
+1/V^{\circ} \to 1/V_{\mathrm{U}}
+\end{align}\]</div>
+<p>and</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8a75cd50-30b4-40d6-ad90-8b0d7ee6dbcb">
+<span class="eqno">()<a class="headerlink" href="#equation-8a75cd50-30b4-40d6-ad90-8b0d7ee6dbcb" title="Permalink to this equation"></a></span>\[\begin{align}
+1/V_{\mathrm{U}} \to 1/V_{\mathrm{B}}
+\end{align}\]</div>
+<p>we obtain</p>
+<div class="amsmath math notranslate nohighlight" id="equation-41f304a8-ea0b-4662-be85-83d23e7f5580">
+<span class="eqno">()<a class="headerlink" href="#equation-41f304a8-ea0b-4662-be85-83d23e7f5580" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G^{\circ} = \Delta G_{\mathrm{PMF}} + \Delta G_{\mathrm{corr}}^{\circ}
+\end{align}\]</div>
+<p>Substituting Eqs. EQREF(pmf:dGpmfEQREF) and EQREF(pmf:dGcorrEQREF) into the above equation yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f7be695b-7289-48e5-aeb3-a160511d6669">
+<span class="eqno">()<a class="headerlink" href="#equation-f7be695b-7289-48e5-aeb3-a160511d6669" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta G^{\circ} = - \Delta w - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{B}}}{V^{\circ}}
+\end{align}\]</div>
+<p>Since this expression does not contain <span class="math notranslate nohighlight">\(V_{\mathrm{U}}\)</span>, the value of <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)</span> is independent of the choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span>.</p>
+</section>
+<section id="parameter-list">
+<h2>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_cv</span></code></p></td>
+<td class="text-left"><p>File containing the list of CV files</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_weight</span></code></p></td>
+<td class="text-left"><p>File containing the list of weight files (optional)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fcv</span></code></p></td>
+<td class="text-left"><p>CV filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fweight</span></code></p></td>
+<td class="text-left"><p>Weight filename</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">calcfe</span></code></p></td>
+<td class="text-left"><p>Whether to calculate the standard free energy</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ndim</span></code></p></td>
+<td class="text-left"><p>Number of CV dimensions</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">only_r</span></code></p></td>
+<td class="text-left"><p>Whether the intermolecular distance is the only CV</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></td>
+<td class="text-left"><p>Temperature [K]</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">dr</span></code></p></td>
+<td class="text-left"><p>Distance grid spacing</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ngrid</span></code></p></td>
+<td class="text-left"><p>Number of distance grids</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsta</span></code></p></td>
+<td class="text-left"><p>Starting frame number for the analysis</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">use_bootstrap</span></code></p></td>
+<td class="text-left"><p>Whether to perform bootstrap analysis</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">vol0</span></code></p></td>
+<td class="text-left"><p>Standard-state volume</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">urange</span></code></p></td>
+<td class="text-left"><p>Distance range of the unbound state</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">bound_range</span></code></p></td>
+<td class="text-left"><p>Distance range of the bound state</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">iseed</span></code></p></td>
+<td class="text-left"><p>Random number seed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsample</span></code></p></td>
+<td class="text-left"><p>Number of samples drawn in each trial</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></p></td>
+<td class="text-left"><p>Whether duplicate sampling is allowed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ntrial</span></code></p></td>
+<td class="text-left"><p>Number of bootstrap trials</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|      & File containing the list of CV files \\
+                     & \verb|flist_weight|  & File containing the list of weight files (optional) \\
+                     & \verb|fcv|           & CV filename \\
+                     & \verb|fweight|       & Weight filename \\
+\hline
+\verb|&output_param| & \verb|fhead|         & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|calcfe|        & Whether to calculate the standard free energy \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|only_r|        & Whether the intermolecular distance is the only CV \\
+                     & \verb|temperature|   & Temperature [K] \\
+                     & \verb|dr|            & Distance grid spacing \\
+                     & \verb|ngrid|         & Number of distance grids \\
+                     & \verb|nsta|          & Starting frame number for the analysis \\
+                     & \verb|use_bootstrap| & Whether to perform bootstrap analysis \\
+                     & \verb|vol0|          & Standard-state volume \\
+                     & \verb|urange|        & Distance range of the unbound state \\
+                     & \verb|bound_range|   & Distance range of the bound state \\
+\hline
+\verb|&bootopt_param| & \verb|iseed|        & Random number seed \\
+                      & \verb|nsample|      & Number of samples drawn in each trial \\
+                      & \verb|duplicate|    & Whether duplicate sampling is allowed \\
+                      & \verb|ntrial|       & Number of bootstrap trials \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="format-of-the-input-file-time-series-data">
+<h2>Format of the Input File (Time-Series Data)<a class="headerlink" href="#format-of-the-input-file-time-series-data" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>1st column: Time</p></li>
+<li><p>2nd to <span class="math notranslate nohighlight">\((N+1)\)</span>-th columns: CV values</p></li>
+<li><p>Last column: Intermolecular distance</p></li>
+</ul>
+<p>The first column is ignored, and the second column is treated as the first data column.</p>
+<p>If the intermolecular distance is the only CV, i.e.,</p>
+<ul class="simple">
+<li><p>1st column: Time</p></li>
+<li><p>2nd column: Intermolecular distance</p></li>
+</ul>
+<p>then simply specify</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">only_r</span> <span class="o">=</span> <span class="o">.</span><span class="n">true</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>in <code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code>.</p>
+</section>
+<section id="option-param">
+<h2><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#option-param" title="Link to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calcfe</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.true.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">calcfe</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the standard binding free energy should be calculated.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the standard binding free energy is calculated.
+If <code class="docutils literal notranslate"><span class="pre">.false.</span></code>, only the PMF profile is generated.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ndim</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies the number of CV dimensions.</p>
+<p>Currently, both one-dimensional and multidimensional PMF calculations are supported.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">only_r</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">only_r</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>Set this option to <code class="docutils literal notranslate"><span class="pre">.true.</span></code> when the intermolecular distance is the only CV and no additional CVs are present.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">temperature</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">298.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">=</span> <span class="pre">300.0</span></code></p></li>
+</ul>
+<p>Specifies the temperature <span class="math notranslate nohighlight">\(T\)</span> [K] used for the free energy calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">dr</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">dr</span> <span class="pre">=</span> <span class="pre">0.1d0</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing along the distance coordinate.</p>
+<p>This value is used as the grid interval <span class="math notranslate nohighlight">\(\Delta r\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ngrid</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ngrid</span> <span class="pre">=</span> <span class="pre">1000</span></code></p></li>
+</ul>
+<p>Specifies the number of grid points along the distance coordinate.</p>
+<p>The PMF is evaluated on <code class="docutils literal notranslate"><span class="pre">ngrid</span></code> grid points.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsta</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsta</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the frame number from which the analysis starts.</p>
+<p>Frames before <code class="docutils literal notranslate"><span class="pre">nsta</span></code> are excluded from the analysis.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">use_bootstrap</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether bootstrap error analysis is performed.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, bootstrap analysis is carried out according to the settings in <code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">vol0</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1661.0d0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">vol0</span> <span class="pre">=</span> <span class="pre">1661.0d0</span></code></p></li>
+</ul>
+<p>Specifies the standard-state volume <span class="math notranslate nohighlight">\(V^\circ\)</span>.</p>
+<p>The default value corresponds to the volume for a concentration of 1 mol/L in ANGSTROM units (1661 ANGSTROM<span class="math notranslate nohighlight">\(^3\)</span>).</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">urange</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">urange</span> <span class="pre">=</span> <span class="pre">25.0</span> <span class="pre">30.0</span></code></p></li>
+</ul>
+<p>Specifies the distance range regarded as the unbound state.</p>
+<p>The first value represents the lower bound, and the second value represents the upper bound.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">bound_range</span></code></strong></p>
+<ul>
+<li><p>Default: None</p></li>
+<li><p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">react_range</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="mf">10.0</span>
+              <span class="mf">5.0</span> <span class="mf">20.0</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Specifies the CV range corresponding to the bound state.</p>
+<p>For each line, the first value represents the lower bound and the second value represents the upper bound.</p>
+<p>By specifying <code class="docutils literal notranslate"><span class="pre">ndim</span></code> ranges, a multidimensional bound region can be defined.</p>
+</li>
+</ul>
+</section>
+<section id="bootopt-param">
+<h2><code class="docutils literal notranslate"><span class="pre">&amp;bootopt_param</span></code><a class="headerlink" href="#bootopt-param" title="Link to this heading"></a></h2>
+<p>This namelist controls the settings for bootstrap error analysis.</p>
+<p>It is enabled only when <code class="docutils literal notranslate"><span class="pre">use_bootstrap</span> <span class="pre">=</span> <span class="pre">.true.</span></code>.</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">iseed</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: Automatically generated</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">=</span> <span class="pre">3141592</span></code></p></li>
+</ul>
+<p>Specifies the random seed used for bootstrap analysis.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>, the program automatically generates a seed.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsample</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsample</span> <span class="pre">=</span> <span class="pre">1000</span></code></p></li>
+</ul>
+<p>Specifies the number of samples drawn in each bootstrap trial.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.true.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">duplicate</span> <span class="pre">=</span> <span class="pre">.false.</span></code></p></li>
+</ul>
+<p>Specifies whether duplicate sampling is allowed during bootstrap sampling.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ntrial</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: None</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ntrial</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the number of bootstrap trials.</p>
+<p>Increasing the number of trials improves the accuracy of the statistical error estimate, but also increases the computational cost.</p>
+</li>
+</ul>
+</section>
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*.rd</span></code></p>
+<ul>
+<li><p>1st column: Intermolecular distance <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p>2nd column: Conventional PMF along <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p>3rd column: PMF corresponding to the bound state</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>The following example calculates the binding free energy from a time-series data file <code class="docutils literal notranslate"><span class="pre">inp.ts</span></code> that contains one CV and the intermolecular distance in the last column.</p>
+<p>The range <span class="math notranslate nohighlight">\(18 \leq r/\)</span>ANGSTROM<span class="math notranslate nohighlight">\(\leq 20\)</span> is treated as the unbound state, and the bound state is defined by the CV range <span class="math notranslate nohighlight">\(5.0 \leq \zeta \leq 10.0\)</span>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> fcv      = &quot;inp.ts&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead         = &quot;out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> calcfe        = .true.</span>
+<span class="s"> only_r        = .false.</span>
+<span class="s"> ndim          =  1</span>
+<span class="s"> temperature   =  300.0</span>
+<span class="s"> dr            =  0.1d0</span>
+<span class="s"> ngrid         =  1000</span>
+<span class="s"> nsta          =  1</span>
+<span class="s"> use_bootstrap = .false.</span>
+<span class="s"> vol0          = 1661.0d0</span>
+<span class="s"> urange        =  18.0  20.0</span>
+<span class="s"> bound_range   =  5.0  10.0</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>restricted_radial<span class="w"> </span>run.inp
+</pre></div>
+</div>
+<p>After execution, the results are printed near the end of the log file.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>... Thermodynamic analysis ...
+vb      (A^3)      =      21.5444908
+wu      (kcal/mol) =      -1.3486059
+wb      (kcal/mol) =       0.0000000
+dw      (kcal/mol) =      -1.3486059
+dGv     (kcal/mol) =       2.5903536
+dGzero  (kcal/mol) =       3.9389595
+Keq     (M^-1)     =   1.3506025E-03
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

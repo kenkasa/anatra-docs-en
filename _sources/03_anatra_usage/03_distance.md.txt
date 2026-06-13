@@ -1,0 +1,121 @@
+## Distance Calculation (`distance`, `dis`)
+
+The `distance` mode computes the distance between two selected regions. By default, it calculates the distance between the centers of mass of the selected molecules. It can also compute the minimum distance between atoms in two regions.
+
+### List of Options
+
+**Option**                  | **Remarks**       | **Option**            | **Remarks**
+:--------------------------:|:-----------------:|:----------------------:|:------------------:
+``-stype``                  | Common            | ``-sfile``             | Common
+``-tintype``                | Common            | ``-tin``               | Common
+``-flist_traj``             | Common            | ``-fhead``             | Common
+``-sel0``                   | Common            | ``-sel1``              | Common
+``-mode0``                  | Common            | ``-mode1``             | Common
+``-pbc``                    | Mode specific     | ``-dt``                | Mode specific
+``-distance_type``$^\dagger$| Mode specific     | ``-mindist_type0``$^\dagger$ | Mode specific
+``-mindist_type1``$^\dagger$| Mode specific     | ``-prep_only``         | Common
+
+Options marked with $^\dagger$ are not required for standard distance calculations and can be omitted in typical use cases.
+
+---
+
+* **-sel0 \<selection\>**  
+* **-sel1 \<selection\>**
+  * Default: N/A  
+  * Example: ``-sel0 resid 1 to 20 and noh -sel1 resname LIG``
+
+  Specifies the two regions (selid = 0, 1) between which distances will be calculated.
+
+---
+
+* **-mode0 \<residue or whole or atom\>**  
+* **-mode1 \<residue or whole or atom\>**
+  * Default: ``residue``  
+  * Example: ``-mode0 whole -mode1 residue``
+
+  Defines how the selected regions (``-sel0``, ``-sel1``) are partitioned for distance calculations.
+
+---
+
+* **-pbc \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-pbc true``
+
+  Specifies whether periodic boundary conditions should be applied during distance calculations.
+
+---
+
+* **-dt \<time interval\>**
+  * Default: ``1.0``  
+  * Example: ``-dt 0.1``
+
+  Sets the time interval (first column of the output) for the time series data.
+
+---
+
+* **-distance_type \<standard or minimum or intra\>**$^\dagger$
+  * Default: ``standard``  
+  * Example: ``-distance_type standard``
+
+  Specifies the type of distance to compute:  
+  * **standard**: Standard distance between molecules.  
+  * **minimum**: Minimum atomic distance between regions.  
+  * **intra**: Intra-molecular distances.
+
+  The `intra` option is useful when evaluating distances between atoms within the same molecule. For instance, in a system with 100 identical polymers (resname `PLM`) having terminal atoms named `CP1` and `CP2`, computing the end-to-end distance within each polymer requires care. Using `-distance_type standard` with `-sel0 name CP1` and `-sel1 name CP2` would also include inter-polymer distances. In contrast, `-distance_type intra` restricts calculations to within individual molecules.
+
+---
+
+* **-mindist_type1 \<site or com\>**$^\dagger$
+  * Default: ``site``  
+  * Example: ``-mindist_type0 com -mindist_type1 site``
+
+  Specifies the candidate sites for minimum distance calculations:  
+  * **site**: All atoms in the region are considered.  
+  * **com**: Only the center of mass is considered.
+
+  When both regions use `com`, the result is equivalent to standard center-of-mass distance.
+
+---
+
+### Output File Format
+
+* `*.dis` file
+
+  This file contains distances (or minimum distances) between the selected regions. Suppose `-mode0` and `-mode1` divide selections into $n_1$ and $n_2$ molecules, respectively. Then $n_1 \times n_2$ distances will be recorded per frame. The format is as follows:
+
+  * Column 1: Time  
+  * Column 2: Distance between molecule pair (1, 1)  
+  * Column 3: Distance between pair (1, 2)  
+    ...  
+  * Column $n_2$: Distance between pair (1, $n_2$)  
+  * Column $n_2+1$: Distance between pair (2, 1)  
+  * Column $n_2+2$: Distance between pair (2, 2)  
+    ...
+
+  All distances are reported in ANGSTROM.
+
+### Example of Analysis
+
+#### Standard Atom-to-Region Distance
+
+The following example computes distances between a protein (`resid 1 to 192`) and 10 ligand molecules (`resname LIG`):
+
+```
+#!/bin/bash
+
+anatra distance                                    \
+  -stype          parm7                            \
+  -sfile          complex.prmtop                   \
+  -tintype        dcd                              \
+  -tin            INP.dcd                          \
+  -fhead          out                              \
+  -pbc            true                             \
+  -distance_type  standard                         \
+  -dt             0.1                              \
+  -sel0           resid 1 to 192                   \
+  -sel1           resname LIG                      \
+  -mode0          whole                            \
+  -mode1          residue
+```
+

@@ -1,0 +1,108 @@
+## Free Volume Profile (free_volume)
+
+``free_volume`` calculates the profile of the free volume fraction along a user-specified coordinate axis.
+The free volume is defined as the region where no atoms specified by ``target_selid`` exist.
+The atomic size is estimated from the Lennard-Jones parameters,
+and the free volume fraction is evaluated as the probability that randomly inserted particles do not overlap with any target atoms.
+
+At present, only the $z$ direction (``-coord_type z``) is supported.
+Before the analysis, the system is translated so that the center of the atoms specified by ``center_selid`` is aligned,
+and then the free volume fraction is calculated as a function of the $z$ coordinate.
+
+### List of Options
+
+**Option**         | **Remark**    | **Option**         | **Remark**
+:-----------------:|:-------------:|:------------------:|:--------------:
+``-stype``         | Common        | ``-sfile``         | Common
+``-tintype``       | Common        | ``-tin``           | Common
+``-flist_traj``    | Common        | ``-fhead``         | Common
+``-fprmtop``       | Mode specific | ``-xsta``          | Mode specific
+``-dx``            | Mode specific | ``-ngrid``         | Mode specific
+``-nins``          | Mode specific | ``-sel0``          | Common
+``-sel1``          | Common        | ``-target_selid``  | Mode specific
+``-center_selid``  | Mode specific | ``-coord_type``    | Mode specific
+``-prep_only``     | Common        | --                 | --
+
+ ---
+* **-fprmtop \<Amber parm7 file\>**
+    * Example: ``-fprmtop system.parm7``
+
+    Specifies the Amber parm7 file from which the Lennard-Jones parameters are obtained.
+    In the current implementation, only the parm7 format is supported.
+
+* **-xsta \<initial coordinate (ANGSTROM)\>**
+    * Example: ``-xsta -30.0``
+
+    Specifies the starting position of the coordinate range for the profile calculation.
+
+* **-dx \<grid interval (ANGSTROM)\>**
+    * Example: ``-dx 1.0``
+
+    Specifies the interval between neighboring grid points where the free volume fraction is evaluated.
+
+* **-ngrid \<number of grids\>**
+    * Example: ``-ngrid 60``
+
+    Specifies the number of grid points.
+
+* **-nins \<number of particle insertions\>**
+    * Example: ``-nins 1000``
+
+    Specifies the number of random particle insertions performed at each grid point.
+    A larger value improves the statistical accuracy at the cost of increased computational time.
+
+* **-target_selid \<selection ID of target atoms\>**
+    * Default: ``0``
+    * Example: ``-target_selid 0``
+
+    Specifies the selection ID of the target atoms used to define the free volume.
+    The region that does not overlap with these atoms is regarded as the free volume.
+
+* **-center_selid \<selection ID for centering\>**
+    * Default: ``1``
+    * Example: ``-center_selid 1``
+
+    Specifies the selection ID used to determine the center of the system.
+    The coordinates are shifted based on this group before the analysis.
+
+* **-coord_type \<coordinate axis\>**
+    * Default: ``z``
+    * Example: ``-coord_type z``
+
+    Specifies the coordinate axis along which the free volume profile is calculated.
+    In the current implementation, only ``z`` is supported.
+
+### Format of Output Files
+
+* ``*.profile``
+
+    The free volume fraction profile along the specified coordinate axis is output.
+
+  * Column 1: Coordinate
+  * Column 2: Free volume fraction
+
+### Example
+
+#### Free volume profile in a lipid membrane system
+
+```bash
+#!/usr/bin/env bash
+
+anatra free_volume               \
+  -stype          psf            \
+  -sfile          complex.psf    \
+  -tintype        nc             \
+  -flist_traj     flist          \
+  -fhead          out            \
+  -fprmtop        complex.prmtop \
+  -xsta           0.0            \
+  -dx             1.0            \
+  -ngrid          60             \
+  -nins           1000           \
+  -sel0           all            \
+  -sel1           resname POPC   \
+  -target_selid   0              \
+  -center_selid   1              \
+  -coord_type     z              \
+  -prep_only      false
+```

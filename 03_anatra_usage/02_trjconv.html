@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trajectory Conversion (trjconv) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Trajectory Conversion (<code class="docutils literal notranslate"><span class="pre">trjconv</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/02_trjconv.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="trajectory-conversion-trjconv">
+<h1>Trajectory Conversion (<code class="docutils literal notranslate"><span class="pre">trjconv</span></code>)<a class="headerlink" href="#trajectory-conversion-trjconv" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">trjconv</span></code> mode performs various transformations on MD trajectories. It is typically used for the following purposes:</p>
+<ul class="simple">
+<li><p>To change the file format of a trajectory.</p></li>
+<li><p>To generate a trajectory containing only a specific region of interest<br />
+(e.g., to remove water molecules from the trajectory).</p></li>
+<li><p>To apply periodic boundary wrapping (PBC wrapping) to an unwrapped trajectory.</p></li>
+<li><p>To fit the system such that a selected region aligns with a reference structure.</p></li>
+<li><p>To center the system such that a selected region is translated to the origin.</p></li>
+</ul>
+<section id="list-of-options">
+<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-totype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-to</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel</span></code><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-beg</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-end</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fit</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-centering</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-wrap</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-wrapcenter</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-wrapcomp</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-refpdb</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-outselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fitselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-refselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-beg &lt;first frame to read&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-beg</span> <span class="pre">10</span></code></p></li>
+</ul>
+<p>Specifies the first frame to read from the trajectory. Note that frame indexing starts from 1. The example above starts reading from the 10th frame.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-end &lt;last frame to read&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0</span></code> (interpreted as the final frame)</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-end</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the last frame to read from the trajectory. Frame numbers are counted starting from 1. The example above reads up to the 100th frame.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fit &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fit</span> <span class="pre">true</span></code></p></li>
+<li><p>Note: If set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the options <code class="docutils literal notranslate"><span class="pre">-fitselid</span></code>, <code class="docutils literal notranslate"><span class="pre">-refpdb</span></code>, and <code class="docutils literal notranslate"><span class="pre">-refselid</span></code> must be specified.</p></li>
+</ul>
+<p>Enables or disables structural fitting. Fitting refers to the operation of translating and rotating the entire system so that a specific region matches a reference structure. When this option is used, the following must be specified:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-fitselid</span></code>: selid of the fitting region in the trajectory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-refpdb</span></code>: PDB file of the reference structure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-refselid</span></code>: selid of the fitting region in the reference</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-wrap &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-wrap</span> <span class="pre">true</span> <span class="pre">-wrapcomp</span> <span class="pre">fragment</span> <span class="pre">-wrapcenter</span> <span class="pre">origin</span></code></p></li>
+<li><p>Note: Use <code class="docutils literal notranslate"><span class="pre">-wrapcenter</span></code> to change the wrapping center from the origin.<br />
+Use <code class="docutils literal notranslate"><span class="pre">-wrapcomp</span></code> to define the unit for wrapping.</p></li>
+</ul>
+<p>Specifies whether to apply periodic boundary wrapping (PBC) to the trajectory. By default, the wrapping center is the origin <span class="math notranslate nohighlight">\((x, y, z) = (0, 0, 0)\)</span>, but it will be automatically changed to the center of mass of a region specified with <code class="docutils literal notranslate"><span class="pre">-wrapcenter</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-centering &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-centering</span> <span class="pre">true</span> <span class="pre">-sel1</span> <span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">200</span> <span class="pre">-fitselid</span> <span class="pre">1</span></code></p></li>
+<li><p>Note: Use <code class="docutils literal notranslate"><span class="pre">-fitselid</span></code> to specify the selid of the region to be centered.</p></li>
+</ul>
+<p>Specifies whether to perform centering of the system. Centering refers to translating the system so that the center of mass of a selected region is placed at the coordinate origin. The region to be centered is specified via <code class="docutils literal notranslate"><span class="pre">-fitselid</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-refpdb &lt;PDB file&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-refpdb</span> <span class="pre">A.pdb</span> <span class="pre">-sel2</span> <span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">200</span> <span class="pre">-refselid</span> <span class="pre">2</span></code></p></li>
+<li><p>Note: Specify the selid of the fitting region in the reference using <code class="docutils literal notranslate"><span class="pre">-refselid</span></code>.</p></li>
+</ul>
+<p>Specifies the PDB file of the reference structure for fitting. This option is required if <code class="docutils literal notranslate"><span class="pre">-fit</span> <span class="pre">true</span></code> is specified. The fitting region within the reference is selected using <code class="docutils literal notranslate"><span class="pre">-refselid</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-outselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-sel0</span> <span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">200</span> <span class="pre">-outselid</span> <span class="pre">0</span></code></p></li>
+</ul>
+<p>Specifies the selid corresponding to the region to be written to the output trajectory.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fitselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-sel1</span> <span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">200</span> <span class="pre">-fitselid</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies the selid of the fitting region in the input trajectory.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-wrapcenter &lt;origin or com&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">origin</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-wrapcenter</span> <span class="pre">origin</span></code></p></li>
+<li><p>Note: If <code class="docutils literal notranslate"><span class="pre">com</span></code> is specified, the selid must be provided using <code class="docutils literal notranslate"><span class="pre">-fitselid</span></code>.</p></li>
+</ul>
+<p>Specifies the center of the system used during wrapping.</p>
+<ul class="simple">
+<li><p><strong>origin</strong>: Use the coordinate origin as the center.</p></li>
+<li><p><strong>com</strong>: Use the center of mass of a selected region as the center.<br />
+The selid of this region must be given with <code class="docutils literal notranslate"><span class="pre">-fitselid</span></code>.<br />
+If fitting or centering is performed simultaneously, <code class="docutils literal notranslate"><span class="pre">com</span></code> is enforced.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-wrapcomp &lt;fragment or residue or nocomp&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">fragment</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-wrapcomp</span> <span class="pre">fragment</span></code></p></li>
+</ul>
+<p>Specifies the unit by which molecules are treated for PBC wrapping. For example, when atoms are partially outside the box, this determines whether to wrap individual atoms or entire molecular units.</p>
+<ul class="simple">
+<li><p><strong>fragment</strong>: Atoms connected through bonding paths are treated as a single unit.</p></li>
+<li><p><strong>residue</strong>: All atoms within a residue ID are treated as a single unit.</p></li>
+<li><p><strong>nocomp</strong>: Each atom is treated as an independent unit.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<p>Below are script examples using the minimum necessary options for common analyses. Options such as <code class="docutils literal notranslate"><span class="pre">-beg</span></code> and <code class="docutils literal notranslate"><span class="pre">-end</span></code> are omitted.</p>
+<section id="removing-water-from-trajectory">
+<h3>Removing Water from Trajectory<a class="headerlink" href="#removing-water-from-trajectory" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">trjconv</span>                           \
+  <span class="o">-</span><span class="n">stype</span>      <span class="n">parm7</span>                      \
+  <span class="o">-</span><span class="n">sfile</span>      <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>             \
+  <span class="o">-</span><span class="n">tintype</span>    <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">tin</span>        <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">totype</span>     <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">to</span>         <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">sel0</span>       <span class="ow">not</span> <span class="n">water</span>                  \
+  <span class="o">-</span><span class="n">outselid</span>   <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="pbc-wrapping">
+<h3>PBC Wrapping<a class="headerlink" href="#pbc-wrapping" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">trjconv</span>                           \
+  <span class="o">-</span><span class="n">stype</span>      <span class="n">parm7</span>                      \
+  <span class="o">-</span><span class="n">sfile</span>      <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>             \
+  <span class="o">-</span><span class="n">tintype</span>    <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">tin</span>        <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">totype</span>     <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">to</span>         <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">sel0</span>       <span class="nb">all</span>                        \
+  <span class="o">-</span><span class="n">wrap</span>       <span class="n">true</span>                       \
+  <span class="o">-</span><span class="n">wrapcenter</span> <span class="n">origin</span>                     \
+  <span class="o">-</span><span class="n">wrapcomp</span>   <span class="n">fragment</span>                   \
+  <span class="o">-</span><span class="n">outselid</span>   <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="fitting">
+<h3>Fitting<a class="headerlink" href="#fitting" title="Link to this heading"></a></h3>
+<p>This example assumes a system with one protein in aqueous solution (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">192</span></code>). Fitting is performed to align the C<span class="math notranslate nohighlight">\(\alpha\)</span> atoms in the trajectory to those in the reference structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">trjconv</span>                           \
+  <span class="o">-</span><span class="n">stype</span>      <span class="n">parm7</span>                      \
+  <span class="o">-</span><span class="n">sfile</span>      <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>             \
+  <span class="o">-</span><span class="n">tintype</span>    <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">tin</span>        <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">totype</span>     <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">to</span>         <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">refpdb</span>     <span class="n">REF</span><span class="o">.</span><span class="n">pdb</span>                    \
+  <span class="o">-</span><span class="n">sel0</span>       <span class="nb">all</span>                        \
+  <span class="o">-</span><span class="n">sel1</span>       <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span> \
+  <span class="o">-</span><span class="n">sel2</span>       <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span> \
+  <span class="o">-</span><span class="n">fit</span>        <span class="n">true</span>                       \
+  <span class="o">-</span><span class="n">outselid</span>   <span class="mi">0</span>                          \
+  <span class="o">-</span><span class="n">fitselid</span>   <span class="mi">1</span>                          \
+  <span class="o">-</span><span class="n">refselid</span>   <span class="mi">2</span>
+</pre></div>
+</div>
+</section>
+<section id="centering">
+<h3>Centering<a class="headerlink" href="#centering" title="Link to this heading"></a></h3>
+<p>This example centers the protein<span class="math notranslate nohighlight">\(^{\prime}\)</span>s center of mass at the origin:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">trjconv</span>                           \
+  <span class="o">-</span><span class="n">stype</span>      <span class="n">parm7</span>                      \
+  <span class="o">-</span><span class="n">sfile</span>      <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>             \
+  <span class="o">-</span><span class="n">tintype</span>    <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">tin</span>        <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">totype</span>     <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">to</span>         <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">sel0</span>       <span class="nb">all</span>                        \
+  <span class="o">-</span><span class="n">sel1</span>       <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span>             \
+  <span class="o">-</span><span class="n">centering</span>  <span class="n">true</span>                       \
+  <span class="o">-</span><span class="n">outselid</span>   <span class="mi">0</span>                          \
+  <span class="o">-</span><span class="n">fitselid</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="pbc-wrapping-and-fitting">
+<h3>PBC Wrapping and Fitting<a class="headerlink" href="#pbc-wrapping-and-fitting" title="Link to this heading"></a></h3>
+<p>This example performs both fitting and PBC wrapping. The wrapping center is set to the center of mass of the C<span class="math notranslate nohighlight">\(\alpha\)</span> atoms:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">trjconv</span>                           \
+  <span class="o">-</span><span class="n">stype</span>      <span class="n">parm7</span>                      \
+  <span class="o">-</span><span class="n">sfile</span>      <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>             \
+  <span class="o">-</span><span class="n">tintype</span>    <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">tin</span>        <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">totype</span>     <span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">to</span>         <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>                    \
+  <span class="o">-</span><span class="n">refpdb</span>     <span class="n">REF</span><span class="o">.</span><span class="n">pdb</span>                    \
+  <span class="o">-</span><span class="n">sel0</span>       <span class="nb">all</span>                        \
+  <span class="o">-</span><span class="n">sel1</span>       <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span> \
+  <span class="o">-</span><span class="n">sel2</span>       <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span> \
+  <span class="o">-</span><span class="n">fit</span>        <span class="n">true</span>                       \
+  <span class="o">-</span><span class="n">wrap</span>       <span class="n">true</span>                       \
+  <span class="o">-</span><span class="n">wrapcenter</span> <span class="n">com</span>                        \
+  <span class="o">-</span><span class="n">wrapcomp</span>   <span class="n">fragment</span>                   \
+  <span class="o">-</span><span class="n">outselid</span>   <span class="mi">0</span>                          \
+  <span class="o">-</span><span class="n">fitselid</span>   <span class="mi">1</span>                          \
+  <span class="o">-</span><span class="n">refselid</span>   <span class="mi">2</span>
+</pre></div>
+</div>
+</section>
+<section id="pbc-wrapping-and-centering">
+<h3>PBC Wrapping and Centering<a class="headerlink" href="#pbc-wrapping-and-centering" title="Link to this heading"></a></h3>
+<p>This example sets the wrapping and centering region to a lipid membrane (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">200</span> <span class="pre">and</span> <span class="pre">segid</span> <span class="pre">MEMB</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">trjconv</span>                              \
+  <span class="o">-</span><span class="n">stype</span>      <span class="n">psf</span>                           \
+  <span class="o">-</span><span class="n">sfile</span>      <span class="nb">complex</span><span class="o">.</span><span class="n">psf</span>                   \
+  <span class="o">-</span><span class="n">tintype</span>    <span class="n">dcd</span>                           \
+  <span class="o">-</span><span class="n">tin</span>        <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                       \
+  <span class="o">-</span><span class="n">totype</span>     <span class="n">dcd</span>                           \
+  <span class="o">-</span><span class="n">to</span>         <span class="n">OUT</span><span class="o">.</span><span class="n">dcd</span>                       \
+  <span class="o">-</span><span class="n">sel0</span>       <span class="nb">all</span>                           \
+  <span class="o">-</span><span class="n">sel1</span>       <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">200</span> <span class="ow">and</span> <span class="n">segid</span> <span class="n">MEMB</span> \
+  <span class="o">-</span><span class="n">centering</span>  <span class="n">false</span>                         \
+  <span class="o">-</span><span class="n">wrap</span>       <span class="n">true</span>                          \
+  <span class="o">-</span><span class="n">wrapcenter</span> <span class="n">com</span>                           \
+  <span class="o">-</span><span class="n">wrapcomp</span>   <span class="n">fragment</span>                      \
+  <span class="o">-</span><span class="n">outselid</span>   <span class="mi">0</span>                             \
+  <span class="o">-</span><span class="n">fitselid</span>   <span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

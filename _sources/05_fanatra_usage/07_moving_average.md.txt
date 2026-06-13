@@ -1,0 +1,151 @@
+## Moving Average (moving_average, movave)
+
+In this analysis mode, one-dimensional data (e.g., distribution functions) are smoothed using a moving average.
+
+### Parameter List
+
+**Namelist**     | **Parameter**    | **Description**
+:----------------|:-----------------|:----------------------------------------------------------------------
+`&input_param`   | `fcv`            | Function data file
+`&input_param`   | `flist_cv`       | File containing a list of function data files
+`&output_param`  | `fhead`          | Output file header
+`&option_param`  | `dx`             | Grid spacing
+`&option_param`  | `xsta`           | Starting position of the grid
+`&option_param`  | `xsep`           | Boundary position between regions
+`&option_param`  | `nregion`        | Number of regions
+`&option_param`  | `npoint`         | Number of points used for moving average in each region
+`&option_param`  | `include_zero`   | Whether to preserve the value at the origin
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|fcv|      & Function data file \\
+                     & \verb|flist_cv| & File containing a list of function data files \\
+\hline
+\verb|&output_param| & \verb|fhead|    & Output file header \\
+\hline
+\verb|&option_param| & \verb|dx|            & Grid spacing \\
+                     & \verb|xsta|          & Starting position of the grid \\
+                     & \verb|xsep|          & Boundary position between regions \\
+                     & \verb|nregion|       & Number of regions \\
+                     & \verb|npoint|        & Number of points used for moving average in each region \\
+                     & \verb|include_zero|  & Whether to preserve the value at the origin \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``dx``**
+    * Default: None
+    * Example: ``dx = 0.1d0``
+
+    Specifies the grid spacing of the function data.
+
+----
+* **``xsta``**
+    * Default: ``0.0d0``
+    * Example: ``xsta = 0.0d0``
+
+    Specifies the starting position of the grid.
+
+    If the position of the $i$-th grid point is denoted by $x_i$,
+
+    \begin{align}
+    x_i = x_0 + (i-1)\Delta x
+    \end{align}
+
+    where $x_0$ is the starting position.
+
+----
+* **``nregion``**
+    * Default: ``1``
+    * Example: ``nregion = 2``
+
+    Specifies the number of regions to which different moving-average conditions are applied.
+
+    The number of values given to ``npoint`` must match this number of regions.
+
+----
+* **``xsep``**
+    * Default: ``0.0d0``
+    * Example: ``xsep = 1.0d0``
+
+    Specifies the boundary positions between regions with different moving-average widths.
+
+    This parameter is not used when ``nregion = 1``, in which case ``xsep = 0.0d0`` should be specified.
+
+    For example, when dividing the domain into $N$ regions, $N-1$ boundary values must be specified.
+
+----
+* **``npoint``**
+    * Default: None
+    * Example: ``npoint = 3 5``
+
+    Specifies the number of data points used for the moving average in each region.
+
+    An odd number must be specified.
+
+    In the above example,
+
+    * Region 1: 3-point moving average
+    * Region 2: 5-point moving average
+
+    are applied.
+
+----
+* **``include_zero``**
+    * Default: ``.true.``
+    * Example: ``include_zero = .false.``
+
+    Specifies whether to preserve the value at the origin after smoothing.
+
+    If ``.true.``, the value at the origin is kept unchanged from the input data.
+
+### Output File Format
+
+* ``*XXXX.dat``
+    * Column 1: $x$ coordinate
+    * Column 2: Function value
+
+    A smoothed data file is generated for each input file specified by ``flist_cv`` or related options.
+
+### Example
+
+The following example smooths a one-dimensional function $f\left(x\right)$ stored in ``input.dat`` (grid origin ``0``, grid spacing ``0.1``).
+
+The domain is divided into two regions, $x\leq 1.0$ and $x>1.0$, and 3-point and 5-point moving averages are applied to the first and second regions, respectively.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ fcv      = "input.dat"
+/
+&output_param
+ fhead = "out"
+/
+&option_param
+  dx           = 0.1d0
+  xsta         = 0.0d0
+  xsep         = 1.0d0
+  nregion      = 2
+  npoint       = 3 5
+  include_zero = .true.
+/
+EOF
+
+fanatra moving_average run.inp
+```
+
+Executing this command generates the smoothed function data file ``out0001.dat``.

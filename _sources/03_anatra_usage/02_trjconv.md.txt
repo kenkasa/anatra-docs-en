@@ -1,0 +1,251 @@
+## Trajectory Conversion (`trjconv`)
+
+The `trjconv` mode performs various transformations on MD trajectories. It is typically used for the following purposes:
+
+* To change the file format of a trajectory.
+* To generate a trajectory containing only a specific region of interest  
+  (e.g., to remove water molecules from the trajectory).
+* To apply periodic boundary wrapping (PBC wrapping) to an unwrapped trajectory.
+* To fit the system such that a selected region aligns with a reference structure.
+* To center the system such that a selected region is translated to the origin.
+
+### List of Options
+
+**Option**        | **Remarks**        | **Option**       | **Remarks**
+:----------------:|:------------------:|:----------------:|:------------------:
+``-stype``        | Common             | ``-sfile``       | Common
+``-tintype``      | Common             | ``-tin``         | Common
+``-totype``       | Common             | ``-to``          | Common
+``-sel``$x$       | Common             | ``-beg``         | Mode specific
+``-end``          | Mode specific      | ``-fit``         | Mode specific
+``-centering``    | Mode specific      | ``-wrap``        | Mode specific
+``-wrapcenter``   | Mode specific      | ``-wrapcomp``    | Mode specific
+``-refpdb``       | Mode specific      | ``-outselid``    | Mode specific
+``-fitselid``     | Mode specific      | ``-refselid``    | Mode specific
+
+---
+
+* **-beg \<first frame to read\>**
+  * Default: ``1``
+  * Example: ``-beg 10``
+
+  Specifies the first frame to read from the trajectory. Note that frame indexing starts from 1. The example above starts reading from the 10th frame.
+
+---
+
+* **-end \<last frame to read\>**
+  * Default: ``0`` (interpreted as the final frame)
+  * Example: ``-end 100``
+
+  Specifies the last frame to read from the trajectory. Frame numbers are counted starting from 1. The example above reads up to the 100th frame.
+
+---
+
+* **-fit \<true or false\>**
+  * Default: ``false``
+  * Example: ``-fit true``
+  * Note: If set to ``true``, the options ``-fitselid``, ``-refpdb``, and ``-refselid`` must be specified.
+
+  Enables or disables structural fitting. Fitting refers to the operation of translating and rotating the entire system so that a specific region matches a reference structure. When this option is used, the following must be specified:
+  - ``-fitselid``: selid of the fitting region in the trajectory
+  - ``-refpdb``: PDB file of the reference structure
+  - ``-refselid``: selid of the fitting region in the reference
+
+---
+
+* **-wrap \<true or false\>**
+  * Default: ``false``
+  * Example: ``-wrap true -wrapcomp fragment -wrapcenter origin``
+  * Note: Use ``-wrapcenter`` to change the wrapping center from the origin.  
+          Use ``-wrapcomp`` to define the unit for wrapping.
+
+  Specifies whether to apply periodic boundary wrapping (PBC) to the trajectory. By default, the wrapping center is the origin $(x, y, z) = (0, 0, 0)$, but it will be automatically changed to the center of mass of a region specified with ``-wrapcenter``.
+
+---
+
+* **-centering \<true or false\>**
+  * Default: ``false``
+  * Example: ``-centering true -sel1 resid 1 to 200 -fitselid 1``
+  * Note: Use ``-fitselid`` to specify the selid of the region to be centered.
+
+  Specifies whether to perform centering of the system. Centering refers to translating the system so that the center of mass of a selected region is placed at the coordinate origin. The region to be centered is specified via ``-fitselid``.
+
+---
+
+* **-refpdb \<PDB file\>**
+  * Default: N/A
+  * Example: ``-refpdb A.pdb -sel2 resid 1 to 200 -refselid 2``
+  * Note: Specify the selid of the fitting region in the reference using ``-refselid``.
+
+  Specifies the PDB file of the reference structure for fitting. This option is required if ``-fit true`` is specified. The fitting region within the reference is selected using ``-refselid``.
+
+---
+
+* **-outselid \<selid\>**
+  * Default: N/A
+  * Example: ``-sel0 resid 1 to 200 -outselid 0``
+
+  Specifies the selid corresponding to the region to be written to the output trajectory.
+
+---
+
+* **-fitselid \<selid\>**
+  * Default: N/A
+  * Example: ``-sel1 resid 1 to 200 -fitselid 1``
+
+  Specifies the selid of the fitting region in the input trajectory.
+
+---
+
+* **-wrapcenter \<origin or com\>**
+  * Default: ``origin`` 
+  * Example: ``-wrapcenter origin``
+  * Note: If ``com`` is specified, the selid must be provided using ``-fitselid``.
+
+  Specifies the center of the system used during wrapping.
+
+  * **origin**: Use the coordinate origin as the center.
+  * **com**: Use the center of mass of a selected region as the center.  
+             The selid of this region must be given with ``-fitselid``.  
+             If fitting or centering is performed simultaneously, ``com`` is enforced.
+
+---
+
+* **-wrapcomp \<fragment or residue or nocomp\>**
+  * Default: ``fragment``
+  * Example: ``-wrapcomp fragment``
+
+  Specifies the unit by which molecules are treated for PBC wrapping. For example, when atoms are partially outside the box, this determines whether to wrap individual atoms or entire molecular units.
+
+  * **fragment**: Atoms connected through bonding paths are treated as a single unit.
+  * **residue**: All atoms within a residue ID are treated as a single unit.
+  * **nocomp**: Each atom is treated as an independent unit.
+
+---
+
+### Examples of Analysis
+
+Below are script examples using the minimum necessary options for common analyses. Options such as ``-beg`` and ``-end`` are omitted.
+
+#### Removing Water from Trajectory
+
+```
+#!/bin/bash
+
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -sel0       not water                  \
+  -outselid   0
+```
+
+#### PBC Wrapping
+
+```
+#!/bin/bash
+
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -sel0       all                        \
+  -wrap       true                       \
+  -wrapcenter origin                     \
+  -wrapcomp   fragment                   \
+  -outselid   0
+```
+
+#### Fitting
+
+This example assumes a system with one protein in aqueous solution (`resid 1 to 192`). Fitting is performed to align the C$\alpha$ atoms in the trajectory to those in the reference structure:
+
+```
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -refpdb     REF.pdb                    \
+  -sel0       all                        \
+  -sel1       resid 1 to 192 and name CA \
+  -sel2       resid 1 to 192 and name CA \
+  -fit        true                       \
+  -outselid   0                          \
+  -fitselid   1                          \
+  -refselid   2
+```
+
+#### Centering
+
+This example centers the protein$^{\prime}$s center of mass at the origin:
+
+```
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -sel0       all                        \
+  -sel1       resid 1 to 192             \
+  -centering  true                       \
+  -outselid   0                          \
+  -fitselid   1
+```
+
+#### PBC Wrapping and Fitting
+
+This example performs both fitting and PBC wrapping. The wrapping center is set to the center of mass of the C$\alpha$ atoms:
+
+```
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -refpdb     REF.pdb                    \
+  -sel0       all                        \
+  -sel1       resid 1 to 192 and name CA \
+  -sel2       resid 1 to 192 and name CA \
+  -fit        true                       \
+  -wrap       true                       \
+  -wrapcenter com                        \
+  -wrapcomp   fragment                   \
+  -outselid   0                          \
+  -fitselid   1                          \
+  -refselid   2
+```
+
+#### PBC Wrapping and Centering
+
+This example sets the wrapping and centering region to a lipid membrane (`resid 1 to 200 and segid MEMB`):
+
+```
+anatra trjconv                              \
+  -stype      psf                           \
+  -sfile      complex.psf                   \
+  -tintype    dcd                           \
+  -tin        INP.dcd                       \
+  -totype     dcd                           \
+  -to         OUT.dcd                       \
+  -sel0       all                           \
+  -sel1       resid 1 to 200 and segid MEMB \
+  -centering  false                         \
+  -wrap       true                          \
+  -wrapcenter com                           \
+  -wrapcomp   fragment                      \
+  -outselid   0                             \
+  -fitselid   1
+```

@@ -1,0 +1,106 @@
+## Frame Extraction (extract_frame, extf)
+
+In this analysis mode, snapshots (frames) that satisfy specified CV ranges are extracted.
+
+### Parameter List
+
+**Namelist**     | **Parameter**    | **Description**
+:----------------|:-----------------|:------------------------------------------------------------
+`&input_param`   | `flist_traj`     | Filename containing the list of trajectory files
+`&input_param`   | `flist_cv`       | Filename containing the list of CV files
+`&input_param`   | `ftraj`          | Trajectory filename
+`&input_param`   | `fcv`            | CV filename
+`&output_param`  | `fhead`          | Header of the output filename
+`&option_param`  | `dt`             | Time interval of the trajectory
+`&option_param`  | `ndim`           | Number of CV dimensions
+`&option_param`  | `extract_range`  | CV range for frame extraction
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_traj| & Filename containing the list of trajectory files \\
+                     & \verb|flist_cv|   & Filename containing the list of CV files \\
+                     & \verb|ftraj|      & Trajectory filename \\
+                     & \verb|fcv|        & CV filename \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|dt|            & Time interval of the trajectory \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|extract_range| & CV range for frame extraction \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``ndim``**
+    * Default: None
+    * Example: ``ndim = 2``
+
+    Specifies the number of dimensions of the time-series CV data.
+
+    The ranges specified in ``extract_range`` must correspond to this dimensionality.
+
+----
+
+* **``extract_range``**
+    * Default: None
+    * Example:
+
+      ```
+      extract_range = -5.0d0 5.0d0
+                       1.0d0 0.0d0
+      ```
+
+    Specifies the CV region from which frames are extracted.
+
+    For each CV, a pair of lower and upper bounds should be provided.
+
+    In the above example, frames satisfying
+
+    * CV1: $-5.0 \leq \mathrm{CV}_1 \leq 5.0$
+    * CV2: $0.0 \leq \mathrm{CV}_2 \leq 1.0$
+
+    are extracted.
+
+    By specifying ``ndim`` ranges, multidimensional extraction conditions can be defined.
+
+### Output File Format
+
+The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).
+
+### Example
+
+The following example extracts frames satisfying the condition $5 \leq \zeta \leq 10$ from an input trajectory, using a time-series CV data file ``inp.ts`` containing a single CV.
+
+```bash
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ ftraj    = "input.dcd"
+ fcv      = "inp.ts"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ ndim          =  1
+ extract_range =  5.0  10.0
+/
+EOF
+
+fanatra extract_frame run.inp
+```
+
+After execution, the extracted trajectory is written to ``out.dcd``.

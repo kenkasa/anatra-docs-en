@@ -1,0 +1,187 @@
+## Spatial Distribution Function (`spatial_distr`, `sdf`)
+
+### Theoretical Background
+
+Consider a system with $N_a$ particles of type $a$, volume $V$, and number density $\rho_a = N_a / V$. Assume that one molecule is fixed at the center of the system, including its orientation, acting effectively as an external field. Although such a situation does not naturally occur in standard solution-phase MD simulations, a virtually equivalent condition can be constructed by aligning all trajectories to a reference structure (fitting), as described at the end of this section.
+
+Similar to the radial distribution function, we define the local number density of particle $a$ as
+
+\begin{align}
+\hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}} \delta\left({\bf r} - {\bf r}_i \right).
+\end{align}
+
+Its ensemble average under the external field gives the one-body density
+
+\begin{align}
+\rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
+\end{align}
+
+Here, $\langle \cdots \rangle_{\mathrm{ext}}$ denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, $\rho_a({\bf r}) = \rho_a$. THen, we define the spatial distribution function (SDF) as:
+
+\begin{align}
+g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
+\end{align}
+
+If $g_a({\bf r}) > 1$, the local probability of finding particle $a$ is larger than the bulk value; if $g_a({\bf r}) < 1$, it is lower than in bulk.
+
+To compute the SDF, the system is first fitted such that the molecule treated as the external field overlaps with a reference structure. For unwrapped trajectories, PBC wrapping must be performed in advance ({numref}`figure_sdf_fitting`). The `spatial_distr` mode handles all these steps internally. Once transformed, the reference molecule is fixed in position and orientation, making it effectively act as a static field, and the surrounding molecular distribution can be analyzed as an SDF. If the reference molecule lacks a stable structure, fitting becomes unreliable and SDF computation is infeasible. However, for proteins with stable native structures and minimal conformational changes, SDF analysis is applicable.
+
+```{figure} ./figures/fitting_for_sdf.eps
+:name: figure_sdf_fitting
+
+By aligning the system such that the molecule of interest overlaps with the reference structure (fitting), it becomes possible to examine the three-dimensional distribution of surrounding molecules relative to a fixed molecular orientation. The `spatial_distr` mode automates this entire procedure.
+```
+
+### List of Options
+
+**Option**              | **Remarks**        | **Option**            | **Remarks**
+:----------------------:|:------------------:|:----------------------:|:------------------:
+``-stype``              | Common             | ``-sfile``             | Common
+``-tintype``            | Common             | ``-tin``               | Common
+``-flist_traj``         | Common             | ``-fhead``             | Common
+``-selX``               | Common             | ``-mode``              | Common
+``-ng3``                | Mode specific      | ``-del``               | Mode specific
+``-origin``             | Mode specific      | ``-fit``               | Mode specific
+``-refpdb``             | Mode specific      | ``-refselid``          | Mode specific
+``-fitselid``           | Mode specific      | ``-use_spline``        | Mode specific
+``-spline_resolution``  | Mode specific      | ``-prep_only``         | Common
+
+Advanced options for conditional SDF analysis exist but will be officially supported in a future update.
+
+---
+
+* **-ng3 \<number of grid points along $x,y,z$\>**
+  * Default: ``50 50 50``  
+  * Example: ``-ng3 50 50 50``
+
+  Specifies the number of grid points along each spatial axis, $n_x$, $n_y$, $n_z$. The total number of grid points is $n_x n_y n_z$.
+
+---
+
+* **-del \<grid spacing along $x,y,z$ axes (ANGSTROM)\>**
+  * Default: ``0.5 0.5 0.5``  
+  * Example: ``-del 0.5 0.5 0.5``
+
+  Specifies the grid spacing $\Delta x, \Delta y, \Delta z$ in ANGSTROM. The volume element per grid point is $\Delta V = \Delta x \Delta y \Delta z$.
+
+---
+
+* **-origin \<coordinates of grid origin ($x,y,z$) in ANGSTROM\>**
+  * Default: ``0.0 0.0 0.0``  
+  * Example: ``-origin 0.0 0.0 0.0``
+
+  Sets the origin of the grid. For origin $(x_0, y_0, z_0)$, the coordinates of grid point $(i_x, i_y, i_z)$ are:
+
+  \begin{align}
+  x_i = x_0 + \Delta x \, (i_x - 1) \\
+  y_i = y_0 + \Delta y \, (i_y - 1) \\
+  z_i = z_0 + \Delta z \, (i_z - 1)
+  \end{align}
+
+---
+
+* **-fit \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-fit true``
+
+  If set to `true`, the system is PBC-wrapped and then fitted so that the solute molecule (treated as the external field) aligns with the reference structure. The following must be specified:
+
+  - ``-refpdb``  
+  - ``-refselid``  
+  - ``-fitselid``  
+  - ``-sel0`` (target for SDF calculation)  
+  - ``-sel1`` (reference fitting region)  
+  - ``-sel2`` (trajectory fitting region)
+
+  **Important**: If the input trajectory has already been fitted, you must explicitly set ``-fit false``. Applying PBC wrapping after fitting leads to invalid configurations.
+
+---
+
+* **-refselid \<selid\>**
+  * Default: N/A  
+  * Example: ``-refselid 1``
+
+  Specifies the selid of the reference region used for fitting in the reference structure. For example, if using ``-sel1`` as the reference selection, set ``-refselid 1``.
+
+---
+
+* **-fitselid \<selid for fitting region in trajectory\>**
+  * Default: N/A  
+  * Example: ``-fitselid 2``
+
+  Specifies the selid for the region used for fitting within the trajectory. For example, if using ``-sel2`` for trajectory fitting, set ``-fitselid 2``.
+
+---
+
+* **-use_spline \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-use_spline true``  
+  * Note: The resolution is controlled by ``-spline_resolution``.
+
+  Applies spline interpolation (Akima spline) to the SDF grid.
+
+---
+
+* **-spline_resolution \<integer resolution factor\>**
+  * Default: ``4``  
+  * Example: ``-spline_resolution 4``  
+  * Note: Active only if ``-use_spline true`` is specified.
+
+  Specifies the subdivision factor $n_r$ for each grid axis. Given the original grid spacing $\Delta \alpha$ ($\alpha = x, y, z$), the refined grid spacing becomes:
+
+  \begin{align}
+  \Delta \alpha' = \frac{\Delta \alpha}{n_r}
+  \end{align}
+
+  The total number of grid points changes from $N$ to:
+
+  \begin{align}
+  N' = n_r^3 \cdot N
+  \end{align}
+
+---
+
+### Output File Format
+
+* ``*_out_g_original.dx``  
+  SDF output in DX format. No spline interpolation applied.
+
+* ``*_out_g_spline.dx``  
+  SDF output in DX format with spline interpolation. Generated only if ``-use_spline true`` is specified.
+
+<!---
+* ``*.sdbin``  
+  This binary file stores the raw SDF data.  
+  It is used as input for the ``sd_gather`` mode in ``fanatra``, which averages SDFs from multiple trajectories.  
+  Spline settings are embedded within the file, allowing ``sd_gather`` to apply interpolation during averaging.
+--->
+
+### Examples of Analysis
+
+#### SDF of Water Molecules Around a Protein
+
+The following script computes the SDF of water molecule centers of mass around a protein (`resid 1 to 192`):
+
+```
+#!/bin/bash
+
+anatra spatial_distr                         \
+  -stype             parm7                   \
+  -sfile             complex.prmtop          \
+  -tintype           dcd                     \
+  -tin               INP.dcd                 \
+  -fhead             out                     \
+  -sel0              water                   \
+  -sel1              resid 1 to 192 and noh  \
+  -sel2              resid 1 to 192 and noh  \
+  -mode              residue                 \
+  -ng3               50 50 50                \
+  -del               0.4 0.4 0.4             \
+  -origin            -10.0 -10.0 -10.0       \
+  -fit               true                    \
+  -refpdb            ref.pdb                 \
+  -refselid          1                       \
+  -fitselid          2                       \
+  -use_spline        true                    \
+  -spline_resolution 4
+```

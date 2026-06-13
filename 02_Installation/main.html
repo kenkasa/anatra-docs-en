@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation of ANATRA &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Usage of anatra" href="../03_anatra_usage/combined.html" />
+    <link rel="prev" title="What is ANATRA?" href="../01_about_anatra/main.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation of ANATRA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-from-source">Installing from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-hdf5-library">Building the HDF5 library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-openblas">Using OpenBLAS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation of ANATRA</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/02_Installation/main.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="installation-of-anatra">
+<h1>Installation of ANATRA<a class="headerlink" href="#installation-of-anatra" title="Link to this heading"></a></h1>
+<p>This chapter describes how to install ANATRA.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>VMD (&gt; 1.7.3)</p></li>
+<li><p>Intel compiler (Intel OneAPI) or GCC (&gt; 8.5.0)</p></li>
+<li><p>bash</p></li>
+</ul>
+<p>ANATRA assumes that <code class="docutils literal notranslate"><span class="pre">bash</span></code> is used as the login shell.<a class="footnote-reference brackets" href="#footnote-bash" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<p>VMD can be downloaded free of charge from</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD
+</pre></div>
+</div>
+<p>although account registration is required.<a class="footnote-reference brackets" href="#footnote-vmd" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+</section>
+<section id="installing-from-source">
+<h2>Installing from source<a class="headerlink" href="#installing-from-source" title="Link to this heading"></a></h2>
+<p>The latest ANATRA source code is managed on GitHub.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">kenkasa</span><span class="o">/</span><span class="n">anatra</span>
+</pre></div>
+</div>
+<p>First, clone the repository. Assuming that ANATRA will be installed under <code class="docutils literal notranslate"><span class="pre">/home/USER/software</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/home/USER/software
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kenkasa/anatra.git
+$<span class="w"> </span>ls
+anatra
+
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>anatra
+$<span class="w"> </span>ls
+README.md
+install.sh
+bin/
+tcl/
+f90/
+docs/
+utility/
+</pre></div>
+</div>
+<p>Installation is started by executing <code class="docutils literal notranslate"><span class="pre">install.sh</span></code>. If you have installed ANATRA previously, check <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> or <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code> and remove the following three lines before installation:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">ANATRA_PATH</span><span class="o">=</span>...
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$ANATRA_PATH</span>/bin:<span class="nv">$PATH</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$ANATRA_PATH</span>/f90/lib/external/netcdf/netcdf/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">$ANATRA_PATH</span></code> already points to the same ANATRA directory that you are installing, these lines may be left unchanged. If you are unsure, simply remove them.</p>
+<!---
+When using a login shell other than bash or zsh, add the corresponding settings to your own rc file. For example, for `zsh`:
+
+```sh
+export ANATRA_PATH=/path/to/vmd_scripts/anatra
+export PATH=$ANATRA_PATH/bin:$PATH
+export LD_LIBRARY_PATH=$ANATRA_PATH/f90/lib/external/netcdf/netcdf/lib
+```
+--->
+<p>The available command-line options for <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> are listed below.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Value</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">--compiler=&lt;type&gt;</span></code></p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">intel</span></code></p></td>
+<td class="text-left"><p>Specifies the compiler to be used.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">--install-hdf5</span></code></p></td>
+<td class="text-center"><p>—</p></td>
+<td class="text-left"><p>Installs the HDF5 library.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">--skip-install-lib</span></code></p></td>
+<td class="text-center"><p>—</p></td>
+<td class="text-left"><p>Skips the installation of external libraries.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">--with-openblas</span></code></p></td>
+<td class="text-center"><p>—</p></td>
+<td class="text-left"><p>Uses OpenBLAS instead of Intel MKL.<br>The environment variable <code class="docutils literal notranslate"><span class="pre">OPENBLAS_ROOT</span></code> must be defined in advance to specify the OpenBLAS installation directory.</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">--with-ffte</span></code></p></td>
+<td class="text-center"><p>—</p></td>
+<td class="text-left"><p>Uses the FFTE library instead of the FFT implementation provided by Intel MKL.</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{4cm}p{3cm}p{8cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Option} & \textbf{Value} & \textbf{Description}\\
+\hline
+\verb|--compiler=<type>|
+& \verb|gcc|, \verb|intel| & Specifies the compiler to be used.\\
+\hline
+\verb|--install-hdf5| & --- & Installs the HDF5 library.\\
+\hline
+\verb|--skip-install-lib| & --- & Skips the installation of external libraries.\\
+\hline
+\verb|--with-openblas| & --- & Uses OpenBLAS instead of Intel MKL.
+The environment variable \verb|OPENBLAS_ROOT| must be defined in advance to specify the OpenBLAS installation directory.\\
+\hline
+\verb|--with-ffte| & --- & Uses the FFTE library instead of the FFT implementation provided by Intel MKL.\\
+\hline
+\end{tabular}
+}
+```
+--->
+<p>The compiler can be specified with a command-line option:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./install.sh<span class="w"> </span>--compiler<span class="o">=</span>&lt;gcc<span class="w"> </span>or<span class="w"> </span>intel&gt;
+</pre></div>
+</div>
+<p>The default is <code class="docutils literal notranslate"><span class="pre">intel</span></code>. If the Intel compiler is available, its use is recommended.</p>
+<p>For Intel OneAPI:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./install.sh<span class="w"> </span>--compiler<span class="o">=</span>intel
+</pre></div>
+</div>
+<p>Because ANATRA supports NetCDF trajectories, the HDF5 library is required. Many Linux distributions already provide HDF5. If HDF5 is not installed or you are unsure, add the <code class="docutils literal notranslate"><span class="pre">--install-hdf5</span></code> option to build the bundled HDF5 package:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./install.sh<span class="w"> </span>--compiler<span class="o">=</span>&lt;gcc<span class="w"> </span>or<span class="w"> </span>intel&gt;<span class="w"> </span>--install-hdf5
+</pre></div>
+</div>
+<p>During installation, build logs are displayed. If the following message appears near the end of the build process, all Fortran analysis programs have been compiled successfully:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Installation of ANATRA fortran programs have been
+succesfully finished!!
+</pre></div>
+</div>
+<p>The installation is complete if the <code class="docutils literal notranslate"><span class="pre">ANATRA_PATH</span></code> environment variable is defined and the <code class="docutils literal notranslate"><span class="pre">anatra</span></code> command is available in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$ANATRA_PATH</span>
+/home/USER/software/anatra
+
+$<span class="w"> </span>which<span class="w"> </span>anatra
+/home/USER/software/anatra/bin/anatra
+</pre></div>
+</div>
+<p>When rebuilding ANATRA after modifying the Fortran source code, executing <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> with the standard options rebuilds all external libraries from scratch, which can be time-consuming.
+To avoid this, the <code class="docutils literal notranslate"><span class="pre">--skip-install-lib</span></code> option can be added to skip rebuilding the external libraries.
+However, if the compiler has been changed since the previous build, all external libraries must also be rebuilt.</p>
+<p>Depending on the environment of the machine where ANATRA is installed, the installation may fail because some required libraries are missing.
+If this happens, please refer to the instructions below.</p>
+<section id="building-the-hdf5-library">
+<h3>Building the HDF5 library<a class="headerlink" href="#building-the-hdf5-library" title="Link to this heading"></a></h3>
+<p>ANATRA requires the HDF5 library because it supports NetCDF-format trajectories.</p>
+<p>Many Linux distributions provide HDF5 as a pre-installed system library.
+If HDF5 is not installed, or if you are unsure whether it is available, you can install the bundled HDF5 library by adding the <code class="docutils literal notranslate"><span class="pre">--install-hdf5</span></code> option:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./install.sh<span class="w"> </span>--compiler<span class="o">=</span>&lt;gcc<span class="w"> </span>or<span class="w"> </span>intel&gt;<span class="w"> </span>--install-hdf5
+</pre></div>
+</div>
+</section>
+<section id="using-openblas">
+<h3>Using OpenBLAS<a class="headerlink" href="#using-openblas" title="Link to this heading"></a></h3>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> compiles ANATRA using the Intel Math Kernel Library (MKL) included in Intel OneAPI.
+However, if Intel OneAPI is not installed, OpenBLAS can be used as an alternative.</p>
+<p>OpenBLAS can be downloaded from GitHub:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/OpenMathLib/OpenBLAS.git
+</pre></div>
+</div>
+<p>This command creates a directory named <code class="docutils literal notranslate"><span class="pre">OpenBLAS</span></code> containing the source code.
+Enter this directory and execute <code class="docutils literal notranslate"><span class="pre">make</span></code> followed by <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>.</p>
+<p>The following example installs the library under the <code class="docutils literal notranslate"><span class="pre">OpenBLAS</span></code> directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>OpenBLAS
+$<span class="w"> </span>make
+$<span class="w"> </span>make<span class="w"> </span><span class="nv">PREFIX</span><span class="o">=</span>/path/to/OpenBLAS<span class="w"> </span>install
+</pre></div>
+</div>
+<p>After installation, define the global environment variable <code class="docutils literal notranslate"><span class="pre">OPENBLAS_ROOT</span></code> in <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> or <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code> as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">OPENBLAS_ROOT</span><span class="o">=</span>/path/to/OpenBLAS
+</pre></div>
+</div>
+<p>Then, run ANATRA’s <code class="docutils literal notranslate"><span class="pre">install.sh</span></code> script with the <code class="docutils literal notranslate"><span class="pre">--with-openblas</span></code> option:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>./install.sh<span class="w"> </span>--compiler<span class="o">=</span>gcc<span class="w"> </span>--with-openblas
+</pre></div>
+</div>
+<p>When OpenBLAS is selected as the mathematical library, ANATRA automatically uses <code class="docutils literal notranslate"><span class="pre">ffte</span></code> as the Fast Fourier Transform (FFT) library.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footnote-bash" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>As described in the next section, users of other shells such as <code class="docutils literal notranslate"><span class="pre">zsh</span></code> can also use ANATRA by adding the appropriate settings to their own rc files (e.g., <code class="docutils literal notranslate"><span class="pre">~/.zshrc</span></code>).</p>
+</aside>
+<aside class="footnote brackets" id="footnote-vmd" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>A brief installation guide for VMD is given here. After extracting the downloaded <code class="docutils literal notranslate"><span class="pre">vmd-XXX.tar.gz</span></code> archive, move to the generated <code class="docutils literal notranslate"><span class="pre">vmd-XXX</span></code> directory. Open the <code class="docutils literal notranslate"><span class="pre">configure</span></code> file with a text editor and set <code class="docutils literal notranslate"><span class="pre">install_bin_dir=</span></code> near the beginning of the file to the directory where you want to install VMD. On Linux, run <code class="docutils literal notranslate"><span class="pre">./configure</span> <span class="pre">LINUXAMD64</span></code>, move to the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory, and execute <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>. The <code class="docutils literal notranslate"><span class="pre">vmd</span></code> executable will be installed into the directory specified by <code class="docutils literal notranslate"><span class="pre">install_bin_dir=</span></code>. Add this directory to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to complete the installation.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../01_about_anatra/main.html" class="btn btn-neutral float-left" title="What is ANATRA?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../03_anatra_usage/combined.html" class="btn btn-neutral float-right" title="Usage of anatra" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

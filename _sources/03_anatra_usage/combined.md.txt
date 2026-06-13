@@ -1,0 +1,2065 @@
+# Usage of anatra
+
+## Introduction
+
+**anatra** is a post-processing analysis suite that combines the use of VMD and Fortran programs. This chapter provides a detailed guide on how to use **anatra**.
+As described previously, the standard workflow in **anatra**-based analysis proceeds in two stages. First, atom or residue selection and preprocessing are carried out using VMD, resulting in intermediate files. These files are subsequently analyzed via Fortran executables.
+
+<!---
+A related utility, **anatra_wo_vmd**, is available for executing only the analysis phase after the VMD preprocessing has been completed using **anatra**. Furthermore, **fanatra** provides analysis functionality independent of VMD. These are described in subsequent chapters.
+--->
+
+A list of available analysis modes can be obtained by executing the following command:
+```
+$ anatra -h
+Available analysis in ANATRA
+trjconv             (trj)   : Convert trajectory
+distance            (dis)   : Distance Analysis
+center_of_mass      (com)   : Center-of-Mass Analysis
+radial_distr        (rdf)   : Radial-Distribution Analysis
+spatial_distr       (sdf)   : Spatial-Distribution Analysis
+rmsd                (rmsd)  : Root-Mean-Square-Deviation Analysis
+interaction_energy  (ene)   : Interaction Energy Analysis
+lipid_order         (scd)   : Lipid S_CD order-parameter Analysis
+area_per_lipid      (apl)   : Area Per Lipid Analysis
+z_profile           (zprof) : Z-profile Analysis
+z_orient            (zori)  : Orientation Analysis along z
+rotation            (rot)   : Rotation Analysis
+cluster_size        (cls)   : Cluster-size Analysis
+free_volume         (fvol)  : Free-Volume Analysis
+species_info        (spec)  : Get Species information
+gauqm_prepper       (gau)   : Gaussian QM input prepper
+```
+
+For example, the `trjconv` analysis mode may be invoked as follows:
+```
+$ anatra trjconv -option1 ...
+```
+Abbreviated mode names, as shown in parentheses (e.g., `trj` for `trjconv`), can also be used:
+```
+$ anatra trj -option1 ...
+```
+
+To display available options and example usage for each mode, one can execute:
+```
+$ anatra <analysis_mode> -h
+```
+This help message is generally sufficient for basic usage. However, for more advanced configurations or clarification, this manual should be consulted.  
+An example help output for `trjconv` is shown below (VMD-related output is omitted for brevity):
+```
+$ anatra trjconv -h
+============================================================
+
+                    Trajectory Convert
+
+============================================================
+Usage:
+anatra trjconv                                                            \
+  -stype      <structure file type>                                       \
+  -sfile      <structure file name>                                       \
+  -tintype    <input trajectory file type>                                \
+  -tin        <input trajectory file name>                                \
+  -totype     <output trajectory file type>                               \
+  -to         <output trajectory file name>                               \
+  -beg        <first frame to be read> (default: 1)                       \
+  -end        <last frame to be read>                                     \
+              (default: 0, corresponding to the final frame)              \
+  -selX       <X-th VMD selection> (X = 0,1,2...)                         \
+  -fit        <whether to apply fitting (true or false)>                  \
+  -centering  <whether to apply centering (true or false)>                \
+              (default: false)                                            \
+  -wrap       <whether to apply wrapping (true or false)>                 \
+              (default: false)                                            \
+  -wrapcenter <wrapping center: origin or com (default: fragment)>        \
+  -wrapcomp   <wrapping unit: residue, segid, chain, fragment, or nomp>   \
+              (default: fragment)                                         \
+  -refpdb     <reference PDB file name>                                   \
+              (required if fit = true)                                    \
+  -outselid   <selection ID for output molecules>                         \
+  -fitselid   <selection ID for fitting or centering>                     \
+  -refselid   <selection ID for reference>
+
+Remark:
+o If both fit = true and wrap = true are specified, wrapcomp is automatically set to 'com'
+
+Example (fitting):
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      str.prmtop                 \
+  -tintype    dcd                        \
+  -tin        inp.dcd                    \
+  -totype     dcd                        \
+  -to         out.dcd                    \
+  -beg        1                          \
+  -end        150                        \
+  -sel0       not water                  \
+  -sel1       resid 1 to 275 and name CA \
+  -sel2       resid 1 to 275 and name CA \
+  -fit        true                       \
+  -centering  false                      \
+  -wrap       true                       \
+  -wrapcenter origin                     \
+  -wrapcomp   fragment                   \
+  -refpdb     ref.pdb                    \
+  -outselid   0                          \
+  -fitselid   1                          \
+  -refselid   2
+```
+
+As illustrated above, **anatra** accepts a considerable number of options, making it well-suited for use within `bash` scripts. An example script is provided below:
+```
+#!/bin/bash
+
+anatra trjconv            \
+  -stype    parm7         \
+  -sfile    str.prmtop    \
+  -tintype  dcd           \
+  -tin      INP.dcd       \
+  -totype   dcd           \
+  -to       OUT.dcd       \
+  -sel0     resid 1 to 20 \
+  -outselid 0 
+```
+
+## Common Options
+
+While **anatra** offers various analysis modes, many of them share a common set of command-line options. A summary of these shared options is presented below, followed by detailed descriptions of each.
+
+| **Option**                         | **Function**                                       | **Example**                 |
+|-----------------------------------|----------------------------------------------------|-----------------------------|
+| `-stype`                          | Specifies the structure file type                  | `-stype parm7`              |
+| `-sfile`                          | Specifies the structure file name                  | `-sfile A.prmtop`           |
+| `-tintype`                        | Specifies the input trajectory file type           | `-tintype dcd`              |
+| `-tin`                            | Specifies the input trajectory file name           | `-tin in.dcd`               |
+| `-flist_traj`                     | Specifies a file listing multiple trajectory files | `-flist_traj list.txt`      |
+| `-totype`                         | Specifies the output trajectory file type          | `-totype dcd`               |
+| `-to`                             | Specifies the output trajectory file name          | `-to out.dcd`               |
+| `-sel`$x$                         | Specifies a selection using VMD syntax             | `-sel0 resid 1 to 20`       |
+| `-mode or -mode`$x$               | Specifies how to group the selected atoms          | `-mode residue`             |
+| `-fhead`                          | Header for output file names                       | `-fhead out`                |
+| `-prep_only`                      | If true, only preprocessing is performed           | `-prep_only true`           |
+
+---
+
+---
+
+* **-stype \<structure file type\>**
+  * Default: N/A
+  * Example: ``-stype parm7``
+
+  Specifies the structure file type. Structure files contain information such as atom types and possibly bonding details. Since many trajectory formats (e.g., ``dcd`` or ``xtc``) store only atomic coordinates, a structure file is required for analysis. Most of the structure file types supported by VMD can be specified. Representative examples include:
+
+  * **pdb**: PDB file
+  * **gro**: GRO file
+  * **psf**: CHARMM PSF file
+  * **parm7**: AMBER parameter file (usually with extension ``.prmtop``)
+
+  Among these, ``psf`` (for CHARMM) and ``parm7`` (for AMBER) provide the most complete information and are recommended when available.
+
+---
+
+* **-sfile \<structure file\>**
+  * Default: N/A
+  * Example: ``-sfile complex.prmtop``
+
+  Specifies the name of the structure file.
+
+---
+
+* **-tintype \<input trajectory file type\>**
+  * Default: ``dcd``
+  * Example: ``-tintype dcd``
+
+  Specifies the type of the input trajectory file. Currently, with the exception of ``trjconv``, supported formats are limited to ``dcd``, ``xtc``, and ``netcdf``. ``trjconv`` supports all trajectory formats recognized by VMD.
+
+---
+
+* **-tin \<input trajectory file\>**
+  * Default: N/A
+  * Example: ``-tin INP.dcd``
+
+  Specifies the filename of the input trajectory. When using multiple files, list them as: ``-tin run1.dcd run2.dcd``. Wildcards (e.g., ``run*.dcd``) are also supported. Alternatively, you can use the ``-flist_traj`` option described below.
+
+---
+
+* **-flist_traj \<text file\>**
+  * Default: N/A
+  * Example: ``-flist_traj trajlist.txt``
+
+  Specifies a text file listing the input trajectories. If both ``-tin`` and ``-flist_traj`` are given, ``-flist_traj`` takes precedence. The file should contain one trajectory filename per line, as shown below:
+
+  ```
+  traj1.dcd
+  traj2.dcd
+  traj3.dcd
+  ```
+
+---
+
+* **-totype \<output trajectory file type\>**
+  * Default: ``dcd``
+  * Example: ``-totype dcd``
+
+  Specifies the type of the output trajectory file. As with input, all VMD-supported formats can be used in ``trjconv``. Other modes support only ``dcd`` and ``xtc``.
+
+---
+
+* **-to \<output trajectory file\>**
+  * Default: N/A
+  * Example: ``-to OUT.dcd``
+
+  Specifies the name of the output trajectory file.
+
+---
+
+* **-sel$x$ \<selection\>** ($x=0,1,\cdots$)
+  * Default: N/A
+  * Example: ``-sel0 resid 1 to 20 and name CA`` 
+
+  Specifies an atomic selection using VMD$^{\prime}$s Atomselection syntax. The index $x$ is referred to as the selection ID (*selid*).  
+  Most analysis modes perform calculations on the region specified by each ``-sel$x$``.  In some cases, you must explicitly assign which ``selid`` is used for which purpose (e.g., ``-outselid`` in ``trjconv``).
+
+---
+
+* **-mode$x$ \<residue or whole or atom\>** ($x=0,1,\cdots$)
+  * Default: Mode-dependent
+  * Example: ``-mode0 residue``
+
+  Specifies how to group the atoms selected by ``-sel$x$`` (see {numref}`figuremode`). Some analysis modes only require a single selection, using ``-mode`` to define grouping. Others require multiple selections, each needing a corresponding ``-mode$x$``. See the mode-specific descriptions for details.
+
+  * **residue**: Treat each residue in the selection as a separate molecule.
+  * **whole**: Treat the entire selection as a single molecule.
+  * **atom**: Treat each atom in the selection as an individual molecule.
+
+  For example, if ``-sel0 resname LIG`` selects multiple ligand molecules and you wish to compute each center of mass, set ``-mode residue``. Conversely, to treat a full protein selected via ``-sel0 protein`` as one object (e.g., for center of mass tracking), set ``-mode whole``.
+
+```{figure} ./figures/mode.png
+:name: figuremode
+
+Usage of the ``-mode`` option. In ``residue``, the selected region is split by residue. In ``whole``, the entire selection is treated as one molecule. In ``atom``, each atom in the selection is treated as a separate molecule.
+```
+
+---
+
+* **-fhead <output file header>**
+  * Default: Mode-dependent
+  * Example: ``-fhead out``
+
+  Specifies the prefix for output filenames. For example, if set to ``out``, output files like ``out.XXX``, ``out.YYY`` will be generated.
+
+---
+
+* **-prep_only <true or false>**
+  * Default: ``false``
+  * Example: ``-prep_only true``
+
+  Specifies whether to stop after preprocessing (e.g., generating input parameter files) without running the analysis itself.
+<!---
+  This is mainly used in conjunction with the **anatra_wo_vmd** command for parallel execution.  
+  For example, setting ``-prep_only true`` results in the generation of files such as ``*.molinfo``.
+--->
+
+## Trajectory Conversion (`trjconv`)
+
+The `trjconv` mode performs various transformations on MD trajectories. It is typically used for the following purposes:
+
+* To change the file format of a trajectory.
+* To generate a trajectory containing only a specific region of interest  
+  (e.g., to remove water molecules from the trajectory).
+* To apply periodic boundary wrapping (PBC wrapping) to an unwrapped trajectory.
+* To fit the system such that a selected region aligns with a reference structure.
+* To center the system such that a selected region is translated to the origin.
+
+### List of Options
+
+**Option**        | **Remarks**        | **Option**       | **Remarks**
+:----------------:|:------------------:|:----------------:|:------------------:
+``-stype``        | Common             | ``-sfile``       | Common
+``-tintype``      | Common             | ``-tin``         | Common
+``-totype``       | Common             | ``-to``          | Common
+``-sel``$x$       | Common             | ``-beg``         | Mode specific
+``-end``          | Mode specific      | ``-fit``         | Mode specific
+``-centering``    | Mode specific      | ``-wrap``        | Mode specific
+``-wrapcenter``   | Mode specific      | ``-wrapcomp``    | Mode specific
+``-refpdb``       | Mode specific      | ``-outselid``    | Mode specific
+``-fitselid``     | Mode specific      | ``-refselid``    | Mode specific
+
+---
+
+* **-beg \<first frame to read\>**
+  * Default: ``1``
+  * Example: ``-beg 10``
+
+  Specifies the first frame to read from the trajectory. Note that frame indexing starts from 1. The example above starts reading from the 10th frame.
+
+---
+
+* **-end \<last frame to read\>**
+  * Default: ``0`` (interpreted as the final frame)
+  * Example: ``-end 100``
+
+  Specifies the last frame to read from the trajectory. Frame numbers are counted starting from 1. The example above reads up to the 100th frame.
+
+---
+
+* **-fit \<true or false\>**
+  * Default: ``false``
+  * Example: ``-fit true``
+  * Note: If set to ``true``, the options ``-fitselid``, ``-refpdb``, and ``-refselid`` must be specified.
+
+  Enables or disables structural fitting. Fitting refers to the operation of translating and rotating the entire system so that a specific region matches a reference structure. When this option is used, the following must be specified:
+  - ``-fitselid``: selid of the fitting region in the trajectory
+  - ``-refpdb``: PDB file of the reference structure
+  - ``-refselid``: selid of the fitting region in the reference
+
+---
+
+* **-wrap \<true or false\>**
+  * Default: ``false``
+  * Example: ``-wrap true -wrapcomp fragment -wrapcenter origin``
+  * Note: Use ``-wrapcenter`` to change the wrapping center from the origin.  
+          Use ``-wrapcomp`` to define the unit for wrapping.
+
+  Specifies whether to apply periodic boundary wrapping (PBC) to the trajectory. By default, the wrapping center is the origin $(x, y, z) = (0, 0, 0)$, but it will be automatically changed to the center of mass of a region specified with ``-wrapcenter``.
+
+---
+
+* **-centering \<true or false\>**
+  * Default: ``false``
+  * Example: ``-centering true -sel1 resid 1 to 200 -fitselid 1``
+  * Note: Use ``-fitselid`` to specify the selid of the region to be centered.
+
+  Specifies whether to perform centering of the system. Centering refers to translating the system so that the center of mass of a selected region is placed at the coordinate origin. The region to be centered is specified via ``-fitselid``.
+
+---
+
+* **-refpdb \<PDB file\>**
+  * Default: N/A
+  * Example: ``-refpdb A.pdb -sel2 resid 1 to 200 -refselid 2``
+  * Note: Specify the selid of the fitting region in the reference using ``-refselid``.
+
+  Specifies the PDB file of the reference structure for fitting. This option is required if ``-fit true`` is specified. The fitting region within the reference is selected using ``-refselid``.
+
+---
+
+* **-outselid \<selid\>**
+  * Default: N/A
+  * Example: ``-sel0 resid 1 to 200 -outselid 0``
+
+  Specifies the selid corresponding to the region to be written to the output trajectory.
+
+---
+
+* **-fitselid \<selid\>**
+  * Default: N/A
+  * Example: ``-sel1 resid 1 to 200 -fitselid 1``
+
+  Specifies the selid of the fitting region in the input trajectory.
+
+---
+
+* **-wrapcenter \<origin or com\>**
+  * Default: ``origin`` 
+  * Example: ``-wrapcenter origin``
+  * Note: If ``com`` is specified, the selid must be provided using ``-fitselid``.
+
+  Specifies the center of the system used during wrapping.
+
+  * **origin**: Use the coordinate origin as the center.
+  * **com**: Use the center of mass of a selected region as the center.  
+             The selid of this region must be given with ``-fitselid``.  
+             If fitting or centering is performed simultaneously, ``com`` is enforced.
+
+---
+
+* **-wrapcomp \<fragment or residue or nocomp\>**
+  * Default: ``fragment``
+  * Example: ``-wrapcomp fragment``
+
+  Specifies the unit by which molecules are treated for PBC wrapping. For example, when atoms are partially outside the box, this determines whether to wrap individual atoms or entire molecular units.
+
+  * **fragment**: Atoms connected through bonding paths are treated as a single unit.
+  * **residue**: All atoms within a residue ID are treated as a single unit.
+  * **nocomp**: Each atom is treated as an independent unit.
+
+---
+
+### Examples of Analysis
+
+Below are script examples using the minimum necessary options for common analyses. Options such as ``-beg`` and ``-end`` are omitted.
+
+#### Removing Water from Trajectory
+
+```
+#!/bin/bash
+
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -sel0       not water                  \
+  -outselid   0
+```
+
+#### PBC Wrapping
+
+```
+#!/bin/bash
+
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -sel0       all                        \
+  -wrap       true                       \
+  -wrapcenter origin                     \
+  -wrapcomp   fragment                   \
+  -outselid   0
+```
+
+#### Fitting
+
+This example assumes a system with one protein in aqueous solution (`resid 1 to 192`). Fitting is performed to align the C$\alpha$ atoms in the trajectory to those in the reference structure:
+
+```
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -refpdb     REF.pdb                    \
+  -sel0       all                        \
+  -sel1       resid 1 to 192 and name CA \
+  -sel2       resid 1 to 192 and name CA \
+  -fit        true                       \
+  -outselid   0                          \
+  -fitselid   1                          \
+  -refselid   2
+```
+
+#### Centering
+
+This example centers the protein$^{\prime}$s center of mass at the origin:
+
+```
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -sel0       all                        \
+  -sel1       resid 1 to 192             \
+  -centering  true                       \
+  -outselid   0                          \
+  -fitselid   1
+```
+
+#### PBC Wrapping and Fitting
+
+This example performs both fitting and PBC wrapping. The wrapping center is set to the center of mass of the C$\alpha$ atoms:
+
+```
+anatra trjconv                           \
+  -stype      parm7                      \
+  -sfile      complex.prmtop             \
+  -tintype    dcd                        \
+  -tin        INP.dcd                    \
+  -totype     dcd                        \
+  -to         OUT.dcd                    \
+  -refpdb     REF.pdb                    \
+  -sel0       all                        \
+  -sel1       resid 1 to 192 and name CA \
+  -sel2       resid 1 to 192 and name CA \
+  -fit        true                       \
+  -wrap       true                       \
+  -wrapcenter com                        \
+  -wrapcomp   fragment                   \
+  -outselid   0                          \
+  -fitselid   1                          \
+  -refselid   2
+```
+
+#### PBC Wrapping and Centering
+
+This example sets the wrapping and centering region to a lipid membrane (`resid 1 to 200 and segid MEMB`):
+
+```
+anatra trjconv                              \
+  -stype      psf                           \
+  -sfile      complex.psf                   \
+  -tintype    dcd                           \
+  -tin        INP.dcd                       \
+  -totype     dcd                           \
+  -to         OUT.dcd                       \
+  -sel0       all                           \
+  -sel1       resid 1 to 200 and segid MEMB \
+  -centering  false                         \
+  -wrap       true                          \
+  -wrapcenter com                           \
+  -wrapcomp   fragment                      \
+  -outselid   0                             \
+  -fitselid   1
+```
+## Distance Calculation (`distance`, `dis`)
+
+The `distance` mode computes the distance between two selected regions. By default, it calculates the distance between the centers of mass of the selected molecules. It can also compute the minimum distance between atoms in two regions.
+
+### List of Options
+
+**Option**                  | **Remarks**       | **Option**            | **Remarks**
+:--------------------------:|:-----------------:|:----------------------:|:------------------:
+``-stype``                  | Common            | ``-sfile``             | Common
+``-tintype``                | Common            | ``-tin``               | Common
+``-flist_traj``             | Common            | ``-fhead``             | Common
+``-sel0``                   | Common            | ``-sel1``              | Common
+``-mode0``                  | Common            | ``-mode1``             | Common
+``-pbc``                    | Mode specific     | ``-dt``                | Mode specific
+``-distance_type``$^\dagger$| Mode specific     | ``-mindist_type0``$^\dagger$ | Mode specific
+``-mindist_type1``$^\dagger$| Mode specific     | ``-prep_only``         | Common
+
+Options marked with $^\dagger$ are not required for standard distance calculations and can be omitted in typical use cases.
+
+---
+
+* **-sel0 \<selection\>**  
+* **-sel1 \<selection\>**
+  * Default: N/A  
+  * Example: ``-sel0 resid 1 to 20 and noh -sel1 resname LIG``
+
+  Specifies the two regions (selid = 0, 1) between which distances will be calculated.
+
+---
+
+* **-mode0 \<residue or whole or atom\>**  
+* **-mode1 \<residue or whole or atom\>**
+  * Default: ``residue``  
+  * Example: ``-mode0 whole -mode1 residue``
+
+  Defines how the selected regions (``-sel0``, ``-sel1``) are partitioned for distance calculations.
+
+---
+
+* **-pbc \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-pbc true``
+
+  Specifies whether periodic boundary conditions should be applied during distance calculations.
+
+---
+
+* **-dt \<time interval\>**
+  * Default: ``1.0``  
+  * Example: ``-dt 0.1``
+
+  Sets the time interval (first column of the output) for the time series data.
+
+---
+
+* **-distance_type \<standard or minimum or intra\>**$^\dagger$
+  * Default: ``standard``  
+  * Example: ``-distance_type standard``
+
+  Specifies the type of distance to compute:  
+  * **standard**: Standard distance between molecules.  
+  * **minimum**: Minimum atomic distance between regions.  
+  * **intra**: Intra-molecular distances.
+
+  The `intra` option is useful when evaluating distances between atoms within the same molecule. For instance, in a system with 100 identical polymers (resname `PLM`) having terminal atoms named `CP1` and `CP2`, computing the end-to-end distance within each polymer requires care. Using `-distance_type standard` with `-sel0 name CP1` and `-sel1 name CP2` would also include inter-polymer distances. In contrast, `-distance_type intra` restricts calculations to within individual molecules.
+
+---
+
+* **-mindist_type1 \<site or com\>**$^\dagger$
+  * Default: ``site``  
+  * Example: ``-mindist_type0 com -mindist_type1 site``
+
+  Specifies the candidate sites for minimum distance calculations:  
+  * **site**: All atoms in the region are considered.  
+  * **com**: Only the center of mass is considered.
+
+  When both regions use `com`, the result is equivalent to standard center-of-mass distance.
+
+---
+
+### Output File Format
+
+* `*.dis` file
+
+  This file contains distances (or minimum distances) between the selected regions. Suppose `-mode0` and `-mode1` divide selections into $n_1$ and $n_2$ molecules, respectively. Then $n_1 \times n_2$ distances will be recorded per frame. The format is as follows:
+
+  * Column 1: Time  
+  * Column 2: Distance between molecule pair (1, 1)  
+  * Column 3: Distance between pair (1, 2)  
+    ...  
+  * Column $n_2$: Distance between pair (1, $n_2$)  
+  * Column $n_2+1$: Distance between pair (2, 1)  
+  * Column $n_2+2$: Distance between pair (2, 2)  
+    ...
+
+  All distances are reported in Angstrom.
+
+### Example of Analysis
+
+#### Standard Atom-to-Region Distance
+
+The following example computes distances between a protein (`resid 1 to 192`) and 10 ligand molecules (`resname LIG`):
+
+```
+#!/bin/bash
+
+anatra distance                                    \
+  -stype          parm7                            \
+  -sfile          complex.prmtop                   \
+  -tintype        dcd                              \
+  -tin            INP.dcd                          \
+  -fhead          out                              \
+  -pbc            true                             \
+  -distance_type  standard                         \
+  -dt             0.1                              \
+  -sel0           resid 1 to 192                   \
+  -sel1           resname LIG                      \
+  -mode0          whole                            \
+  -mode1          residue
+```
+
+## Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)
+
+The program ``center_of_mass`` (``com``) computes the temporal variation of molecular centers of mass and the mean square displacement (MSD). To support two-dimensional diffusion (lateral diffusion) within lipid membranes, it also allows for MSD calculations restricted to the $xy$-plane.
+
+### Theoretical Background
+
+#### Mean Square Displacement
+
+Here, we introduce the definition of the mean square displacement (MSD) $\chi(t)$ and discuss its significance based on the diffusion equation.
+
+Let ${\bf r}(t)$ denote the position of a molecule at time $t$. The MSD is defined as follows:
+
+\begin{align}
+\chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
+\end{align}
+
+That is, $\chi(t)$ represents the time-averaged squared displacement of a molecule after a time interval $t$. To understand how MSD is described by the diffusion equation, let us consider a probability density $\rho({\bf r},t)$ representing the location of a molecule, and a diffusion coefficient $D$. The diffusion equation is written as
+
+\begin{align}
+\dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
+\end{align}
+
+Assuming that the molecule was initially located at ${\bf 0}$ at time $t=0$, the initial condition is given by
+
+\begin{align}
+\rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
+\end{align}
+
+Solving the diffusion equation under this condition yields
+
+\begin{align}
+\rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
+\end{align}
+
+Using this solution, the MSD can be expressed as
+
+\begin{align}
+\chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
+                   = 6Dt,
+\end{align}
+
+indicating that MSD increases linearly with time, with a slope of $6D$. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as
+
+\begin{align}
+D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
+\end{align}
+
+This expression is known as Einstein$^\prime$s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.
+
+### List of Options
+
+**Option**           |  **Description**       | **Option**          | **Description**
+|:------------------:|:----------------------:|:-------------------:|:------------------:|
+``-stype``           | Common                 | ``-sfile``          | Common
+``-tintype``         | Common                 | ``-tin``            | Common
+``-flist_traj``      | Common                 | ``-fhead``          | Common             
+``-sel0``            | Common                 | ``-mode``           | Common             
+``-outmsd``          | Mode specific          | ``-unwarp``         | Mode specific      
+``-msddim``          | Mode specific          | ``-dt``             | Mode specific      
+``-t_sparse``        | Mode specific          | ``-t_range``        | Mode specific 
+``-prep_only``       | Common
+
+---
+* **-outmsd \<true or false\>**
+  * Default: ``false``
+  * Example: ``-outmsd true``
+  * Note: If set to ``true``, both ``-msddim`` and ``-msdrange`` must also be specified.
+
+  Specifies whether or not to compute the MSD.
+
+---
+* **-unwrap \<true or false\>**
+  * Default: ``false``
+  * Example: ``-unwrap false``
+
+  Specifies whether to unwrap the trajectory. Since wrapped trajectories cannot yield accurate MSD values, it is necessary to set this option to ``true``. Note that trajectories segmented by periodic boundary conditions (PBC) — as in GROMACS — are not supported by this option. In such cases, preprocessing with GROMACS `trjconv` is required.
+
+---
+* **-msddim \<2 or 3\>**
+  * Default: ``3``
+  * Example: ``-msddim 3``
+
+  Specifies the dimensionality of the MSD calculation. Use ``3`` for general diffusion analysis and ``2`` for lateral diffusion within lipid bilayers.
+
+---
+* **-dt <time interval>**
+  * Default: ``0.1``
+  * Example: ``-dt 0.1``
+
+  Specifies the time interval between snapshots.
+
+---
+* **-t_range <MSD calculation time scale>**
+  * Default: ``10``
+  * Example: ``-t_range 10``
+
+  Specifies the time scale over which MSD is computed.
+
+---
+* **-t_sparse <output time interval for MSD>**
+
+  Specifies the time interval for MSD output. For example, with ``-dt 0.1`` ($=\delta t$) and ``-t_sparse 1`` ($=\Delta t$), the MSD (in Angstrom$^{2}$) is computed at time intervals:
+
+  $$
+  \Delta T = \mathrm{nint}\left(\dfrac{\Delta t}{\delta t}\right) \delta t
+  $$
+
+### Output File Formats
+
+* ``*.com``
+
+  This file contains the center-of-mass coordinates of each molecule within the selected region, in ``xyz`` format.
+   
+* ``*.msd``
+
+  This file stores the MSD values for individual molecules. Output is generated only when ``-outmsd true`` is specified.
+
+  * Column 1: Time
+  * Column 2: MSD of molecule 1
+  * Column 3: MSD of molecule 2  
+    ...
+
+* ``*.msdave``
+
+  This file contains the averaged MSD across all molecules. Output is generated only when ``-outmsd true`` is specified.
+
+  * Column 1: Time
+  * Column 2: Mean MSD
+  * Column 3: Standard deviation of MSD
+
+### Examples of Analysis
+
+#### MSD Calculation for a Protein
+
+The following is an example of calculating the MSD of a single protein (`resid 1 to 192`) dissolved in aqueous solution. Since the protein consists of multiple amino acid residues, it is necessary to specify the mode as "``-mode whole``".
+
+```
+#!/bin/bash
+
+anatra center_of_mass        \
+  -stype     parm7           \
+  -sfile     complex.prmtop  \
+  -tintype   dcd             \
+  -tin       INP.dcd         \
+  -fhead     out             \
+  -outmsd    true            \
+  -sel0      resid 1 to 192  \
+  -mode      whole           \
+  -msddim    3               \
+  -dt        0.01            \
+  -t_range   100             \
+  -t_sparse  0.1
+```
+
+#### MSD Calculation for Multiple Small Molecules
+
+Consider a system containing 100 ligand molecules (`resname LIG`) dissolved in aqueous solution. The following example computes both the MSD of each molecule and their average. In this case, molecular boundaries can be determined based on residue numbers, so the mode is set to "``-mode residue``".
+
+```
+#!/bin/bash
+
+anatra center_of_mass        \
+  -stype     parm7           \
+  -sfile     complex.prmtop  \
+  -tintype   dcd             \
+  -tin       INP.dcd         \
+  -fhead     out             \
+  -outmsd    true            \
+  -sel0      resname LIG     \
+  -mode      residue         \
+  -msddim    3               \
+  -dt        0.01            \
+  -t_range   100             \
+  -t_sparse  0.01
+```
+## Radial Distribution Function (radial_distr, rdf)
+
+### Theoretical Background
+
+This section explains the definition of the radial distribution function (RDF).
+
+#### RDF for Identical Particles
+
+Consider a system containing $N_a$ particles of type $a$, with a total volume $V$ and a bulk number density $\rho_a = N_a/V$. The local density field $\hat{\rho}_{a}\left({\bf r}\right)$ is defined as
+
+\begin{align}
+\hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right).
+\end{align}
+
+Here, ${\bf r}_{i}$ is the position of the $i$-th particle of type $a$. If no external field is present, the ensemble average of the local density field is reduced to the bulk density.
+
+\begin{align}
+\Braket{\hat{\rho}_{a}\left({\bf r}\right)} = \rho_{a}.
+\end{align}
+
+The, let us define the two-body density correlation function as
+
+\begin{align}
+\chi\left({\bf r},{\bf r}^{\prime}\right) = \Braket{\hat{\rho}_{a}\left({\bf r}\right)\hat{\rho}_{a}\left({\bf r}^{\prime}\right)} = \Braket{\sum_{i=1}^{N_{a}}\sum_{j=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}
+
+Separating the terms for $i = j$ and $i \ne j$ gives
+
+\begin{align}
+\chi\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} + \sum_{i=1}^{N_{a}}{\sum_{j\ne i}^{N_{a}}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}
+
+The first term represents the probability that the same particle exists at both ${\bf r}$ and ${\bf r}'$, which is clearly zero unless ${\bf r} = {\bf r}'$, i.e., 
+
+\begin{align}
+\sum_{i=1}^{N_{a}}\braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} = \rho_{a}\delta\left({\bf r}-{\bf r}^{\prime}\right).
+\end{align}
+
+The second term, called the two-body density, represents the probability that one particle is at ${\bf r}$ and another is at ${\bf r}'$:
+
+\begin{align}
+\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\sum_{j\ne i}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}
+
+If ${\bf r}$ and ${\bf r}'$ are far apart, their correlation is negligible. Thus
+
+\begin{align}
+\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) \approx \rho_{a}^{2}\left(1-\dfrac{1}{N_{a}}\right).\qquad (\left|{\bf r} - {\bf r}^{\prime}\right|\to \infty)
+\end{align}
+
+The pair distribution function is defined as 
+
+\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}(1 - 1/N_{a})}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
+\end{align}
+
+For large systems, $1/N_a \approx 0$. Therefore, 
+
+\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
+\end{align}
+
+In uniform systems, the function depends only on the relative position, indicating
+
+\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}^{\prime}-{\bf r}\right).
+\end{align}
+
+Let ${\bf r}$ be ${\bf r}' - {\bf r}$ and $g_{aa}\left({\bf r}\right)$ be the spatial distribution function (SDF) defined as
+
+\begin{align}
+g_{aa}\left({\bf r}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}\right).
+\end{align}
+
+Averaging over orientation leads to the radial distribution function (RDF) defined as 
+
+\begin{align}
+g_{aa}\left(r\right) = \dfrac{1}{4\pi r^{2}}\int d{\bf r}\,\delta\left(\left|{\bf r}\right|-r\right)g_{aa}\left({\bf r}\right).
+\end{align}
+
+For isotropic systems, the following relationship holds.
+
+\begin{align}
+g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
+\end{align}
+
+RDF gives the relative probability of finding a particle at distance $r$ compared to bulk. $g_{aa}(r) > 1$ indicates higher probability, $g_{aa}(r) < 1$ indicates lower probability than bulk.
+
+#### RDF for Heterogeneous Particles
+
+Consider a system with $N_a$ particles of type $a$ and $N_b$ of type $b$, with respective bulk densities $\rho_a = N_a/V$ and $\rho_b = N_b/V$. The two-body density is
+
+\begin{align}
+\rho_{ab}^{(2)}({\bf r},{\bf r}') = \sum_{i=1}^{N_a}\sum_{j=1}^{N_b}\Braket{\delta({\bf r} - {\bf r}_i^a)\delta({\bf r}' - {\bf r}_j^b)}.
+\end{align}
+
+For uncorrelated particles,
+
+\begin{align}
+\rho_{ab}^{(2)}({\bf r},{\bf r}') \approx \rho_a \rho_b.
+\end{align}
+
+The spatial distribution function is
+
+\begin{align}
+g_{ab}({\bf r}) = \dfrac{1}{\rho_a \rho_b} \rho_{ab}^{(2)}({\bf 0}, {\bf r}),
+\end{align}
+
+and the RDF is 
+
+\begin{align}
+g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\bf r}).
+\end{align}
+
+### Option List
+
+**Option**           | **Description**            | **Option**              | **Description**
+:-------------------:|:--------------------------:|:------------------------:|:--------------------------:
+``-stype``           | Common                     | ``-sfile``              | Common
+``-tintype``         | Common                     | ``-tin``                | Common
+``-flist_traj``      | Common                     | ``-fhead``              | Common
+``-sel0``            | Common                     | ``-sel1``               | Common
+``-mode0``           | Common                     | ``-mode1``              | Common
+``-dr``              | Mode specific              | ``-identical``          | Mode specific
+``-normalize``       | Mode specific              | ``-separate_self``      | Mode specific
+
+---
+
+* **-dr <bin width in Angstrom>**  
+  * Default: ``0.1``
+
+  Specifies the bin width for RDF calculation.
+
+---
+
+* **-identical <true or false>**  
+  * Default: ``false``
+
+  Set to ``true`` when ``-sel0`` and ``-sel1`` are the same. As discussed in the theory section, RDF calculations differ depending on whether the particles are identical or not, so this must be specified by the user.
+
+---
+
+* **-normalize <true or false>**  
+  * Default: ``true``
+
+  Specifies whether to output the RDF $g_{12}(r)$ directly (``true``), or multiply by the average number density $\rho_2$ of ``sel1`` to output $\rho_{12}(r) = \rho_2 g_{12}(r)$ (``false``).
+
+---
+
+* **-separate_self <true or false>**  
+  * Default: ``false``
+
+  Determines whether to separate intra- and intermolecular contributions in RDF. This is useful, for example, when calculating RDF between different atoms in the same type of molecule (e.g., OW-HW1 in water). Setting ``true`` separates contributions from within the same molecule.
+
+---
+
+### Output File Format
+
+* ``*.rdf`` file
+
+  This file contains the RDF output. The content varies depending on the ``-separate_self`` option:
+
+  * If ``-separate_self false``:
+
+    * Column 1: Distance
+    * Column 2: RDF
+
+  * If ``-separate_self true``:
+
+    * Column 1: Distance
+    * Column 2: Intermolecular RDF
+    * Column 3: Intramolecular RDF (self-correlation function)
+
+<!---
+* ``*.rdbin`` file
+
+  This file stores RDF data in binary format.  
+  The ``fanatra`` analysis mode ``rd_gather`` can be used to average RDFs from multiple trajectories, using this ``*.rdbin`` file as input.
+--->
+
+### Examples of Analysis
+
+#### RDF between Oxygen Atoms of Water Molecules
+
+```
+#!/bin/bash
+
+anatra rdf                                        \
+  -stype         parm7                            \
+  -sfile         complex.prmtop                   \
+  -tintype       dcd                              \
+  -tin           INP.dcd                          \
+  -fhead         out                              \
+  -sel0          resname WAT and name O           \
+  -sel1          resname WAT and name O           \
+  -mode0         residue                          \
+  -mode1         residue                          \
+  -dr            0.1                              \
+  -identical     true                             \
+  -normalize     true                             \
+  -separate_self false
+```
+
+#### RDF between Oxygen and Hydrogen Atoms in Water Molecules
+
+```
+#!/bin/bash
+
+anatra rdf                                        \
+  -stype         parm7                            \
+  -sfile         complex.prmtop                   \
+  -tintype       dcd                              \
+  -tin           INP.dcd                          \
+  -fhead         out                              \
+  -sel0          resname WAT and name O           \
+  -sel1          resname WAT and name H1          \
+  -mode0         residue                          \
+  -mode1         residue                          \
+  -dr            0.1                              \
+  -identical     false                            \
+  -normalize     true                             \
+  -separate_self true 
+```
+
+#### RDF between Protein C$\alpha$ Atoms and Water Oxygen Atoms
+
+This example calculates the RDF between the C$\alpha$ atoms (``resid 1 to 192``) of a protein and oxygen atoms of water molecules, and outputs the average of the individual RDFs.
+
+```
+anatra rdf                                        \
+  -stype         parm7                            \
+  -sfile         complex.prmtop                   \
+  -tintype       dcd                              \
+  -tin           INP.dcd                          \
+  -fhead         out                              \
+  -sel0          resid 1 to 192 and name CA       \
+  -sel1          resname WAT and name O           \
+  -mode0         atom                             \
+  -mode1         residue                          \
+  -dr            0.1                              \
+  -identical     false                            \
+  -normalize     true                             \
+  -separate_self false
+```
+## Spatial Distribution Function (`spatial_distr`, `sdf`)
+
+### Theoretical Background
+
+Consider a system with $N_a$ particles of type $a$, volume $V$, and number density $\rho_a = N_a / V$. Assume that one molecule is fixed at the center of the system, including its orientation, acting effectively as an external field. Although such a situation does not naturally occur in standard solution-phase MD simulations, a virtually equivalent condition can be constructed by aligning all trajectories to a reference structure (fitting), as described at the end of this section.
+
+Similar to the radial distribution function, we define the local number density of particle $a$ as
+
+\begin{align}
+\hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}} \delta\left({\bf r} - {\bf r}_i \right).
+\end{align}
+
+Its ensemble average under the external field gives the one-body density
+
+\begin{align}
+\rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
+\end{align}
+
+Here, $\langle \cdots \rangle_{\mathrm{ext}}$ denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, $\rho_a({\bf r}) = \rho_a$. THen, we define the spatial distribution function (SDF) as:
+
+\begin{align}
+g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
+\end{align}
+
+If $g_a({\bf r}) > 1$, the local probability of finding particle $a$ is larger than the bulk value; if $g_a({\bf r}) < 1$, it is lower than in bulk.
+
+To compute the SDF, the system is first fitted such that the molecule treated as the external field overlaps with a reference structure. For unwrapped trajectories, PBC wrapping must be performed in advance ({numref}`figure_sdf_fitting`). The `spatial_distr` mode handles all these steps internally. Once transformed, the reference molecule is fixed in position and orientation, making it effectively act as a static field, and the surrounding molecular distribution can be analyzed as an SDF. If the reference molecule lacks a stable structure, fitting becomes unreliable and SDF computation is infeasible. However, for proteins with stable native structures and minimal conformational changes, SDF analysis is applicable.
+
+```{figure} ./figures/fitting_for_sdf.png
+:name: figure_sdf_fitting
+
+By aligning the system such that the molecule of interest overlaps with the reference structure (fitting), it becomes possible to examine the three-dimensional distribution of surrounding molecules relative to a fixed molecular orientation. The `spatial_distr` mode automates this entire procedure.
+```
+
+### List of Options
+
+**Option**              | **Remarks**        | **Option**            | **Remarks**
+:----------------------:|:------------------:|:----------------------:|:------------------:
+``-stype``              | Common             | ``-sfile``             | Common
+``-tintype``            | Common             | ``-tin``               | Common
+``-flist_traj``         | Common             | ``-fhead``             | Common
+``-selX``               | Common             | ``-mode``              | Common
+``-ng3``                | Mode specific      | ``-del``               | Mode specific
+``-origin``             | Mode specific      | ``-fit``               | Mode specific
+``-refpdb``             | Mode specific      | ``-refselid``          | Mode specific
+``-fitselid``           | Mode specific      | ``-use_spline``        | Mode specific
+``-spline_resolution``  | Mode specific      | ``-prep_only``         | Common
+
+Advanced options for conditional SDF analysis exist but will be officially supported in a future update.
+
+---
+
+* **-ng3 \<number of grid points along $x,y,z$\>**
+  * Default: ``50 50 50``  
+  * Example: ``-ng3 50 50 50``
+
+  Specifies the number of grid points along each spatial axis, $n_x$, $n_y$, $n_z$. The total number of grid points is $n_x n_y n_z$.
+
+---
+
+* **-del \<grid spacing along $x,y,z$ axes (Angstrom)\>**
+  * Default: ``0.5 0.5 0.5``  
+  * Example: ``-del 0.5 0.5 0.5``
+
+  Specifies the grid spacing $\Delta x, \Delta y, \Delta z$ in Angstrom. The volume element per grid point is $\Delta V = \Delta x \Delta y \Delta z$.
+
+---
+
+* **-origin \<coordinates of grid origin ($x,y,z$) in Angstrom\>**
+  * Default: ``0.0 0.0 0.0``  
+  * Example: ``-origin 0.0 0.0 0.0``
+
+  Sets the origin of the grid. For origin $(x_0, y_0, z_0)$, the coordinates of grid point $(i_x, i_y, i_z)$ are:
+
+  \begin{align}
+  x_i = x_0 + \Delta x \, (i_x - 1) \\
+  y_i = y_0 + \Delta y \, (i_y - 1) \\
+  z_i = z_0 + \Delta z \, (i_z - 1)
+  \end{align}
+
+---
+
+* **-fit \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-fit true``
+
+  If set to `true`, the system is PBC-wrapped and then fitted so that the solute molecule (treated as the external field) aligns with the reference structure. The following must be specified:
+
+  - ``-refpdb``  
+  - ``-refselid``  
+  - ``-fitselid``  
+  - ``-sel0`` (target for SDF calculation)  
+  - ``-sel1`` (reference fitting region)  
+  - ``-sel2`` (trajectory fitting region)
+
+  **Important**: If the input trajectory has already been fitted, you must explicitly set ``-fit false``. Applying PBC wrapping after fitting leads to invalid configurations.
+
+---
+
+* **-refselid \<selid\>**
+  * Default: N/A  
+  * Example: ``-refselid 1``
+
+  Specifies the selid of the reference region used for fitting in the reference structure. For example, if using ``-sel1`` as the reference selection, set ``-refselid 1``.
+
+---
+
+* **-fitselid \<selid for fitting region in trajectory\>**
+  * Default: N/A  
+  * Example: ``-fitselid 2``
+
+  Specifies the selid for the region used for fitting within the trajectory. For example, if using ``-sel2`` for trajectory fitting, set ``-fitselid 2``.
+
+---
+
+* **-use_spline \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-use_spline true``  
+  * Note: The resolution is controlled by ``-spline_resolution``.
+
+  Applies spline interpolation (Akima spline) to the SDF grid.
+
+---
+
+* **-spline_resolution \<integer resolution factor\>**
+  * Default: ``4``  
+  * Example: ``-spline_resolution 4``  
+  * Note: Active only if ``-use_spline true`` is specified.
+
+  Specifies the subdivision factor $n_r$ for each grid axis. Given the original grid spacing $\Delta \alpha$ ($\alpha = x, y, z$), the refined grid spacing becomes:
+
+  \begin{align}
+  \Delta \alpha' = \frac{\Delta \alpha}{n_r}
+  \end{align}
+
+  The total number of grid points changes from $N$ to:
+
+  \begin{align}
+  N' = n_r^3 \cdot N
+  \end{align}
+
+---
+
+### Output File Format
+
+* ``*_out_g_original.dx``  
+  SDF output in DX format. No spline interpolation applied.
+
+* ``*_out_g_spline.dx``  
+  SDF output in DX format with spline interpolation. Generated only if ``-use_spline true`` is specified.
+
+<!---
+* ``*.sdbin``  
+  This binary file stores the raw SDF data.  
+  It is used as input for the ``sd_gather`` mode in ``fanatra``, which averages SDFs from multiple trajectories.  
+  Spline settings are embedded within the file, allowing ``sd_gather`` to apply interpolation during averaging.
+--->
+
+### Examples of Analysis
+
+#### SDF of Water Molecules Around a Protein
+
+The following script computes the SDF of water molecule centers of mass around a protein (`resid 1 to 192`):
+
+```
+#!/bin/bash
+
+anatra spatial_distr                         \
+  -stype             parm7                   \
+  -sfile             complex.prmtop          \
+  -tintype           dcd                     \
+  -tin               INP.dcd                 \
+  -fhead             out                     \
+  -sel0              water                   \
+  -sel1              resid 1 to 192 and noh  \
+  -sel2              resid 1 to 192 and noh  \
+  -mode              residue                 \
+  -ng3               50 50 50                \
+  -del               0.4 0.4 0.4             \
+  -origin            -10.0 -10.0 -10.0       \
+  -fit               true                    \
+  -refpdb            ref.pdb                 \
+  -refselid          1                       \
+  -fitselid          2                       \
+  -use_spline        true                    \
+  -spline_resolution 4
+```
+## Root-Mean-Square Deviation (`rmsd`)
+
+### Theoretical Background
+
+This section explains the definition of the root-mean-square deviation (RMSD). RMSD quantitatively evaluates the structural deviation of a molecule or a specific region of interest from a reference structure at a given time during an MD simulation. It is commonly used to assess how much a structure deviates from, for example, an experimental crystal structure during the equilibration phase, and whether or not it relaxes over time.
+
+Consider a molecule composed of $N_{\mathrm{sel}}$ atoms. Let ${\bf r}_i$ denote the position of the $i$-th atom, ${\bf r}^{\mathrm{ref}}_i$ the corresponding coordinate in the reference structure, and ${\bf r}_i(t)$ the position at time $t$. Then, the RMSD $\chi(t)$ is defined as:
+
+\begin{align}
+\chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
+\end{align}
+
+### List of Options
+
+**Option**         | **Remarks**        | **Option**         | **Remarks**
+:-----------------:|:------------------:|:------------------:|:------------------:
+``-stype``         | Common             | ``-sfile``         | Common
+``-tintype``       | Common             | ``-tin``           | Common
+``-fout``          | Common             | ``-sel0``          | Common
+``-sel1``          | Common             | ``-sel2``          | Common
+``-sel3``          | Common             | ``-fit``           | Mode specific
+``-refpdb``        | Common             | ``-fitselid``      | Mode specific
+``-refselid``      | Mode specific      | ``-rmsdselid``     | Mode specific
+``-rmsdrefselid``  | Mode specific      |
+
+---
+
+* **-fout \<output file name\>**
+  * Default: `out.rmsd`  
+  * Example: ``-fout out.rmsd``
+
+  Specifies the filename for the output of RMSD results.
+
+---
+
+* **-refpdb \<reference structure in PDB format\>**
+  * Default: N/A  
+  * Example: ``-refpdb ref.pdb``
+
+  Specifies the reference structure used for RMSD calculation.
+
+---
+
+* **-fit \<true or false\>**
+  * Default: ``false``  
+  * Example: ``-fit true``  
+  * Note: If set to `true`, ``-refselid`` and ``-fitselid`` must be specified.
+
+  Indicates whether to perform structural fitting prior to RMSD calculation.
+
+---
+
+* **-fitselid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-fitselid 1``
+
+* **-refselid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-refselid 2``
+
+  Specify the selection IDs of the fitting regions in the trajectory and the reference structure, respectively. These options are required when ``-fit true`` is set.
+
+---
+
+* **-rmsdselid \<selid\>**
+  * Default: N/A  
+  * Example: ``-rmsdselid 2``
+
+  Specifies the selid corresponding to the region used in the trajectory for RMSD calculation.
+
+---
+
+* **-rmsdrefselid \<selid\>**
+  * Default: N/A  
+  * Example: ``-rmsdrefselid 3``
+
+  Specifies the selid corresponding to the region in the reference structure for RMSD calculation.
+
+### Output File Format
+
+* `*.rmsd` file
+
+  This file contains the time evolution of RMSD values.
+
+  * Column 1: Time  
+  * Column 2: RMSD
+
+### Examples of Analysis
+
+#### RMSD from the Crystal Structure of a Protein in Solution
+
+This example calculates the RMSD of the C$\alpha$ atoms of a protein (`resid 1 to 161`) with respect to a crystal structure.
+
+```
+anatra rmsd                                   \
+  -stype        parm7                         \
+  -sfile        complex.prmtop                \
+  -tintype      dcd                           \
+  -tin          INP.dcd                       \
+  -fout         out.rmsd                      \
+  -sel0         resid 1 to 161 and name CA    \
+  -sel1         resid 1 to 161 and name CA    \
+  -sel2         resid 1 to 161 and name CA    \
+  -sel3         resid 1 to 161 and name CA    \
+  -fit          true                          \
+  -refpdb       ref.pdb                       \
+  -fitselid     0                             \
+  -refselid     1                             \
+  -rmsdselid    2                             \
+  -rmsdrefselid 3
+```
+## Interaction Energy (`interaction_energy`, `ene`)
+
+The `interaction_energy` (`ene`) mode allows the calculation of interaction energies between selected molecules, groups of molecules, or specific regions. Currently, **ANATRA** supports the following three types of interactions:
+
+* **Electrostatic Interaction**  
+    Electrostatic interaction energy $U_{\mathrm{elec}}$ between molecules A and B can be computed using two schemes. The first is the bare interaction,
+
+    \begin{align}
+    U_{\mathrm{elec}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} \frac{q_i q_j}{r_{ij}},
+    \end{align}
+
+    where $i$ and $j$ denote atomic indices in molecules A and B, respectively. The second scheme uses the Smooth Particle Mesh Ewald (SPME) method, which is the standard approach for accounting for long-range electrostatic interactions in MD simulations. If consistency with MD simulations is required, the SPME method should be employed.
+
+* **Lennard-Jones (LJ) Interaction**  
+    The LJ interaction, which empirically describes van der Waals interactions, is given by
+
+    \begin{align}
+    U_{\mathrm{LJ}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right].
+    \end{align}
+
+    Here, $\epsilon_{ij}$ and $\sigma_{ij}$ are the LJ parameters between atom $i$ in molecule A and atom $j$ in molecule B.
+
+* **Attractive LJ Interaction**  
+    The attractive component of the LJ interaction is defined as:
+
+    \begin{align}
+    U_{\mathrm{attr}} &= \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} u_{\mathrm{attr},ij}, \\
+    u_{\mathrm{attr},ij} &= \begin{cases}
+    4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right] & r_{ij} \geq 2^{1/6} \sigma, \\
+    -\epsilon_{ij} & r_{ij} < 2^{1/6} \sigma.
+    \end{cases}
+    \end{align}
+
+    This formulation removes the repulsive part of the LJ potential, eliminating the multivalued nature of energy with respect to distance (see Fig. 3.3). When constructing a PMF for molecular binding, using the attractive LJ interaction as a reaction coordinate can more clearly distinguish between bound and unbound states than the standard LJ potential.
+
+In addition to the individual components above, the sum of electrostatic and LJ can also be calculated.
+
+### List of Options
+
+**Option**           | **Remarks**       | **Option**          | **Remarks**
+:-------------------:|:-----------------:|:-------------------:|:-----------------:
+``-stype``           | Common            | ``-sfile``          | Common
+``-tintype``         | Common            | ``-tin``            | Common
+``-flist_traj``      | Common            | ``-fhead``          | Common
+``-sel0``            | Common            | ``-sel1``           | Common
+``-mode0``           | Common            | ``-mode1``          | Common
+``-parmformat``      | Mode specific     | ``-fanaparm``       | Mode specific
+``-pbc``             | Mode specific     | ``-calc_vdw``       | Mode specific
+``-calc_elec``       | Mode specific     | ``-vdw_type``       | Mode specific
+``-elec_type``       | Mode specific     | ``-dt``             | Mode specific
+``-rvdwcut``         | Mode specific     | ``-relcut``         | Mode specific
+``-pme_alpha``       | Mode specific     | ``-pme_grids``      | Mode specific
+``-pme_rigid``       | Mode specific     | ``-pme_dual``       | Mode specific
+``-pme_fprm``        | Mode specific     | ``-prep_only``      | Common
+
+---
+
+* **-parmformat \<prmtop or anaparm\>**  
+  * Default: ``prmtop``  
+  * Example: ``-parmformat anaparm``  
+  * Note: When set to `anaparm`, ``-fanaparm`` must also be specified.
+
+  Specifies the parameter file for atomic charges. When using `prmtop`, the file given by ``-sfile`` will be automatically used.
+
+---
+
+* **-fanaparm \<filename\>**  
+  * Default: N/A  
+  * Example: ``-fanaparm complex.anaparm``
+
+  Specifies the `anaparm` file containing LJ parameters and atomic charges. Required when ``-parmformat anaparm`` is used.
+
+---
+
+* **-pbc \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-pbc true``
+
+  Enables periodic boundary condition treatment, including image interactions from adjacent periodic boxes.
+
+---
+
+* **-calc_vdw \<true or false\>**  
+  * Default: ``true``  
+  * Example: ``-calc_vdw false``
+
+  Specifies whether to compute van der Waals (LJ) interactions.
+
+---
+
+* **-calc_elec \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-calc_elec true``
+
+  Specifies whether to compute electrostatic interactions.
+
+---
+
+* **-vdw_type \<standard or attractive\>**  
+  * Default: ``standard``  
+  * Example: ``-vdw_type attractive``
+
+  Specifies which LJ interaction function to use.  
+  ``standard`` computes the standard LJ (Eq. \eqref{LJ}), and ``attractive`` computes the attractive LJ (Eq. \eqref{Uattr}).
+
+---
+
+* **-elec_type \<bare or pme\>**  
+  * Default: ``bare``  
+  * Example: ``-elec_type bare``
+
+  Specifies the method for electrostatic interaction calculation:  
+  ``bare`` for Eq. \eqref{elec}, ``pme`` for the PME method.
+
+---
+
+* **-dt \<time interval\>**  
+  * Default: ``0.1``  
+  * Example: ``-dt 1.0``
+
+  Sets the time resolution (first column) of the time-series output.
+
+---
+
+* **-rvdwcut \<cutoff distance (Å)\>**  
+  * Default: ``12.0``  
+  * Example: ``-rvdwcut 20.0``
+
+  Cutoff distance for van der Waals interactions.
+
+---
+
+* **-relcut \<cutoff distance (Å)\>**  
+  * Default: ``1.0e10``  
+  * Example: ``-relcut 1.0e10``
+
+  Cutoff distance for electrostatic interactions.
+
+---
+
+* **-pme_alpha \<PME screening parameter (Angstrom$^{-1}$)\>**  
+  * Default: ``0.35``  
+  * Example: ``-pme_alpha 0.35``
+
+  Specifies the screening parameter used in PME. Only used when ``-elec_type pme``.
+
+---
+
+* **-pme_grids \<grid size in $x,y,z$\>**  
+  * Default: ``64 64 64``  
+  * Example: ``-pme_grids 64 64 64``
+
+  Grid size $n_x, n_y, n_z$ used in PME. Total number of grid points is $n_x n_y n_z$.
+
+---
+
+* **-pme_rigid \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-pme_rigid false``
+
+  If the region specified by ``-sel0`` is spatially fixed, set to `true` to reduce PME computational cost.
+
+---
+
+### Output File Format
+
+* `*.uij` file
+
+  This file contains pairwise interaction energies between selected regions. If selections 0 and 1 are divided into $n_1$ and $n_2$ molecules, respectively (via ``-mode0`` and ``-mode1``), the output contains $n_1 n_2$ interaction terms:
+
+  * Column 1: Time  
+  * Column 2: Interaction between pair (1, 1)  
+  * Column 3: Interaction between pair (1, 2)  
+    ...  
+  * Column $n_2$: Interaction between pair (1, $n_2$)  
+  * Column $n_2+1$: Interaction between pair (2, 1)  
+    ...
+
+### Examples of Analysis
+
+The following are minimal examples for common types of interaction energy analysis.
+
+#### Electrostatic + LJ Interaction Between Solute Molecules
+
+This example computes the total of electrostatic and LJ interactions between a protein (`resid 1 to 161`) and ligand molecules (`resname LIG`), using the SPME method for electrostatics:
+
+```
+#!/bin/bash
+
+anatra energy                                 \
+  -stype       parm7                          \
+  -sfile       complex.prmtop                 \
+  -tintype     dcd                            \
+  -tin         INP.dcd                        \
+  -fhead       out                            \
+  -parmformat  prmtop                         \
+  -pbc         true                           \
+  -calc_vdw    true                           \
+  -calc_elec   true                           \
+  -vdw_type    standard                       \
+  -elec_type   pme                            \
+  -mode0       whole                          \
+  -mode1       residue                        \
+  -dt          0.1                            \
+  -rvdwcut     12.0                           \
+  -relcut      12.0                           \
+  -pme_alpha   0.35                           \
+  -pme_grids   64 64 64                       \
+  -pme_rigid   false                          \
+  -sel0        resid 1 to 161                 \
+  -sel1        resname LIG                    \
+  -prep_only   false
+```
+
+#### LJ Interaction Between Solute Molecules
+
+This example computes only the LJ interactions between a protein and ligand molecules:
+
+```
+#!/bin/bash
+
+anatra energy                                 \
+  -stype       parm7                          \
+  -sfile       complex.prmtop                 \
+  -tintype     dcd                            \
+  -tin         INP.dcd                        \
+  -fhead       out                            \
+  -parmformat  prmtop                         \
+  -pbc         true                           \
+  -calc_vdw    true                           \
+  -calc_elec   false                          \
+  -vdw_type    standard                       \
+  -mode0       whole                          \
+  -mode1       residue                        \
+  -dt          0.1                            \
+  -rvdwcut     12.0                           \
+  -relcut      1.0e10                         \
+  -sel0        resid 1 to 161                 \
+  -sel1        resname LIG                    \
+  -prep_only   false
+```
+## Lipid Order Parameter (`lipid_order`, `scd`)
+
+The `lipid_order` (`scd`) mode allows for the calculation of the orientational order parameter $S_{\mathrm{CD}}$ associated with acyl chains of phospholipids. Using the membrane normal direction as the $z$-axis, the angle $\theta$ is defined between this axis and the vector connecting a specific carbon atom and its bonded hydrogen. The $S_{\mathrm{CD}}$ parameter is then defined as:
+
+\begin{align}
+S_{\mathrm{CD}} = \frac{1}{2} \left\langle 3 \cos^2 \theta - 1 \right\rangle.
+\end{align}
+
+The range of $S_{\mathrm{CD}}$ is $0 \leq S_{\mathrm{CD}} \leq 1$, where higher values indicate greater order, and a value of 0 corresponds to complete disorder. Since $S_{\mathrm{CD}}$ is defined for each carbon atom, this analysis provides position-resolved information on lipid order along the acyl chains.
+
+```{figure} ./figures/scd.png
+:name: figure_scd.png
+
+The angle $\theta$ is defined between the membrane normal (the $z$-axis) and the vector connecting a specific carbon and its bonded hydrogen atom. This angle $\theta$ reflects the local orientation of the lipid.
+```
+
+### List of Options
+
+**Option**         | **Remarks**        | **Option**       | **Remarks**
+:-----------------:|:------------------:|:----------------:|:------------------:
+``-stype``         | Common             | ``-sfile``       | Common
+``-tintype``       | Common             | ``-tin``         | Common
+``-flist_traj``    | Common             | ``-fhead``       | Common
+``-selX``          | Common             | ``-mode``        | Common
+``-cindex``        | Mode specific      | ``-prep_only``   | Common
+
+---
+
+* **-selX \<selection of atoms\>**
+  * Default: N/A  
+  * Example: ``-sel0 name C32 H2X H2Y``
+
+  Specify the carbon atom and its bonded hydrogen atoms for which $S_{\mathrm{CD}}$ will be calculated. Use ``-selX`` for each carbon atom of interest.
+
+---
+
+* **-cindex \<carbon indices\>**
+  * Default: N/A  
+  * Example: ``-cindex 1 2 3 4 5``
+
+  Specifies the carbon index number (counted from the base of the acyl chain) corresponding to each ``-selX`` entry. The number of values given must match the number of ``-selX`` options. The carbon indices provided here will be used for the first column (x-axis) of the output `.scd` file.
+
+### Output File Format
+
+* `*.scd`  
+  The $S_{\mathrm{CD}}$ values are printed in the order of carbon atoms specified by ``-sel0``, ``-sel1``, ...
+
+  * Column 1: Carbon index (as specified by ``-cindex``)  
+  * Column 2: $S_{\mathrm{CD}}$
+
+### Examples of Analysis
+
+#### Calculation of $S_{\mathrm{CD}}$ in a DPPC Lipid Bilayer
+
+```
+anatra lipid_order                            \
+  -stype      psf                             \
+  -sfile      complex.psf                     \
+  -tintype    netcdf                          \
+  -flist_traj flist                           \
+  -fhead      run_nc                          \
+  -dt         0.1                             \
+  -cindex     1 2 3 4 5                       \
+  -sel0       name C23 H3R H3S and segid MEMB \
+  -sel1       name C24 H4R H4S and segid MEMB \
+  -sel2       name C25 H5X H5Y and segid MEMB \
+  -sel3       name C26 H6X H6Y and segid MEMB \
+  -sel4       name C27 H7X H7Y and segid MEMB \
+  -prep_only  false
+```
+
+## Distribution Function Along the Membrane Normal ($z$-axis) (`z_profile`, `zprof`)
+
+The `z_profile` (`zprof`) mode calculates the distribution of molecular species along the membrane normal (i.e., the $z$-axis). The local density field of species $a$ along the $z$-axis is defined as
+
+\begin{align}
+\hat{\rho}_{a}\left(z\right) = \dfrac{1}{A_{xy}} \sum_{i=1}^{N_{\mathrm{a}}} \delta\left(z - z_{i}\right),
+\end{align}
+
+where $A_{xy}$ is the cross-sectional area of the simulation box in the $xy$-plane, and $z_i$ is the $z$-coordinate of the $i$-th molecule. The ensemble-averaged distribution function is defined as
+
+\begin{align}
+\rho_{a}\left(z\right) = \Braket{ \hat{\rho}_{a}(z) }.
+\end{align}
+
+For comparison with experimental data, it is often useful to compute the electron density distribution $\rho^e_a(z)$. The corresponding local density field is defined as
+
+\begin{align}
+\hat{\rho}^{e}_{a}(z) = \sum_{i=1}^{N_a} \sum_{\lambda=1}^{N_s} q_\lambda \delta(z - z_{i,\lambda}),
+\end{align}
+
+where $q_\lambda$ is the number of electrons on the $\lambda$-th atom in molecule $a$, and $z_{i,\lambda}$ is its $z$-coordinate in the $i$-th molecule. The ensemble average yields the electron density distribution: $\rho^e_a(z) = \Braket{ \hat{\rho}^e_a(z) }$.
+
+### List of Options
+
+**Option**         | **Remarks**         | **Option**           | **Remarks**
+:-----------------:|:-------------------:|:---------------------:|:--------------------:
+``-stype``         | Common              | ``-sfile``            | Common
+``-tintype``       | Common              | ``-tin``              | Common
+``-flist_traj``    | Common              | ``-fhead``            | Common
+``-sel0``          | Common              | ``-sel1``             | Common
+``-mode0``         | Common              | ``-mode1``            | Common
+``-target_selid``  | Mode specific       | ``-center_selid``     | Mode specific
+``-denstype``      | Mode specific       | ``-symmetrize``       | Mode specific
+``-prep_only``     | Common              | --                    | --
+
+---
+
+* **-sel0 \<selection\>**  
+* **-sel1 \<selection\>**  
+  * Default: N/A  
+  * Example: ``-sel0 resname ETOH -sel1 segid MEMB``
+
+  Select the molecules for which the distribution function is to be calculated. To define the membrane center as $z = 0$, membrane molecules must also be selected.
+
+---
+
+* **-target_selid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-target_selid 0``
+
+  Specifies the selid (defined via ``-selX``) corresponding to the molecules for which the distribution is to be calculated.
+
+---
+
+* **-center_selid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-center_selid 1``
+
+  Specifies the selid (defined via ``-selX``) corresponding to the membrane molecules whose center-of-mass is used to define $z = 0$.
+
+---
+
+* **-symmetrize \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-symmetrize false``
+
+  Specifies whether to symmetrize the distribution by averaging the data for $z > 0$ and $z < 0$.
+
+---
+
+* **-denstype \<number or electron\>**  
+  * Default: ``number``  
+  * Example: ``-denstype number``
+
+  Specifies the type of density to compute:  
+  ``number`` for number density, or ``electron`` for electron density.
+
+### Output File Format
+
+* `*.zprof`
+
+  The distribution function of the molecules corresponding to the ``-target_selid`` will be output in the following format:
+
+  * Column 1: $z$-coordinate  
+  * Column 2: Density value
+
+### Examples of Analysis
+
+#### Number Density Profile of Water in a Lipid Membrane System
+
+```
+#!/usr/bin/env bash
+
+anatra z_profile                 \
+  -stype      psf                \
+  -sfile      complex.psf        \
+  -tintype    netcdf             \
+  -flist_traj flist              \
+  -fhead      run                \
+  -sel0       water              \
+  -sel1       segid MEMB and noh \
+  -mode0      residue            \
+  -mode1      whole              \
+  -target_selid 0                \
+  -center_selid 1                \
+  -denstype   number             \
+  -prep_only  false
+```
+## Molecular Orientation Along a Specific Direction (`z_orient`, `zori`)
+
+The `z_orient` (`zori`) mode computes the orientation distribution of molecules relative to a reference direction, typically the $z$-axis.  
+To define the orientation of a molecule, two parts of the molecule are selected: the *bottom* and the *head*. The centers of mass of these two parts are denoted by ${\bf R}_{\mathrm{B}}$ and ${\bf R}_{\mathrm{H}}$, respectively. The molecular axis ${\bf u}$ is then defined as
+
+\begin{align}
+{\bf u} = {\bf R}_{\mathrm{H}} - {\bf R}_{\mathrm{B}}. \label{uvec}
+\end{align}
+
+Let $\theta$ be the angle between the $z$-axis (unit vector ${\bf e}_z$) and the molecular axis (unit vector ${\bf e}_{\mathrm{u}}$). Then
+
+\begin{align}
+\cos \theta = {\bf e}_z \cdot {\bf e}_{\mathrm{u}}.
+\end{align}
+
+The orientation distribution function is defined by
+
+\begin{align}
+P(\chi) = C \left\langle \delta(\chi - \cos \theta) \right\rangle,
+\end{align}
+
+where $C$ is a normalization constant determined such that
+
+\begin{align}
+\int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) = 1.
+\end{align}
+
+By changing variables from $\theta$ to $\chi = \cos \theta$, the left hand side of the above equation becomes
+
+\begin{align}
+\int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) &= \int_{0}^{1} d\chi\, P(\chi) \notag \\
+& = CN  
+\end{align}
+
+where $N$ is the number of targer molecules. Thus, $C$ is set to $C=1/N$. 
+The `z_orient` mode calculates $P(\chi) = P(\cos \theta)$.
+
+Additionally, the reference $z$-axis does not have to be fixed in the laboratory frame; it can also be defined by the orientation of a particular molecule. If four points ${\bf x}_{\mathrm{B}_0}, {\bf x}_{\mathrm{H}_0}, {\bf x}_{\mathrm{B}_1}, {\bf x}_{\mathrm{H}_1}$ are chosen from this reference molecule, the two vectors:
+
+\begin{align}
+{\bf v}_0 = {\bf x}_{\mathrm{H}_0} - {\bf x}_{\mathrm{B}_0}, \quad
+{\bf v}_1 = {\bf x}_{\mathrm{H}_1} - {\bf x}_{\mathrm{B}_1}
+\end{align}
+
+can be used to define the $z$-axis unit vector via the cross product:
+
+\begin{align}
+{\bf e}_z = \frac{ {\bf v}_1 \times {\bf v}_2 }{ \left| {\bf v}_1 \times {\bf v}_2 \right| }.
+\end{align}
+
+The orientation distribution $P(\cos \theta)$ is then computed based on the angle between this ${\bf e}_z$ and the molecular axis ${\bf u}$.
+
+### List of Options
+
+**Option**         | **Remarks**          | **Option**                | **Remarks**
+:-----------------:|:--------------------:|:--------------------------:|:-----------------------:
+``-stype``         | Common               | ``-sfile``                 | Common
+``-tintype``       | Common               | ``-tin``                   | Common
+``-flist_traj``    | Common               | ``-fhead``                 | Common
+``-sel``$x$        | Common               | ``-mode``$x$               | Common
+``-zdef_type``     | Mode specific        | ``-vecX_bottom_selid``     | Mode specific
+``-vecX_head_selid`` | Mode specific      | ``-bottom_selid``          | Mode specific
+``-head_selid``    | Mode specific        | ``-judgeup``               | Mode specific
+``-nmolup``        | Mode specific        | ``-center_selid``          | Mode specific
+``-dx``            | Mode specific        | ``-dt``                    | Mode specific
+``-prep_only``     | Common               | --                         | --
+
+---
+
+* **-sel$x$ \<selection\>** (up to 7 selections)  
+  * Default: N/A  
+  * Example: ``-sel0 name P -sel1 name N``
+
+  Specify the atomic groups used to define the bottom and head parts of the molecule. If using a reference molecular orientation to define the $z$-axis (`-zdef_type outerprod`), additional selections for ${\bf v}_0$ and ${\bf v}_1$ must also be provided. If you use ``-judgeup``, selection of reference molecules to determine direction is also necessary.
+
+---
+
+* **-head_selid**, **-bottom_selid**  
+  * Default: N/A  
+  * Example: ``-head_selid 0 -bottom_selid 1``
+
+  Specify which selections correspond to the head and bottom of the molecule used to compute the orientation vector ${\bf u}$.
+
+---
+
+* **-zdef_type \<coord or outerprod\>**,  
+  * Default: N/A  
+  * Example: ``-zdef_type coord``  
+
+  Required for specifying the definition of the $z$-direction.
+
+  - ``coord``: Use laboratory frame $z$-axis  
+  - ``outerprod``: Use cross product of vectors ${\bf v}_0$ and ${\bf v}_1$ to define $z$-axis
+
+  If ``outerprod``, the following options smust be set. 
+  - ``-vec0_bottom_selid`` $\rightarrow$ ${\bf x}_{\mathrm{B}_0}$  
+  - ``-vec0_head_selid`` $\rightarrow$ ${\bf x}_{\mathrm{H}_0}$  
+  - ``-vec1_bottom_selid`` $\rightarrow$ ${\bf x}_{\mathrm{B}_1}$  
+  - ``-vec1_head_selid`` $\rightarrow$ ${\bf x}_{\mathrm{H}_1}$
+
+---
+
+* **-judgeup \<nmolup coord or none\>**  
+  * Default: ``coord``  
+  * Example: ``-judgeup coord``
+
+* **-nmolup \<# of target molecules in upper leaflet\>**  
+  * Default: 0  
+  * Example: ``-nmolup 100``
+
+* **-center_selid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-center_selid 2``
+
+This option specifies the orientation of ${\bf e}_{z}$ when taking the laboratory coordinate system$^{\prime}$s $z$-axis as the reference. The unit vector pointing in the positive $z$-axis direction is denoted as ${\bf e}_{z}^{\prime}$.
+
+- In the case of ``-judgeup nmolup``: Let $N_{\mathrm{up}}$ be the number specified by the ``-nmolup`` option. Then, the first $N_{\mathrm{up}}$ molecules are assigned ${\bf e}_{z} = {\bf e}_{z}^{\prime}$ for calculating $\cos \theta$, and the remaining molecules are assigned ${\bf e}_{z} = -{\bf e}_{z}^{\prime}$ for calculating $\cos \theta$.
+
+- In the case of ``-judgeup coord``: Let $z_{\mathrm{c}}$ be the $z$-coordinate of the center of mass of the molecule specified by ``-center_selid``, and $z_{\mathrm{B}}$ and $z_{\mathrm{H}}$ be the $z$-coordinates of the centers of mass of the regions specified by ``-bottom_selid`` and ``-head_selid``, respectively. Then,
+
+\begin{align}
+{\bf e}_{z} =
+\begin{cases}
+{\bf e}_{z}^{\prime}  & \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} > 0\\[.2cm]
+-{\bf e}_{z}^{\prime} & \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} \leq  0\\
+\end{cases}
+\end{align}
+
+---
+
+* **-dx \<grid width for $\cos\theta$\>**  
+  * Default: ``0.1``  
+  * Example: ``-dx 0.1``
+
+  Grid width $\Delta\chi$ used for computing $P(\cos\theta)$.
+
+---
+
+* **-dt \<time step\>**  
+  * Default: ``1.0``  
+  * Example: ``-dt 0.1``
+
+  Time increment for the output time series data.
+
+### Output File Format
+
+* `*.costheta`  
+  Time series data of $\cos \theta$:
+
+  * Column 1: Time  
+  * Column 2: $\cos \theta$ of molecule 1  
+  * Column 3: $\cos \theta$ of molecule 2  
+    ...
+
+* `*.distr`  
+  Probability distribution $P(\cos \theta)$:
+
+  * Column 1: $\cos \theta$  
+  * Column 2: $P(\cos \theta)$
+
+### Examples of Analysis
+
+#### Orientation Distribution of Lipids in a Bilayer
+
+```
+#!/usr/bin/env bash
+
+anatra z_orient                    \
+  -stype       psf                 \
+  -sfile       complex.psf         \
+  -tintype     nc                  \
+  -flist_traj  flist               \
+  -fhead       run_nc              \
+  -judgeup     coord               \
+  -dx          0.1                 \
+  -dt          0.1                 \
+  -sel0        name P              \
+  -sel1        name N              \
+  -sel2        segid MEMB and noh  \
+  -mode0       residue             \
+  -mode1       residue             \
+  -mode2       whole               \
+  -bottom_selid 0                  \
+  -head_selid   1                  \
+  -center_selid 2                  \
+  -prep_only   false
+```
+## Free Volume Profile (free_volume)
+
+``free_volume`` calculates the profile of the free volume fraction along a user-specified coordinate axis.
+The free volume is defined as the region where no atoms specified by ``target_selid`` exist.
+The atomic size is estimated from the Lennard-Jones parameters,
+and the free volume fraction is evaluated as the probability that randomly inserted particles do not overlap with any target atoms.
+
+At present, only the $z$ direction (``-coord_type z``) is supported.
+Before the analysis, the system is translated so that the center of the atoms specified by ``center_selid`` is aligned,
+and then the free volume fraction is calculated as a function of the $z$ coordinate.
+
+### List of Options
+
+**Option**         | **Remark**    | **Option**         | **Remark**
+:-----------------:|:-------------:|:------------------:|:--------------:
+``-stype``         | Common        | ``-sfile``         | Common
+``-tintype``       | Common        | ``-tin``           | Common
+``-flist_traj``    | Common        | ``-fhead``         | Common
+``-fprmtop``       | Mode specific | ``-xsta``          | Mode specific
+``-dx``            | Mode specific | ``-ngrid``         | Mode specific
+``-nins``          | Mode specific | ``-sel0``          | Common
+``-sel1``          | Common        | ``-target_selid``  | Mode specific
+``-center_selid``  | Mode specific | ``-coord_type``    | Mode specific
+``-prep_only``     | Common        | --                 | --
+
+ ---
+* **-fprmtop \<Amber parm7 file\>**
+    * Example: ``-fprmtop system.parm7``
+
+    Specifies the Amber parm7 file from which the Lennard-Jones parameters are obtained.
+    In the current implementation, only the parm7 format is supported.
+
+* **-xsta \<initial coordinate (Angstrom)\>**
+    * Example: ``-xsta -30.0``
+
+    Specifies the starting position of the coordinate range for the profile calculation.
+
+* **-dx \<grid interval (Angstrom)\>**
+    * Example: ``-dx 1.0``
+
+    Specifies the interval between neighboring grid points where the free volume fraction is evaluated.
+
+* **-ngrid \<number of grids\>**
+    * Example: ``-ngrid 60``
+
+    Specifies the number of grid points.
+
+* **-nins \<number of particle insertions\>**
+    * Example: ``-nins 1000``
+
+    Specifies the number of random particle insertions performed at each grid point.
+    A larger value improves the statistical accuracy at the cost of increased computational time.
+
+* **-target_selid \<selection ID of target atoms\>**
+    * Default: ``0``
+    * Example: ``-target_selid 0``
+
+    Specifies the selection ID of the target atoms used to define the free volume.
+    The region that does not overlap with these atoms is regarded as the free volume.
+
+* **-center_selid \<selection ID for centering\>**
+    * Default: ``1``
+    * Example: ``-center_selid 1``
+
+    Specifies the selection ID used to determine the center of the system.
+    The coordinates are shifted based on this group before the analysis.
+
+* **-coord_type \<coordinate axis\>**
+    * Default: ``z``
+    * Example: ``-coord_type z``
+
+    Specifies the coordinate axis along which the free volume profile is calculated.
+    In the current implementation, only ``z`` is supported.
+
+### Format of Output Files
+
+* ``*.profile``
+
+    The free volume fraction profile along the specified coordinate axis is output.
+
+  * Column 1: Coordinate
+  * Column 2: Free volume fraction
+
+### Example
+
+#### Free volume profile in a lipid membrane system
+
+```bash
+#!/usr/bin/env bash
+
+anatra free_volume               \
+  -stype          psf            \
+  -sfile          complex.psf    \
+  -tintype        nc             \
+  -flist_traj     flist          \
+  -fhead          out            \
+  -fprmtop        complex.prmtop \
+  -xsta           0.0            \
+  -dx             1.0            \
+  -ngrid          60             \
+  -nins           1000           \
+  -sel0           all            \
+  -sel1           resname POPC   \
+  -target_selid   0              \
+  -center_selid   1              \
+  -coord_type     z              \
+  -prep_only      false
+```

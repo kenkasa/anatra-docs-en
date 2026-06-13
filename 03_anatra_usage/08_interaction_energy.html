@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interaction Energy (interaction_energy, ene) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Interaction Energy (<code class="docutils literal notranslate"><span class="pre">interaction_energy</span></code>, <code class="docutils literal notranslate"><span class="pre">ene</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/08_interaction_energy.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="interaction-energy-interaction-energy-ene">
+<h1>Interaction Energy (<code class="docutils literal notranslate"><span class="pre">interaction_energy</span></code>, <code class="docutils literal notranslate"><span class="pre">ene</span></code>)<a class="headerlink" href="#interaction-energy-interaction-energy-ene" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">interaction_energy</span></code> (<code class="docutils literal notranslate"><span class="pre">ene</span></code>) mode allows the calculation of interaction energies between selected molecules, groups of molecules, or specific regions. Currently, <strong>ANATRA</strong> supports the following three types of interactions:</p>
+<ul>
+<li><p><strong>Electrostatic Interaction</strong><br />
+Electrostatic interaction energy <span class="math notranslate nohighlight">\(U_{\mathrm{elec}}\)</span> between molecules A and B can be computed using two schemes. The first is the bare interaction,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d205195a-995b-44fa-8ecb-36971f8dfe63">
+<span class="eqno">()<a class="headerlink" href="#equation-d205195a-995b-44fa-8ecb-36971f8dfe63" title="Permalink to this equation"></a></span>\[\begin{align}
+U_{\mathrm{elec}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} \frac{q_i q_j}{r_{ij}},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> denote atomic indices in molecules A and B, respectively. The second scheme uses the Smooth Particle Mesh Ewald (SPME) method, which is the standard approach for accounting for long-range electrostatic interactions in MD simulations. If consistency with MD simulations is required, the SPME method should be employed.</p>
+</li>
+<li><p><strong>Lennard-Jones (LJ) Interaction</strong><br />
+The LJ interaction, which empirically describes van der Waals interactions, is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a4fbd85a-df07-4a37-8ed7-adf59660980a">
+<span class="eqno">()<a class="headerlink" href="#equation-a4fbd85a-df07-4a37-8ed7-adf59660980a" title="Permalink to this equation"></a></span>\[\begin{align}
+U_{\mathrm{LJ}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right].
+\end{align}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> and <span class="math notranslate nohighlight">\(\sigma_{ij}\)</span> are the LJ parameters between atom <span class="math notranslate nohighlight">\(i\)</span> in molecule A and atom <span class="math notranslate nohighlight">\(j\)</span> in molecule B.</p>
+</li>
+<li><p><strong>Attractive LJ Interaction</strong><br />
+The attractive component of the LJ interaction is defined as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2c9f363c-4cf0-4cc0-93e7-5493795401de">
+<span class="eqno">()<a class="headerlink" href="#equation-2c9f363c-4cf0-4cc0-93e7-5493795401de" title="Permalink to this equation"></a></span>\[\begin{align}
+U_{\mathrm{attr}} &amp;= \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} u_{\mathrm{attr},ij}, \\
+u_{\mathrm{attr},ij} &amp;= \begin{cases}
+4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right] &amp; r_{ij} \geq 2^{1/6} \sigma, \\
+-\epsilon_{ij} &amp; r_{ij} &lt; 2^{1/6} \sigma.
+\end{cases}
+\end{align}\]</div>
+<p>This formulation removes the repulsive part of the LJ potential, eliminating the multivalued nature of energy with respect to distance (see Fig. 3.3). When constructing a PMF for molecular binding, using the attractive LJ interaction as a reaction coordinate can more clearly distinguish between bound and unbound states than the standard LJ potential.</p>
+</li>
+</ul>
+<p>In addition to the individual components above, the sum of electrostatic and LJ can also be calculated.</p>
+<section id="list-of-options">
+<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fhead</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel0</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel1</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode0</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode1</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-parmformat</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fanaparm</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-pbc</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-calc_vdw</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-calc_elec</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-vdw_type</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-elec_type</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-dt</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-rvdwcut</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-relcut</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-pme_alpha</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-pme_grids</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-pme_rigid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-pme_dual</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-pme_fprm</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-prep_only</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-parmformat &lt;prmtop or anaparm&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">prmtop</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-parmformat</span> <span class="pre">anaparm</span></code></p></li>
+<li><p>Note: When set to <code class="docutils literal notranslate"><span class="pre">anaparm</span></code>, <code class="docutils literal notranslate"><span class="pre">-fanaparm</span></code> must also be specified.</p></li>
+</ul>
+<p>Specifies the parameter file for atomic charges. When using <code class="docutils literal notranslate"><span class="pre">prmtop</span></code>, the file given by <code class="docutils literal notranslate"><span class="pre">-sfile</span></code> will be automatically used.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fanaparm &lt;filename&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fanaparm</span> <span class="pre">complex.anaparm</span></code></p></li>
+</ul>
+<p>Specifies the <code class="docutils literal notranslate"><span class="pre">anaparm</span></code> file containing LJ parameters and atomic charges. Required when <code class="docutils literal notranslate"><span class="pre">-parmformat</span> <span class="pre">anaparm</span></code> is used.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-pbc &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-pbc</span> <span class="pre">true</span></code></p></li>
+</ul>
+<p>Enables periodic boundary condition treatment, including image interactions from adjacent periodic boxes.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-calc_vdw &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-calc_vdw</span> <span class="pre">false</span></code></p></li>
+</ul>
+<p>Specifies whether to compute van der Waals (LJ) interactions.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-calc_elec &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-calc_elec</span> <span class="pre">true</span></code></p></li>
+</ul>
+<p>Specifies whether to compute electrostatic interactions.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-vdw_type &lt;standard or attractive&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">standard</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-vdw_type</span> <span class="pre">attractive</span></code></p></li>
+</ul>
+<p>Specifies which LJ interaction function to use.<br />
+<code class="docutils literal notranslate"><span class="pre">standard</span></code> computes the standard LJ (Eq. \eqref{LJ}), and <code class="docutils literal notranslate"><span class="pre">attractive</span></code> computes the attractive LJ (Eq. \eqref{Uattr}).</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-elec_type &lt;bare or pme&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">bare</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-elec_type</span> <span class="pre">bare</span></code></p></li>
+</ul>
+<p>Specifies the method for electrostatic interaction calculation:<br />
+<code class="docutils literal notranslate"><span class="pre">bare</span></code> for Eq. \eqref{elec}, <code class="docutils literal notranslate"><span class="pre">pme</span></code> for the PME method.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-dt &lt;time interval&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-dt</span> <span class="pre">1.0</span></code></p></li>
+</ul>
+<p>Sets the time resolution (first column) of the time-series output.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-rvdwcut &lt;cutoff distance (Å)&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">12.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-rvdwcut</span> <span class="pre">20.0</span></code></p></li>
+</ul>
+<p>Cutoff distance for van der Waals interactions.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-relcut &lt;cutoff distance (Å)&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">1.0e10</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-relcut</span> <span class="pre">1.0e10</span></code></p></li>
+</ul>
+<p>Cutoff distance for electrostatic interactions.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-pme_alpha &lt;PME screening parameter (ANGSTROM<span class="math notranslate nohighlight">\(^{-1}\)</span>)&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.35</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-pme_alpha</span> <span class="pre">0.35</span></code></p></li>
+</ul>
+<p>Specifies the screening parameter used in PME. Only used when <code class="docutils literal notranslate"><span class="pre">-elec_type</span> <span class="pre">pme</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-pme_grids &lt;grid size in <span class="math notranslate nohighlight">\(x,y,z\)</span>&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">64</span> <span class="pre">64</span> <span class="pre">64</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-pme_grids</span> <span class="pre">64</span> <span class="pre">64</span> <span class="pre">64</span></code></p></li>
+</ul>
+<p>Grid size <span class="math notranslate nohighlight">\(n_x, n_y, n_z\)</span> used in PME. Total number of grid points is <span class="math notranslate nohighlight">\(n_x n_y n_z\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-pme_rigid &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-pme_rigid</span> <span class="pre">false</span></code></p></li>
+</ul>
+<p>If the region specified by <code class="docutils literal notranslate"><span class="pre">-sel0</span></code> is spatially fixed, set to <code class="docutils literal notranslate"><span class="pre">true</span></code> to reduce PME computational cost.</p>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.uij</span></code> file</p>
+<p>This file contains pairwise interaction energies between selected regions. If selections 0 and 1 are divided into <span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_2\)</span> molecules, respectively (via <code class="docutils literal notranslate"><span class="pre">-mode0</span></code> and <code class="docutils literal notranslate"><span class="pre">-mode1</span></code>), the output contains <span class="math notranslate nohighlight">\(n_1 n_2\)</span> interaction terms:</p>
+<ul class="simple">
+<li><p>Column 1: Time</p></li>
+<li><p>Column 2: Interaction between pair (1, 1)</p></li>
+<li><p>Column 3: Interaction between pair (1, 2)<br />
+…</p></li>
+<li><p>Column <span class="math notranslate nohighlight">\(n_2\)</span>: Interaction between pair (1, <span class="math notranslate nohighlight">\(n_2\)</span>)</p></li>
+<li><p>Column <span class="math notranslate nohighlight">\(n_2+1\)</span>: Interaction between pair (2, 1)<br />
+…</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<p>The following are minimal examples for common types of interaction energy analysis.</p>
+<section id="electrostatic-lj-interaction-between-solute-molecules">
+<h3>Electrostatic + LJ Interaction Between Solute Molecules<a class="headerlink" href="#electrostatic-lj-interaction-between-solute-molecules" title="Link to this heading"></a></h3>
+<p>This example computes the total of electrostatic and LJ interactions between a protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">161</span></code>) and ligand molecules (<code class="docutils literal notranslate"><span class="pre">resname</span> <span class="pre">LIG</span></code>), using the SPME method for electrostatics:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">energy</span>                                 \
+  <span class="o">-</span><span class="n">stype</span>       <span class="n">parm7</span>                          \
+  <span class="o">-</span><span class="n">sfile</span>       <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>                 \
+  <span class="o">-</span><span class="n">tintype</span>     <span class="n">dcd</span>                            \
+  <span class="o">-</span><span class="n">tin</span>         <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">fhead</span>       <span class="n">out</span>                            \
+  <span class="o">-</span><span class="n">parmformat</span>  <span class="n">prmtop</span>                         \
+  <span class="o">-</span><span class="n">pbc</span>         <span class="n">true</span>                           \
+  <span class="o">-</span><span class="n">calc_vdw</span>    <span class="n">true</span>                           \
+  <span class="o">-</span><span class="n">calc_elec</span>   <span class="n">true</span>                           \
+  <span class="o">-</span><span class="n">vdw_type</span>    <span class="n">standard</span>                       \
+  <span class="o">-</span><span class="n">elec_type</span>   <span class="n">pme</span>                            \
+  <span class="o">-</span><span class="n">mode0</span>       <span class="n">whole</span>                          \
+  <span class="o">-</span><span class="n">mode1</span>       <span class="n">residue</span>                        \
+  <span class="o">-</span><span class="n">dt</span>          <span class="mf">0.1</span>                            \
+  <span class="o">-</span><span class="n">rvdwcut</span>     <span class="mf">12.0</span>                           \
+  <span class="o">-</span><span class="n">relcut</span>      <span class="mf">12.0</span>                           \
+  <span class="o">-</span><span class="n">pme_alpha</span>   <span class="mf">0.35</span>                           \
+  <span class="o">-</span><span class="n">pme_grids</span>   <span class="mi">64</span> <span class="mi">64</span> <span class="mi">64</span>                       \
+  <span class="o">-</span><span class="n">pme_rigid</span>   <span class="n">false</span>                          \
+  <span class="o">-</span><span class="n">sel0</span>        <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">161</span>                 \
+  <span class="o">-</span><span class="n">sel1</span>        <span class="n">resname</span> <span class="n">LIG</span>                    \
+  <span class="o">-</span><span class="n">prep_only</span>   <span class="n">false</span>
+</pre></div>
+</div>
+</section>
+<section id="lj-interaction-between-solute-molecules">
+<h3>LJ Interaction Between Solute Molecules<a class="headerlink" href="#lj-interaction-between-solute-molecules" title="Link to this heading"></a></h3>
+<p>This example computes only the LJ interactions between a protein and ligand molecules:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">energy</span>                                 \
+  <span class="o">-</span><span class="n">stype</span>       <span class="n">parm7</span>                          \
+  <span class="o">-</span><span class="n">sfile</span>       <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>                 \
+  <span class="o">-</span><span class="n">tintype</span>     <span class="n">dcd</span>                            \
+  <span class="o">-</span><span class="n">tin</span>         <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                        \
+  <span class="o">-</span><span class="n">fhead</span>       <span class="n">out</span>                            \
+  <span class="o">-</span><span class="n">parmformat</span>  <span class="n">prmtop</span>                         \
+  <span class="o">-</span><span class="n">pbc</span>         <span class="n">true</span>                           \
+  <span class="o">-</span><span class="n">calc_vdw</span>    <span class="n">true</span>                           \
+  <span class="o">-</span><span class="n">calc_elec</span>   <span class="n">false</span>                          \
+  <span class="o">-</span><span class="n">vdw_type</span>    <span class="n">standard</span>                       \
+  <span class="o">-</span><span class="n">mode0</span>       <span class="n">whole</span>                          \
+  <span class="o">-</span><span class="n">mode1</span>       <span class="n">residue</span>                        \
+  <span class="o">-</span><span class="n">dt</span>          <span class="mf">0.1</span>                            \
+  <span class="o">-</span><span class="n">rvdwcut</span>     <span class="mf">12.0</span>                           \
+  <span class="o">-</span><span class="n">relcut</span>      <span class="mf">1.0e10</span>                         \
+  <span class="o">-</span><span class="n">sel0</span>        <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">161</span>                 \
+  <span class="o">-</span><span class="n">sel1</span>        <span class="n">resname</span> <span class="n">LIG</span>                    \
+  <span class="o">-</span><span class="n">prep_only</span>   <span class="n">false</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

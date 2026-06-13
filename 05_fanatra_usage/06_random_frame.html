@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random Frame Extraction (random_frame, randf) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_anatra_usage/combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Random Frame Extraction (random_frame, randf)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/05_fanatra_usage/06_random_frame.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="random-frame-extraction-random-frame-randf">
+<h1>Random Frame Extraction (random_frame, randf)<a class="headerlink" href="#random-frame-extraction-random-frame-randf" title="Link to this heading"></a></h1>
+<p>In this analysis mode, snapshots (frames) are randomly extracted from a trajectory.</p>
+<section id="parameter-list">
+<h2>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
+<th class="head text-left"><p><strong>Parameter</strong></p></th>
+<th class="head text-left"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">ftraj</span></code></p></td>
+<td class="text-left"><p>Input trajectory filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;input_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">flist_traj</span></code></p></td>
+<td class="text-left"><p>Filename containing the list of trajectory files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;output_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">fhead</span></code></p></td>
+<td class="text-left"><p>Header of the output filename</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">nsample</span></code></p></td>
+<td class="text-left"><p>Number of randomly extracted frames</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">iseed</span></code></p></td>
+<td class="text-left"><p>Random seed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">output_trajtype</span></code></p></td>
+<td class="text-left"><p>Output trajectory format</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></p></td>
+<td class="text-left"><p>Whether duplicate sampling is allowed</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">out_rst7</span></code></p></td>
+<td class="text-left"><p>Whether to output AMBER rst7 files</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">shuffle</span></code></p></td>
+<td class="text-left"><p>Whether to shuffle the extracted frames</p></td>
+</tr>
+</tbody>
+</table>
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|ftraj|      & Input trajectory filename \\
+                     & \verb|flist_traj| & Filename containing the list of trajectory files \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|nsample|         & Number of randomly extracted frames \\
+                     & \verb|iseed|           & Random seed \\
+                     & \verb|output_trajtype| & Output trajectory format \\
+                     & \verb|duplicate|       & Whether duplicate sampling is allowed \\
+                     & \verb|out_rst7|        & Whether to output AMBER rst7 files \\
+                     & \verb|shuffle|         & Whether to shuffle the extracted frames \\
+\hline
+\end{tabular}
+}
+```
+--->
+</section>
+<section id="option-param">
+<h2><code class="docutils literal notranslate"><span class="pre">&amp;option_param</span></code><a class="headerlink" href="#option-param" title="Link to this heading"></a></h2>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">nsample</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">100</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">nsample</span> <span class="pre">=</span> <span class="pre">100</span></code></p></li>
+</ul>
+<p>Specifies the number of frames to be randomly extracted.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">iseed</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">-1</span></code> (automatically generated)</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">=</span> <span class="pre">3141592</span></code></p></li>
+</ul>
+<p>Specifies the random seed used for frame extraction.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">iseed</span> <span class="pre">&lt;=</span> <span class="pre">0</span></code>, the program automatically generates a seed.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">output_trajtype</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">dcd</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">output_trajtype</span> <span class="pre">=</span> <span class="pre">&quot;dcd&quot;</span></code></p></li>
+</ul>
+<p>Specifies the output trajectory format.</p>
+<p>Currently, the following formats are supported:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dcd</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xtc</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">netcdf</span></code></p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">duplicate</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">duplicate</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the same frame can be extracted multiple times.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">out_rst7</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">out_rst7</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether each extracted frame should also be output in AMBER rst7 format.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">shuffle</span></code></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">.false.</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">shuffle</span> <span class="pre">=</span> <span class="pre">.true.</span></code></p></li>
+</ul>
+<p>Specifies whether the extracted frames should be shuffled before output.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, all extracted frames are written in a random order.</p>
+</li>
+</ul>
+</section>
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<p>The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<p>The following example extracts 100 random frames from the trajectory file <code class="docutils literal notranslate"><span class="pre">input.dcd</span></code>.
+In addition to the trajectory, the structure of each extracted frame is also written in <code class="docutils literal notranslate"><span class="pre">rst7</span></code> (<code class="docutils literal notranslate"><span class="pre">inpcrd</span></code>) format.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; run.inp</span>
+<span class="s">&amp;input_param</span>
+<span class="s"> ftraj    = &quot;input.dcd&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;output_param</span>
+<span class="s"> fhead         = &quot;out&quot;</span>
+<span class="s">/</span>
+<span class="s">&amp;option_param</span>
+<span class="s"> nsample = 100</span>
+<span class="s"> output_trajtype = &quot;dcd&quot;</span>
+<span class="s"> duplicate       = .false.</span>
+<span class="s"> out_rst7        = .true.</span>
+<span class="s">/</span>
+<span class="s">EOF</span>
+
+fanatra<span class="w"> </span>random_frame<span class="w"> </span>run.inp
+</pre></div>
+</div>
+<p>After execution, <code class="docutils literal notranslate"><span class="pre">out.dcd</span></code> and <code class="docutils literal notranslate"><span class="pre">outXXXXX.inpcrd</span></code> (<code class="docutils literal notranslate"><span class="pre">XXXXX</span> <span class="pre">=</span> <span class="pre">00001,</span> <span class="pre">...,</span> <span class="pre">00100</span></code>) are generated.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

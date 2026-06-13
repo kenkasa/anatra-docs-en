@@ -1,0 +1,108 @@
+## Distribution Function Along the Membrane Normal ($z$-axis) (`z_profile`, `zprof`)
+
+The `z_profile` (`zprof`) mode calculates the distribution of molecular species along the membrane normal (i.e., the $z$-axis). The local density field of species $a$ along the $z$-axis is defined as
+
+\begin{align}
+\hat{\rho}_{a}\left(z\right) = \dfrac{1}{A_{xy}} \sum_{i=1}^{N_{\mathrm{a}}} \delta\left(z - z_{i}\right),
+\end{align}
+
+where $A_{xy}$ is the cross-sectional area of the simulation box in the $xy$-plane, and $z_i$ is the $z$-coordinate of the $i$-th molecule. The ensemble-averaged distribution function is defined as
+
+\begin{align}
+\rho_{a}\left(z\right) = \Braket{ \hat{\rho}_{a}(z) }.
+\end{align}
+
+For comparison with experimental data, it is often useful to compute the electron density distribution $\rho^e_a(z)$. The corresponding local density field is defined as
+
+\begin{align}
+\hat{\rho}^{e}_{a}(z) = \sum_{i=1}^{N_a} \sum_{\lambda=1}^{N_s} q_\lambda \delta(z - z_{i,\lambda}),
+\end{align}
+
+where $q_\lambda$ is the number of electrons on the $\lambda$-th atom in molecule $a$, and $z_{i,\lambda}$ is its $z$-coordinate in the $i$-th molecule. The ensemble average yields the electron density distribution: $\rho^e_a(z) = \Braket{ \hat{\rho}^e_a(z) }$.
+
+### List of Options
+
+**Option**         | **Remarks**         | **Option**           | **Remarks**
+:-----------------:|:-------------------:|:---------------------:|:--------------------:
+``-stype``         | Common              | ``-sfile``            | Common
+``-tintype``       | Common              | ``-tin``              | Common
+``-flist_traj``    | Common              | ``-fhead``            | Common
+``-sel0``          | Common              | ``-sel1``             | Common
+``-mode0``         | Common              | ``-mode1``            | Common
+``-target_selid``  | Mode specific       | ``-center_selid``     | Mode specific
+``-denstype``      | Mode specific       | ``-symmetrize``       | Mode specific
+``-prep_only``     | Common              | --                    | --
+
+---
+
+* **-sel0 \<selection\>**  
+* **-sel1 \<selection\>**  
+  * Default: N/A  
+  * Example: ``-sel0 resname ETOH -sel1 segid MEMB``
+
+  Select the molecules for which the distribution function is to be calculated. To define the membrane center as $z = 0$, membrane molecules must also be selected.
+
+---
+
+* **-target_selid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-target_selid 0``
+
+  Specifies the selid (defined via ``-selX``) corresponding to the molecules for which the distribution is to be calculated.
+
+---
+
+* **-center_selid \<selid\>**  
+  * Default: N/A  
+  * Example: ``-center_selid 1``
+
+  Specifies the selid (defined via ``-selX``) corresponding to the membrane molecules whose center-of-mass is used to define $z = 0$.
+
+---
+
+* **-symmetrize \<true or false\>**  
+  * Default: ``false``  
+  * Example: ``-symmetrize false``
+
+  Specifies whether to symmetrize the distribution by averaging the data for $z > 0$ and $z < 0$.
+
+---
+
+* **-denstype \<number or electron\>**  
+  * Default: ``number``  
+  * Example: ``-denstype number``
+
+  Specifies the type of density to compute:  
+  ``number`` for number density, or ``electron`` for electron density.
+
+### Output File Format
+
+* `*.zprof`
+
+  The distribution function of the molecules corresponding to the ``-target_selid`` will be output in the following format:
+
+  * Column 1: $z$-coordinate  
+  * Column 2: Density value
+
+### Examples of Analysis
+
+#### Number Density Profile of Water in a Lipid Membrane System
+
+```
+#!/usr/bin/env bash
+
+anatra z_profile                 \
+  -stype      psf                \
+  -sfile      complex.psf        \
+  -tintype    netcdf             \
+  -flist_traj flist              \
+  -fhead      run                \
+  -sel0       water              \
+  -sel1       segid MEMB and noh \
+  -mode0      residue            \
+  -mode1      whole              \
+  -target_selid 0                \
+  -center_selid 1                \
+  -denstype   number             \
+  -prep_only  false
+```

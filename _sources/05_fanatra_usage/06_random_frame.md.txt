@@ -1,0 +1,134 @@
+## Random Frame Extraction (random_frame, randf)
+
+In this analysis mode, snapshots (frames) are randomly extracted from a trajectory.
+
+### Parameter List
+
+**Namelist**     | **Parameter**      | **Description**
+:----------------|:-------------------|:-------------------------------------------------------------
+`&input_param`   | `ftraj`            | Input trajectory filename
+`&input_param`   | `flist_traj`       | Filename containing the list of trajectory files
+`&output_param`  | `fhead`            | Header of the output filename
+`&option_param`  | `nsample`          | Number of randomly extracted frames
+`&option_param`  | `iseed`            | Random seed
+`&option_param`  | `output_trajtype`  | Output trajectory format
+`&option_param`  | `duplicate`        | Whether duplicate sampling is allowed
+`&option_param`  | `out_rst7`         | Whether to output AMBER rst7 files
+`&option_param`  | `shuffle`          | Whether to shuffle the extracted frames
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|ftraj|      & Input trajectory filename \\
+                     & \verb|flist_traj| & Filename containing the list of trajectory files \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|nsample|         & Number of randomly extracted frames \\
+                     & \verb|iseed|           & Random seed \\
+                     & \verb|output_trajtype| & Output trajectory format \\
+                     & \verb|duplicate|       & Whether duplicate sampling is allowed \\
+                     & \verb|out_rst7|        & Whether to output AMBER rst7 files \\
+                     & \verb|shuffle|         & Whether to shuffle the extracted frames \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``nsample``**
+    * Default: ``100``
+    * Example: ``nsample = 100``
+
+    Specifies the number of frames to be randomly extracted.
+
+----
+
+* **``iseed``**
+    * Default: ``-1`` (automatically generated)
+    * Example: ``iseed = 3141592``
+
+    Specifies the random seed used for frame extraction.
+
+    If ``iseed <= 0``, the program automatically generates a seed.
+
+----
+
+* **``output_trajtype``**
+    * Default: ``dcd``
+    * Example: ``output_trajtype = "dcd"``
+
+    Specifies the output trajectory format.
+
+    Currently, the following formats are supported:
+
+    * ``dcd``
+    * ``xtc``
+    * ``netcdf``
+
+----
+
+* **``duplicate``**
+    * Default: ``.false.``
+    * Example: ``duplicate = .true.``
+
+    Specifies whether the same frame can be extracted multiple times.
+
+----
+
+* **``out_rst7``**
+    * Default: ``.false.``
+    * Example: ``out_rst7 = .true.``
+
+    Specifies whether each extracted frame should also be output in AMBER rst7 format.
+
+----
+
+* **``shuffle``**
+    * Default: ``.false.``
+    * Example: ``shuffle = .true.``
+
+    Specifies whether the extracted frames should be shuffled before output.
+
+    If ``.true.``, all extracted frames are written in a random order.
+
+### Output File Format
+
+The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).
+
+### Example
+
+The following example extracts 100 random frames from the trajectory file ``input.dcd``.
+In addition to the trajectory, the structure of each extracted frame is also written in ``rst7`` (``inpcrd``) format.
+
+```bash
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ ftraj    = "input.dcd"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ nsample = 100
+ output_trajtype = "dcd"
+ duplicate       = .false.
+ out_rst7        = .true.
+/
+EOF
+
+fanatra random_frame run.inp
+```
+
+After execution, ``out.dcd`` and ``outXXXXX.inpcrd`` (``XXXXX = 00001, ..., 00100``) are generated.

@@ -1,0 +1,256 @@
+# Usage of fanatra
+
+## Introduction
+
+**fanatra** stands for **"Fortran ANATRA"** and, as its name suggests, is a collection of analysis programs written in Fortran. This chapter describes how to use **fanatra**. Since **fanatra** performs analyses without invoking VMD, it can also be used on computing systems where the use of VMD on compute nodes is difficult. A list of available analysis modes can be displayed by executing ``fanatra -h``.
+
+```
+$ fanatra -h
+Available analysis in Fortran ANATRA
+histogram               (hist)   : Histogram Analysis
+potential_of_mean_force (pmf)    : Free-energy Profile Analysis
+restricted_radial       (rrpmf)  : Restricted Radial Analysis
+extract_frame           (extf)   : Extract Frames Using CV
+random_frame            (randf)  : Randomly Extract Frames
+state_define            (sdef)   : Define States From Time-series Data
+moving_average          (movave) : Moving Average Analysis
+average_function        (avef)   : Function Average Analysis
+bootstrap_prepper       (boot)   : Bootstrap Sample Generator
+return_prob             (rp)     : Returning Probability Analysis
+rprate                  (rprate) : Rate Constant Analysis based on RP theory
+iepdyn                  (iepdyn) : Integral-equation Formalism of Population Dynamics
+```
+
+Among the above, entries such as ``histogram`` are analysis modes, and their abbreviated names (e.g., ``hist``) can also be used.
+
+While **anatra** performs analyses by specifying parameters directly on the command line, **fanatra** uses a separate parameter file. For example,
+
+```
+$ fanatra hist control_file
+```
+
+The parameter file must be written in the Fortran namelist format.
+
+In addition, the format and contents of the parameter file for each analysis mode can be displayed together with a brief explanation and a sample input by executing ``fanatra <analysis_mode> -h``. Therefore, the basic usage of each analysis mode can be understood from the help message. An example for ``histogram`` is shown below.
+
+```
+$ fanatra histogram -h
+
+==================================================
+
+              Histogram Analysis
+
+==================================================
+&input_param
+ fcv      = "cvdata1" "cvdata2" ! Time-series CV data
+ flist_cv = "list" ! CV-file list (Either fcv or flist_cv should be specified)
+/
+&output_param
+ fhead = "run" ! header of output filename
+/
+&option_param
+  dx       = 0.1d0  ! grid spacing
+  xsta     = 0.0d0  ! minimum value of the coordinate
+  nx       = 100    ! number of grids
+  ncol     = 1      ! number of data column
+/
+
+
+:::
+1st column: time (arbitrary), Nth column (N>1): data
+example)
+
+0.00   0.02120
+0.01   0.03140
+0.02   0.22310
+....   .......
+```
+
+## Common Parameters
+
+Most parameter files in **fanatra** are based on the Fortran namelist format. Parameters are specified in the **input_param**, **output_param**, and **option_param** sections.
+
+The **input_param** and **output_param** sections, which are common to all analysis modes, are described below.
+
+### &input_param
+
+This namelist specifies parameters related to input files.
+
+**Parameter**                         | **Function**                                                      | **Example**
+:-------------------------------------|:-----------------------------------------------------------------:|:------------------------------:
+ftraj                                 | Specify input trajectory file(s) (multiple files allowed)         | ftraj      = "inp1.dcd", "inp2.dcd"
+fcv                                   | Specify input time-series data file(s) (multiple files allowed)   | fcv        = "cv1.txt", "cv2.txt"
+fweight                               | Specify statistical weight file(s) corresponding to the input time-series data (multiple files allowed) | fweight = "weight1.txt", "weight2.txt"
+flist_traj$^{1}$                      | Specify a file containing a list of input trajectory files        | flist_traj = "list.txt"
+flist_cv$^{2}$                        | Specify a file containing a list of input time-series data files  | flist_cv   = "list.txt"
+flist_weight$^{3}$                    | Specify a file containing a list of statistical weight files      | flist_weight = "list.txt"
+
+$^{1}$ If both ``ftraj`` and ``flist_traj`` are specified, the contents of ``flist_traj`` take precedence.  
+$^{2}$ If both ``fcv`` and ``flist_cv`` are specified, the contents of ``flist_cv`` take precedence.  
+$^{3}$ If both ``fweight`` and ``flist_weight`` are specified, the contents of ``flist_weight`` take precedence.
+
+
+ ---
+* **``ftraj``**
+    * Default: N/A
+    * Example: ``ftraj = "inp1.dcd", "inp2.dcd"``
+
+    Specifies the input trajectory file(s). As shown in the example, multiple files can be specified.
+    If the number of files is large, they can instead be specified using ``flist_traj``.
+
+ ---
+* **``fcv``**
+    * Default: N/A
+    * Example: ``fcv = "cv1.txt", "cv2.txt"``
+
+    Specifies the input time-series data file(s). As shown in the example, multiple files can be specified.
+    If the number of files is large, they can instead be specified using ``flist_cv``.
+
+ ---
+* **``fweight``**
+    * Default: N/A
+    * Example: ``fweight = "weight1.txt", "weight2.txt"``
+
+    Specifies the input statistical weight file(s).
+
+    Statistical weight files provide a statistical weight for each step of the corresponding time-series data. Statistical weights obtained from enhanced sampling methods or the Multistate Bennett Acceptance Ratio (MBAR) method can be used. The total weight is automatically normalized to unity within the program.
+
+    As shown in the example, multiple files can be specified.
+    If the number of files is large, they can instead be specified using ``flist_weight``.
+
+ ---
+* **``flist_traj``**
+    * Default: N/A
+    * Example: ``flist_traj = "list.txt"``
+
+    Specifies a file containing a list of input trajectory files. The contents specified by ``flist_traj`` take precedence over those specified by ``ftraj``.
+
+    The list file must contain one input trajectory filename per line, as shown below.
+
+    ```
+    inp1.dcd
+    inp2.dcd
+    inp3.dcd
+    inp4.dcd
+    ```
+
+ ---
+* **``flist_cv``**
+    * Default: N/A
+    * Example: ``flist_cv = "list.txt"``
+
+    Specifies a file containing a list of input time-series data files. The contents specified by ``flist_cv`` take precedence over those specified by ``fcv``.
+
+    The list file must contain one input time-series data filename per line, as shown below.
+
+    ```
+    inp1.txt
+    inp2.txt
+    inp3.txt
+    inp4.txt
+    ```
+
+ ---
+* **``flist_weight``**
+    * Default: N/A
+    * Example: ``flist_weight = "list.txt"``
+
+    Specifies a file containing a list of input statistical weight files. The contents specified by ``flist_weight`` take precedence over those specified by ``fweight``.
+
+    The list file must contain one input statistical weight filename per line, as shown below.
+
+    ```
+    inp1.txt
+    inp2.txt
+    inp3.txt
+    inp4.txt
+    ```
+
+### Format of Time-series Data
+
+The format of the time-series data is as follows.
+
+* 1st column: Time axis
+* 2nd column: First time-series data
+* 3rd column: Second time-series data
+
+The first column is ignored in all analysis modes, and the second column is treated as the first data column.
+
+### Format of Statistical Weight Data
+
+The format of the statistical weight data is as follows.
+
+* 1st column: Time axis
+* 2nd column: Statistical weight
+
+The first column is ignored in all analysis modes, and only the second column is used.
+
+The number of rows in the statistical weight data file must be identical to that of the corresponding time-series data file.
+
+### &output_param
+
+This namelist specifies parameters related to output files.
+
+**Parameter**                         | **Function**                                              | **Example**
+:-------------------------------------|:----------------------------------------------------------:|:------------------------------:
+fhead                                 | Specify the basename of the output file                   | fhead          = "run"
+file_extension$^{1}$                  | Specify the extension of the output file                  | file_extension = "dat"
+
+$^{1}$ This parameter is enabled only for a limited number of analysis modes.
+
+ ---
+* **``fhead``**
+    * Default: ``run``
+    * Example: ``fhead = "run"``
+
+    Specifies the basename of the output file.
+
+    For example, if ``fhead = "run"`` is specified, the analysis mode ``histogram``, which is described next, outputs a file named ``run.dat`` by default.
+
+ ---
+* **``file_extension``**
+    * Default: ``dat``
+    * Example: ``file_extension = "dat"``
+
+    Specifies the extension of the output file. However, this parameter is enabled only for a limited number of analysis modes, such as ``histogram``.
+
+<!---
+ **Section**                           | **Option**                          | **Function**                                           | **Example**
+:--------------------------------------|:-----------------------------------:|:------------------------------------------------------:|---------------:
+``&input_param``                       | ``flist``                           | Specify an input file containing the names of the data files to be analyzed | ``flist = "input_list.txt"``
+``&output_param``                      | ``fhead``                           | Specify the header of the output filename              | ``fhead = "out"``
+ 
+An example of the input file specified by ``flist`` is shown below.
+
+In **fanatra**, a file containing the names of the target data files is given as input. This design allows multiple data files to be analyzed at once.
+
+```
+$ cat input_list.txt
+
+../../../06_2d/02_2dene/03_atr/combined_0001.dat
+../../../06_2d/02_2dene/03_atr/combined_0002.dat
+../../../06_2d/02_2dene/03_atr/combined_0003.dat
+../../../06_2d/02_2dene/03_atr/combined_0004.dat
+../../../06_2d/02_2dene/03_atr/combined_0005.dat
+../../../06_2d/02_2dene/03_atr/combined_0006.dat
+../../../06_2d/02_2dene/03_atr/combined_0007.dat
+../../../06_2d/02_2dene/03_atr/combined_0008.dat
+../../../06_2d/02_2dene/03_atr/combined_0009.dat
+../../../06_2d/02_2dene/03_atr/combined_0010.dat
+../../../06_2d/02_2dene/03_atr/combined_0011.dat
+../../../06_2d/02_2dene/03_atr/combined_0012.dat
+../../../06_2d/02_2dene/03_atr/combined_0013.dat
+../../../06_2d/02_2dene/03_atr/combined_0014.dat
+../../../06_2d/02_2dene/03_atr/combined_0015.dat
+../../../06_2d/02_2dene/03_atr/combined_0016.dat
+```
+
+## Format of Input Data Files
+
+The format of the input data files specified in ``flist`` is the same as that of the files generated by **anatra**:
+
+* 1st column: Time-series data
+* 2nd column: Data to be analyzed
+
+That is, the input data file must have the above structure.
+--->

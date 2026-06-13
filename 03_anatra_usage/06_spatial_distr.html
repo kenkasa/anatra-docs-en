@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spatial Distribution Function (spatial_distr, sdf) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Spatial Distribution Function (<code class="docutils literal notranslate"><span class="pre">spatial_distr</span></code>, <code class="docutils literal notranslate"><span class="pre">sdf</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/06_spatial_distr.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="spatial-distribution-function-spatial-distr-sdf">
+<h1>Spatial Distribution Function (<code class="docutils literal notranslate"><span class="pre">spatial_distr</span></code>, <code class="docutils literal notranslate"><span class="pre">sdf</span></code>)<a class="headerlink" href="#spatial-distribution-function-spatial-distr-sdf" title="Link to this heading"></a></h1>
+<section id="theoretical-background">
+<h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
+<p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, volume <span class="math notranslate nohighlight">\(V\)</span>, and number density <span class="math notranslate nohighlight">\(\rho_a = N_a / V\)</span>. Assume that one molecule is fixed at the center of the system, including its orientation, acting effectively as an external field. Although such a situation does not naturally occur in standard solution-phase MD simulations, a virtually equivalent condition can be constructed by aligning all trajectories to a reference structure (fitting), as described at the end of this section.</p>
+<p>Similar to the radial distribution function, we define the local number density of particle <span class="math notranslate nohighlight">\(a\)</span> as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ea4f655c-f2fd-424a-aa97-25867122c311">
+<span class="eqno">()<a class="headerlink" href="#equation-ea4f655c-f2fd-424a-aa97-25867122c311" title="Permalink to this equation"></a></span>\[\begin{align}
+\hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}} \delta\left({\bf r} - {\bf r}_i \right).
+\end{align}\]</div>
+<p>Its ensemble average under the external field gives the one-body density</p>
+<div class="amsmath math notranslate nohighlight" id="equation-64a39376-2c46-4b8b-9d1d-6d53d4d21aaf">
+<span class="eqno">()<a class="headerlink" href="#equation-64a39376-2c46-4b8b-9d1d-6d53d4d21aaf" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
+\end{align}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\langle \cdots \rangle_{\mathrm{ext}}\)</span> denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, <span class="math notranslate nohighlight">\(\rho_a({\bf r}) = \rho_a\)</span>. THen, we define the spatial distribution function (SDF) as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0d9283b2-a424-4717-a30b-d2d3cdf2655e">
+<span class="eqno">()<a class="headerlink" href="#equation-0d9283b2-a424-4717-a30b-d2d3cdf2655e" title="Permalink to this equation"></a></span>\[\begin{align}
+g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
+\end{align}\]</div>
+<p>If <span class="math notranslate nohighlight">\(g_a({\bf r}) &gt; 1\)</span>, the local probability of finding particle <span class="math notranslate nohighlight">\(a\)</span> is larger than the bulk value; if <span class="math notranslate nohighlight">\(g_a({\bf r}) &lt; 1\)</span>, it is lower than in bulk.</p>
+<p>To compute the SDF, the system is first fitted such that the molecule treated as the external field overlaps with a reference structure. For unwrapped trajectories, PBC wrapping must be performed in advance (<a class="reference internal" href="combined.html#figure-sdf-fitting"><span class="std std-numref">Fig. 2</span></a>). The <code class="docutils literal notranslate"><span class="pre">spatial_distr</span></code> mode handles all these steps internally. Once transformed, the reference molecule is fixed in position and orientation, making it effectively act as a static field, and the surrounding molecular distribution can be analyzed as an SDF. If the reference molecule lacks a stable structure, fitting becomes unreliable and SDF computation is infeasible. However, for proteins with stable native structures and minimal conformational changes, SDF analysis is applicable.</p>
+<figure class="align-default" id="figure-sdf-fitting">
+<img alt="../_images/fitting_for_sdf.eps" src="../_images/fitting_for_sdf.eps" />
+<figcaption>
+<p><span class="caption-text">By aligning the system such that the molecule of interest overlaps with the reference structure (fitting), it becomes possible to examine the three-dimensional distribution of surrounding molecules relative to a fixed molecular orientation. The <code class="docutils literal notranslate"><span class="pre">spatial_distr</span></code> mode automates this entire procedure.</span><a class="headerlink" href="#figure-sdf-fitting" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="list-of-options">
+<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Remarks</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fhead</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-selX</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-ng3</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-del</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-origin</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fit</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-refpdb</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-refselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fitselid</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-use_spline</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-spline_resolution</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-prep_only</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+</tbody>
+</table>
+<p>Advanced options for conditional SDF analysis exist but will be officially supported in a future update.</p>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-ng3 &lt;number of grid points along <span class="math notranslate nohighlight">\(x,y,z\)</span>&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">50</span> <span class="pre">50</span> <span class="pre">50</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-ng3</span> <span class="pre">50</span> <span class="pre">50</span> <span class="pre">50</span></code></p></li>
+</ul>
+<p>Specifies the number of grid points along each spatial axis, <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span>, <span class="math notranslate nohighlight">\(n_z\)</span>. The total number of grid points is <span class="math notranslate nohighlight">\(n_x n_y n_z\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-del &lt;grid spacing along <span class="math notranslate nohighlight">\(x,y,z\)</span> axes (ANGSTROM)&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.5</span> <span class="pre">0.5</span> <span class="pre">0.5</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-del</span> <span class="pre">0.5</span> <span class="pre">0.5</span> <span class="pre">0.5</span></code></p></li>
+</ul>
+<p>Specifies the grid spacing <span class="math notranslate nohighlight">\(\Delta x, \Delta y, \Delta z\)</span> in ANGSTROM. The volume element per grid point is <span class="math notranslate nohighlight">\(\Delta V = \Delta x \Delta y \Delta z\)</span>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-origin &lt;coordinates of grid origin (<span class="math notranslate nohighlight">\(x,y,z\)</span>) in ANGSTROM&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-origin</span> <span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
+</ul>
+<p>Sets the origin of the grid. For origin <span class="math notranslate nohighlight">\((x_0, y_0, z_0)\)</span>, the coordinates of grid point <span class="math notranslate nohighlight">\((i_x, i_y, i_z)\)</span> are:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1d2741f6-9ae8-4253-880d-14093967b885">
+<span class="eqno">()<a class="headerlink" href="#equation-1d2741f6-9ae8-4253-880d-14093967b885" title="Permalink to this equation"></a></span>\[\begin{align}
+x_i = x_0 + \Delta x \, (i_x - 1) \\
+y_i = y_0 + \Delta y \, (i_y - 1) \\
+z_i = z_0 + \Delta z \, (i_z - 1)
+\end{align}\]</div>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fit &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fit</span> <span class="pre">true</span></code></p></li>
+</ul>
+<p>If set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the system is PBC-wrapped and then fitted so that the solute molecule (treated as the external field) aligns with the reference structure. The following must be specified:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-refpdb</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-refselid</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-fitselid</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-sel0</span></code> (target for SDF calculation)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-sel1</span></code> (reference fitting region)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-sel2</span></code> (trajectory fitting region)</p></li>
+</ul>
+<p><strong>Important</strong>: If the input trajectory has already been fitted, you must explicitly set <code class="docutils literal notranslate"><span class="pre">-fit</span> <span class="pre">false</span></code>. Applying PBC wrapping after fitting leads to invalid configurations.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-refselid &lt;selid&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-refselid</span> <span class="pre">1</span></code></p></li>
+</ul>
+<p>Specifies the selid of the reference region used for fitting in the reference structure. For example, if using <code class="docutils literal notranslate"><span class="pre">-sel1</span></code> as the reference selection, set <code class="docutils literal notranslate"><span class="pre">-refselid</span> <span class="pre">1</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-fitselid &lt;selid for fitting region in trajectory&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: N/A</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-fitselid</span> <span class="pre">2</span></code></p></li>
+</ul>
+<p>Specifies the selid for the region used for fitting within the trajectory. For example, if using <code class="docutils literal notranslate"><span class="pre">-sel2</span></code> for trajectory fitting, set <code class="docutils literal notranslate"><span class="pre">-fitselid</span> <span class="pre">2</span></code>.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-use_spline &lt;true or false&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-use_spline</span> <span class="pre">true</span></code></p></li>
+<li><p>Note: The resolution is controlled by <code class="docutils literal notranslate"><span class="pre">-spline_resolution</span></code>.</p></li>
+</ul>
+<p>Applies spline interpolation (Akima spline) to the SDF grid.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-spline_resolution &lt;integer resolution factor&gt;</strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">4</span></code></p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">-spline_resolution</span> <span class="pre">4</span></code></p></li>
+<li><p>Note: Active only if <code class="docutils literal notranslate"><span class="pre">-use_spline</span> <span class="pre">true</span></code> is specified.</p></li>
+</ul>
+<p>Specifies the subdivision factor <span class="math notranslate nohighlight">\(n_r\)</span> for each grid axis. Given the original grid spacing <span class="math notranslate nohighlight">\(\Delta \alpha\)</span> (<span class="math notranslate nohighlight">\(\alpha = x, y, z\)</span>), the refined grid spacing becomes:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f9b92df8-cb04-4efb-90f4-cfe17ad3f81a">
+<span class="eqno">()<a class="headerlink" href="#equation-f9b92df8-cb04-4efb-90f4-cfe17ad3f81a" title="Permalink to this equation"></a></span>\[\begin{align}
+\Delta \alpha' = \frac{\Delta \alpha}{n_r}
+\end{align}\]</div>
+<p>The total number of grid points changes from <span class="math notranslate nohighlight">\(N\)</span> to:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c575ae67-de39-4b04-85f1-8229c84595e9">
+<span class="eqno">()<a class="headerlink" href="#equation-c575ae67-de39-4b04-85f1-8229c84595e9" title="Permalink to this equation"></a></span>\[\begin{align}
+N' = n_r^3 \cdot N
+\end{align}\]</div>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">*_out_g_original.dx</span></code><br />
+SDF output in DX format. No spline interpolation applied.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*_out_g_spline.dx</span></code><br />
+SDF output in DX format with spline interpolation. Generated only if <code class="docutils literal notranslate"><span class="pre">-use_spline</span> <span class="pre">true</span></code> is specified.</p></li>
+</ul>
+<!---
+* ``*.sdbin``  
+  This binary file stores the raw SDF data.  
+  It is used as input for the ``sd_gather`` mode in ``fanatra``, which averages SDFs from multiple trajectories.  
+  Spline settings are embedded within the file, allowing ``sd_gather`` to apply interpolation during averaging.
+--->
+</section>
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="sdf-of-water-molecules-around-a-protein">
+<h3>SDF of Water Molecules Around a Protein<a class="headerlink" href="#sdf-of-water-molecules-around-a-protein" title="Link to this heading"></a></h3>
+<p>The following script computes the SDF of water molecule centers of mass around a protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">192</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">spatial_distr</span>                         \
+  <span class="o">-</span><span class="n">stype</span>             <span class="n">parm7</span>                   \
+  <span class="o">-</span><span class="n">sfile</span>             <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>          \
+  <span class="o">-</span><span class="n">tintype</span>           <span class="n">dcd</span>                     \
+  <span class="o">-</span><span class="n">tin</span>               <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                 \
+  <span class="o">-</span><span class="n">fhead</span>             <span class="n">out</span>                     \
+  <span class="o">-</span><span class="n">sel0</span>              <span class="n">water</span>                   \
+  <span class="o">-</span><span class="n">sel1</span>              <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">noh</span>  \
+  <span class="o">-</span><span class="n">sel2</span>              <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">noh</span>  \
+  <span class="o">-</span><span class="n">mode</span>              <span class="n">residue</span>                 \
+  <span class="o">-</span><span class="n">ng3</span>               <span class="mi">50</span> <span class="mi">50</span> <span class="mi">50</span>                \
+  <span class="o">-</span><span class="k">del</span>               <span class="mf">0.4</span> <span class="mf">0.4</span> <span class="mf">0.4</span>             \
+  <span class="o">-</span><span class="n">origin</span>            <span class="o">-</span><span class="mf">10.0</span> <span class="o">-</span><span class="mf">10.0</span> <span class="o">-</span><span class="mf">10.0</span>       \
+  <span class="o">-</span><span class="n">fit</span>               <span class="n">true</span>                    \
+  <span class="o">-</span><span class="n">refpdb</span>            <span class="n">ref</span><span class="o">.</span><span class="n">pdb</span>                 \
+  <span class="o">-</span><span class="n">refselid</span>          <span class="mi">1</span>                       \
+  <span class="o">-</span><span class="n">fitselid</span>          <span class="mi">2</span>                       \
+  <span class="o">-</span><span class="n">use_spline</span>        <span class="n">true</span>                    \
+  <span class="o">-</span><span class="n">spline_resolution</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

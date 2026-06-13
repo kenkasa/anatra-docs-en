@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radial Distribution Function (radial_distr, rdf) &mdash; ANATRA 1.1.1 User Guide  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e72c8e07" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ANATRA 1.1.1 User Guide
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_about_anatra/main.html">What is ANATRA?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Installation/main.html">Installation of ANATRA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="combined.html">Usage of anatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_fanatra_usage/combined.html">Usage of fanatra</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_iepdyn/combined.html">Integral-Equation Formalism of Population DYNamics (IEPDYN)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ANATRA 1.1.1 User Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Radial Distribution Function (radial_distr, rdf)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/03_anatra_usage/05_radial_distr.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="radial-distribution-function-radial-distr-rdf">
+<h1>Radial Distribution Function (radial_distr, rdf)<a class="headerlink" href="#radial-distribution-function-radial-distr-rdf" title="Link to this heading"></a></h1>
+<section id="theoretical-background">
+<h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
+<p>This section explains the definition of the radial distribution function (RDF).</p>
+<section id="rdf-for-identical-particles">
+<h3>RDF for Identical Particles<a class="headerlink" href="#rdf-for-identical-particles" title="Link to this heading"></a></h3>
+<p>Consider a system containing <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, with a total volume <span class="math notranslate nohighlight">\(V\)</span> and a bulk number density <span class="math notranslate nohighlight">\(\rho_a = N_a/V\)</span>. The local density field <span class="math notranslate nohighlight">\(\hat{\rho}_{a}\left({\bf r}\right)\)</span> is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ee35c5d6-8bba-4735-961f-261c89bfcc45">
+<span class="eqno">()<a class="headerlink" href="#equation-ee35c5d6-8bba-4735-961f-261c89bfcc45" title="Permalink to this equation"></a></span>\[\begin{align}
+\hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right).
+\end{align}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\({\bf r}_{i}\)</span> is the position of the <span class="math notranslate nohighlight">\(i\)</span>-th particle of type <span class="math notranslate nohighlight">\(a\)</span>. If no external field is present, the ensemble average of the local density field is reduced to the bulk density.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-36b6b82c-9e78-4e93-a8dd-fb5327ad6d59">
+<span class="eqno">()<a class="headerlink" href="#equation-36b6b82c-9e78-4e93-a8dd-fb5327ad6d59" title="Permalink to this equation"></a></span>\[\begin{align}
+\Braket{\hat{\rho}_{a}\left({\bf r}\right)} = \rho_{a}.
+\end{align}\]</div>
+<p>The, let us define the two-body density correlation function as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8a74f6a8-4f50-450a-b162-c6bf38187a36">
+<span class="eqno">()<a class="headerlink" href="#equation-8a74f6a8-4f50-450a-b162-c6bf38187a36" title="Permalink to this equation"></a></span>\[\begin{align}
+\chi\left({\bf r},{\bf r}^{\prime}\right) = \Braket{\hat{\rho}_{a}\left({\bf r}\right)\hat{\rho}_{a}\left({\bf r}^{\prime}\right)} = \Braket{\sum_{i=1}^{N_{a}}\sum_{j=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}\]</div>
+<p>Separating the terms for <span class="math notranslate nohighlight">\(i = j\)</span> and <span class="math notranslate nohighlight">\(i \ne j\)</span> gives</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3d644748-c63d-4cfd-ac7e-adaf9131af6a">
+<span class="eqno">()<a class="headerlink" href="#equation-3d644748-c63d-4cfd-ac7e-adaf9131af6a" title="Permalink to this equation"></a></span>\[\begin{align}
+\chi\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} + \sum_{i=1}^{N_{a}}{\sum_{j\ne i}^{N_{a}}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}\]</div>
+<p>The first term represents the probability that the same particle exists at both <span class="math notranslate nohighlight">\({\bf r}\)</span> and <span class="math notranslate nohighlight">\({\bf r}'\)</span>, which is clearly zero unless <span class="math notranslate nohighlight">\({\bf r} = {\bf r}'\)</span>, i.e.,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ca294e04-b169-4381-9be2-84236078e863">
+<span class="eqno">()<a class="headerlink" href="#equation-ca294e04-b169-4381-9be2-84236078e863" title="Permalink to this equation"></a></span>\[\begin{align}
+\sum_{i=1}^{N_{a}}\braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} = \rho_{a}\delta\left({\bf r}-{\bf r}^{\prime}\right).
+\end{align}\]</div>
+<p>The second term, called the two-body density, represents the probability that one particle is at <span class="math notranslate nohighlight">\({\bf r}\)</span> and another is at <span class="math notranslate nohighlight">\({\bf r}'\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3aac03ce-0f9e-4fd5-8633-9ccc15cdb487">
+<span class="eqno">()<a class="headerlink" href="#equation-3aac03ce-0f9e-4fd5-8633-9ccc15cdb487" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\sum_{j\ne i}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}\]</div>
+<p>If <span class="math notranslate nohighlight">\({\bf r}\)</span> and <span class="math notranslate nohighlight">\({\bf r}'\)</span> are far apart, their correlation is negligible. Thus</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0a0e94f6-049f-44dd-9b44-2ac504e3319f">
+<span class="eqno">()<a class="headerlink" href="#equation-0a0e94f6-049f-44dd-9b44-2ac504e3319f" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) \approx \rho_{a}^{2}\left(1-\dfrac{1}{N_{a}}\right).\qquad (\left|{\bf r} - {\bf r}^{\prime}\right|\to \infty)
+\end{align}\]</div>
+<p>The pair distribution function is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7d90dd68-db7d-4c57-acba-771d3a09977a">
+<span class="eqno">()<a class="headerlink" href="#equation-7d90dd68-db7d-4c57-acba-771d3a09977a" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}(1 - 1/N_{a})}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
+\end{align}\]</div>
+<p>For large systems, <span class="math notranslate nohighlight">\(1/N_a \approx 0\)</span>. Therefore,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-82a5419b-ddbe-467b-a75e-9b491f1ff667">
+<span class="eqno">()<a class="headerlink" href="#equation-82a5419b-ddbe-467b-a75e-9b491f1ff667" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
+\end{align}\]</div>
+<p>In uniform systems, the function depends only on the relative position, indicating</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e5a4582e-d539-45a9-a200-2cef9294a130">
+<span class="eqno">()<a class="headerlink" href="#equation-e5a4582e-d539-45a9-a200-2cef9294a130" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}^{\prime}-{\bf r}\right).
+\end{align}\]</div>
+<p>Let <span class="math notranslate nohighlight">\({\bf r}\)</span> be <span class="math notranslate nohighlight">\({\bf r}' - {\bf r}\)</span> and <span class="math notranslate nohighlight">\(g_{aa}\left({\bf r}\right)\)</span> be the spatial distribution function (SDF) defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a13e0f63-1e96-4c8a-bece-65f5125ae941">
+<span class="eqno">()<a class="headerlink" href="#equation-a13e0f63-1e96-4c8a-bece-65f5125ae941" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{aa}\left({\bf r}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}\right).
+\end{align}\]</div>
+<p>Averaging over orientation leads to the radial distribution function (RDF) defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-905f667e-d8d1-4000-bb6e-eff0ca43fc91">
+<span class="eqno">()<a class="headerlink" href="#equation-905f667e-d8d1-4000-bb6e-eff0ca43fc91" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{aa}\left(r\right) = \dfrac{1}{4\pi r^{2}}\int d{\bf r}\,\delta\left(\left|{\bf r}\right|-r\right)g_{aa}\left({\bf r}\right).
+\end{align}\]</div>
+<p>For isotropic systems, the following relationship holds.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-776b4ff1-3e6d-43f4-87c0-d82dfb6d9105">
+<span class="eqno">()<a class="headerlink" href="#equation-776b4ff1-3e6d-43f4-87c0-d82dfb6d9105" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
+\end{align}\]</div>
+<p>RDF gives the relative probability of finding a particle at distance <span class="math notranslate nohighlight">\(r\)</span> compared to bulk. <span class="math notranslate nohighlight">\(g_{aa}(r) &gt; 1\)</span> indicates higher probability, <span class="math notranslate nohighlight">\(g_{aa}(r) &lt; 1\)</span> indicates lower probability than bulk.</p>
+</section>
+<section id="rdf-for-heterogeneous-particles">
+<h3>RDF for Heterogeneous Particles<a class="headerlink" href="#rdf-for-heterogeneous-particles" title="Link to this heading"></a></h3>
+<p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(N_b\)</span> of type <span class="math notranslate nohighlight">\(b\)</span>, with respective bulk densities <span class="math notranslate nohighlight">\(\rho_a = N_a/V\)</span> and <span class="math notranslate nohighlight">\(\rho_b = N_b/V\)</span>. The two-body density is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-275fe2ba-f9af-4b73-b6ab-03a5c4acafe1">
+<span class="eqno">()<a class="headerlink" href="#equation-275fe2ba-f9af-4b73-b6ab-03a5c4acafe1" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho_{ab}^{(2)}({\bf r},{\bf r}') = \sum_{i=1}^{N_a}\sum_{j=1}^{N_b}\Braket{\delta({\bf r} - {\bf r}_i^a)\delta({\bf r}' - {\bf r}_j^b)}.
+\end{align}\]</div>
+<p>For uncorrelated particles,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5e43b326-0fce-4afe-96d7-fca7411ce78a">
+<span class="eqno">()<a class="headerlink" href="#equation-5e43b326-0fce-4afe-96d7-fca7411ce78a" title="Permalink to this equation"></a></span>\[\begin{align}
+\rho_{ab}^{(2)}({\bf r},{\bf r}') \approx \rho_a \rho_b.
+\end{align}\]</div>
+<p>The spatial distribution function is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b2e8b722-b700-48e7-ad88-03f8d3696522">
+<span class="eqno">()<a class="headerlink" href="#equation-b2e8b722-b700-48e7-ad88-03f8d3696522" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{ab}({\bf r}) = \dfrac{1}{\rho_a \rho_b} \rho_{ab}^{(2)}({\bf 0}, {\bf r}),
+\end{align}\]</div>
+<p>and the RDF is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bcbdf0d1-c850-4b71-a95e-07b6f4063aeb">
+<span class="eqno">()<a class="headerlink" href="#equation-bcbdf0d1-c850-4b71-a95e-07b6f4063aeb" title="Permalink to this equation"></a></span>\[\begin{align}
+g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\bf r}).
+\end{align}\]</div>
+</section>
+</section>
+<section id="option-list">
+<h2>Option List<a class="headerlink" href="#option-list" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Description</strong></p></th>
+<th class="head text-center"><p><strong>Option</strong></p></th>
+<th class="head text-center"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-stype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sfile</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tintype</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-tin</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-flist_traj</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-fhead</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel0</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-sel1</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode0</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-mode1</span></code></p></td>
+<td class="text-center"><p>Common</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-dr</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-identical</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-normalize</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+<td class="text-center"><p><code class="docutils literal notranslate"><span class="pre">-separate_self</span></code></p></td>
+<td class="text-center"><p>Mode specific</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-dr <bin width in ANGSTROM></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">0.1</span></code></p></li>
+</ul>
+<p>Specifies the bin width for RDF calculation.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-identical <true or false></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+</ul>
+<p>Set to <code class="docutils literal notranslate"><span class="pre">true</span></code> when <code class="docutils literal notranslate"><span class="pre">-sel0</span></code> and <code class="docutils literal notranslate"><span class="pre">-sel1</span></code> are the same. As discussed in the theory section, RDF calculations differ depending on whether the particles are identical or not, so this must be specified by the user.</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-normalize <true or false></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">true</span></code></p></li>
+</ul>
+<p>Specifies whether to output the RDF <span class="math notranslate nohighlight">\(g_{12}(r)\)</span> directly (<code class="docutils literal notranslate"><span class="pre">true</span></code>), or multiply by the average number density <span class="math notranslate nohighlight">\(\rho_2\)</span> of <code class="docutils literal notranslate"><span class="pre">sel1</span></code> to output <span class="math notranslate nohighlight">\(\rho_{12}(r) = \rho_2 g_{12}(r)\)</span> (<code class="docutils literal notranslate"><span class="pre">false</span></code>).</p>
+</li>
+</ul>
+<hr class="docutils" />
+<ul>
+<li><p><strong>-separate_self <true or false></strong></p>
+<ul class="simple">
+<li><p>Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></p></li>
+</ul>
+<p>Determines whether to separate intra- and intermolecular contributions in RDF. This is useful, for example, when calculating RDF between different atoms in the same type of molecule (e.g., OW-HW1 in water). Setting <code class="docutils literal notranslate"><span class="pre">true</span></code> separates contributions from within the same molecule.</p>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Link to this heading"></a></h2>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">*.rdf</span></code> file</p>
+<p>This file contains the RDF output. The content varies depending on the <code class="docutils literal notranslate"><span class="pre">-separate_self</span></code> option:</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">-separate_self</span> <span class="pre">false</span></code>:</p>
+<ul>
+<li><p>Column 1: Distance</p></li>
+<li><p>Column 2: RDF</p></li>
+</ul>
+</li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">-separate_self</span> <span class="pre">true</span></code>:</p>
+<ul>
+<li><p>Column 1: Distance</p></li>
+<li><p>Column 2: Intermolecular RDF</p></li>
+<li><p>Column 3: Intramolecular RDF (self-correlation function)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!---
+* ``*.rdbin`` file
+
+  This file stores RDF data in binary format.  
+  The ``fanatra`` analysis mode ``rd_gather`` can be used to average RDFs from multiple trajectories, using this ``*.rdbin`` file as input.
+--->
+</section>
+<section id="examples-of-analysis">
+<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="rdf-between-oxygen-atoms-of-water-molecules">
+<h3>RDF between Oxygen Atoms of Water Molecules<a class="headerlink" href="#rdf-between-oxygen-atoms-of-water-molecules" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">rdf</span>                                        \
+  <span class="o">-</span><span class="n">stype</span>         <span class="n">parm7</span>                            \
+  <span class="o">-</span><span class="n">sfile</span>         <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>                   \
+  <span class="o">-</span><span class="n">tintype</span>       <span class="n">dcd</span>                              \
+  <span class="o">-</span><span class="n">tin</span>           <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                          \
+  <span class="o">-</span><span class="n">fhead</span>         <span class="n">out</span>                              \
+  <span class="o">-</span><span class="n">sel0</span>          <span class="n">resname</span> <span class="n">WAT</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">O</span>           \
+  <span class="o">-</span><span class="n">sel1</span>          <span class="n">resname</span> <span class="n">WAT</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">O</span>           \
+  <span class="o">-</span><span class="n">mode0</span>         <span class="n">residue</span>                          \
+  <span class="o">-</span><span class="n">mode1</span>         <span class="n">residue</span>                          \
+  <span class="o">-</span><span class="n">dr</span>            <span class="mf">0.1</span>                              \
+  <span class="o">-</span><span class="n">identical</span>     <span class="n">true</span>                             \
+  <span class="o">-</span><span class="n">normalize</span>     <span class="n">true</span>                             \
+  <span class="o">-</span><span class="n">separate_self</span> <span class="n">false</span>
+</pre></div>
+</div>
+</section>
+<section id="rdf-between-oxygen-and-hydrogen-atoms-in-water-molecules">
+<h3>RDF between Oxygen and Hydrogen Atoms in Water Molecules<a class="headerlink" href="#rdf-between-oxygen-and-hydrogen-atoms-in-water-molecules" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="n">anatra</span> <span class="n">rdf</span>                                        \
+  <span class="o">-</span><span class="n">stype</span>         <span class="n">parm7</span>                            \
+  <span class="o">-</span><span class="n">sfile</span>         <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>                   \
+  <span class="o">-</span><span class="n">tintype</span>       <span class="n">dcd</span>                              \
+  <span class="o">-</span><span class="n">tin</span>           <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                          \
+  <span class="o">-</span><span class="n">fhead</span>         <span class="n">out</span>                              \
+  <span class="o">-</span><span class="n">sel0</span>          <span class="n">resname</span> <span class="n">WAT</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">O</span>           \
+  <span class="o">-</span><span class="n">sel1</span>          <span class="n">resname</span> <span class="n">WAT</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">H1</span>          \
+  <span class="o">-</span><span class="n">mode0</span>         <span class="n">residue</span>                          \
+  <span class="o">-</span><span class="n">mode1</span>         <span class="n">residue</span>                          \
+  <span class="o">-</span><span class="n">dr</span>            <span class="mf">0.1</span>                              \
+  <span class="o">-</span><span class="n">identical</span>     <span class="n">false</span>                            \
+  <span class="o">-</span><span class="n">normalize</span>     <span class="n">true</span>                             \
+  <span class="o">-</span><span class="n">separate_self</span> <span class="n">true</span> 
+</pre></div>
+</div>
+</section>
+<section id="rdf-between-protein-c-alpha-atoms-and-water-oxygen-atoms">
+<h3>RDF between Protein C<span class="math notranslate nohighlight">\(\alpha\)</span> Atoms and Water Oxygen Atoms<a class="headerlink" href="#rdf-between-protein-c-alpha-atoms-and-water-oxygen-atoms" title="Link to this heading"></a></h3>
+<p>This example calculates the RDF between the C<span class="math notranslate nohighlight">\(\alpha\)</span> atoms (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">192</span></code>) of a protein and oxygen atoms of water molecules, and outputs the average of the individual RDFs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">rdf</span>                                        \
+  <span class="o">-</span><span class="n">stype</span>         <span class="n">parm7</span>                            \
+  <span class="o">-</span><span class="n">sfile</span>         <span class="nb">complex</span><span class="o">.</span><span class="n">prmtop</span>                   \
+  <span class="o">-</span><span class="n">tintype</span>       <span class="n">dcd</span>                              \
+  <span class="o">-</span><span class="n">tin</span>           <span class="n">INP</span><span class="o">.</span><span class="n">dcd</span>                          \
+  <span class="o">-</span><span class="n">fhead</span>         <span class="n">out</span>                              \
+  <span class="o">-</span><span class="n">sel0</span>          <span class="n">resid</span> <span class="mi">1</span> <span class="n">to</span> <span class="mi">192</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">CA</span>       \
+  <span class="o">-</span><span class="n">sel1</span>          <span class="n">resname</span> <span class="n">WAT</span> <span class="ow">and</span> <span class="n">name</span> <span class="n">O</span>           \
+  <span class="o">-</span><span class="n">mode0</span>         <span class="n">atom</span>                             \
+  <span class="o">-</span><span class="n">mode1</span>         <span class="n">residue</span>                          \
+  <span class="o">-</span><span class="n">dr</span>            <span class="mf">0.1</span>                              \
+  <span class="o">-</span><span class="n">identical</span>     <span class="n">false</span>                            \
+  <span class="o">-</span><span class="n">normalize</span>     <span class="n">true</span>                             \
+  <span class="o">-</span><span class="n">separate_self</span> <span class="n">false</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Classmethod.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

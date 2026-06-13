@@ -1,0 +1,244 @@
+## Radial Distribution Function (radial_distr, rdf)
+
+### Theoretical Background
+
+This section explains the definition of the radial distribution function (RDF).
+
+#### RDF for Identical Particles
+
+Consider a system containing $N_a$ particles of type $a$, with a total volume $V$ and a bulk number density $\rho_a = N_a/V$. The local density field $\hat{\rho}_{a}\left({\bf r}\right)$ is defined as
+
+\begin{align}
+\hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right).
+\end{align}
+
+Here, ${\bf r}_{i}$ is the position of the $i$-th particle of type $a$. If no external field is present, the ensemble average of the local density field is reduced to the bulk density.
+
+\begin{align}
+\Braket{\hat{\rho}_{a}\left({\bf r}\right)} = \rho_{a}.
+\end{align}
+
+The, let us define the two-body density correlation function as
+
+\begin{align}
+\chi\left({\bf r},{\bf r}^{\prime}\right) = \Braket{\hat{\rho}_{a}\left({\bf r}\right)\hat{\rho}_{a}\left({\bf r}^{\prime}\right)} = \Braket{\sum_{i=1}^{N_{a}}\sum_{j=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}
+
+Separating the terms for $i = j$ and $i \ne j$ gives
+
+\begin{align}
+\chi\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} + \sum_{i=1}^{N_{a}}{\sum_{j\ne i}^{N_{a}}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}
+
+The first term represents the probability that the same particle exists at both ${\bf r}$ and ${\bf r}'$, which is clearly zero unless ${\bf r} = {\bf r}'$, i.e., 
+
+\begin{align}
+\sum_{i=1}^{N_{a}}\braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} = \rho_{a}\delta\left({\bf r}-{\bf r}^{\prime}\right).
+\end{align}
+
+The second term, called the two-body density, represents the probability that one particle is at ${\bf r}$ and another is at ${\bf r}'$:
+
+\begin{align}
+\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\sum_{j\ne i}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
+\end{align}
+
+If ${\bf r}$ and ${\bf r}'$ are far apart, their correlation is negligible. Thus
+
+\begin{align}
+\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) \approx \rho_{a}^{2}\left(1-\dfrac{1}{N_{a}}\right).\qquad (\left|{\bf r} - {\bf r}^{\prime}\right|\to \infty)
+\end{align}
+
+The pair distribution function is defined as 
+
+\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}(1 - 1/N_{a})}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
+\end{align}
+
+For large systems, $1/N_a \approx 0$. Therefore, 
+
+\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
+\end{align}
+
+In uniform systems, the function depends only on the relative position, indicating
+
+\begin{align}
+g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}^{\prime}-{\bf r}\right).
+\end{align}
+
+Let ${\bf r}$ be ${\bf r}' - {\bf r}$ and $g_{aa}\left({\bf r}\right)$ be the spatial distribution function (SDF) defined as
+
+\begin{align}
+g_{aa}\left({\bf r}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}\right).
+\end{align}
+
+Averaging over orientation leads to the radial distribution function (RDF) defined as 
+
+\begin{align}
+g_{aa}\left(r\right) = \dfrac{1}{4\pi r^{2}}\int d{\bf r}\,\delta\left(\left|{\bf r}\right|-r\right)g_{aa}\left({\bf r}\right).
+\end{align}
+
+For isotropic systems, the following relationship holds.
+
+\begin{align}
+g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
+\end{align}
+
+RDF gives the relative probability of finding a particle at distance $r$ compared to bulk. $g_{aa}(r) > 1$ indicates higher probability, $g_{aa}(r) < 1$ indicates lower probability than bulk.
+
+#### RDF for Heterogeneous Particles
+
+Consider a system with $N_a$ particles of type $a$ and $N_b$ of type $b$, with respective bulk densities $\rho_a = N_a/V$ and $\rho_b = N_b/V$. The two-body density is
+
+\begin{align}
+\rho_{ab}^{(2)}({\bf r},{\bf r}') = \sum_{i=1}^{N_a}\sum_{j=1}^{N_b}\Braket{\delta({\bf r} - {\bf r}_i^a)\delta({\bf r}' - {\bf r}_j^b)}.
+\end{align}
+
+For uncorrelated particles,
+
+\begin{align}
+\rho_{ab}^{(2)}({\bf r},{\bf r}') \approx \rho_a \rho_b.
+\end{align}
+
+The spatial distribution function is
+
+\begin{align}
+g_{ab}({\bf r}) = \dfrac{1}{\rho_a \rho_b} \rho_{ab}^{(2)}({\bf 0}, {\bf r}),
+\end{align}
+
+and the RDF is 
+
+\begin{align}
+g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\bf r}).
+\end{align}
+
+### Option List
+
+**Option**           | **Description**            | **Option**              | **Description**
+:-------------------:|:--------------------------:|:------------------------:|:--------------------------:
+``-stype``           | Common                     | ``-sfile``              | Common
+``-tintype``         | Common                     | ``-tin``                | Common
+``-flist_traj``      | Common                     | ``-fhead``              | Common
+``-sel0``            | Common                     | ``-sel1``               | Common
+``-mode0``           | Common                     | ``-mode1``              | Common
+``-dr``              | Mode specific              | ``-identical``          | Mode specific
+``-normalize``       | Mode specific              | ``-separate_self``      | Mode specific
+
+---
+
+* **-dr <bin width in ANGSTROM>**  
+  * Default: ``0.1``
+
+  Specifies the bin width for RDF calculation.
+
+---
+
+* **-identical <true or false>**  
+  * Default: ``false``
+
+  Set to ``true`` when ``-sel0`` and ``-sel1`` are the same. As discussed in the theory section, RDF calculations differ depending on whether the particles are identical or not, so this must be specified by the user.
+
+---
+
+* **-normalize <true or false>**  
+  * Default: ``true``
+
+  Specifies whether to output the RDF $g_{12}(r)$ directly (``true``), or multiply by the average number density $\rho_2$ of ``sel1`` to output $\rho_{12}(r) = \rho_2 g_{12}(r)$ (``false``).
+
+---
+
+* **-separate_self <true or false>**  
+  * Default: ``false``
+
+  Determines whether to separate intra- and intermolecular contributions in RDF. This is useful, for example, when calculating RDF between different atoms in the same type of molecule (e.g., OW-HW1 in water). Setting ``true`` separates contributions from within the same molecule.
+
+---
+
+### Output File Format
+
+* ``*.rdf`` file
+
+  This file contains the RDF output. The content varies depending on the ``-separate_self`` option:
+
+  * If ``-separate_self false``:
+
+    * Column 1: Distance
+    * Column 2: RDF
+
+  * If ``-separate_self true``:
+
+    * Column 1: Distance
+    * Column 2: Intermolecular RDF
+    * Column 3: Intramolecular RDF (self-correlation function)
+
+<!---
+* ``*.rdbin`` file
+
+  This file stores RDF data in binary format.  
+  The ``fanatra`` analysis mode ``rd_gather`` can be used to average RDFs from multiple trajectories, using this ``*.rdbin`` file as input.
+--->
+
+### Examples of Analysis
+
+#### RDF between Oxygen Atoms of Water Molecules
+
+```
+#!/bin/bash
+
+anatra rdf                                        \
+  -stype         parm7                            \
+  -sfile         complex.prmtop                   \
+  -tintype       dcd                              \
+  -tin           INP.dcd                          \
+  -fhead         out                              \
+  -sel0          resname WAT and name O           \
+  -sel1          resname WAT and name O           \
+  -mode0         residue                          \
+  -mode1         residue                          \
+  -dr            0.1                              \
+  -identical     true                             \
+  -normalize     true                             \
+  -separate_self false
+```
+
+#### RDF between Oxygen and Hydrogen Atoms in Water Molecules
+
+```
+#!/bin/bash
+
+anatra rdf                                        \
+  -stype         parm7                            \
+  -sfile         complex.prmtop                   \
+  -tintype       dcd                              \
+  -tin           INP.dcd                          \
+  -fhead         out                              \
+  -sel0          resname WAT and name O           \
+  -sel1          resname WAT and name H1          \
+  -mode0         residue                          \
+  -mode1         residue                          \
+  -dr            0.1                              \
+  -identical     false                            \
+  -normalize     true                             \
+  -separate_self true 
+```
+
+#### RDF between Protein C$\alpha$ Atoms and Water Oxygen Atoms
+
+This example calculates the RDF between the C$\alpha$ atoms (``resid 1 to 192``) of a protein and oxygen atoms of water molecules, and outputs the average of the individual RDFs.
+
+```
+anatra rdf                                        \
+  -stype         parm7                            \
+  -sfile         complex.prmtop                   \
+  -tintype       dcd                              \
+  -tin           INP.dcd                          \
+  -fhead         out                              \
+  -sel0          resid 1 to 192 and name CA       \
+  -sel1          resname WAT and name O           \
+  -mode0         atom                             \
+  -mode1         residue                          \
+  -dr            0.1                              \
+  -identical     false                            \
+  -normalize     true                             \
+  -separate_self false
+```

@@ -1,0 +1,71 @@
+## Lipid Order Parameter (`lipid_order`, `scd`)
+
+The `lipid_order` (`scd`) mode allows for the calculation of the orientational order parameter $S_{\mathrm{CD}}$ associated with acyl chains of phospholipids. Using the membrane normal direction as the $z$-axis, the angle $\theta$ is defined between this axis and the vector connecting a specific carbon atom and its bonded hydrogen. The $S_{\mathrm{CD}}$ parameter is then defined as:
+
+\begin{align}
+S_{\mathrm{CD}} = \frac{1}{2} \left\langle 3 \cos^2 \theta - 1 \right\rangle.
+\end{align}
+
+The range of $S_{\mathrm{CD}}$ is $0 \leq S_{\mathrm{CD}} \leq 1$, where higher values indicate greater order, and a value of 0 corresponds to complete disorder. Since $S_{\mathrm{CD}}$ is defined for each carbon atom, this analysis provides position-resolved information on lipid order along the acyl chains.
+
+```{figure} ./figures/scd.eps
+:name: figure_scd.eps
+
+The angle $\theta$ is defined between the membrane normal (the $z$-axis) and the vector connecting a specific carbon and its bonded hydrogen atom. This angle $\theta$ reflects the local orientation of the lipid.
+```
+
+### List of Options
+
+**Option**         | **Remarks**        | **Option**       | **Remarks**
+:-----------------:|:------------------:|:----------------:|:------------------:
+``-stype``         | Common             | ``-sfile``       | Common
+``-tintype``       | Common             | ``-tin``         | Common
+``-flist_traj``    | Common             | ``-fhead``       | Common
+``-selX``          | Common             | ``-mode``        | Common
+``-cindex``        | Mode specific      | ``-prep_only``   | Common
+
+---
+
+* **-selX \<selection of atoms\>**
+  * Default: N/A  
+  * Example: ``-sel0 name C32 H2X H2Y``
+
+  Specify the carbon atom and its bonded hydrogen atoms for which $S_{\mathrm{CD}}$ will be calculated. Use ``-selX`` for each carbon atom of interest.
+
+---
+
+* **-cindex \<carbon indices\>**
+  * Default: N/A  
+  * Example: ``-cindex 1 2 3 4 5``
+
+  Specifies the carbon index number (counted from the base of the acyl chain) corresponding to each ``-selX`` entry. The number of values given must match the number of ``-selX`` options. The carbon indices provided here will be used for the first column (x-axis) of the output `.scd` file.
+
+### Output File Format
+
+* `*.scd`  
+  The $S_{\mathrm{CD}}$ values are printed in the order of carbon atoms specified by ``-sel0``, ``-sel1``, ...
+
+  * Column 1: Carbon index (as specified by ``-cindex``)  
+  * Column 2: $S_{\mathrm{CD}}$
+
+### Examples of Analysis
+
+#### Calculation of $S_{\mathrm{CD}}$ in a DPPC Lipid Bilayer
+
+```
+anatra lipid_order                            \
+  -stype      psf                             \
+  -sfile      complex.psf                     \
+  -tintype    netcdf                          \
+  -flist_traj flist                           \
+  -fhead      run_nc                          \
+  -dt         0.1                             \
+  -cindex     1 2 3 4 5                       \
+  -sel0       name C23 H3R H3S and segid MEMB \
+  -sel1       name C24 H4R H4S and segid MEMB \
+  -sel2       name C25 H5X H5Y and segid MEMB \
+  -sel3       name C26 H6X H6Y and segid MEMB \
+  -sel4       name C27 H7X H7Y and segid MEMB \
+  -prep_only  false
+```
+

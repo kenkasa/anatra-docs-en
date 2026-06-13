@@ -1,0 +1,1733 @@
+# Usage of fanatra
+
+## Introduction
+
+**fanatra** stands for **"Fortran ANATRA"** and, as its name suggests, is a collection of analysis programs written in Fortran. This chapter describes how to use **fanatra**. Since **fanatra** performs analyses without invoking VMD, it can also be used on computing systems where the use of VMD on compute nodes is difficult. A list of available analysis modes can be displayed by executing ``fanatra -h``.
+
+```
+$ fanatra -h
+Available analysis in Fortran ANATRA
+histogram               (hist)   : Histogram Analysis
+potential_of_mean_force (pmf)    : Free-energy Profile Analysis
+restricted_radial       (rrpmf)  : Restricted Radial Analysis
+extract_frame           (extf)   : Extract Frames Using CV
+random_frame            (randf)  : Randomly Extract Frames
+state_define            (sdef)   : Define States From Time-series Data
+moving_average          (movave) : Moving Average Analysis
+average_function        (avef)   : Function Average Analysis
+bootstrap_prepper       (boot)   : Bootstrap Sample Generator
+return_prob             (rp)     : Returning Probability Analysis
+rprate                  (rprate) : Rate Constant Analysis based on RP theory
+iepdyn                  (iepdyn) : Integral-equation Formalism of Population Dynamics
+```
+
+Among the above, entries such as ``histogram`` are analysis modes, and their abbreviated names (e.g., ``hist``) can also be used.
+
+While **anatra** performs analyses by specifying parameters directly on the command line, **fanatra** uses a separate parameter file. For example,
+
+```
+$ fanatra hist control_file
+```
+
+The parameter file must be written in the Fortran namelist format.
+
+In addition, the format and contents of the parameter file for each analysis mode can be displayed together with a brief explanation and a sample input by executing ``fanatra <analysis_mode> -h``. Therefore, the basic usage of each analysis mode can be understood from the help message. An example for ``histogram`` is shown below.
+
+```
+$ fanatra histogram -h
+
+==================================================
+
+              Histogram Analysis
+
+==================================================
+&input_param
+ fcv      = "cvdata1" "cvdata2" ! Time-series CV data
+ flist_cv = "list" ! CV-file list (Either fcv or flist_cv should be specified)
+/
+&output_param
+ fhead = "run" ! header of output filename
+/
+&option_param
+  dx       = 0.1d0  ! grid spacing
+  xsta     = 0.0d0  ! minimum value of the coordinate
+  nx       = 100    ! number of grids
+  ncol     = 1      ! number of data column
+/
+
+
+:::
+1st column: time (arbitrary), Nth column (N>1): data
+example)
+
+0.00   0.02120
+0.01   0.03140
+0.02   0.22310
+....   .......
+```
+
+## Common Parameters
+
+Most parameter files in **fanatra** are based on the Fortran namelist format. Parameters are specified in the **input_param**, **output_param**, and **option_param** sections.
+
+The **input_param** and **output_param** sections, which are common to all analysis modes, are described below.
+
+### &input_param
+
+This namelist specifies parameters related to input files.
+
+**Parameter**                         | **Function**                                                      | **Example**
+:-------------------------------------|:-----------------------------------------------------------------:|:------------------------------:
+ftraj                                 | Specify input trajectory file(s) (multiple files allowed)         | ftraj      = "inp1.dcd", "inp2.dcd"
+fcv                                   | Specify input time-series data file(s) (multiple files allowed)   | fcv        = "cv1.txt", "cv2.txt"
+fweight                               | Specify statistical weight file(s) corresponding to the input time-series data (multiple files allowed) | fweight = "weight1.txt", "weight2.txt"
+flist_traj$^{1}$                      | Specify a file containing a list of input trajectory files        | flist_traj = "list.txt"
+flist_cv$^{2}$                        | Specify a file containing a list of input time-series data files  | flist_cv   = "list.txt"
+flist_weight$^{3}$                    | Specify a file containing a list of statistical weight files      | flist_weight = "list.txt"
+
+$^{1}$ If both ``ftraj`` and ``flist_traj`` are specified, the contents of ``flist_traj`` take precedence.  
+$^{2}$ If both ``fcv`` and ``flist_cv`` are specified, the contents of ``flist_cv`` take precedence.  
+$^{3}$ If both ``fweight`` and ``flist_weight`` are specified, the contents of ``flist_weight`` take precedence.
+
+
+ ---
+* **``ftraj``**
+    * Default: N/A
+    * Example: ``ftraj = "inp1.dcd", "inp2.dcd"``
+
+    Specifies the input trajectory file(s). As shown in the example, multiple files can be specified.
+    If the number of files is large, they can instead be specified using ``flist_traj``.
+
+ ---
+* **``fcv``**
+    * Default: N/A
+    * Example: ``fcv = "cv1.txt", "cv2.txt"``
+
+    Specifies the input time-series data file(s). As shown in the example, multiple files can be specified.
+    If the number of files is large, they can instead be specified using ``flist_cv``.
+
+ ---
+* **``fweight``**
+    * Default: N/A
+    * Example: ``fweight = "weight1.txt", "weight2.txt"``
+
+    Specifies the input statistical weight file(s).
+
+    Statistical weight files provide a statistical weight for each step of the corresponding time-series data. Statistical weights obtained from enhanced sampling methods or the Multistate Bennett Acceptance Ratio (MBAR) method can be used. The total weight is automatically normalized to unity within the program.
+
+    As shown in the example, multiple files can be specified.
+    If the number of files is large, they can instead be specified using ``flist_weight``.
+
+ ---
+* **``flist_traj``**
+    * Default: N/A
+    * Example: ``flist_traj = "list.txt"``
+
+    Specifies a file containing a list of input trajectory files. The contents specified by ``flist_traj`` take precedence over those specified by ``ftraj``.
+
+    The list file must contain one input trajectory filename per line, as shown below.
+
+    ```
+    inp1.dcd
+    inp2.dcd
+    inp3.dcd
+    inp4.dcd
+    ```
+
+ ---
+* **``flist_cv``**
+    * Default: N/A
+    * Example: ``flist_cv = "list.txt"``
+
+    Specifies a file containing a list of input time-series data files. The contents specified by ``flist_cv`` take precedence over those specified by ``fcv``.
+
+    The list file must contain one input time-series data filename per line, as shown below.
+
+    ```
+    inp1.txt
+    inp2.txt
+    inp3.txt
+    inp4.txt
+    ```
+
+ ---
+* **``flist_weight``**
+    * Default: N/A
+    * Example: ``flist_weight = "list.txt"``
+
+    Specifies a file containing a list of input statistical weight files. The contents specified by ``flist_weight`` take precedence over those specified by ``fweight``.
+
+    The list file must contain one input statistical weight filename per line, as shown below.
+
+    ```
+    inp1.txt
+    inp2.txt
+    inp3.txt
+    inp4.txt
+    ```
+
+### Format of Time-series Data
+
+The format of the time-series data is as follows.
+
+* 1st column: Time axis
+* 2nd column: First time-series data
+* 3rd column: Second time-series data
+
+The first column is ignored in all analysis modes, and the second column is treated as the first data column.
+
+### Format of Statistical Weight Data
+
+The format of the statistical weight data is as follows.
+
+* 1st column: Time axis
+* 2nd column: Statistical weight
+
+The first column is ignored in all analysis modes, and only the second column is used.
+
+The number of rows in the statistical weight data file must be identical to that of the corresponding time-series data file.
+
+### &output_param
+
+This namelist specifies parameters related to output files.
+
+**Parameter**                         | **Function**                                              | **Example**
+:-------------------------------------|:----------------------------------------------------------:|:------------------------------:
+fhead                                 | Specify the basename of the output file                   | fhead          = "run"
+file_extension$^{1}$                  | Specify the extension of the output file                  | file_extension = "dat"
+
+$^{1}$ This parameter is enabled only for a limited number of analysis modes.
+
+ ---
+* **``fhead``**
+    * Default: ``run``
+    * Example: ``fhead = "run"``
+
+    Specifies the basename of the output file.
+
+    For example, if ``fhead = "run"`` is specified, the analysis mode ``histogram``, which is described next, outputs a file named ``run.dat`` by default.
+
+ ---
+* **``file_extension``**
+    * Default: ``dat``
+    * Example: ``file_extension = "dat"``
+
+    Specifies the extension of the output file. However, this parameter is enabled only for a limited number of analysis modes, such as ``histogram``.
+
+<!---
+ **Section**                           | **Option**                          | **Function**                                           | **Example**
+:--------------------------------------|:-----------------------------------:|:------------------------------------------------------:|---------------:
+``&input_param``                       | ``flist``                           | Specify an input file containing the names of the data files to be analyzed | ``flist = "input_list.txt"``
+``&output_param``                      | ``fhead``                           | Specify the header of the output filename              | ``fhead = "out"``
+ 
+An example of the input file specified by ``flist`` is shown below.
+
+In **fanatra**, a file containing the names of the target data files is given as input. This design allows multiple data files to be analyzed at once.
+
+```
+$ cat input_list.txt
+
+../../../06_2d/02_2dene/03_atr/combined_0001.dat
+../../../06_2d/02_2dene/03_atr/combined_0002.dat
+../../../06_2d/02_2dene/03_atr/combined_0003.dat
+../../../06_2d/02_2dene/03_atr/combined_0004.dat
+../../../06_2d/02_2dene/03_atr/combined_0005.dat
+../../../06_2d/02_2dene/03_atr/combined_0006.dat
+../../../06_2d/02_2dene/03_atr/combined_0007.dat
+../../../06_2d/02_2dene/03_atr/combined_0008.dat
+../../../06_2d/02_2dene/03_atr/combined_0009.dat
+../../../06_2d/02_2dene/03_atr/combined_0010.dat
+../../../06_2d/02_2dene/03_atr/combined_0011.dat
+../../../06_2d/02_2dene/03_atr/combined_0012.dat
+../../../06_2d/02_2dene/03_atr/combined_0013.dat
+../../../06_2d/02_2dene/03_atr/combined_0014.dat
+../../../06_2d/02_2dene/03_atr/combined_0015.dat
+../../../06_2d/02_2dene/03_atr/combined_0016.dat
+```
+
+## Format of Input Data Files
+
+The format of the input data files specified in ``flist`` is the same as that of the files generated by **anatra**:
+
+* 1st column: Time-series data
+* 2nd column: Data to be analyzed
+
+That is, the input data file must have the above structure.
+--->
+## Histogram (histogram, hist)
+
+In this analysis mode, the distribution function $P\left(x\right)$ is calculated from a given time-series data set $\xi\left(t\right)$.
+
+\begin{align}
+P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
+\end{align}
+
+where $N$ is the number of data points. The above expression satisfies the normalization condition
+
+\begin{align}
+\int_{-\infty}^{\infty} dx P\left(x\right) = 1
+\end{align}
+
+### List of Parameters
+
+**Namelist**     | **Parameter**    | **Remarks**
+:----------------|:-----------------|:--------------------------------------------------------
+`&input_param`   | `flist_cv`       | --
+`&input_param`   | `fcv`            | --
+`&output_param`  | `fhead`          | --
+`&output_param`  | `file_extension` | --
+`&option_param`  | `dx`             | Grid spacing of the distribution function
+`&option_param`  | `xsta`           | Starting position of the grid
+`&option_param`  | `nx`             | Number of grid points
+`&option_param`  | `ncol`           | Number of data columns per file
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Remarks}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|  & -- \\
+                     & \verb|fcv|        & -- \\
+\hline
+\verb|&output_param| & \verb|fhead|      & -- \\
+                     & \verb|file_extension| & -- \\
+\hline
+\verb|&option_param| & \verb|dx|         & Grid spacing of the distribution function \\
+                     & \verb|xsta|       & Starting position of the grid \\
+                     & \verb|nx|         & Number of grid points \\
+                     & \verb|ncol|       & Number of data columns per file \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### &option_param
+
+* **``dx``**
+    * Default: 0.1
+    * Example: ``dx = 0.1``
+
+    Specifies the grid spacing $\Delta x$ used to calculate the distribution function.
+
+----
+* **``xsta``**
+    * Default: 0.0
+    * Example: ``xsta = 0.0``
+
+    Specifies the starting position of the grid, $x_{0}$. If the position of the $i$-th grid point is denoted by $x_{i}$,
+
+    \begin{align}
+    x_{i} = x_{0} + \left(i - 1 \right) \Delta x
+    \end{align}
+
+    holds.
+
+----
+* **``ncol``**
+    * Default: 1
+    * Example: ``ncol = 10``
+
+    Specifies the number of data columns contained in each time-series data file.
+
+### Format of Output File
+
+* ``*.dat`` (the extension can be changed by ``file_extension``)
+    * 1st column: $x$ coordinate
+    * 2nd column: Distribution function $P\left(x\right)$
+
+### Example
+
+The following example calculates the distribution function $P\left(x\right)$ in the range $5 \leq x \leq 10$ from a time-series data file ``inp.ts`` containing three data columns.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+fcv = "inp.ts"
+/
+&output_param
+fhead = "run"
+/
+&option_param
+dx   = 0.1d0
+xsta = 5.0d0
+nx   = 50
+ncol = 3
+/
+EOF
+
+fanatra hist run.inp
+```
+## Potential of Mean Force (potential_of_mean_force, pmf)
+
+In this analysis mode, the free-energy profile $W\left(\boldsymbol{\zeta}\right)$ along the reaction coordinate $\boldsymbol{\zeta}$ is calculated from the time-series data of the reaction coordinate, $\boldsymbol{\xi}\left(t\right)$. The function $W\left(\boldsymbol{\zeta}\right)$ is also referred to as the **potential of mean force (PMF)**.
+
+### Theoretical Background
+
+Let ${\bf X}$ denote the configuration of the system and $U\left({\bf X}\right)$ its potential energy. The configurational integral $Z$ is given by
+
+\begin{align}
+Z =\int d{\bf X}\,\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+where $\beta$ is the inverse temperature.
+
+Similarly, the partition function corresponding to the state in which the system is trapped within the infinitesimal region $\boldsymbol{\zeta} - \boldsymbol{\zeta}+\Delta \boldsymbol{\zeta}$ in the reaction coordinate space ($\boldsymbol{\zeta}\left({\bf X}\right)$) is
+
+\begin{align}
+Z\left(\boldsymbol{\zeta}\right) =\Delta\boldsymbol{\zeta}\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+Defining the probability density corresponding to $\boldsymbol{\zeta}$ as
+
+\begin{align}
+\rho\left(\boldsymbol{\zeta}\right) = \Braket{\delta\left(\boldsymbol{\zeta} - \boldsymbol{\xi}\left({\bf X}\right)\right)} = \dfrac{1}{Z}\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+we obtain
+
+\begin{align}
+\dfrac{Z\left(\boldsymbol{\zeta}\right)}{Z} =\rho\left(\boldsymbol{\zeta}\right)\Delta\boldsymbol{\zeta}
+\end{align}
+
+Therefore, the free-energy difference $\Delta F\left(\boldsymbol{\zeta}\right)$ between the unrestricted state and the state confined to the region $\boldsymbol{\zeta}-\boldsymbol{\zeta} + \Delta \boldsymbol{\zeta}$ is expressed as
+
+\begin{align}
+\Delta F\left(\boldsymbol{\zeta}\right) =-\dfrac{1}{\beta}\log\dfrac{Z\left(\boldsymbol{\zeta}\right)}{Z}
+ = -\dfrac{1}{\beta}\log \left(\rho\left(\boldsymbol{\zeta}\right)\Delta \boldsymbol{\zeta}\right)
+\end{align}
+
+The free energy relative to a reference point $\boldsymbol{\zeta}_{0}$ is
+
+\begin{align}
+W\left(\boldsymbol{\zeta}\right) =\Delta F\left(\boldsymbol{\zeta}\right)-\Delta F\left(\boldsymbol{\zeta}_{0}\right)\notag\\
+ =-\dfrac{1}{\beta}\log\dfrac{\rho\left(\boldsymbol{\zeta}\right)}{\rho\left(\boldsymbol{\zeta}_{0}\right)}
+ \label{pmf:pmf}
+\end{align}
+
+This quantity $W$ is called the **potential of mean force**. The choice of $\boldsymbol{\zeta}_{0}$ is arbitrary, but in most cases it is chosen such that the minimum value of $W\left(\boldsymbol{\zeta}\right)$ becomes zero.
+
+By calculating $W\left(\boldsymbol{\zeta}\right)$, it becomes possible to discuss the change in thermodynamic stability as a function of $\boldsymbol{\zeta}$.
+
+Equation \eqref{pmf:pmf} can also be rewritten by separating the $\boldsymbol{\zeta}$-dependent part and a constant $C$:
+
+\begin{align}
+W\left(\boldsymbol{\zeta}\right) =-\dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)+C
+\label{pmf:pmf2}
+\end{align}
+
+where
+
+\begin{align}
+C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}_{0}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
+\end{align}
+
+### List of Parameters
+
+**Namelist**         | **Parameter**          | **Remarks**
+:--------------------|:-----------------------|:-------------------------------------------------------------------
+`&input_param`       | `flist_cv`             | Filename containing a list of CV files
+`&input_param`       | `flist_weight`         | Filename containing a list of weight files (optional)
+`&input_param`       | `fcv`                  | CV filename
+`&input_param`       | `fweight`              | Weight filename (optional)
+`&output_param`      | `fhead`                | Header of the output filename
+`&option_param`      | `ndim`                 | Number of CV dimensions
+`&option_param`      | `xyzcol`               | Column indices of the CV data
+`&option_param`      | `ng3`                  | Number of grid points for each CV direction
+`&option_param`      | `del`                  | Grid spacing for each CV direction
+`&option_param`      | `origin`               | Grid origin for each CV direction
+`&option_param`      | `temperature`          | Temperature [K]
+`&option_param`      | `use_radial`           | Whether radial CVs are included
+`&option_param`      | `radcol`               | Column indices corresponding to radial CVs
+`&option_param`      | `box_system`           | Simulation box size (used only when `ndim=3`)
+`&option_param`      | `use_spline`           | Enable spline interpolation
+`&option_param`      | `spline_resolution`    | Resolution of spline interpolation
+`&option_param`      | `gen_script_mpl2d`     | Generate a Python script for 2D PMF visualization
+`&option_param`      | `skip_calc`            | Skip PMF calculation
+`&matplotlib_param`  | `fpdf`                 | Output PDF filename
+`&matplotlib_param`  | `labels`               | Axis labels and colorbar label
+`&matplotlib_param`  | `ranges`               | Plotting range
+`&matplotlib_param`  | `tics`                 | Axis tick intervals
+`&matplotlib_param`  | `scales`               | Unit conversion factors for each axis
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Remarks}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|     & Filename containing a list of CV files \\
+                     & \verb|flist_weight| & Filename containing a list of weight files (optional) \\
+                     & \verb|fcv|          & CV filename \\
+                     & \verb|fweight|      & Weight filename (optional) \\
+\hline
+\verb|&output_param| & \verb|fhead|        & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|ndim|               & Number of CV dimensions \\
+                     & \verb|xyzcol|             & Column indices of the CV data \\
+                     & \verb|ng3|                & Number of grid points for each CV direction \\
+                     & \verb|del|                & Grid spacing for each CV direction \\
+                     & \verb|origin|             & Grid origin for each CV direction \\
+                     & \verb|temperature|        & Temperature [K] \\
+                     & \verb|use_radial|         & Whether radial CVs are included \\
+                     & \verb|radcol|             & Column indices corresponding to radial CVs \\
+                     & \verb|box_system|         & Simulation box size (used only when \verb|ndim=3|) \\
+                     & \verb|use_spline|         & Enable spline interpolation \\
+                     & \verb|spline_resolution|  & Resolution of spline interpolation \\
+                     & \verb|gen_script_mpl2d|   & Generate a Python script for 2D PMF visualization \\
+                     & \verb|skip_calc|          & Skip PMF calculation \\
+\hline
+\verb|&matplotlib_param| & \verb|fpdf|    & Output PDF filename \\
+                         & \verb|labels|  & Axis labels and colorbar label \\
+                         & \verb|ranges|  & Plotting range \\
+                         & \verb|tics|    & Axis tick intervals \\
+                         & \verb|scales|  & Unit conversion factors for each axis \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### &option_param
+
+* **``ndim``**
+    * Default: None
+    * Example: ``ndim = 2``
+
+    Specifies the number of dimensions of the Collective Variable (CV).
+
+    For example, ``ndim = 2`` calculates a two-dimensional PMF, while ``ndim = 3`` calculates a three-dimensional PMF.
+
+----
+* **``xyzcol``**
+    * Default: ``1``
+    * Example: ``xyzcol = 1 2``
+
+    Specifies the column indices corresponding to each CV in the CV data file.
+
+    The first column is ignored because it is treated as the time or step index.
+
+    For example, if the data are stored as
+
+    ```
+    time  cv1  cv2  cv3
+    ```
+
+    then
+
+    ```
+    xyzcol = 1 2
+    ```
+
+    calculates a two-dimensional PMF using ``cv1`` and ``cv2``.
+
+----
+* **``ng3``**
+    * Default: ``1 1 1``
+    * Example: ``ng3 = 10 20``
+
+    Specifies the number of grid points for each CV direction.
+
+    When ``ndim = N``, the grid numbers for each dimension should be specified sequentially in ``ng3``.
+
+----
+* **``del``**
+    * Default: ``1.0 1.0 1.0``
+    * Example: ``del = 0.1d0 0.2d0``
+
+    Specifies the grid spacing for each CV direction.
+
+    For the $i$-th CV, if the grid spacing is denoted by $\Delta_i$, the distance between adjacent grid points is $\Delta_i$.
+
+----
+* **``origin``**
+    * Default: ``0.0 0.0 0.0``
+    * Example: ``origin = 0.0d0 1.0d0``
+
+    Specifies the grid origin for each CV direction.
+
+    For the $k$-th CV, let the origin be $x_k^{(0)}$ and the grid spacing be $\Delta_k$. Then the position of the $i$-th grid point is given by
+
+    \begin{align}
+    x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
+    \end{align}
+
+----
+* **``temperature``**
+    * Default: ``300.0d0``
+    * Example: ``temperature = 298.0d0``
+
+    Specifies the temperature $T$ [K] used for the PMF calculation.
+
+----
+* **``use_radial``**
+    * Default: ``.false.``
+    * Example: ``use_radial = .true.``
+
+    Specifies whether the CV contains a radial component.
+
+    If ``.true.``, the distribution function for the CV component $x_k$ specified by ``radcol`` is calculated using the bin volume
+
+    \begin{align}
+    4\pi x_{k}^{2} \Delta_{k}^{2}
+    \end{align}
+
+----
+* **``radcol``**
+    * Default: N/A
+    * Example: ``radcol = 1``
+
+    Specifies which CV corresponds to the radial component.
+
+    This parameter is effective only when ``use_radial = .true.``.
+
+----
+* **``box_system``**
+    * Default: ``0.0 0.0 0.0``
+    * Example: ``box_system = 50.0d0 50.0d0 50.0d0``
+
+    Specifies the simulation box size.
+
+    This parameter is used only when ``ndim = 3``.
+    The box lengths in each direction should be specified in order.
+
+----
+* **``use_spline``**
+    * Default: ``.false.``
+    * Example: ``use_spline = .true.``
+
+    Specifies whether spline interpolation is performed after the PMF calculation.
+
+    If ``.true.``, spline interpolation is applied; otherwise, the original grid is used.
+
+----
+* **``spline_resolution``**
+    * Default: ``4``
+    * Example: ``spline_resolution = 8``
+
+    Specifies the resolution used for spline interpolation.
+
+    Larger values generate a finer interpolation grid.
+
+----
+* **``gen_script_mpl2d``**
+    * Default: ``.false.``
+    * Example: ``gen_script_mpl2d = .true.``
+
+    Specifies whether a Python script for visualizing a two-dimensional PMF is generated.
+
+    Currently, this option is supported only when ``ndim = 2``.
+
+----
+* **``skip_calc``**
+    * Default: ``.false.``
+    * Example: ``skip_calc = .true.``
+
+    Specifies whether the PMF calculation is skipped.
+
+    If ``.true.``, the PMF calculation is omitted and only auxiliary files are generated.
+    If ``.false.``, the PMF calculation is performed normally.
+
+    This option is convenient when recreating the Matplotlib (Python) script after modifying its settings.
+
+### &matplotlib_param
+
+Options for generating a Python (Matplotlib) script for visualizing a two-dimensional PMF.
+
+These options are enabled when ``gen_script_mpl2d = .true.`` is specified in ``&option_param``.
+
+* **``fpdf``**
+    * Default: None
+    * Example: ``fpdf = "pmf.pdf"``
+
+    Specifies the name of the output PDF file.
+
+----
+* **``labels``**
+    * Default: None
+    * Example: ``labels = "$x$" "$y$" "PMF"``
+
+    Specifies the axis labels displayed in the plot.
+
+    When ``ndim = 2``,
+
+    ```
+    labels = "xlabel" "ylabel" "zlabel"
+    ```
+
+    specifies the labels for the $x$-axis, the $y$-axis, and the color bar corresponding to the PMF values, respectively.
+
+    LaTeX-style mathematical expressions can be used.
+
+----
+* **``ranges``**
+    * Default: None
+    * Example: ``ranges = -10.0 10.0 -5.0 5.0 0.0 10.0``
+
+    Specifies the plotting range.
+
+    When ``ndim = 2``,
+
+    ```
+    ranges = xmin xmax ymin ymax zmin zmax
+    ```
+
+    should be specified in this order.
+
+    Here,
+
+    * ``xmin``, ``xmax`` : Display range of the $x$-axis
+    * ``ymin``, ``ymax`` : Display range of the $y$-axis
+    * ``zmin``, ``zmax`` : Display range of the PMF values
+
+----
+* **``tics``**
+    * Default: None
+    * Example: ``tics = 1.0 1.0 0.5``
+
+    Specifies the intervals of the axis ticks.
+
+    When ``ndim = 2``,
+
+    ```
+    tics = xtic ytic ztic
+    ```
+
+    should be specified in this order.
+
+    Here,
+
+    * ``xtic`` : Tick interval of the $x$-axis
+    * ``ytic`` : Tick interval of the $y$-axis
+    * ``ztic`` : Tick interval of the color bar corresponding to the PMF values
+
+----
+* **``scales``**
+    * Default: ``1.0 1.0 1.0``
+    * Example: ``scales = 10.0 10.0 0.239006``
+
+    Specifies the unit conversion factors for the axes.
+
+    When ``ndim = 2``,
+
+    ```
+    scales = xscale yscale zscale
+    ```
+
+    should be specified in this order.
+
+    The loaded data values are multiplied by these factors when they are plotted.
+
+    For example,
+
+    ```
+    scales = 10.0 10.0 1.0
+    ```
+
+    displays the values of the $x$- and $y$-axes multiplied by 10.
+
+### Format of Output Files
+
+* ``*_original.gnplt``
+
+    The PMF ($W(\boldsymbol{\zeta})$) is written to this file.
+
+    * 1st column: Coordinate
+    * 2nd column: PMF
+
+* ``*_g_original.gnplt``
+
+    The distribution function ($\rho\left(\boldsymbol{\zeta}\right)/\rho_{0}\left(\boldsymbol{\zeta}_{0}\right)$) is written to this file.
+
+    * 1st column: Coordinate
+    * 2nd column: Distribution function
+
+When ``use_spline = .true.``, the spline-interpolated PMF and distribution function are written to ``*_spline.gnplt`` and ``*_g_spline.gnplt``, respectively.
+
+### Example
+
+The following example calculates the PMF ($W\left(x\right)$) with a grid spacing of $\Delta x = 0.1$ over the range $5 \leq x \leq 10$ from a time-series data file ``inp.ts`` containing a single data column.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ fcv     = "inp.ts"
+/
+&output_param
+ fhead = "out"
+/
+&option_param
+  ndim        = 1
+  xyzcol      = 1
+  ng3         = 50
+  del         = 0.1
+  origin      = 5.0
+  temperature = 300.0d0
+  use_spline  = .false.
+  use_radial  = .false.
+/
+EOF
+
+fanatra potential_of_mean_force run.inp
+
+```
+## Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)
+
+This analysis mode calculates the free energy profile along the radial direction under a condition defined by one or more reaction coordinates (collective variables).
+
+Using this profile, the free energy change associated with the binding of a host molecule and a guest molecule (binding free energy) can also be evaluated.
+
+### Theoretical Background
+
+Let ${\bf X}$ denote the configuration of the system.
+The intermolecular distance between the host and guest molecules and the reaction coordinates defining the binding state are denoted by $d\left({\bf X}\right)$ and $\boldsymbol{\xi}\left({\bf X}\right)$, respectively.
+
+The potential of mean force along the intermolecular distance is defined as
+
+\begin{align}
+w\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
+\end{align}
+
+Furthermore, let $\boldsymbol{\Upsilon}$ be the region in the reaction coordinate space corresponding to the bound state, and introduce the characteristic function $\Theta\left(\boldsymbol{\xi}\right)$ defined as
+
+\begin{align}
+\Theta_{\mathrm{B}}\left(\boldsymbol{\xi}\right) =\begin{cases}
+1 & \boldsymbol{\xi}\in\boldsymbol{\Upsilon}\\
+0 & \boldsymbol{\xi}\notin\boldsymbol{\Upsilon}
+\end{cases}
+\end{align}
+
+Using this function, the PMF for configurations belonging to the bound state is expressed as
+
+\begin{align}
+w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\Theta_{\mathrm{B}}\left(\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
+\end{align}
+
+The constant $C$ appearing in both $w\left(r\right)$ and $w_{\mathrm{B}}\left(r\right)$ is taken to be the same value, and is chosen such that the minimum value of $w_{\mathrm{B}}\left(r\right)$ becomes zero.
+
+Since $w\left(r\right)$ becomes constant when $r$ is sufficiently large, let this constant be $\Delta w$, and define the region satisfying $w\left(r\right)=\Delta w$ as $r_{0}\leq r\leq r_{1}$.
+The choice of $r_{0}$ and $r_{1}$ is arbitrary as long as this condition is satisfied.
+This point will be discussed later.
+
+The probability ratio between the unbound state U, where the two molecules are separated by $r_{0}\leq r \leq r_{1}$, and the bound state B is
+
+\begin{align}
+\dfrac{{\displaystyle \int_{\boldsymbol{\Upsilon}}dr\,\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,\exp\left(-\beta w\left(r\right)\right)}}
+\end{align}
+
+Therefore, the free energy change $\Delta G_{\mathrm{PMF}}$ associated with the transition from U to B is
+
+\begin{align}
+\Delta G_{\mathrm{PMF}} =-\dfrac{1}{\beta}\log\dfrac{{\displaystyle \int_{\boldsymbol{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}\exp\left(-\beta w\left(r\right)\right)}}
+\end{align}
+
+Since $w\left(r\right)=\Delta w$ within the range $r_{0}\leq r\leq r_{1}$, this equation can be rewritten as
+
+\begin{align}
+\Delta G_{\mathrm{PMF}} =-\Delta w-\dfrac{1}{\beta}\log\dfrac{V_{\mathrm{B}}}{V_{\mathrm{U}}}
+\label{pmf:dGpmf}
+\end{align}
+
+where
+
+\begin{align}
+V_{\mathrm{B}} =\int_{\boldsymbol{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)\\
+V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
+\end{align}
+
+The second term in Eq. \eqref{pmf:dGpmf} represents the free energy change associated with the transition of the guest molecule from a concentration of $1/V_{\mathrm{U}}$ to a concentration of $1/V_{\mathrm{B}}$.
+
+The experimentally measured binding free energy is the free energy change associated with binding a guest molecule at the standard-state concentration (typically $c^{\circ} = 1~\mathrm{mol~L^{-1}}$), and is therefore different from $\Delta G_{\mathrm{PMF}}$.
+
+Let $V^{\circ}$ be the volume corresponding to a concentration of $c^{\circ}$ for a single guest molecule.
+Then $V^{\circ} = 1661$ Angstrom$^{3}$.
+
+The free energy change $\Delta G^{\circ}_{\mathrm{corr}}$ associated with the transition from concentration $c^{\circ}=1/V^{\circ}$ to $1/V_{\mathrm{U}}$ is
+
+\begin{align}
+\Delta G^{\circ}_{\mathrm{corr}} = - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{U}}}{V^{\circ}}
+\label{pmf:dGcorr}
+\end{align}
+
+Thus, by decomposing the transition from $1/V^{\circ}$ to $1/V_{\mathrm{B}}$ into the two steps,
+
+\begin{align}
+1/V^{\circ} \to 1/V_{\mathrm{U}}
+\end{align}
+
+and
+
+\begin{align}
+1/V_{\mathrm{U}} \to 1/V_{\mathrm{B}}
+\end{align}
+
+we obtain
+
+\begin{align}
+\Delta G^{\circ} = \Delta G_{\mathrm{PMF}} + \Delta G_{\mathrm{corr}}^{\circ}
+\end{align}
+
+Substituting Eqs. \eqref{pmf:dGpmf} and \eqref{pmf:dGcorr} into the above equation yields
+
+\begin{align}
+\Delta G^{\circ} = - \Delta w - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{B}}}{V^{\circ}}
+\end{align}
+
+Since this expression does not contain $V_{\mathrm{U}}$, the value of $\Delta G^{\circ}$ is independent of the choice of $r_{0}$ and $r_{1}$.
+
+### Parameter List
+
+**Namelist**      | **Parameter**      | **Description**
+:-----------------|:-------------------|:----------------------------------------------------------------
+`&input_param`    | `flist_cv`         | File containing the list of CV files
+`&input_param`    | `flist_weight`     | File containing the list of weight files (optional)
+`&input_param`    | `fcv`              | CV filename
+`&input_param`    | `fweight`          | Weight filename
+`&output_param`   | `fhead`            | Header of the output filename
+`&option_param`   | `calcfe`           | Whether to calculate the standard free energy
+`&option_param`   | `ndim`             | Number of CV dimensions
+`&option_param`   | `only_r`           | Whether the intermolecular distance is the only CV
+`&option_param`   | `temperature`      | Temperature [K]
+`&option_param`   | `dr`               | Distance grid spacing
+`&option_param`   | `ngrid`            | Number of distance grids
+`&option_param`   | `nsta`             | Starting frame number for the analysis
+`&option_param`   | `use_bootstrap`    | Whether to perform bootstrap analysis
+`&option_param`   | `vol0`             | Standard-state volume
+`&option_param`   | `urange`           | Distance range of the unbound state
+`&option_param`   | `bound_range`      | Distance range of the bound state
+`&bootopt_param`  | `iseed`            | Random number seed
+`&bootopt_param`  | `nsample`          | Number of samples drawn in each trial
+`&bootopt_param`  | `duplicate`        | Whether duplicate sampling is allowed
+`&bootopt_param`  | `ntrial`           | Number of bootstrap trials
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|      & File containing the list of CV files \\
+                     & \verb|flist_weight|  & File containing the list of weight files (optional) \\
+                     & \verb|fcv|           & CV filename \\
+                     & \verb|fweight|       & Weight filename \\
+\hline
+\verb|&output_param| & \verb|fhead|         & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|calcfe|        & Whether to calculate the standard free energy \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|only_r|        & Whether the intermolecular distance is the only CV \\
+                     & \verb|temperature|   & Temperature [K] \\
+                     & \verb|dr|            & Distance grid spacing \\
+                     & \verb|ngrid|         & Number of distance grids \\
+                     & \verb|nsta|          & Starting frame number for the analysis \\
+                     & \verb|use_bootstrap| & Whether to perform bootstrap analysis \\
+                     & \verb|vol0|          & Standard-state volume \\
+                     & \verb|urange|        & Distance range of the unbound state \\
+                     & \verb|bound_range|   & Distance range of the bound state \\
+\hline
+\verb|&bootopt_param| & \verb|iseed|        & Random number seed \\
+                      & \verb|nsample|      & Number of samples drawn in each trial \\
+                      & \verb|duplicate|    & Whether duplicate sampling is allowed \\
+                      & \verb|ntrial|       & Number of bootstrap trials \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### Format of the Input File (Time-Series Data)
+
+* 1st column: Time
+* 2nd to $(N+1)$-th columns: CV values
+* Last column: Intermolecular distance
+
+The first column is ignored, and the second column is treated as the first data column.
+
+If the intermolecular distance is the only CV, i.e.,
+
+* 1st column: Time
+* 2nd column: Intermolecular distance
+
+then simply specify
+
+```
+only_r = .true.
+```
+
+in ``&option_param``.
+
+### ``&option_param``
+
+* **``calcfe``**
+    * Default: ``.true.``
+    * Example: ``calcfe = .true.``
+
+    Specifies whether the standard binding free energy should be calculated.
+
+    If ``.true.``, the standard binding free energy is calculated.
+    If ``.false.``, only the PMF profile is generated.
+
+----
+
+* **``ndim``**
+    * Default: None
+    * Example: ``ndim = 1``
+
+    Specifies the number of CV dimensions.
+
+    Currently, both one-dimensional and multidimensional PMF calculations are supported.
+
+----
+
+* **``only_r``**
+    * Default: ``.false.``
+    * Example: ``only_r = .false.``
+
+    Set this option to ``.true.`` when the intermolecular distance is the only CV and no additional CVs are present.
+
+----
+
+* **``temperature``**
+    * Default: ``298.0``
+    * Example: ``temperature = 300.0``
+
+    Specifies the temperature $T$ [K] used for the free energy calculation.
+
+----
+
+* **``dr``**
+    * Default: None
+    * Example: ``dr = 0.1d0``
+
+    Specifies the grid spacing along the distance coordinate.
+
+    This value is used as the grid interval $\Delta r$.
+
+----
+
+* **``ngrid``**
+    * Default: None
+    * Example: ``ngrid = 1000``
+
+    Specifies the number of grid points along the distance coordinate.
+
+    The PMF is evaluated on ``ngrid`` grid points.
+
+----
+
+* **``nsta``**
+    * Default: ``1``
+    * Example: ``nsta = 100``
+
+    Specifies the frame number from which the analysis starts.
+
+    Frames before ``nsta`` are excluded from the analysis.
+
+----
+
+* **``use_bootstrap``**
+    * Default: ``.false.``
+    * Example: ``use_bootstrap = .true.``
+
+    Specifies whether bootstrap error analysis is performed.
+
+    If ``.true.``, bootstrap analysis is carried out according to the settings in ``&bootopt_param``.
+
+----
+
+* **``vol0``**
+    * Default: ``1661.0d0``
+    * Example: ``vol0 = 1661.0d0``
+
+    Specifies the standard-state volume $V^\circ$.
+
+    The default value corresponds to the volume for a concentration of 1 mol/L in Angstrom units (1661 Angstrom$^3$).
+
+----
+
+* **``urange``**
+    * Default: None
+    * Example: ``urange = 25.0 30.0``
+
+    Specifies the distance range regarded as the unbound state.
+
+    The first value represents the lower bound, and the second value represents the upper bound.
+
+----
+
+* **``bound_range``**
+    * Default: None
+    * Example:
+      ```
+      react_range = 0.0 10.0
+                    5.0 20.0
+      ```
+
+    Specifies the CV range corresponding to the bound state.
+
+    For each line, the first value represents the lower bound and the second value represents the upper bound.
+
+    By specifying ``ndim`` ranges, a multidimensional bound region can be defined.
+
+### ``&bootopt_param``
+
+This namelist controls the settings for bootstrap error analysis.
+
+It is enabled only when ``use_bootstrap = .true.``.
+
+* **``iseed``**
+    * Default: Automatically generated
+    * Example: ``iseed = 3141592``
+
+    Specifies the random seed used for bootstrap analysis.
+
+    If ``iseed <= 0``, the program automatically generates a seed.
+
+----
+
+* **``nsample``**
+    * Default: None
+    * Example: ``nsample = 1000``
+
+    Specifies the number of samples drawn in each bootstrap trial.
+
+----
+
+* **``duplicate``**
+    * Default: ``.true.``
+    * Example: ``duplicate = .false.``
+
+    Specifies whether duplicate sampling is allowed during bootstrap sampling.
+
+----
+
+* **``ntrial``**
+    * Default: None
+    * Example: ``ntrial = 100``
+
+    Specifies the number of bootstrap trials.
+
+    Increasing the number of trials improves the accuracy of the statistical error estimate, but also increases the computational cost.
+
+### Output File Format
+
+* ``*.rd``
+    * 1st column: Intermolecular distance $r$
+    * 2nd column: Conventional PMF along $r$
+    * 3rd column: PMF corresponding to the bound state
+
+### Example
+
+The following example calculates the binding free energy from a time-series data file ``inp.ts`` that contains one CV and the intermolecular distance in the last column.
+
+The range $18 \leq r/$Angstrom$\leq 20$ is treated as the unbound state, and the bound state is defined by the CV range $5.0 \leq \zeta \leq 10.0$.
+
+```bash
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ fcv      = "inp.ts"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ calcfe        = .true.
+ only_r        = .false.
+ ndim          =  1
+ temperature   =  300.0
+ dr            =  0.1d0
+ ngrid         =  1000
+ nsta          =  1
+ use_bootstrap = .false.
+ vol0          = 1661.0d0
+ urange        =  18.0  20.0
+ bound_range   =  5.0  10.0
+/
+EOF
+
+fanatra restricted_radial run.inp
+```
+
+After execution, the results are printed near the end of the log file.
+
+```text
+... Thermodynamic analysis ...
+vb      (A^3)      =      21.5444908
+wu      (kcal/mol) =      -1.3486059
+wb      (kcal/mol) =       0.0000000
+dw      (kcal/mol) =      -1.3486059
+dGv     (kcal/mol) =       2.5903536
+dGzero  (kcal/mol) =       3.9389595
+Keq     (M^-1)     =   1.3506025E-03
+```
+## Frame Extraction (extract_frame, extf)
+
+In this analysis mode, snapshots (frames) that satisfy specified CV ranges are extracted.
+
+### Parameter List
+
+**Namelist**     | **Parameter**    | **Description**
+:----------------|:-----------------|:------------------------------------------------------------
+`&input_param`   | `flist_traj`     | Filename containing the list of trajectory files
+`&input_param`   | `flist_cv`       | Filename containing the list of CV files
+`&input_param`   | `ftraj`          | Trajectory filename
+`&input_param`   | `fcv`            | CV filename
+`&output_param`  | `fhead`          | Header of the output filename
+`&option_param`  | `dt`             | Time interval of the trajectory
+`&option_param`  | `ndim`           | Number of CV dimensions
+`&option_param`  | `extract_range`  | CV range for frame extraction
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_traj| & Filename containing the list of trajectory files \\
+                     & \verb|flist_cv|   & Filename containing the list of CV files \\
+                     & \verb|ftraj|      & Trajectory filename \\
+                     & \verb|fcv|        & CV filename \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|dt|            & Time interval of the trajectory \\
+                     & \verb|ndim|          & Number of CV dimensions \\
+                     & \verb|extract_range| & CV range for frame extraction \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``ndim``**
+    * Default: None
+    * Example: ``ndim = 2``
+
+    Specifies the number of dimensions of the time-series CV data.
+
+    The ranges specified in ``extract_range`` must correspond to this dimensionality.
+
+----
+
+* **``extract_range``**
+    * Default: None
+    * Example:
+
+      ```
+      extract_range = -5.0d0 5.0d0
+                       1.0d0 0.0d0
+      ```
+
+    Specifies the CV region from which frames are extracted.
+
+    For each CV, a pair of lower and upper bounds should be provided.
+
+    In the above example, frames satisfying
+
+    * CV1: $-5.0 \leq \mathrm{CV}_1 \leq 5.0$
+    * CV2: $0.0 \leq \mathrm{CV}_2 \leq 1.0$
+
+    are extracted.
+
+    By specifying ``ndim`` ranges, multidimensional extraction conditions can be defined.
+
+### Output File Format
+
+The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).
+
+### Example
+
+The following example extracts frames satisfying the condition $5 \leq \zeta \leq 10$ from an input trajectory, using a time-series CV data file ``inp.ts`` containing a single CV.
+
+```bash
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ ftraj    = "input.dcd"
+ fcv      = "inp.ts"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ ndim          =  1
+ extract_range =  5.0  10.0
+/
+EOF
+
+fanatra extract_frame run.inp
+```
+
+After execution, the extracted trajectory is written to ``out.dcd``.
+## Random Frame Extraction (random_frame, randf)
+
+In this analysis mode, snapshots (frames) are randomly extracted from a trajectory.
+
+### Parameter List
+
+**Namelist**     | **Parameter**      | **Description**
+:----------------|:-------------------|:-------------------------------------------------------------
+`&input_param`   | `ftraj`            | Input trajectory filename
+`&input_param`   | `flist_traj`       | Filename containing the list of trajectory files
+`&output_param`  | `fhead`            | Header of the output filename
+`&option_param`  | `nsample`          | Number of randomly extracted frames
+`&option_param`  | `iseed`            | Random seed
+`&option_param`  | `output_trajtype`  | Output trajectory format
+`&option_param`  | `duplicate`        | Whether duplicate sampling is allowed
+`&option_param`  | `out_rst7`         | Whether to output AMBER rst7 files
+`&option_param`  | `shuffle`          | Whether to shuffle the extracted frames
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|ftraj|      & Input trajectory filename \\
+                     & \verb|flist_traj| & Filename containing the list of trajectory files \\
+\hline
+\verb|&output_param| & \verb|fhead|      & Header of the output filename \\
+\hline
+\verb|&option_param| & \verb|nsample|         & Number of randomly extracted frames \\
+                     & \verb|iseed|           & Random seed \\
+                     & \verb|output_trajtype| & Output trajectory format \\
+                     & \verb|duplicate|       & Whether duplicate sampling is allowed \\
+                     & \verb|out_rst7|        & Whether to output AMBER rst7 files \\
+                     & \verb|shuffle|         & Whether to shuffle the extracted frames \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``nsample``**
+    * Default: ``100``
+    * Example: ``nsample = 100``
+
+    Specifies the number of frames to be randomly extracted.
+
+----
+
+* **``iseed``**
+    * Default: ``-1`` (automatically generated)
+    * Example: ``iseed = 3141592``
+
+    Specifies the random seed used for frame extraction.
+
+    If ``iseed <= 0``, the program automatically generates a seed.
+
+----
+
+* **``output_trajtype``**
+    * Default: ``dcd``
+    * Example: ``output_trajtype = "dcd"``
+
+    Specifies the output trajectory format.
+
+    Currently, the following formats are supported:
+
+    * ``dcd``
+    * ``xtc``
+    * ``netcdf``
+
+----
+
+* **``duplicate``**
+    * Default: ``.false.``
+    * Example: ``duplicate = .true.``
+
+    Specifies whether the same frame can be extracted multiple times.
+
+----
+
+* **``out_rst7``**
+    * Default: ``.false.``
+    * Example: ``out_rst7 = .true.``
+
+    Specifies whether each extracted frame should also be output in AMBER rst7 format.
+
+----
+
+* **``shuffle``**
+    * Default: ``.false.``
+    * Example: ``shuffle = .true.``
+
+    Specifies whether the extracted frames should be shuffled before output.
+
+    If ``.true.``, all extracted frames are written in a random order.
+
+### Output File Format
+
+The output trajectory file has the same format as the input trajectory file (dcd, xtc, or nc (netcdf)).
+
+### Example
+
+The following example extracts 100 random frames from the trajectory file ``input.dcd``.
+In addition to the trajectory, the structure of each extracted frame is also written in ``rst7`` (``inpcrd``) format.
+
+```bash
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ ftraj    = "input.dcd"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ nsample = 100
+ output_trajtype = "dcd"
+ duplicate       = .false.
+ out_rst7        = .true.
+/
+EOF
+
+fanatra random_frame run.inp
+```
+
+After execution, ``out.dcd`` and ``outXXXXX.inpcrd`` (``XXXXX = 00001, ..., 00100``) are generated.
+## Moving Average (moving_average, movave)
+
+In this analysis mode, one-dimensional data (e.g., distribution functions) are smoothed using a moving average.
+
+### Parameter List
+
+**Namelist**     | **Parameter**    | **Description**
+:----------------|:-----------------|:----------------------------------------------------------------------
+`&input_param`   | `fcv`            | Function data file
+`&input_param`   | `flist_cv`       | File containing a list of function data files
+`&output_param`  | `fhead`          | Output file header
+`&option_param`  | `dx`             | Grid spacing
+`&option_param`  | `xsta`           | Starting position of the grid
+`&option_param`  | `xsep`           | Boundary position between regions
+`&option_param`  | `nregion`        | Number of regions
+`&option_param`  | `npoint`         | Number of points used for moving average in each region
+`&option_param`  | `include_zero`   | Whether to preserve the value at the origin
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|fcv|      & Function data file \\
+                     & \verb|flist_cv| & File containing a list of function data files \\
+\hline
+\verb|&output_param| & \verb|fhead|    & Output file header \\
+\hline
+\verb|&option_param| & \verb|dx|            & Grid spacing \\
+                     & \verb|xsta|          & Starting position of the grid \\
+                     & \verb|xsep|          & Boundary position between regions \\
+                     & \verb|nregion|       & Number of regions \\
+                     & \verb|npoint|        & Number of points used for moving average in each region \\
+                     & \verb|include_zero|  & Whether to preserve the value at the origin \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``dx``**
+    * Default: None
+    * Example: ``dx = 0.1d0``
+
+    Specifies the grid spacing of the function data.
+
+----
+* **``xsta``**
+    * Default: ``0.0d0``
+    * Example: ``xsta = 0.0d0``
+
+    Specifies the starting position of the grid.
+
+    If the position of the $i$-th grid point is denoted by $x_i$,
+
+    \begin{align}
+    x_i = x_0 + (i-1)\Delta x
+    \end{align}
+
+    where $x_0$ is the starting position.
+
+----
+* **``nregion``**
+    * Default: ``1``
+    * Example: ``nregion = 2``
+
+    Specifies the number of regions to which different moving-average conditions are applied.
+
+    The number of values given to ``npoint`` must match this number of regions.
+
+----
+* **``xsep``**
+    * Default: ``0.0d0``
+    * Example: ``xsep = 1.0d0``
+
+    Specifies the boundary positions between regions with different moving-average widths.
+
+    This parameter is not used when ``nregion = 1``, in which case ``xsep = 0.0d0`` should be specified.
+
+    For example, when dividing the domain into $N$ regions, $N-1$ boundary values must be specified.
+
+----
+* **``npoint``**
+    * Default: None
+    * Example: ``npoint = 3 5``
+
+    Specifies the number of data points used for the moving average in each region.
+
+    An odd number must be specified.
+
+    In the above example,
+
+    * Region 1: 3-point moving average
+    * Region 2: 5-point moving average
+
+    are applied.
+
+----
+* **``include_zero``**
+    * Default: ``.true.``
+    * Example: ``include_zero = .false.``
+
+    Specifies whether to preserve the value at the origin after smoothing.
+
+    If ``.true.``, the value at the origin is kept unchanged from the input data.
+
+### Output File Format
+
+* ``*XXXX.dat``
+    * Column 1: $x$ coordinate
+    * Column 2: Function value
+
+    A smoothed data file is generated for each input file specified by ``flist_cv`` or related options.
+
+### Example
+
+The following example smooths a one-dimensional function $f\left(x\right)$ stored in ``input.dat`` (grid origin ``0``, grid spacing ``0.1``).
+
+The domain is divided into two regions, $x\leq 1.0$ and $x>1.0$, and 3-point and 5-point moving averages are applied to the first and second regions, respectively.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ fcv      = "input.dat"
+/
+&output_param
+ fhead = "out"
+/
+&option_param
+  dx           = 0.1d0
+  xsta         = 0.0d0
+  xsep         = 1.0d0
+  nregion      = 2
+  npoint       = 3 5
+  include_zero = .true.
+/
+EOF
+
+fanatra moving_average run.inp
+```
+
+Executing this command generates the smoothed function data file ``out0001.dat``.
+## Average Function (average_function, avef)
+
+In this analysis mode, one-dimensional functions stored in multiple input files are averaged.
+For example, let $f_{i}\left(x\right)$ be the function stored in the $i$-th file and let $N$ be the total number of files.
+The averaged function $f_{\mathrm{ave}}\left(x\right)$ is given by
+
+\begin{align}
+f_{\mathrm{ave}}\left(x\right) = \dfrac{1}{N}\sum_{i=1}^{N}f_{i}\left(x\right),
+\end{align}
+
+### Parameter List
+
+**Namelist**      | **Parameter**     | **Description**
+:-----------------|:------------------|:-------------------------------------------------------------
+`&input_param`    | `flist_cv`        | File containing a list of function data files
+`&output_param`   | `fhead`           | Output file header
+`&option_param`   | `use_bootstrap`   | Enable bootstrap analysis
+`&option_param`   | `xsta`            | Starting position of the grid
+`&option_param`   | `dx`              | Grid spacing
+`&bootopt_param`  | `duplicate`       | Whether duplicate sampling is allowed
+`&bootopt_param`  | `iseed`           | Random seed
+`&bootopt_param`  | `nsample`         | Number of samples drawn in each trial
+`&bootopt_param`  | `ntrial`          | Number of bootstrap trials
+
+<!---
+```{raw} latex
+\renewcommand{\arraystretch}{1.2}
+{\arrayrulewidth=0.5pt
+\begin{tabular}{p{3cm}p{5cm}p{7cm}}
+\arrayrulecolor{gray}
+\rowcolor{headerColor}
+\hline
+\textbf{Namelist} & \textbf{Parameter} & \textbf{Description}\\
+\hline
+\verb|&input_param|  & \verb|flist_cv|      & File containing a list of function data files \\
+\hline
+\verb|&output_param| & \verb|fhead|         & Output file header \\
+\hline
+\verb|&option_param| & \verb|use_bootstrap| & Enable bootstrap analysis \\
+                     & \verb|xsta|          & Starting position of the grid \\
+                     & \verb|dx|            & Grid spacing \\
+\hline
+\verb|&bootopt_param| & \verb|duplicate|    & Whether duplicate sampling is allowed \\
+                      & \verb|iseed|        & Random seed \\
+                      & \verb|nsample|      & Number of samples drawn in each trial \\
+                      & \verb|ntrial|       & Number of bootstrap trials \\
+\hline
+\end{tabular}
+}
+```
+--->
+
+### ``&option_param``
+
+* **``use_bootstrap``**
+    * Default: ``.false.``
+    * Example: ``use_bootstrap = .true.``
+
+    Specifies whether to perform error estimation using the bootstrap method.
+
+    If ``.true.``, bootstrap analysis is carried out according to the settings in ``&bootopt_param``.
+
+----
+* **``xsta``**
+    * Default: ``0.0d0``
+    * Example: ``xsta = 0.0d0``
+
+    Specifies the starting position of the grid.
+
+    If the position of the $i$-th grid point is denoted by $x_i$,
+
+    \begin{align}
+    x_i = x_0 + (i-1)\Delta x
+    \end{align} 
+
+    where $x_0$ is the grid origin.
+
+----
+* **``dx``**
+    * Default: ``0.1d0``
+    * Example: ``dx = 0.1d0``
+
+    Specifies the grid spacing of the function data.
+
+### ``&bootopt_param``
+
+This section defines the settings for bootstrap error analysis.
+
+It is effective only when ``use_bootstrap = .true.``.
+
+* **``iseed``**
+    * Default: Automatically generated
+    * Example: ``iseed = 3141592``
+
+    Specifies the random seed used for bootstrap analysis.
+
+    If ``iseed <= 0``, the program automatically generates a seed.
+
+----
+* **``nsample``**
+    * Default: None
+    * Example: ``nsample = 1000``
+
+    Specifies the number of samples drawn in each bootstrap trial.
+
+----
+* **``duplicate``**
+    * Default: ``.true.``
+    * Example: ``duplicate = .false.``
+
+    Specifies whether duplicate sampling is allowed during bootstrap sampling.
+
+----
+* **``ntrial``**
+    * Default: None
+    * Example: ``ntrial = 100``
+
+    Specifies the number of bootstrap trials.
+
+    Increasing the number of trials improves the accuracy of the estimated statistical error, but also increases the computational cost.
+
+### Output File Format
+
+* ``*.ave``
+    * Column 1: $x$ coordinate
+    * Column 2: Function value
+    * Column 3: Standard error (when ``use_bootstrap = .true.``)
+
+### Example
+
+Suppose that one-dimensional functions $f\left(x\right)$ (grid origin ``0``, grid spacing ``0.1``) are stored in multiple files, and the list of these files is stored in ``list``.
+The following example calculates the average function and its standard error using the bootstrap method.
+
+```
+#!/usr/bin/env bash
+
+cat << EOF > run.inp
+&input_param
+ flist_cv = "list"
+/
+&output_param
+ fhead         = "out"
+/
+&option_param
+ use_bootstrap =  .false.
+ xsta          =  0.0d0  
+ dx            =  0.1d0  
+/
+
+&bootopt_param
+ duplicate     = .true.   
+ iseed         =  3141592 
+ nsample       =  1000    
+ ntrial        =  100     
+/
+EOF
+
+fanatra average_function run.inp 
+```
+
+Executing this command generates the averaged function data file ``out.ave``.
