@@ -41,7 +41,7 @@ At the same time, since the Fortran programs themselves do not implement Atomsel
     * Yuya Matsubara (Graduate School of Engineering Science, Univ. of Osaka)
     * Yusei Maruyama (Graduate School of Engineering Science, Univ. of Osaka)
     * Ryo Okabe (Graduate School of Engineering Science, Univ. of Osaka)
-    * Yuki Yamashita (Graduate School of Engineering Science, Univ. of Osaka)
+    * Yuuki Yamashita (Graduate School of Engineering Science, Univ. of Osaka)
     * Shuto Saeki (Graduate School of Engineering Science, Univ. of Osaka)
     * Nobuyuki Matubayasi (Graduate School of Engineering Science, Univ. of Osaka) 
 

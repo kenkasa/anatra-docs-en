@@ -442,13 +442,13 @@ That is, the input data file must have the above structure.
 <section id="histogram-histogram-hist">
 <h2>Histogram (histogram, hist)<a class="headerlink" href="#histogram-histogram-hist" title="Link to this heading"></a></h2>
 <p>In this analysis mode, the distribution function <span class="math notranslate nohighlight">\(P\left(x\right)\)</span> is calculated from a given time-series data set <span class="math notranslate nohighlight">\(\xi\left(t\right)\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-73e13515-71a6-479b-b5ce-c74155499939">
-<span class="eqno">(46)<a class="headerlink" href="#equation-73e13515-71a6-479b-b5ce-c74155499939" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-efbc4bab-5e95-4357-9b3b-1a62a335d2d2">
+<span class="eqno">(46)<a class="headerlink" href="#equation-efbc4bab-5e95-4357-9b3b-1a62a335d2d2" title="Permalink to this equation"></a></span>\[\begin{align}
 P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of data points. The above expression satisfies the normalization condition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0f881148-d60e-4a89-b783-083c8d0d58b0">
-<span class="eqno">(47)<a class="headerlink" href="#equation-0f881148-d60e-4a89-b783-083c8d0d58b0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ed4a7085-4107-4a9e-b50f-6fedf7995bae">
+<span class="eqno">(47)<a class="headerlink" href="#equation-ed4a7085-4107-4a9e-b50f-6fedf7995bae" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{-\infty}^{\infty} dx P\left(x\right) = 1
 \end{align}\]</div>
 <section id="list-of-parameters">
@@ -540,8 +540,8 @@ P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsta</span> <span class="pre">=</span> <span class="pre">0.0</span></code></p></li>
 </ul>
 <p>Specifies the starting position of the grid, <span class="math notranslate nohighlight">\(x_{0}\)</span>. If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_{i}\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b7ac743a-005f-4bc9-b9f1-2776d7cae6a6">
-<span class="eqno">(48)<a class="headerlink" href="#equation-b7ac743a-005f-4bc9-b9f1-2776d7cae6a6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fcf97b62-0d15-4e27-b55f-877570eb57b4">
+<span class="eqno">(48)<a class="headerlink" href="#equation-fcf97b62-0d15-4e27-b55f-877570eb57b4" title="Permalink to this equation"></a></span>\[\begin{align}
 x_{i} = x_{0} + \left(i - 1 \right) \Delta x
 \end{align}\]</div>
 <p>holds.</p>
@@ -600,35 +600,35 @@ x_{i} = x_{0} + \left(i - 1 \right) \Delta x
 <section id="theoretical-background">
 <h3>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h3>
 <p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system and <span class="math notranslate nohighlight">\(U\left({\bf X}\right)\)</span> its potential energy. The configurational integral <span class="math notranslate nohighlight">\(Z\)</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-68ef784f-1c00-4a3e-92cd-57a2a81ec436">
-<span class="eqno">(49)<a class="headerlink" href="#equation-68ef784f-1c00-4a3e-92cd-57a2a81ec436" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-315077cc-d3dd-4389-a350-615d43e6ecd0">
+<span class="eqno">(49)<a class="headerlink" href="#equation-315077cc-d3dd-4389-a350-615d43e6ecd0" title="Permalink to this equation"></a></span>\[\begin{align}
 Z =\int d{\bf X}\,\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is the inverse temperature.</p>
 <p>Similarly, the partition function corresponding to the state in which the system is trapped within the infinitesimal region <span class="math notranslate nohighlight">\(\boldsymbol{\zeta} - \boldsymbol{\zeta}+\Delta \boldsymbol{\zeta}\)</span> in the reaction coordinate space (<span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\left({\bf X}\right)\)</span>) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82b8ece8-4b1b-4ed6-896d-84d4f56fa9ab">
-<span class="eqno">(50)<a class="headerlink" href="#equation-82b8ece8-4b1b-4ed6-896d-84d4f56fa9ab" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-29f9c7ea-84ea-45d5-ae8f-5835072aed06">
+<span class="eqno">(50)<a class="headerlink" href="#equation-29f9c7ea-84ea-45d5-ae8f-5835072aed06" title="Permalink to this equation"></a></span>\[\begin{align}
 Z\left(\boldsymbol{\zeta}\right) =\Delta\boldsymbol{\zeta}\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 <p>Defining the probability density corresponding to <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c21eddd-cd47-4adf-bc9f-231b10e06756">
-<span class="eqno">(51)<a class="headerlink" href="#equation-5c21eddd-cd47-4adf-bc9f-231b10e06756" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2bde7b4e-c054-41cd-a1db-0ac20ec603d0">
+<span class="eqno">(51)<a class="headerlink" href="#equation-2bde7b4e-c054-41cd-a1db-0ac20ec603d0" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left(\boldsymbol{\zeta}\right) = \Braket{\delta\left(\boldsymbol{\zeta} - \boldsymbol{\xi}\left({\bf X}\right)\right)} = \dfrac{1}{Z}\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 <p>we obtain</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e987056-b823-4f79-88b4-844c058fe69c">
-<span class="eqno">(52)<a class="headerlink" href="#equation-2e987056-b823-4f79-88b4-844c058fe69c" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a7501585-4b41-44a8-8545-ea7ea8a38b89">
+<span class="eqno">(52)<a class="headerlink" href="#equation-a7501585-4b41-44a8-8545-ea7ea8a38b89" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{Z\left(\boldsymbol{\zeta}\right)}{Z} =\rho\left(\boldsymbol{\zeta}\right)\Delta\boldsymbol{\zeta}
 \end{align}\]</div>
 <p>Therefore, the free-energy difference <span class="math notranslate nohighlight">\(\Delta F\left(\boldsymbol{\zeta}\right)\)</span> between the unrestricted state and the state confined to the region <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}-\boldsymbol{\zeta} + \Delta \boldsymbol{\zeta}\)</span> is expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3e9c4008-3c81-4d99-a36e-cc009d0ef34e">
-<span class="eqno">(53)<a class="headerlink" href="#equation-3e9c4008-3c81-4d99-a36e-cc009d0ef34e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-02176818-f97e-408a-916f-0c05506954ec">
+<span class="eqno">(53)<a class="headerlink" href="#equation-02176818-f97e-408a-916f-0c05506954ec" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta F\left(\boldsymbol{\zeta}\right) =-\dfrac{1}{\beta}\log\dfrac{Z\left(\boldsymbol{\zeta}\right)}{Z}
  = -\dfrac{1}{\beta}\log \left(\rho\left(\boldsymbol{\zeta}\right)\Delta \boldsymbol{\zeta}\right)
 \end{align}\]</div>
 <p>The free energy relative to a reference point <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}_{0}\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee1aeccb-6890-4e94-b3c8-236d6865c1ee">
-<span class="eqno">(54)<a class="headerlink" href="#equation-ee1aeccb-6890-4e94-b3c8-236d6865c1ee" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dd16a78c-03c9-45a4-81f4-042ef6c9caa0">
+<span class="eqno">(54)<a class="headerlink" href="#equation-dd16a78c-03c9-45a4-81f4-042ef6c9caa0" title="Permalink to this equation"></a></span>\[\begin{align}
 W\left(\boldsymbol{\zeta}\right) =\Delta F\left(\boldsymbol{\zeta}\right)-\Delta F\left(\boldsymbol{\zeta}_{0}\right)\notag\\
  =-\dfrac{1}{\beta}\log\dfrac{\rho\left(\boldsymbol{\zeta}\right)}{\rho\left(\boldsymbol{\zeta}_{0}\right)}
  \label{pmf:pmf}
@@ -636,14 +636,14 @@ W\left(\boldsymbol{\zeta}\right) =\Delta F\left(\boldsymbol{\zeta}\right)-\Delta
 <p>This quantity <span class="math notranslate nohighlight">\(W\)</span> is called the <strong>potential of mean force</strong>. The choice of <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}_{0}\)</span> is arbitrary, but in most cases it is chosen such that the minimum value of <span class="math notranslate nohighlight">\(W\left(\boldsymbol{\zeta}\right)\)</span> becomes zero.</p>
 <p>By calculating <span class="math notranslate nohighlight">\(W\left(\boldsymbol{\zeta}\right)\)</span>, it becomes possible to discuss the change in thermodynamic stability as a function of <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span>.</p>
 <p>Equation \eqref{pmf:pmf} can also be rewritten by separating the <span class="math notranslate nohighlight">\(\boldsymbol{\zeta}\)</span>-dependent part and a constant <span class="math notranslate nohighlight">\(C\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2869c06c-6093-4473-9d9f-b0ea824aad9d">
-<span class="eqno">(55)<a class="headerlink" href="#equation-2869c06c-6093-4473-9d9f-b0ea824aad9d" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b3ad49f5-ebe7-484e-ac39-8cae36926f73">
+<span class="eqno">(55)<a class="headerlink" href="#equation-b3ad49f5-ebe7-484e-ac39-8cae36926f73" title="Permalink to this equation"></a></span>\[\begin{align}
 W\left(\boldsymbol{\zeta}\right) =-\dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)+C
 \label{pmf:pmf2}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78415ef0-3095-4aa8-ba8c-d5e74c097aa4">
-<span class="eqno">(56)<a class="headerlink" href="#equation-78415ef0-3095-4aa8-ba8c-d5e74c097aa4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-24b36684-7d2e-4c8a-bbee-eb4467a96852">
+<span class="eqno">(56)<a class="headerlink" href="#equation-24b36684-7d2e-4c8a-bbee-eb4467a96852" title="Permalink to this equation"></a></span>\[\begin{align}
 C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}_{0}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 </section>
@@ -856,8 +856,8 @@ C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}_{0}-\bolds
 </ul>
 <p>Specifies the grid origin for each CV direction.</p>
 <p>For the <span class="math notranslate nohighlight">\(k\)</span>-th CV, let the origin be <span class="math notranslate nohighlight">\(x_k^{(0)}\)</span> and the grid spacing be <span class="math notranslate nohighlight">\(\Delta_k\)</span>. Then the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0428c37d-4e65-431c-bb5d-d5026bc4bcb1">
-<span class="eqno">(57)<a class="headerlink" href="#equation-0428c37d-4e65-431c-bb5d-d5026bc4bcb1" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-93967ba6-65a2-4e23-a13a-340510baccc7">
+<span class="eqno">(57)<a class="headerlink" href="#equation-93967ba6-65a2-4e23-a13a-340510baccc7" title="Permalink to this equation"></a></span>\[\begin{align}
 x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
 \end{align}\]</div>
 </li>
@@ -881,8 +881,8 @@ x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
 </ul>
 <p>Specifies whether the CV contains a radial component.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the distribution function for the CV component <span class="math notranslate nohighlight">\(x_k\)</span> specified by <code class="docutils literal notranslate"><span class="pre">radcol</span></code> is calculated using the bin volume</p>
-<div class="amsmath math notranslate nohighlight" id="equation-10c056c0-46d0-4eba-9ed1-ddc67038432c">
-<span class="eqno">(58)<a class="headerlink" href="#equation-10c056c0-46d0-4eba-9ed1-ddc67038432c" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3e854928-1a44-42a2-9b0f-726af772d583">
+<span class="eqno">(58)<a class="headerlink" href="#equation-3e854928-1a44-42a2-9b0f-726af772d583" title="Permalink to this equation"></a></span>\[\begin{align}
 4\pi x_{k}^{2} \Delta_{k}^{2}
 \end{align}\]</div>
 </li>
@@ -1109,21 +1109,21 @@ If <code class="docutils literal notranslate"><span class="pre">.false.</span></
 <p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system.
 The intermolecular distance between the host and guest molecules and the reaction coordinates defining the binding state are denoted by <span class="math notranslate nohighlight">\(d\left({\bf X}\right)\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\left({\bf X}\right)\)</span>, respectively.</p>
 <p>The potential of mean force along the intermolecular distance is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-41eab4cf-bd30-4ec9-8126-e2e0e138eab1">
-<span class="eqno">(59)<a class="headerlink" href="#equation-41eab4cf-bd30-4ec9-8126-e2e0e138eab1" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8febf257-2f1e-4fbc-93e3-476756c9ad8d">
+<span class="eqno">(59)<a class="headerlink" href="#equation-8febf257-2f1e-4fbc-93e3-476756c9ad8d" title="Permalink to this equation"></a></span>\[\begin{align}
 w\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
 \end{align}\]</div>
 <p>Furthermore, let <span class="math notranslate nohighlight">\(\boldsymbol{\Upsilon}\)</span> be the region in the reaction coordinate space corresponding to the bound state, and introduce the characteristic function <span class="math notranslate nohighlight">\(\Theta\left(\boldsymbol{\xi}\right)\)</span> defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7577e9ac-57a9-4a6a-b7e5-88d046dafea4">
-<span class="eqno">(60)<a class="headerlink" href="#equation-7577e9ac-57a9-4a6a-b7e5-88d046dafea4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-47e76be9-af18-4f1a-9e6b-104c6ea6738f">
+<span class="eqno">(60)<a class="headerlink" href="#equation-47e76be9-af18-4f1a-9e6b-104c6ea6738f" title="Permalink to this equation"></a></span>\[\begin{align}
 \Theta_{\mathrm{B}}\left(\boldsymbol{\xi}\right) =\begin{cases}
 1 &amp; \boldsymbol{\xi}\in\boldsymbol{\Upsilon}\\
 0 &amp; \boldsymbol{\xi}\notin\boldsymbol{\Upsilon}
 \end{cases}
 \end{align}\]</div>
 <p>Using this function, the PMF for configurations belonging to the bound state is expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49df10ab-5b5d-4f3c-80ad-2a709e5093a0">
-<span class="eqno">(61)<a class="headerlink" href="#equation-49df10ab-5b5d-4f3c-80ad-2a709e5093a0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2dc25998-2fa3-471d-9c85-22ea54690369">
+<span class="eqno">(61)<a class="headerlink" href="#equation-2dc25998-2fa3-471d-9c85-22ea54690369" title="Permalink to this equation"></a></span>\[\begin{align}
 w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\Theta_{\mathrm{B}}\left(\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
 \end{align}\]</div>
 <p>The constant <span class="math notranslate nohighlight">\(C\)</span> appearing in both <span class="math notranslate nohighlight">\(w\left(r\right)\)</span> and <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> is taken to be the same value, and is chosen such that the minimum value of <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> becomes zero.</p>
@@ -1131,24 +1131,24 @@ w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\
 The choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span> is arbitrary as long as this condition is satisfied.
 This point will be discussed later.</p>
 <p>The probability ratio between the unbound state U, where the two molecules are separated by <span class="math notranslate nohighlight">\(r_{0}\leq r \leq r_{1}\)</span>, and the bound state B is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-444f8687-6010-4d7d-b278-44ffaf615292">
-<span class="eqno">(62)<a class="headerlink" href="#equation-444f8687-6010-4d7d-b278-44ffaf615292" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a7cbf7b3-8684-43e1-b9ad-894a9eb95593">
+<span class="eqno">(62)<a class="headerlink" href="#equation-a7cbf7b3-8684-43e1-b9ad-894a9eb95593" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{{\displaystyle \int_{\boldsymbol{\Upsilon}}dr\,\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,\exp\left(-\beta w\left(r\right)\right)}}
 \end{align}\]</div>
 <p>Therefore, the free energy change <span class="math notranslate nohighlight">\(\Delta G_{\mathrm{PMF}}\)</span> associated with the transition from U to B is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e865f69-d124-4dfb-b388-694ab3fbfc68">
-<span class="eqno">(63)<a class="headerlink" href="#equation-5e865f69-d124-4dfb-b388-694ab3fbfc68" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fee1ec17-edc4-4691-a1d4-f473c74fe395">
+<span class="eqno">(63)<a class="headerlink" href="#equation-fee1ec17-edc4-4691-a1d4-f473c74fe395" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G_{\mathrm{PMF}} =-\dfrac{1}{\beta}\log\dfrac{{\displaystyle \int_{\boldsymbol{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}\exp\left(-\beta w\left(r\right)\right)}}
 \end{align}\]</div>
 <p>Since <span class="math notranslate nohighlight">\(w\left(r\right)=\Delta w\)</span> within the range <span class="math notranslate nohighlight">\(r_{0}\leq r\leq r_{1}\)</span>, this equation can be rewritten as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-96e6d5f0-f0da-40dc-9f3e-fc455acfc8c5">
-<span class="eqno">(64)<a class="headerlink" href="#equation-96e6d5f0-f0da-40dc-9f3e-fc455acfc8c5" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4880af86-ebeb-48d7-a7ed-80f27458361e">
+<span class="eqno">(64)<a class="headerlink" href="#equation-4880af86-ebeb-48d7-a7ed-80f27458361e" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G_{\mathrm{PMF}} =-\Delta w-\dfrac{1}{\beta}\log\dfrac{V_{\mathrm{B}}}{V_{\mathrm{U}}}
 \label{pmf:dGpmf}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3050c867-ee02-4ae3-a376-248d8517e1a1">
-<span class="eqno">(65)<a class="headerlink" href="#equation-3050c867-ee02-4ae3-a376-248d8517e1a1" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2a5b2096-6179-43bb-a692-51bc9581ef36">
+<span class="eqno">(65)<a class="headerlink" href="#equation-2a5b2096-6179-43bb-a692-51bc9581ef36" title="Permalink to this equation"></a></span>\[\begin{align}
 V_{\mathrm{B}} =\int_{\boldsymbol{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)\\
 V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
 \end{align}\]</div>
@@ -1157,29 +1157,29 @@ V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
 <p>Let <span class="math notranslate nohighlight">\(V^{\circ}\)</span> be the volume corresponding to a concentration of <span class="math notranslate nohighlight">\(c^{\circ}\)</span> for a single guest molecule.
 Then <span class="math notranslate nohighlight">\(V^{\circ} = 1661\)</span> Angstrom<span class="math notranslate nohighlight">\(^{3}\)</span>.</p>
 <p>The free energy change <span class="math notranslate nohighlight">\(\Delta G^{\circ}_{\mathrm{corr}}\)</span> associated with the transition from concentration <span class="math notranslate nohighlight">\(c^{\circ}=1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{U}}\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a747e2c6-e041-4b8e-9a2f-ab64c1b81ec4">
-<span class="eqno">(66)<a class="headerlink" href="#equation-a747e2c6-e041-4b8e-9a2f-ab64c1b81ec4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a892ce1a-5570-4abe-93dc-d9d832c2146f">
+<span class="eqno">(66)<a class="headerlink" href="#equation-a892ce1a-5570-4abe-93dc-d9d832c2146f" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G^{\circ}_{\mathrm{corr}} = - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{U}}}{V^{\circ}}
 \label{pmf:dGcorr}
 \end{align}\]</div>
 <p>Thus, by decomposing the transition from <span class="math notranslate nohighlight">\(1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{B}}\)</span> into the two steps,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3dc6ea2-1815-4412-92da-001d3d10bd6f">
-<span class="eqno">(67)<a class="headerlink" href="#equation-a3dc6ea2-1815-4412-92da-001d3d10bd6f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-84c8938c-a272-4918-b830-285cd8be8cbc">
+<span class="eqno">(67)<a class="headerlink" href="#equation-84c8938c-a272-4918-b830-285cd8be8cbc" title="Permalink to this equation"></a></span>\[\begin{align}
 1/V^{\circ} \to 1/V_{\mathrm{U}}
 \end{align}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ad2cf6ef-3420-4a99-b7ad-368d697091ce">
-<span class="eqno">(68)<a class="headerlink" href="#equation-ad2cf6ef-3420-4a99-b7ad-368d697091ce" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1dc686a1-5b2c-4cc9-88a9-5466ba5bf03e">
+<span class="eqno">(68)<a class="headerlink" href="#equation-1dc686a1-5b2c-4cc9-88a9-5466ba5bf03e" title="Permalink to this equation"></a></span>\[\begin{align}
 1/V_{\mathrm{U}} \to 1/V_{\mathrm{B}}
 \end{align}\]</div>
 <p>we obtain</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5a7190b-c02e-4826-9c03-6d64a2472ef0">
-<span class="eqno">(69)<a class="headerlink" href="#equation-d5a7190b-c02e-4826-9c03-6d64a2472ef0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cc4bc56d-c7d0-4d15-9d01-181ba5ca8038">
+<span class="eqno">(69)<a class="headerlink" href="#equation-cc4bc56d-c7d0-4d15-9d01-181ba5ca8038" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G^{\circ} = \Delta G_{\mathrm{PMF}} + \Delta G_{\mathrm{corr}}^{\circ}
 \end{align}\]</div>
 <p>Substituting Eqs. \eqref{pmf:dGpmf} and \eqref{pmf:dGcorr} into the above equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8a1e491-a827-4aa1-8cec-418a7da6365c">
-<span class="eqno">(70)<a class="headerlink" href="#equation-a8a1e491-a827-4aa1-8cec-418a7da6365c" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-48257afe-0415-4cf5-b325-5cf2771b9f24">
+<span class="eqno">(70)<a class="headerlink" href="#equation-48257afe-0415-4cf5-b325-5cf2771b9f24" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G^{\circ} = - \Delta w - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{B}}}{V^{\circ}}
 \end{align}\]</div>
 <p>Since this expression does not contain <span class="math notranslate nohighlight">\(V_{\mathrm{U}}\)</span>, the value of <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)</span> is independent of the choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span>.</p>
@@ -1979,8 +1979,8 @@ fanatra<span class="w"> </span>random_frame<span class="w"> </span>run.inp
 </ul>
 <p>Specifies the starting position of the grid.</p>
 <p>If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_i\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bcfea958-41ed-47ed-93a0-624755b9fc05">
-<span class="eqno">(71)<a class="headerlink" href="#equation-bcfea958-41ed-47ed-93a0-624755b9fc05" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7484fbbd-b0d4-4b10-bf72-abe250c2c63d">
+<span class="eqno">(71)<a class="headerlink" href="#equation-7484fbbd-b0d4-4b10-bf72-abe250c2c63d" title="Permalink to this equation"></a></span>\[\begin{align}
 x_i = x_0 + (i-1)\Delta x
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x_0\)</span> is the starting position.</p>
@@ -2084,8 +2084,8 @@ x_i = x_0 + (i-1)\Delta x
 <p>In this analysis mode, one-dimensional functions stored in multiple input files are averaged.
 For example, let <span class="math notranslate nohighlight">\(f_{i}\left(x\right)\)</span> be the function stored in the <span class="math notranslate nohighlight">\(i\)</span>-th file and let <span class="math notranslate nohighlight">\(N\)</span> be the total number of files.
 The averaged function <span class="math notranslate nohighlight">\(f_{\mathrm{ave}}\left(x\right)\)</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ede21a92-2044-4897-96b3-84df3f45870e">
-<span class="eqno">(72)<a class="headerlink" href="#equation-ede21a92-2044-4897-96b3-84df3f45870e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cef9ce50-8e8f-46e1-8e0a-fe349c0c70da">
+<span class="eqno">(72)<a class="headerlink" href="#equation-cef9ce50-8e8f-46e1-8e0a-fe349c0c70da" title="Permalink to this equation"></a></span>\[\begin{align}
 f_{\mathrm{ave}}\left(x\right) = \dfrac{1}{N}\sum_{i=1}^{N}f_{i}\left(x\right),
 \end{align}\]</div>
 <section id="id19">
@@ -2185,8 +2185,8 @@ f_{\mathrm{ave}}\left(x\right) = \dfrac{1}{N}\sum_{i=1}^{N}f_{i}\left(x\right),
 </ul>
 <p>Specifies the starting position of the grid.</p>
 <p>If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_i\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-32b6cf62-5aab-4252-a103-fd1bb859184e">
-<span class="eqno">(73)<a class="headerlink" href="#equation-32b6cf62-5aab-4252-a103-fd1bb859184e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c6f18e80-b0da-4723-b78b-a26dd8162ea8">
+<span class="eqno">(73)<a class="headerlink" href="#equation-c6f18e80-b0da-4723-b78b-a26dd8162ea8" title="Permalink to this equation"></a></span>\[\begin{align}
 x_i = x_0 + (i-1)\Delta x
 \end{align} \]</div>
 <p>where <span class="math notranslate nohighlight">\(x_0\)</span> is the grid origin.</p>

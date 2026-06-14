@@ -120,20 +120,20 @@
 <h3>Theoretical Framework of IEPDYN<a class="headerlink" href="#theoretical-framework-of-iepdyn" title="Link to this heading"></a></h3>
 <p>Let <span class="math notranslate nohighlight">\(\boldsymbol{\Gamma}\)</span> denote the set of atomic coordinates and momenta (a phase point) of the system, and divide the corresponding phase space into multiple structural states.</p>
 <p>If <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is the Liouville operator of the system, the exact time evolution of the probability density of state <span class="math notranslate nohighlight">\(j\)</span>, denoted by <span class="math notranslate nohighlight">\(\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right)\)</span>, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9545d39f-f3e1-40c6-b62d-63fe5a8dd28b">
-<span class="eqno">(74)<a class="headerlink" href="#equation-9545d39f-f3e1-40c6-b62d-63fe5a8dd28b" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b426b1f2-8b27-495f-9f8b-603cd92cf504">
+<span class="eqno">(74)<a class="headerlink" href="#equation-b426b1f2-8b27-495f-9f8b-603cd92cf504" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{\partial}{\partial t}\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right) =&amp; -\mathcal{L}\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right) -\sum_{i\in\mathcal{N}_{j}}S_{ij}\left(\boldsymbol{\Gamma}\right)\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right) +\sum_{k\in\mathcal{N}_{j}}S_{jk}\left(\boldsymbol{\Gamma}\right)\hat{f}_{k}\left(\boldsymbol{\Gamma},t\right).
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\mathcal{N}_{j}\)</span> is the set of states adjacent to state <span class="math notranslate nohighlight">\(j\)</span>, and <span class="math notranslate nohighlight">\(S_{ij}\)</span> is called the <strong>reaction sink function</strong>. It is defined such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-362b5bbc-39c7-4bdb-b301-3d8d17705813">
-<span class="eqno">(75)<a class="headerlink" href="#equation-362b5bbc-39c7-4bdb-b301-3d8d17705813" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-69ea489c-85b8-420d-b668-43ea9755428a">
+<span class="eqno">(75)<a class="headerlink" href="#equation-69ea489c-85b8-420d-b668-43ea9755428a" title="Permalink to this equation"></a></span>\[\begin{align}
 S_{ij}\left(\boldsymbol{\Gamma}\right)\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right)
 \end{align}\]</div>
 <p>represents the probability that the system transitions from state <span class="math notranslate nohighlight">\(j\)</span> to state <span class="math notranslate nohighlight">\(i\)</span> during the time interval from <span class="math notranslate nohighlight">\(t\)</span> to <span class="math notranslate nohighlight">\(t+dt\)</span>.</p>
 <p>The probability that the system is in state <span class="math notranslate nohighlight">\(j\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>, denoted by <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span>, is obtained by integrating <span class="math notranslate nohighlight">\(\hat{f}_{j}\left(\boldsymbol{\Gamma},t\right)\)</span> over the phase space.</p>
 <p>From the formal solution of the above equation, the following approximate expression for <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span> is obtained:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7b19f7f6-36d3-4574-a554-2e9c3a7beb8d">
-<span class="eqno">(76)<a class="headerlink" href="#equation-7b19f7f6-36d3-4574-a554-2e9c3a7beb8d" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36c367ec-04e4-4070-b747-22a739d6aa52">
+<span class="eqno">(76)<a class="headerlink" href="#equation-36c367ec-04e4-4070-b747-22a739d6aa52" title="Permalink to this equation"></a></span>\[\begin{align}
 P_{j}\left(t\right) &amp; =P_{j}^{0}\left(t\right)+\sum_{k\in\mathcal{N}_{j}}\int_{0}^{t}d\tau\,M_{jk}\left(t-\tau\right)Q_{jk}\left(\tau\right),
 \end{align}\]</div>
 <p>where</p>
@@ -144,8 +144,8 @@ P_{j}\left(t\right) &amp; =P_{j}^{0}\left(t\right)+\sum_{k\in\mathcal{N}_{j}}\in
 </ul>
 <p>Since <span class="math notranslate nohighlight">\(P_j^0(t)\)</span> and <span class="math notranslate nohighlight">\(M_{jk}(t)\)</span> involve only a single transition event, they can be evaluated from short MD simulations.</p>
 <p>Furthermore, <span class="math notranslate nohighlight">\(Q_{jk}\left(t\right)\)</span> can also be represented by an integral equation whose kernel decays on a short time scale:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-18938cbc-836f-423b-8874-2976a8b20132">
-<span class="eqno">(77)<a class="headerlink" href="#equation-18938cbc-836f-423b-8874-2976a8b20132" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a007e301-489e-4916-a4ad-173a63ae63bf">
+<span class="eqno">(77)<a class="headerlink" href="#equation-a007e301-489e-4916-a4ad-173a63ae63bf" title="Permalink to this equation"></a></span>\[\begin{align}
 Q_{ij}\left(t\right) = R_{ij}\left(t\right) + \sum_{k\in \mathcal{N}_{j}}\int_{0}^{t}d\tau\, K_{ijk}\left(t-\tau\right) Q_{jk}\left(\tau\right),
 \end{align}\]</div>
 <p>where</p>
@@ -157,8 +157,8 @@ Q_{ij}\left(t\right) = R_{ij}\left(t\right) + \sum_{k\in \mathcal{N}_{j}}\int_{0
 Therefore, by performing short MD simulations and evaluating <span class="math notranslate nohighlight">\(R_{ij}\left(t\right)\)</span> and <span class="math notranslate nohighlight">\(K_{ijk}\left(t\right)\)</span>, one can predict long-time population dynamics <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span>.</p>
 <p>In the IEPDYN framework, the initial population of each state, <span class="math notranslate nohighlight">\(w_{j}\)</span>, must be specified.
 If the system is assumed to be in equilibrium at the initial time, let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{I}}\)</span> be the set of states that have nonzero initial populations and let <span class="math notranslate nohighlight">\(P_{j}^{\mathrm{eq}}\)</span> be the equilibrium population of state <span class="math notranslate nohighlight">\(j\)</span>. Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9c751f64-ccdf-4018-9725-8ed2f406cbd1">
-<span class="eqno">(78)<a class="headerlink" href="#equation-9c751f64-ccdf-4018-9725-8ed2f406cbd1" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6698b7ef-65d6-4957-b66f-f37628b2d161">
+<span class="eqno">(78)<a class="headerlink" href="#equation-6698b7ef-65d6-4957-b66f-f37628b2d161" title="Permalink to this equation"></a></span>\[\begin{align}
 \forall j\in \mathcal{M}_{\mathrm{I}},~ w_{j} = \dfrac{P_{j}^{\mathrm{eq}}}{\displaystyle\sum_{k\in\mathcal{M}_{\mathrm{I}}} P_{k}^{\mathrm{eq}}}
 \end{align}\]</div>
 <p>The equilibrium populations <span class="math notranslate nohighlight">\(P_j^{\mathrm{eq}}\)</span> may be obtained from free energy calculations such as umbrella sampling. Alternatively, as described later, they can also be evaluated analytically within the IEPDYN framework.</p>
@@ -180,16 +180,16 @@ If the system is assumed to be in equilibrium at the initial time, let <span cla
 <h3>Introducing Boundary Conditions<a class="headerlink" href="#introducing-boundary-conditions" title="Link to this heading"></a></h3>
 <p>In the IEPDYN framework, reflecting and absorbing boundary conditions can be introduced into the coarse-grained reaction dynamics. These boundary conditions are imposed directly on the state-to-state transition probabilities, <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span>, and are particularly useful for analyzing molecular binding processes based on the recurrence probability (RP) theory.</p>
 <p>For the <strong>reflecting boundary condition</strong>, any population entering a reflecting state is immediately redistributed to neighboring states without remaining in that state. Let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{reflect}}\)</span> denote the set of reflecting states. The reflecting boundary condition is expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4a58d513-8504-4e7b-a135-9d93cc83fe52">
-<span class="eqno">(79)<a class="headerlink" href="#equation-4a58d513-8504-4e7b-a135-9d93cc83fe52" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8a82e28d-f7e1-416f-bcea-d40cdcf91f79">
+<span class="eqno">(79)<a class="headerlink" href="#equation-8a82e28d-f7e1-416f-bcea-d40cdcf91f79" title="Permalink to this equation"></a></span>\[\begin{align}
 &amp; \forall i\in\mathcal{M}_{\mathrm{reflect}},~\forall j\in\mathcal{N}_{i}, \notag \\
 &amp; Q_{ji}\left(t\right)=R_{ij}\left(t\right) + \sum_{k\in\mathcal{N}_{j}}\int_{0}^{t}d\tau\,K_{ijk}\left(t-\tau\right)Q_{jk}\left(\tau\right),\\
 &amp; Q_{ij}\left(t\right)=0,
 \end{align}\]</div>
 <p>which represents that a population flowing from state <span class="math notranslate nohighlight">\(j\)</span> into a reflecting state <span class="math notranslate nohighlight">\(i\in\mathcal{M}_{\mathrm{reflect}}\)</span> is instantaneously reflected back to state <span class="math notranslate nohighlight">\(j\)</span>.</p>
 <p>In contrast, under the <strong>absorbing boundary condition</strong>, a population that reaches an absorbing state never transitions to any other state thereafter. Let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{absorb}}\)</span> denote the set of absorbing states. The absorbing boundary condition is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf5e8da2-637b-4718-9af8-910289d1ebf6">
-<span class="eqno">(80)<a class="headerlink" href="#equation-bf5e8da2-637b-4718-9af8-910289d1ebf6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-af00098c-be31-4370-9c34-c667f3a06de8">
+<span class="eqno">(80)<a class="headerlink" href="#equation-af00098c-be31-4370-9c34-c667f3a06de8" title="Permalink to this equation"></a></span>\[\begin{align}
 \forall i\in\mathcal{M}_{\mathrm{absorb}},~\forall j \in\mathcal{N}_{i},\quad Q_{ji}\left(t\right) =0,
 \end{align}\]</div>
 <p>which means that no population can flow out of an absorbing state. Once the population reaches an absorbing state, it is treated as having reached the final state.</p>
@@ -199,8 +199,8 @@ If the system is assumed to be in equilibrium at the initial time, let <span cla
 <h3>Incorporating Returning Probability (RP) Theory<a class="headerlink" href="#incorporating-returning-probability-rp-theory" title="Link to this heading"></a></h3>
 <p>The Returning probability (RP) theory is a rigorous framework of diffusion-influenced reactions. This theory characterizes molecular binding processes in terms of the thermodynamic and kinetic properties of the <strong>reactive state</strong> existing during binding processes. In the IEPDYN framework, the dynamical quantities required by the RP theory can be efficiently evaluated from short MD simulations.</p>
 <p>In the RP theory, the association rate constant, <span class="math notranslate nohighlight">\(k_{\mathrm{on}}\)</span>, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b265291e-cc24-452b-9a84-453a9351abc4">
-<span class="eqno">(81)<a class="headerlink" href="#equation-b265291e-cc24-452b-9a84-453a9351abc4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-98b93a6d-04cd-48dd-bae4-0a2ab05acb0c">
+<span class="eqno">(81)<a class="headerlink" href="#equation-98b93a6d-04cd-48dd-bae4-0a2ab05acb0c" title="Permalink to this equation"></a></span>\[\begin{align}
 k_{\mathrm{on}}
 =
 k_{\mathrm{ins}}K^{*}
@@ -214,14 +214,14 @@ P_{\mathrm{RET}}\left(t\right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(K^{*}\)</span> is the equilibrium constant between the reactive and unbound states, <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> is the transition rate constant from the reactive state to the bound state, and <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}\left(t\right)\)</span> is the conditional probability (returning probability) that a system initially in the reactive state is still in the reactive state at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>In the IEPDYN framework, let <span class="math notranslate nohighlight">\(\mathcal{M}_{\mathrm{R}}\)</span> denote the set of reactive states, and set the initial-state set as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-573b8bc4-567e-4cb4-970b-a3c183a61215">
-<span class="eqno">(82)<a class="headerlink" href="#equation-573b8bc4-567e-4cb4-970b-a3c183a61215" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c51cc892-c5c4-4a60-8013-7b1d6d96c1a3">
+<span class="eqno">(82)<a class="headerlink" href="#equation-c51cc892-c5c4-4a60-8013-7b1d6d96c1a3" title="Permalink to this equation"></a></span>\[\begin{align}
 \mathcal{M}_{\mathrm{I}}=\mathcal{M}_{\mathrm{R}}.
 \end{align}\]</div>
 <p>By introducing appropriate boundary conditions, both <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> and <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}(t)\)</span> can be evaluated from the state populations <span class="math notranslate nohighlight">\(P_j(t)\)</span>.</p>
 <p>For the calculation of <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span>, an absorbing boundary condition is introduced to define the completion of the binding process, while a reflecting boundary condition is imposed on the neighboring states located on the unbound side of the reactive state. Under these conditions,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59d355b1-8cdb-4d97-ab81-f05abf21f743">
-<span class="eqno">(83)<a class="headerlink" href="#equation-59d355b1-8cdb-4d97-ab81-f05abf21f743" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f3b11317-9029-4146-a4a5-a769baae75ef">
+<span class="eqno">(83)<a class="headerlink" href="#equation-f3b11317-9029-4146-a4a5-a769baae75ef" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{1}{k_{\mathrm{ins}}}
 =
 \int_{0}^{\infty}
@@ -232,8 +232,8 @@ P_{j}\left(t\right),
 \end{align}\]</div>
 <p>holds. The right-hand side corresponds to the <strong>Mean First Passage Time (MFPT)</strong> from the reactive state to the absorbing state, and its inverse gives <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span>.</p>
 <p>On the other hand, for the calculation of <span class="math notranslate nohighlight">\(P_{\mathrm{RET}}(t)\)</span>, the neighboring states located on the bound side of the reactive state are treated as reflecting boundaries. In this case,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e00f0bae-c9e0-4e6b-b698-98b39287e7a9">
-<span class="eqno">(84)<a class="headerlink" href="#equation-e00f0bae-c9e0-4e6b-b698-98b39287e7a9" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7c139026-10ef-48e9-b018-d85bd622a26b">
+<span class="eqno">(84)<a class="headerlink" href="#equation-7c139026-10ef-48e9-b018-d85bd622a26b" title="Permalink to this equation"></a></span>\[\begin{align}
 P_{\mathrm{RET}}\left(t\right)
 =
 \sum_{j\in\mathcal{M}_{\mathrm{R}}}
@@ -245,21 +245,21 @@ P_{j}\left(t\right),
 <section id="analytical-estimation-of-the-time-integral-of-p-j-left-t-right">
 <h3>Analytical Estimation of the Time Integral of <span class="math notranslate nohighlight">\(P_{j}\left(t\right)\)</span><a class="headerlink" href="#analytical-estimation-of-the-time-integral-of-p-j-left-t-right" title="Link to this heading"></a></h3>
 <p>Kinetic parameters, including <span class="math notranslate nohighlight">\(k_{\mathrm{ins}}\)</span> in the RP theory, are expressed in terms of the time integral of the state population,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6646121a-a649-401a-8036-19304fdd6e72">
-<span class="eqno">(85)<a class="headerlink" href="#equation-6646121a-a649-401a-8036-19304fdd6e72" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-765d6e01-0731-420f-9e0d-842a2396a768">
+<span class="eqno">(85)<a class="headerlink" href="#equation-765d6e01-0731-420f-9e0d-842a2396a768" title="Permalink to this equation"></a></span>\[\begin{align}
 \tau_j=\int_0^\infty dt\,P_j(t).
 \end{align}\]</div>
 <p>By introducing absorbing boundary conditions or states corresponding to infinite separation, <span class="math notranslate nohighlight">\(P_j(t)\)</span> converges to zero as <span class="math notranslate nohighlight">\(t\to\infty\)</span>.
 A straightforward approach is to solve the integral equations for the time evolution of <span class="math notranslate nohighlight">\(P_j(t)\)</span> followed by its numerical integration.
 Instead of the numerical integration, the IEPDYN enables us to directly evaluate <span class="math notranslate nohighlight">\(\tau_j\)</span> through the Laplace transform.</p>
 <p>The Laplace transform of a function <span class="math notranslate nohighlight">\(f(t)\)</span> is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-577226a9-4cbe-496a-838f-0eda40f7349f">
-<span class="eqno">(86)<a class="headerlink" href="#equation-577226a9-4cbe-496a-838f-0eda40f7349f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d286906f-ab83-4a36-8488-f608b74c8c8f">
+<span class="eqno">(86)<a class="headerlink" href="#equation-d286906f-ab83-4a36-8488-f608b74c8c8f" title="Permalink to this equation"></a></span>\[\begin{align}
 \widetilde{f}(s)=\int_0^\infty dt\,e^{-st}f(t).
 \end{align}\]</div>
 <p>Applying the Laplace transform to the integral equation for the state population yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-afcb40c9-8f7a-41aa-b59d-c438dd3e5a30">
-<span class="eqno">(87)<a class="headerlink" href="#equation-afcb40c9-8f7a-41aa-b59d-c438dd3e5a30" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a71e7cde-e999-4b20-8167-14e3f065f4dc">
+<span class="eqno">(87)<a class="headerlink" href="#equation-a71e7cde-e999-4b20-8167-14e3f065f4dc" title="Permalink to this equation"></a></span>\[\begin{align}
 \widetilde{P}_{j}\left(s\right)
 =
 \widetilde{P}_{j}^{0}\left(s\right)
@@ -269,8 +269,8 @@ Instead of the numerical integration, the IEPDYN enables us to directly evaluate
 \widetilde{Q}_{jk}\left(s\right).
 \end{align}\]</div>
 <p>Taking the limit <span class="math notranslate nohighlight">\(s\rightarrow 0\)</span>, we obtain</p>
-<div class="amsmath math notranslate nohighlight" id="equation-16578096-effa-4c40-a3b4-fdf1364f992a">
-<span class="eqno">(88)<a class="headerlink" href="#equation-16578096-effa-4c40-a3b4-fdf1364f992a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7439b59-5c4a-485d-87cc-4f48cb6fbec8">
+<span class="eqno">(88)<a class="headerlink" href="#equation-d7439b59-5c4a-485d-87cc-4f48cb6fbec8" title="Permalink to this equation"></a></span>\[\begin{align}
 \tau_{j}
 =
 \widetilde{P}_{j}^{0}\left(0\right)
@@ -281,16 +281,16 @@ Instead of the numerical integration, the IEPDYN enables us to directly evaluate
 \end{align}\]</div>
 <p>Therefore, the evaluation of <span class="math notranslate nohighlight">\(\tau_j\)</span> reduces to the calculation of <span class="math notranslate nohighlight">\(\widetilde{Q}_{jk}(0)\)</span>.
 To this end, we introduce</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd1cb3c4-b954-4f59-acf7-6c66324bf680">
-<span class="eqno">(89)<a class="headerlink" href="#equation-fd1cb3c4-b954-4f59-acf7-6c66324bf680" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6fae3476-c33e-4e3f-ad2a-64967b59d52c">
+<span class="eqno">(89)<a class="headerlink" href="#equation-6fae3476-c33e-4e3f-ad2a-64967b59d52c" title="Permalink to this equation"></a></span>\[\begin{align}
 \mathcal{K}_{ij,j^{\prime}k}\left(t\right)
 =
 \delta_{jj^{\prime}}
 K_{ijk}\left(t\right).
 \end{align}\]</div>
 <p>The integral equation for <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span> can then be written in Laplace space as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cf5d9dea-8a65-4108-bb72-ce3b86d608fd">
-<span class="eqno">(90)<a class="headerlink" href="#equation-cf5d9dea-8a65-4108-bb72-ce3b86d608fd" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d92e6a8a-5465-41ff-a6d2-0f9b2c617319">
+<span class="eqno">(90)<a class="headerlink" href="#equation-d92e6a8a-5465-41ff-a6d2-0f9b2c617319" title="Permalink to this equation"></a></span>\[\begin{align}
 \widetilde{Q}_{ij}\left(s\right)
 =
 \widetilde{R}_{ij}\left(s\right)
@@ -300,8 +300,8 @@ K_{ijk}\left(t\right).
 \widetilde{Q}_{j^{\prime}k}\left(s\right).
 \end{align}\]</div>
 <p>By introducing a composite index <span class="math notranslate nohighlight">\(\lambda\)</span> for the state pair <span class="math notranslate nohighlight">\((ij)\)</span>, the above equation can be expressed in matrix form as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f97b4eb-fa98-4491-809a-53ca2fb133da">
-<span class="eqno">(91)<a class="headerlink" href="#equation-7f97b4eb-fa98-4491-809a-53ca2fb133da" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a3f733f0-6879-4bc8-8f8d-7856c0db50c9">
+<span class="eqno">(91)<a class="headerlink" href="#equation-a3f733f0-6879-4bc8-8f8d-7856c0db50c9" title="Permalink to this equation"></a></span>\[\begin{align}
 \widetilde{\mathbf{Q}}(s)
 =
 \widetilde{\mathbf{R}}(s)
@@ -310,8 +310,8 @@ K_{ijk}\left(t\right).
 \widetilde{\mathbf{Q}}(s).
 \end{align}\]</div>
 <p>Taking the limit <span class="math notranslate nohighlight">\(s\to0\)</span> gives</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4716ad30-9764-449f-9d8c-7667dd6b157e">
-<span class="eqno">(92)<a class="headerlink" href="#equation-4716ad30-9764-449f-9d8c-7667dd6b157e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2472978a-2bb7-4ab7-8720-3b866615f47b">
+<span class="eqno">(92)<a class="headerlink" href="#equation-2472978a-2bb7-4ab7-8720-3b866615f47b" title="Permalink to this equation"></a></span>\[\begin{align}
 \widetilde{\mathbf{Q}}\left(0\right)
 =
 \left[
@@ -322,8 +322,8 @@ K_{ijk}\left(t\right).
 \widetilde{\mathbf{R}}\left(0\right),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> is the identity matrix and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-690d8c89-f53f-4827-90c7-c62f1a560ee3">
-<span class="eqno">(93)<a class="headerlink" href="#equation-690d8c89-f53f-4827-90c7-c62f1a560ee3" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-935a1ac8-e591-4475-b818-6d34dcac585d">
+<span class="eqno">(93)<a class="headerlink" href="#equation-935a1ac8-e591-4475-b818-6d34dcac585d" title="Permalink to this equation"></a></span>\[\begin{align}
 \left(
 \mathbf{I}
 -
@@ -342,25 +342,25 @@ This approach eliminates the need to explicitly compute the long-time evolution 
 <section id="analytical-evaluation-of-the-equilibrium-population-p-j-left-infty-right">
 <h3>Analytical Evaluation of the Equilibrium Population <span class="math notranslate nohighlight">\(P_{j}\left(\infty\right)\)</span><a class="headerlink" href="#analytical-evaluation-of-the-equilibrium-population-p-j-left-infty-right" title="Link to this heading"></a></h3>
 <p>For systems in which the total population is conserved, the equilibrium population of state <span class="math notranslate nohighlight">\(j\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-54df41da-f840-4913-8682-c3ae25ff4c61">
-<span class="eqno">(94)<a class="headerlink" href="#equation-54df41da-f840-4913-8682-c3ae25ff4c61" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1be03c2c-167a-4dfc-805c-b486a5da5ae1">
+<span class="eqno">(94)<a class="headerlink" href="#equation-1be03c2c-167a-4dfc-805c-b486a5da5ae1" title="Permalink to this equation"></a></span>\[\begin{align}
 P_j^{\mathrm{eq}}\equiv P_j(\infty),
 \end{align}\]</div>
 <p>can be evaluated without numerically integrating the time evolution of <span class="math notranslate nohighlight">\(P_j(t)\)</span>.</p>
 <p>First, the state-transition probability <span class="math notranslate nohighlight">\(Q_{ij}(t)\)</span> is decomposed into its equilibrium and time-dependent components as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-365810f2-c60c-4306-a693-cb784c03946f">
-<span class="eqno">(95)<a class="headerlink" href="#equation-365810f2-c60c-4306-a693-cb784c03946f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-753b6358-3917-49ed-a4b7-b409614d4e16">
+<span class="eqno">(95)<a class="headerlink" href="#equation-753b6358-3917-49ed-a4b7-b409614d4e16" title="Permalink to this equation"></a></span>\[\begin{align}
 Q_{ij}(t)=Q_{ij}^{\mathrm{eq}}+\delta Q_{ij}(t).
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0b7c96b-918a-4a55-beca-15564e6e07a0">
-<span class="eqno">(96)<a class="headerlink" href="#equation-a0b7c96b-918a-4a55-beca-15564e6e07a0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-24c4e5d8-6993-42a1-84a8-a59a1101a080">
+<span class="eqno">(96)<a class="headerlink" href="#equation-24c4e5d8-6993-42a1-84a8-a59a1101a080" title="Permalink to this equation"></a></span>\[\begin{align}
 Q_{ij}^{\mathrm{eq}}\equiv Q_{ij}(\infty)
 \end{align}\]</div>
 <p>represents the equilibrium population flux from state <span class="math notranslate nohighlight">\(j\)</span> to state <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <p>Substituting this decomposition into the IEPDYN integral equation and taking the limit <span class="math notranslate nohighlight">\(t\to\infty\)</span>, we obtain</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c33cda3-4433-45a3-a86a-3ba10ea84511">
-<span class="eqno">(97)<a class="headerlink" href="#equation-6c33cda3-4433-45a3-a86a-3ba10ea84511" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c4addfe7-3069-405b-bf14-b8605129e13c">
+<span class="eqno">(97)<a class="headerlink" href="#equation-c4addfe7-3069-405b-bf14-b8605129e13c" title="Permalink to this equation"></a></span>\[\begin{align}
 P_{j}^{\mathrm{eq}}
 &amp;=
 \lim_{t\to\infty}
@@ -379,8 +379,8 @@ I_{jk}
 Q_{jk}^{\mathrm{eq}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(I_{jk}\)</span> is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5e5afd2-edec-4997-a1bf-ded3fb97d042">
-<span class="eqno">(98)<a class="headerlink" href="#equation-d5e5afd2-edec-4997-a1bf-ded3fb97d042" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ad6bc48b-ea87-4178-938b-9a5b084bf994">
+<span class="eqno">(98)<a class="headerlink" href="#equation-ad6bc48b-ea87-4178-938b-9a5b084bf994" title="Permalink to this equation"></a></span>\[\begin{align}
 I_{jk}
 =
 \int_{0}^{\infty}
@@ -388,8 +388,8 @@ dt\,
 M_{jk}(t).
 \end{align}\]</div>
 <p>Since both <span class="math notranslate nohighlight">\(M_{jk}(t)\)</span> and <span class="math notranslate nohighlight">\(\delta Q_{jk}(t)\)</span> vanish in the limit <span class="math notranslate nohighlight">\(t\to\infty\)</span>, the first term disappears, yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a344262-83cf-4efc-85c5-c6e56ba7e8d4">
-<span class="eqno">(99)<a class="headerlink" href="#equation-1a344262-83cf-4efc-85c5-c6e56ba7e8d4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f4116ca0-3676-491d-9b37-0741c0011e6b">
+<span class="eqno">(99)<a class="headerlink" href="#equation-f4116ca0-3676-491d-9b37-0741c0011e6b" title="Permalink to this equation"></a></span>\[\begin{align}
 P_{j}^{\mathrm{eq}}
 =
 \sum_{k\in\mathcal{N}_{j}}
@@ -398,8 +398,8 @@ Q_{jk}^{\mathrm{eq}}.
 \end{align}\]</div>
 <p>Therefore, once the equilibrium transition fluxes <span class="math notranslate nohighlight">\(Q_{jk}^{\mathrm{eq}}\)</span> are determined, the equilibrium populations of all states can be calculated directly.</p>
 <p>Furthermore, the integral equation can be written in matrix form as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92e70e24-bbba-4f3e-8b56-6c95e67fe361">
-<span class="eqno">(100)<a class="headerlink" href="#equation-92e70e24-bbba-4f3e-8b56-6c95e67fe361" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9cfb5694-d0d4-40c3-aeb7-a194fdb2c579">
+<span class="eqno">(100)<a class="headerlink" href="#equation-9cfb5694-d0d4-40c3-aeb7-a194fdb2c579" title="Permalink to this equation"></a></span>\[\begin{align}
 \boldsymbol{\delta}{\bf Q}(t)
 &amp;=
 {\bf R}(t)
@@ -417,8 +417,8 @@ d\tau\,
 {\bf Q}^{\mathrm{eq}},
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2fc89e50-654a-4880-a674-301b21144df0">
-<span class="eqno">(101)<a class="headerlink" href="#equation-2fc89e50-654a-4880-a674-301b21144df0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ef2b22d8-9b29-4ade-8b32-7b0cc4b9639e">
+<span class="eqno">(101)<a class="headerlink" href="#equation-ef2b22d8-9b29-4ade-8b32-7b0cc4b9639e" title="Permalink to this equation"></a></span>\[\begin{align}
 J_{\lambda\mu}
 =
 \int_{0}^{\infty}
@@ -426,8 +426,8 @@ dt\,
 \mathcal{K}_{\lambda\mu}(t).
 \end{align}\]</div>
 <p>In the limit <span class="math notranslate nohighlight">\(t\to\infty\)</span>, the time-dependent terms vanish, leading to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dba2eae5-f008-474c-92e7-f5e27d506c09">
-<span class="eqno">(102)<a class="headerlink" href="#equation-dba2eae5-f008-474c-92e7-f5e27d506c09" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7719c773-fdb8-4de1-b356-f1a5359e6127">
+<span class="eqno">(102)<a class="headerlink" href="#equation-7719c773-fdb8-4de1-b356-f1a5359e6127" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf J}
 {\bf Q}^{\mathrm{eq}}
 =
@@ -435,8 +435,8 @@ dt\,
 \end{align}\]</div>
 <p>Thus, <span class="math notranslate nohighlight">\({\bf Q}^{\mathrm{eq}}\)</span> is given by the eigenvector of the matrix <span class="math notranslate nohighlight">\({\bf J}\)</span> corresponding to the eigenvalue of unity.
 By solving this eigenvalue problem, the equilibrium transition fluxes can be obtained, and the equilibrium populations are then evaluated from</p>
-<div class="amsmath math notranslate nohighlight" id="equation-35c5079d-1f79-4ce4-9742-ad3afb6e64fa">
-<span class="eqno">(103)<a class="headerlink" href="#equation-35c5079d-1f79-4ce4-9742-ad3afb6e64fa" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-08ddefe8-ac2f-4067-b66a-03fb2d85ae5b">
+<span class="eqno">(103)<a class="headerlink" href="#equation-08ddefe8-ac2f-4067-b66a-03fb2d85ae5b" title="Permalink to this equation"></a></span>\[\begin{align}
 P_{j}^{\mathrm{eq}}
 =
 \sum_{k\in\mathcal{N}_{j}}
@@ -444,8 +444,8 @@ I_{jk}
 Q_{jk}^{\mathrm{eq}}.
 \end{align}\]</div>
 <p>The resulting equilibrium populations are also used to determine the initial statistical weights in the IEPDYN formalism:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a709617d-e294-4783-b9d4-5067dcfcdad4">
-<span class="eqno">(104)<a class="headerlink" href="#equation-a709617d-e294-4783-b9d4-5067dcfcdad4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e4cff80a-7ac9-4a71-9987-e86cc314a2c2">
+<span class="eqno">(104)<a class="headerlink" href="#equation-e4cff80a-7ac9-4a71-9987-e86cc314a2c2" title="Permalink to this equation"></a></span>\[\begin{align}
 \forall j\in\mathcal{M}_{\mathrm{I}},
 \quad
 w_j
@@ -958,8 +958,8 @@ The information stored in this file corresponds to the state before applying bou
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">*.int</span></code> (<code class="docutils literal notranslate"><span class="pre">calc_Pint</span> <span class="pre">=</span> <span class="pre">.true.</span></code>)</p>
 <p>Stores</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d32c373a-adf0-495f-830e-d73830dc9849">
-<span class="eqno">(105)<a class="headerlink" href="#equation-d32c373a-adf0-495f-830e-d73830dc9849" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-32b92894-771d-423f-88d8-89628b01bd9e">
+<span class="eqno">(105)<a class="headerlink" href="#equation-32b92894-771d-423f-88d8-89628b01bd9e" title="Permalink to this equation"></a></span>\[\begin{align}
 \tau_{j} = \int_{0}^{\infty} dt\, P_{j}\left(t\right),
 \end{align}\]</div>
 <p>in the following format:</p>
@@ -998,8 +998,8 @@ The information stored in this file corresponds to the state before applying bou
 <li><p>State 4 (including the dissociated state): <span class="math notranslate nohighlight">\(4 \leq r\)</span></p></li>
 </ul>
 <p>The target quantity is defined as the residence time correlation function,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e8706f6-0439-493e-893d-f13fdb7512e8">
-<span class="eqno">(106)<a class="headerlink" href="#equation-9e8706f6-0439-493e-893d-f13fdb7512e8" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aa0f47fc-0e79-4f53-8e35-e133fd1bc9f8">
+<span class="eqno">(106)<a class="headerlink" href="#equation-aa0f47fc-0e79-4f53-8e35-e133fd1bc9f8" title="Permalink to this equation"></a></span>\[\begin{align}
 P_{\mathrm{B}}\left(t\right)
 =
 \dfrac{\displaystyle \sum_{k\in \mathcal{M}_{\mathrm{I}}}P_{k}\left(t\right)}

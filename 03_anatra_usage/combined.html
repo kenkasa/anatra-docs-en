@@ -1017,34 +1017,34 @@ If fitting or centering is performed simultaneously, <code class="docutils liter
 <h4>Mean Square Displacement<a class="headerlink" href="#mean-square-displacement" title="Link to this heading"></a></h4>
 <p>Here, we introduce the definition of the mean square displacement (MSD) <span class="math notranslate nohighlight">\(\chi(t)\)</span> and discuss its significance based on the diffusion equation.</p>
 <p>Let <span class="math notranslate nohighlight">\({\bf r}(t)\)</span> denote the position of a molecule at time <span class="math notranslate nohighlight">\(t\)</span>. The MSD is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f2e6d54d-c38d-43fd-9995-865c55f658f7">
-<span class="eqno">(1)<a class="headerlink" href="#equation-f2e6d54d-c38d-43fd-9995-865c55f658f7" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dc7da75c-9bf3-4e7a-9af2-9e01de4a4e72">
+<span class="eqno">(1)<a class="headerlink" href="#equation-dc7da75c-9bf3-4e7a-9af2-9e01de4a4e72" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
 \end{align}\]</div>
 <p>That is, <span class="math notranslate nohighlight">\(\chi(t)\)</span> represents the time-averaged squared displacement of a molecule after a time interval <span class="math notranslate nohighlight">\(t\)</span>. To understand how MSD is described by the diffusion equation, let us consider a probability density <span class="math notranslate nohighlight">\(\rho({\bf r},t)\)</span> representing the location of a molecule, and a diffusion coefficient <span class="math notranslate nohighlight">\(D\)</span>. The diffusion equation is written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4fafc4f2-1900-40f4-93b2-f7b51b6f5230">
-<span class="eqno">(2)<a class="headerlink" href="#equation-4fafc4f2-1900-40f4-93b2-f7b51b6f5230" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fd524dfb-f0e3-41ad-8bb2-9dd2b6809e6e">
+<span class="eqno">(2)<a class="headerlink" href="#equation-fd524dfb-f0e3-41ad-8bb2-9dd2b6809e6e" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
 \end{align}\]</div>
 <p>Assuming that the molecule was initially located at <span class="math notranslate nohighlight">\({\bf 0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, the initial condition is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17af4e6e-98f1-4f67-981c-2a6f288115e9">
-<span class="eqno">(3)<a class="headerlink" href="#equation-17af4e6e-98f1-4f67-981c-2a6f288115e9" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9ec4a5a0-6d5f-4665-a0fe-f9d5a2f193a9">
+<span class="eqno">(3)<a class="headerlink" href="#equation-9ec4a5a0-6d5f-4665-a0fe-f9d5a2f193a9" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
 \end{align}\]</div>
 <p>Solving the diffusion equation under this condition yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40837676-8733-429f-b9bd-82a23d39d715">
-<span class="eqno">(4)<a class="headerlink" href="#equation-40837676-8733-429f-b9bd-82a23d39d715" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a80cc832-cd60-4f33-8337-3acf5df45c03">
+<span class="eqno">(4)<a class="headerlink" href="#equation-a80cc832-cd60-4f33-8337-3acf5df45c03" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
 \end{align}\]</div>
 <p>Using this solution, the MSD can be expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d1fd87d-903e-45f9-ab70-b474e54d5e68">
-<span class="eqno">(5)<a class="headerlink" href="#equation-0d1fd87d-903e-45f9-ab70-b474e54d5e68" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0dd28e47-2857-4d6d-ae97-803f56b2b83e">
+<span class="eqno">(5)<a class="headerlink" href="#equation-0dd28e47-2857-4d6d-ae97-803f56b2b83e" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
                    = 6Dt,
 \end{align}\]</div>
 <p>indicating that MSD increases linearly with time, with a slope of <span class="math notranslate nohighlight">\(6D\)</span>. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-81ea65e1-89a3-4d28-8062-eaf63dd450ae">
-<span class="eqno">(6)<a class="headerlink" href="#equation-81ea65e1-89a3-4d28-8062-eaf63dd450ae" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e57a4660-a05f-432e-8c12-f83f56d1f135">
+<span class="eqno">(6)<a class="headerlink" href="#equation-e57a4660-a05f-432e-8c12-f83f56d1f135" title="Permalink to this equation"></a></span>\[\begin{align}
 D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
 \end{align}\]</div>
 <p>This expression is known as Einstein<span class="math notranslate nohighlight">\(^\prime\)</span>s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.</p>
@@ -1244,68 +1244,68 @@ D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf 
 <section id="rdf-for-identical-particles">
 <h4>RDF for Identical Particles<a class="headerlink" href="#rdf-for-identical-particles" title="Link to this heading"></a></h4>
 <p>Consider a system containing <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, with a total volume <span class="math notranslate nohighlight">\(V\)</span> and a bulk number density <span class="math notranslate nohighlight">\(\rho_a = N_a/V\)</span>. The local density field <span class="math notranslate nohighlight">\(\hat{\rho}_{a}\left({\bf r}\right)\)</span> is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7a4782ba-5c80-477a-b6e0-a0e38be25c05">
-<span class="eqno">(7)<a class="headerlink" href="#equation-7a4782ba-5c80-477a-b6e0-a0e38be25c05" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8f13b5a5-a271-4ba8-99e5-c86e73006767">
+<span class="eqno">(7)<a class="headerlink" href="#equation-8f13b5a5-a271-4ba8-99e5-c86e73006767" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right).
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\({\bf r}_{i}\)</span> is the position of the <span class="math notranslate nohighlight">\(i\)</span>-th particle of type <span class="math notranslate nohighlight">\(a\)</span>. If no external field is present, the ensemble average of the local density field is reduced to the bulk density.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb2db00e-7ecd-4071-b6f1-17d3110229fc">
-<span class="eqno">(8)<a class="headerlink" href="#equation-cb2db00e-7ecd-4071-b6f1-17d3110229fc" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8b5d246e-1265-482a-bc08-92785e9a3897">
+<span class="eqno">(8)<a class="headerlink" href="#equation-8b5d246e-1265-482a-bc08-92785e9a3897" title="Permalink to this equation"></a></span>\[\begin{align}
 \Braket{\hat{\rho}_{a}\left({\bf r}\right)} = \rho_{a}.
 \end{align}\]</div>
 <p>The, let us define the two-body density correlation function as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a92a5270-4c4f-4000-8a57-947e7e6a4fa6">
-<span class="eqno">(9)<a class="headerlink" href="#equation-a92a5270-4c4f-4000-8a57-947e7e6a4fa6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-79fb6e1a-6d57-427b-ac33-61828570a50b">
+<span class="eqno">(9)<a class="headerlink" href="#equation-79fb6e1a-6d57-427b-ac33-61828570a50b" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left({\bf r},{\bf r}^{\prime}\right) = \Braket{\hat{\rho}_{a}\left({\bf r}\right)\hat{\rho}_{a}\left({\bf r}^{\prime}\right)} = \Braket{\sum_{i=1}^{N_{a}}\sum_{j=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
 \end{align}\]</div>
 <p>Separating the terms for <span class="math notranslate nohighlight">\(i = j\)</span> and <span class="math notranslate nohighlight">\(i \ne j\)</span> gives</p>
-<div class="amsmath math notranslate nohighlight" id="equation-75383bba-1783-4948-87b5-dff1010a3229">
-<span class="eqno">(10)<a class="headerlink" href="#equation-75383bba-1783-4948-87b5-dff1010a3229" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ea66c6be-b953-4a4e-9689-b3639830c4c1">
+<span class="eqno">(10)<a class="headerlink" href="#equation-ea66c6be-b953-4a4e-9689-b3639830c4c1" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} + \sum_{i=1}^{N_{a}}{\sum_{j\ne i}^{N_{a}}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
 \end{align}\]</div>
 <p>The first term represents the probability that the same particle exists at both <span class="math notranslate nohighlight">\({\bf r}\)</span> and <span class="math notranslate nohighlight">\({\bf r}'\)</span>, which is clearly zero unless <span class="math notranslate nohighlight">\({\bf r} = {\bf r}'\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e42f3cdf-34ba-49ac-97df-b3a92685a3bb">
-<span class="eqno">(11)<a class="headerlink" href="#equation-e42f3cdf-34ba-49ac-97df-b3a92685a3bb" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-28b9f07d-f22c-457c-bcd6-bc70e19429cc">
+<span class="eqno">(11)<a class="headerlink" href="#equation-28b9f07d-f22c-457c-bcd6-bc70e19429cc" title="Permalink to this equation"></a></span>\[\begin{align}
 \sum_{i=1}^{N_{a}}\braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} = \rho_{a}\delta\left({\bf r}-{\bf r}^{\prime}\right).
 \end{align}\]</div>
 <p>The second term, called the two-body density, represents the probability that one particle is at <span class="math notranslate nohighlight">\({\bf r}\)</span> and another is at <span class="math notranslate nohighlight">\({\bf r}'\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a98b2f4c-ccca-43b0-9375-ae522009a928">
-<span class="eqno">(12)<a class="headerlink" href="#equation-a98b2f4c-ccca-43b0-9375-ae522009a928" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eb24279a-9816-4148-9617-b5f3d48d0361">
+<span class="eqno">(12)<a class="headerlink" href="#equation-eb24279a-9816-4148-9617-b5f3d48d0361" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\sum_{j\ne i}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
 \end{align}\]</div>
 <p>If <span class="math notranslate nohighlight">\({\bf r}\)</span> and <span class="math notranslate nohighlight">\({\bf r}'\)</span> are far apart, their correlation is negligible. Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dfac0923-72e6-4733-b5c8-eb921b7361e7">
-<span class="eqno">(13)<a class="headerlink" href="#equation-dfac0923-72e6-4733-b5c8-eb921b7361e7" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b5079ba0-8021-4477-9c12-c4fc3a676d0a">
+<span class="eqno">(13)<a class="headerlink" href="#equation-b5079ba0-8021-4477-9c12-c4fc3a676d0a" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) \approx \rho_{a}^{2}\left(1-\dfrac{1}{N_{a}}\right).\qquad (\left|{\bf r} - {\bf r}^{\prime}\right|\to \infty)
 \end{align}\]</div>
 <p>The pair distribution function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ddf0f2ec-fc89-4e8b-8e57-0c2bd92b5051">
-<span class="eqno">(14)<a class="headerlink" href="#equation-ddf0f2ec-fc89-4e8b-8e57-0c2bd92b5051" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-65ec0a32-b1d1-47f9-9743-5db3d93f5c03">
+<span class="eqno">(14)<a class="headerlink" href="#equation-65ec0a32-b1d1-47f9-9743-5db3d93f5c03" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}(1 - 1/N_{a})}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
 \end{align}\]</div>
 <p>For large systems, <span class="math notranslate nohighlight">\(1/N_a \approx 0\)</span>. Therefore,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b284dac9-070d-4bea-a98a-36c185e5174f">
-<span class="eqno">(15)<a class="headerlink" href="#equation-b284dac9-070d-4bea-a98a-36c185e5174f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-00714050-decf-483c-a36c-c0602c1b951b">
+<span class="eqno">(15)<a class="headerlink" href="#equation-00714050-decf-483c-a36c-c0602c1b951b" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
 \end{align}\]</div>
 <p>In uniform systems, the function depends only on the relative position, indicating</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72933357-85f9-4a44-b107-fed0a34ce1c3">
-<span class="eqno">(16)<a class="headerlink" href="#equation-72933357-85f9-4a44-b107-fed0a34ce1c3" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0c7b8f94-eb5d-4004-969f-8611f177ca88">
+<span class="eqno">(16)<a class="headerlink" href="#equation-0c7b8f94-eb5d-4004-969f-8611f177ca88" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}^{\prime}-{\bf r}\right).
 \end{align}\]</div>
 <p>Let <span class="math notranslate nohighlight">\({\bf r}\)</span> be <span class="math notranslate nohighlight">\({\bf r}' - {\bf r}\)</span> and <span class="math notranslate nohighlight">\(g_{aa}\left({\bf r}\right)\)</span> be the spatial distribution function (SDF) defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-266feaf1-569c-415f-9224-38e87cd630e2">
-<span class="eqno">(17)<a class="headerlink" href="#equation-266feaf1-569c-415f-9224-38e87cd630e2" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-536785dc-2ddc-4ae4-b3fc-7a65fd27a674">
+<span class="eqno">(17)<a class="headerlink" href="#equation-536785dc-2ddc-4ae4-b3fc-7a65fd27a674" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}\left({\bf r}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}\right).
 \end{align}\]</div>
 <p>Averaging over orientation leads to the radial distribution function (RDF) defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-995d5f46-b914-414a-a832-0164303609ad">
-<span class="eqno">(18)<a class="headerlink" href="#equation-995d5f46-b914-414a-a832-0164303609ad" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7fac3c8-e297-467e-9d4f-f000f91436a5">
+<span class="eqno">(18)<a class="headerlink" href="#equation-d7fac3c8-e297-467e-9d4f-f000f91436a5" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}\left(r\right) = \dfrac{1}{4\pi r^{2}}\int d{\bf r}\,\delta\left(\left|{\bf r}\right|-r\right)g_{aa}\left({\bf r}\right).
 \end{align}\]</div>
 <p>For isotropic systems, the following relationship holds.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24916bbb-f5fb-445e-9f22-c38a502c7e3f">
-<span class="eqno">(19)<a class="headerlink" href="#equation-24916bbb-f5fb-445e-9f22-c38a502c7e3f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a787f1e5-bc0c-45de-b585-ee9354696255">
+<span class="eqno">(19)<a class="headerlink" href="#equation-a787f1e5-bc0c-45de-b585-ee9354696255" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
 \end{align}\]</div>
 <p>RDF gives the relative probability of finding a particle at distance <span class="math notranslate nohighlight">\(r\)</span> compared to bulk. <span class="math notranslate nohighlight">\(g_{aa}(r) &gt; 1\)</span> indicates higher probability, <span class="math notranslate nohighlight">\(g_{aa}(r) &lt; 1\)</span> indicates lower probability than bulk.</p>
@@ -1313,23 +1313,23 @@ g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
 <section id="rdf-for-heterogeneous-particles">
 <h4>RDF for Heterogeneous Particles<a class="headerlink" href="#rdf-for-heterogeneous-particles" title="Link to this heading"></a></h4>
 <p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(N_b\)</span> of type <span class="math notranslate nohighlight">\(b\)</span>, with respective bulk densities <span class="math notranslate nohighlight">\(\rho_a = N_a/V\)</span> and <span class="math notranslate nohighlight">\(\rho_b = N_b/V\)</span>. The two-body density is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b957b14a-fe1c-40ce-9cf0-16382a1839a0">
-<span class="eqno">(20)<a class="headerlink" href="#equation-b957b14a-fe1c-40ce-9cf0-16382a1839a0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dd1dba15-e8d1-435f-9580-7f6a60102659">
+<span class="eqno">(20)<a class="headerlink" href="#equation-dd1dba15-e8d1-435f-9580-7f6a60102659" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{ab}^{(2)}({\bf r},{\bf r}') = \sum_{i=1}^{N_a}\sum_{j=1}^{N_b}\Braket{\delta({\bf r} - {\bf r}_i^a)\delta({\bf r}' - {\bf r}_j^b)}.
 \end{align}\]</div>
 <p>For uncorrelated particles,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7cb0fdec-4593-44ab-8139-83926ad46114">
-<span class="eqno">(21)<a class="headerlink" href="#equation-7cb0fdec-4593-44ab-8139-83926ad46114" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-22b76a12-1f2c-4092-80f8-0a4730567cf5">
+<span class="eqno">(21)<a class="headerlink" href="#equation-22b76a12-1f2c-4092-80f8-0a4730567cf5" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{ab}^{(2)}({\bf r},{\bf r}') \approx \rho_a \rho_b.
 \end{align}\]</div>
 <p>The spatial distribution function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b579abb9-4864-4670-af38-6b14f04493ed">
-<span class="eqno">(22)<a class="headerlink" href="#equation-b579abb9-4864-4670-af38-6b14f04493ed" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-491b0b61-580d-4543-b544-a3c82d88d2a1">
+<span class="eqno">(22)<a class="headerlink" href="#equation-491b0b61-580d-4543-b544-a3c82d88d2a1" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{ab}({\bf r}) = \dfrac{1}{\rho_a \rho_b} \rho_{ab}^{(2)}({\bf 0}, {\bf r}),
 \end{align}\]</div>
 <p>and the RDF is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aff1e09f-ec94-4a20-96b8-afaa634b0fd6">
-<span class="eqno">(23)<a class="headerlink" href="#equation-aff1e09f-ec94-4a20-96b8-afaa634b0fd6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-455f92fe-d45d-475a-aa7e-d140e679ebee">
+<span class="eqno">(23)<a class="headerlink" href="#equation-455f92fe-d45d-475a-aa7e-d140e679ebee" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\bf r}).
 \end{align}\]</div>
 </section>
@@ -1521,18 +1521,18 @@ g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\
 <h3>Theoretical Background<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, volume <span class="math notranslate nohighlight">\(V\)</span>, and number density <span class="math notranslate nohighlight">\(\rho_a = N_a / V\)</span>. Assume that one molecule is fixed at the center of the system, including its orientation, acting effectively as an external field. Although such a situation does not naturally occur in standard solution-phase MD simulations, a virtually equivalent condition can be constructed by aligning all trajectories to a reference structure (fitting), as described at the end of this section.</p>
 <p>Similar to the radial distribution function, we define the local number density of particle <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8dd94a7-77cb-45f8-8a6b-e065727065a0">
-<span class="eqno">(24)<a class="headerlink" href="#equation-a8dd94a7-77cb-45f8-8a6b-e065727065a0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7f703229-eae2-425d-9953-78120f4b5496">
+<span class="eqno">(24)<a class="headerlink" href="#equation-7f703229-eae2-425d-9953-78120f4b5496" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}} \delta\left({\bf r} - {\bf r}_i \right).
 \end{align}\]</div>
 <p>Its ensemble average under the external field gives the one-body density</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b145f12f-4765-402a-bce4-ab97a9d59d15">
-<span class="eqno">(25)<a class="headerlink" href="#equation-b145f12f-4765-402a-bce4-ab97a9d59d15" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-589cabd5-3618-4a14-8e95-cd5331703750">
+<span class="eqno">(25)<a class="headerlink" href="#equation-589cabd5-3618-4a14-8e95-cd5331703750" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\langle \cdots \rangle_{\mathrm{ext}}\)</span> denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, <span class="math notranslate nohighlight">\(\rho_a({\bf r}) = \rho_a\)</span>. THen, we define the spatial distribution function (SDF) as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-972af683-cde6-4588-accf-8ac2d8919ec8">
-<span class="eqno">(26)<a class="headerlink" href="#equation-972af683-cde6-4588-accf-8ac2d8919ec8" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8b0d82cc-220e-422e-94cc-b10c06ba7666">
+<span class="eqno">(26)<a class="headerlink" href="#equation-8b0d82cc-220e-422e-94cc-b10c06ba7666" title="Permalink to this equation"></a></span>\[\begin{align}
 g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
 \end{align}\]</div>
 <p>If <span class="math notranslate nohighlight">\(g_a({\bf r}) &gt; 1\)</span>, the local probability of finding particle <span class="math notranslate nohighlight">\(a\)</span> is larger than the bulk value; if <span class="math notranslate nohighlight">\(g_a({\bf r}) &lt; 1\)</span>, it is lower than in bulk.</p>
@@ -1631,8 +1631,8 @@ g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">-origin</span> <span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
 </ul>
 <p>Sets the origin of the grid. For origin <span class="math notranslate nohighlight">\((x_0, y_0, z_0)\)</span>, the coordinates of grid point <span class="math notranslate nohighlight">\((i_x, i_y, i_z)\)</span> are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-649b0df2-f774-436c-8da2-5b5b8e2f1db7">
-<span class="eqno">(27)<a class="headerlink" href="#equation-649b0df2-f774-436c-8da2-5b5b8e2f1db7" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1b732c92-d5ac-4751-8341-47d6b3788d14">
+<span class="eqno">(27)<a class="headerlink" href="#equation-1b732c92-d5ac-4751-8341-47d6b3788d14" title="Permalink to this equation"></a></span>\[\begin{align}
 x_i = x_0 + \Delta x \, (i_x - 1) \\
 y_i = y_0 + \Delta y \, (i_y - 1) \\
 z_i = z_0 + \Delta z \, (i_z - 1)
@@ -1698,13 +1698,13 @@ z_i = z_0 + \Delta z \, (i_z - 1)
 <li><p>Note: Active only if <code class="docutils literal notranslate"><span class="pre">-use_spline</span> <span class="pre">true</span></code> is specified.</p></li>
 </ul>
 <p>Specifies the subdivision factor <span class="math notranslate nohighlight">\(n_r\)</span> for each grid axis. Given the original grid spacing <span class="math notranslate nohighlight">\(\Delta \alpha\)</span> (<span class="math notranslate nohighlight">\(\alpha = x, y, z\)</span>), the refined grid spacing becomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b85e75a-aa2d-4916-8f5d-84a28f1c0ba8">
-<span class="eqno">(28)<a class="headerlink" href="#equation-0b85e75a-aa2d-4916-8f5d-84a28f1c0ba8" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-306b634d-979f-4d84-9b7b-c98f9084c7a9">
+<span class="eqno">(28)<a class="headerlink" href="#equation-306b634d-979f-4d84-9b7b-c98f9084c7a9" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta \alpha' = \frac{\Delta \alpha}{n_r}
 \end{align}\]</div>
 <p>The total number of grid points changes from <span class="math notranslate nohighlight">\(N\)</span> to:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-279e2574-6ba3-4a6f-86cb-7a0768144e94">
-<span class="eqno">(29)<a class="headerlink" href="#equation-279e2574-6ba3-4a6f-86cb-7a0768144e94" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3bd4a121-5a28-43ae-8d35-8450ca229f16">
+<span class="eqno">(29)<a class="headerlink" href="#equation-3bd4a121-5a28-43ae-8d35-8450ca229f16" title="Permalink to this equation"></a></span>\[\begin{align}
 N' = n_r^3 \cdot N
 \end{align}\]</div>
 </li>
@@ -1763,8 +1763,8 @@ SDF output in DX format with spline interpolation. Generated only if <code class
 <h3>Theoretical Background<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
 <p>This section explains the definition of the root-mean-square deviation (RMSD). RMSD quantitatively evaluates the structural deviation of a molecule or a specific region of interest from a reference structure at a given time during an MD simulation. It is commonly used to assess how much a structure deviates from, for example, an experimental crystal structure during the equilibration phase, and whether or not it relaxes over time.</p>
 <p>Consider a molecule composed of <span class="math notranslate nohighlight">\(N_{\mathrm{sel}}\)</span> atoms. Let <span class="math notranslate nohighlight">\({\bf r}_i\)</span> denote the position of the <span class="math notranslate nohighlight">\(i\)</span>-th atom, <span class="math notranslate nohighlight">\({\bf r}^{\mathrm{ref}}_i\)</span> the corresponding coordinate in the reference structure, and <span class="math notranslate nohighlight">\({\bf r}_i(t)\)</span> the position at time <span class="math notranslate nohighlight">\(t\)</span>. Then, the RMSD <span class="math notranslate nohighlight">\(\chi(t)\)</span> is defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea28e2a2-7289-47a0-8e08-c84f3b2c6db4">
-<span class="eqno">(30)<a class="headerlink" href="#equation-ea28e2a2-7289-47a0-8e08-c84f3b2c6db4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cb6bec4f-8d37-48f1-8acb-e8df0160cbfb">
+<span class="eqno">(30)<a class="headerlink" href="#equation-cb6bec4f-8d37-48f1-8acb-e8df0160cbfb" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
 \end{align}\]</div>
 </section>
@@ -1933,24 +1933,24 @@ SDF output in DX format with spline interpolation. Generated only if <code class
 <ul>
 <li><p><strong>Electrostatic Interaction</strong><br />
 Electrostatic interaction energy <span class="math notranslate nohighlight">\(U_{\mathrm{elec}}\)</span> between molecules A and B can be computed using two schemes. The first is the bare interaction,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a4d82b6-0fa4-4545-889a-84d0f7364fb0">
-<span class="eqno">(31)<a class="headerlink" href="#equation-9a4d82b6-0fa4-4545-889a-84d0f7364fb0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7853972e-e755-4caf-a954-89b528a74890">
+<span class="eqno">(31)<a class="headerlink" href="#equation-7853972e-e755-4caf-a954-89b528a74890" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{elec}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} \frac{q_i q_j}{r_{ij}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> denote atomic indices in molecules A and B, respectively. The second scheme uses the Smooth Particle Mesh Ewald (SPME) method, which is the standard approach for accounting for long-range electrostatic interactions in MD simulations. If consistency with MD simulations is required, the SPME method should be employed.</p>
 </li>
 <li><p><strong>Lennard-Jones (LJ) Interaction</strong><br />
 The LJ interaction, which empirically describes van der Waals interactions, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fddb13a3-4a48-4a9f-9ff9-450baf8fce75">
-<span class="eqno">(32)<a class="headerlink" href="#equation-fddb13a3-4a48-4a9f-9ff9-450baf8fce75" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3c2c35a2-4b8b-4e1d-82c8-0f5c2766ea8a">
+<span class="eqno">(32)<a class="headerlink" href="#equation-3c2c35a2-4b8b-4e1d-82c8-0f5c2766ea8a" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{LJ}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right].
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> and <span class="math notranslate nohighlight">\(\sigma_{ij}\)</span> are the LJ parameters between atom <span class="math notranslate nohighlight">\(i\)</span> in molecule A and atom <span class="math notranslate nohighlight">\(j\)</span> in molecule B.</p>
 </li>
 <li><p><strong>Attractive LJ Interaction</strong><br />
 The attractive component of the LJ interaction is defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-171dd7d1-8327-4214-9505-d775d3799c3e">
-<span class="eqno">(33)<a class="headerlink" href="#equation-171dd7d1-8327-4214-9505-d775d3799c3e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-82ecbbe4-f8c3-44c1-8e20-67ad6d6ef64d">
+<span class="eqno">(33)<a class="headerlink" href="#equation-82ecbbe4-f8c3-44c1-8e20-67ad6d6ef64d" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{attr}} &amp;= \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} u_{\mathrm{attr},ij}, \\
 u_{\mathrm{attr},ij} &amp;= \begin{cases}
 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right] &amp; r_{ij} \geq 2^{1/6} \sigma, \\
@@ -2257,8 +2257,8 @@ u_{\mathrm{attr},ij} &amp;= \begin{cases}
 <section id="lipid-order-parameter-lipid-order-scd">
 <h2>Lipid Order Parameter (<code class="docutils literal notranslate"><span class="pre">lipid_order</span></code>, <code class="docutils literal notranslate"><span class="pre">scd</span></code>)<a class="headerlink" href="#lipid-order-parameter-lipid-order-scd" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">lipid_order</span></code> (<code class="docutils literal notranslate"><span class="pre">scd</span></code>) mode allows for the calculation of the orientational order parameter <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> associated with acyl chains of phospholipids. Using the membrane normal direction as the <span class="math notranslate nohighlight">\(z\)</span>-axis, the angle <span class="math notranslate nohighlight">\(\theta\)</span> is defined between this axis and the vector connecting a specific carbon atom and its bonded hydrogen. The <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> parameter is then defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fe754ed0-7433-477d-bf72-25b818ef1249">
-<span class="eqno">(34)<a class="headerlink" href="#equation-fe754ed0-7433-477d-bf72-25b818ef1249" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a52843de-f994-47f3-a70a-064bd1819232">
+<span class="eqno">(34)<a class="headerlink" href="#equation-a52843de-f994-47f3-a70a-064bd1819232" title="Permalink to this equation"></a></span>\[\begin{align}
 S_{\mathrm{CD}} = \frac{1}{2} \left\langle 3 \cos^2 \theta - 1 \right\rangle.
 \end{align}\]</div>
 <p>The range of <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> is <span class="math notranslate nohighlight">\(0 \leq S_{\mathrm{CD}} \leq 1\)</span>, where higher values indicate greater order, and a value of 0 corresponds to complete disorder. Since <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> is defined for each carbon atom, this analysis provides position-resolved information on lipid order along the acyl chains.</p>
@@ -2365,18 +2365,18 @@ The <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> values
 <section id="distribution-function-along-the-membrane-normal-z-axis-z-profile-zprof">
 <h2>Distribution Function Along the Membrane Normal (<span class="math notranslate nohighlight">\(z\)</span>-axis) (<code class="docutils literal notranslate"><span class="pre">z_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">zprof</span></code>)<a class="headerlink" href="#distribution-function-along-the-membrane-normal-z-axis-z-profile-zprof" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">z_profile</span></code> (<code class="docutils literal notranslate"><span class="pre">zprof</span></code>) mode calculates the distribution of molecular species along the membrane normal (i.e., the <span class="math notranslate nohighlight">\(z\)</span>-axis). The local density field of species <span class="math notranslate nohighlight">\(a\)</span> along the <span class="math notranslate nohighlight">\(z\)</span>-axis is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3392e9bd-ad28-4d65-bcb0-7478b146c4ec">
-<span class="eqno">(35)<a class="headerlink" href="#equation-3392e9bd-ad28-4d65-bcb0-7478b146c4ec" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2cc4fc5e-9966-4072-a885-86646dd9aee1">
+<span class="eqno">(35)<a class="headerlink" href="#equation-2cc4fc5e-9966-4072-a885-86646dd9aee1" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left(z\right) = \dfrac{1}{A_{xy}} \sum_{i=1}^{N_{\mathrm{a}}} \delta\left(z - z_{i}\right),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{xy}\)</span> is the cross-sectional area of the simulation box in the <span class="math notranslate nohighlight">\(xy\)</span>-plane, and <span class="math notranslate nohighlight">\(z_i\)</span> is the <span class="math notranslate nohighlight">\(z\)</span>-coordinate of the <span class="math notranslate nohighlight">\(i\)</span>-th molecule. The ensemble-averaged distribution function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a577f3cb-041a-4000-9477-1f50655e0b9c">
-<span class="eqno">(36)<a class="headerlink" href="#equation-a577f3cb-041a-4000-9477-1f50655e0b9c" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-74b64967-9a48-42e1-bcf6-d120c3786993">
+<span class="eqno">(36)<a class="headerlink" href="#equation-74b64967-9a48-42e1-bcf6-d120c3786993" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{a}\left(z\right) = \Braket{ \hat{\rho}_{a}(z) }.
 \end{align}\]</div>
 <p>For comparison with experimental data, it is often useful to compute the electron density distribution <span class="math notranslate nohighlight">\(\rho^e_a(z)\)</span>. The corresponding local density field is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70e235cc-cc96-40f5-87bb-32145f82047e">
-<span class="eqno">(37)<a class="headerlink" href="#equation-70e235cc-cc96-40f5-87bb-32145f82047e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c4ef4f0-cf40-4203-b27c-d9e2daad376a">
+<span class="eqno">(37)<a class="headerlink" href="#equation-1c4ef4f0-cf40-4203-b27c-d9e2daad376a" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}^{e}_{a}(z) = \sum_{i=1}^{N_a} \sum_{\lambda=1}^{N_s} q_\lambda \delta(z - z_{i,\lambda}),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_\lambda\)</span> is the number of electrons on the <span class="math notranslate nohighlight">\(\lambda\)</span>-th atom in molecule <span class="math notranslate nohighlight">\(a\)</span>, and <span class="math notranslate nohighlight">\(z_{i,\lambda}\)</span> is its <span class="math notranslate nohighlight">\(z\)</span>-coordinate in the <span class="math notranslate nohighlight">\(i\)</span>-th molecule. The ensemble average yields the electron density distribution: <span class="math notranslate nohighlight">\(\rho^e_a(z) = \Braket{ \hat{\rho}^e_a(z) }\)</span>.</p>
@@ -2527,42 +2527,42 @@ The <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> values
 <h2>Molecular Orientation Along a Specific Direction (<code class="docutils literal notranslate"><span class="pre">z_orient</span></code>, <code class="docutils literal notranslate"><span class="pre">zori</span></code>)<a class="headerlink" href="#molecular-orientation-along-a-specific-direction-z-orient-zori" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">z_orient</span></code> (<code class="docutils literal notranslate"><span class="pre">zori</span></code>) mode computes the orientation distribution of molecules relative to a reference direction, typically the <span class="math notranslate nohighlight">\(z\)</span>-axis.<br />
 To define the orientation of a molecule, two parts of the molecule are selected: the <em>bottom</em> and the <em>head</em>. The centers of mass of these two parts are denoted by <span class="math notranslate nohighlight">\({\bf R}_{\mathrm{B}}\)</span> and <span class="math notranslate nohighlight">\({\bf R}_{\mathrm{H}}\)</span>, respectively. The molecular axis <span class="math notranslate nohighlight">\({\bf u}\)</span> is then defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2b6a113f-10fd-41de-8aa5-ad83176d7059">
-<span class="eqno">(38)<a class="headerlink" href="#equation-2b6a113f-10fd-41de-8aa5-ad83176d7059" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7357b38b-ba0a-48d0-867c-b0a135cdb488">
+<span class="eqno">(38)<a class="headerlink" href="#equation-7357b38b-ba0a-48d0-867c-b0a135cdb488" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf u} = {\bf R}_{\mathrm{H}} - {\bf R}_{\mathrm{B}}. \label{uvec}
 \end{align}\]</div>
 <p>Let <span class="math notranslate nohighlight">\(\theta\)</span> be the angle between the <span class="math notranslate nohighlight">\(z\)</span>-axis (unit vector <span class="math notranslate nohighlight">\({\bf e}_z\)</span>) and the molecular axis (unit vector <span class="math notranslate nohighlight">\({\bf e}_{\mathrm{u}}\)</span>). Then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a9070dbe-abbb-4666-ac40-bf8c03267626">
-<span class="eqno">(39)<a class="headerlink" href="#equation-a9070dbe-abbb-4666-ac40-bf8c03267626" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4fb0f4df-44c8-49c4-9117-ebcff64a1a2c">
+<span class="eqno">(39)<a class="headerlink" href="#equation-4fb0f4df-44c8-49c4-9117-ebcff64a1a2c" title="Permalink to this equation"></a></span>\[\begin{align}
 \cos \theta = {\bf e}_z \cdot {\bf e}_{\mathrm{u}}.
 \end{align}\]</div>
 <p>The orientation distribution function is defined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f96b9916-04e6-4717-a765-04022792429f">
-<span class="eqno">(40)<a class="headerlink" href="#equation-f96b9916-04e6-4717-a765-04022792429f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c4cfb48b-a199-4495-9735-2f2cb49b4494">
+<span class="eqno">(40)<a class="headerlink" href="#equation-c4cfb48b-a199-4495-9735-2f2cb49b4494" title="Permalink to this equation"></a></span>\[\begin{align}
 P(\chi) = C \left\langle \delta(\chi - \cos \theta) \right\rangle,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C\)</span> is a normalization constant determined such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47f18802-3cee-41fe-b0fc-449813916c4f">
-<span class="eqno">(41)<a class="headerlink" href="#equation-47f18802-3cee-41fe-b0fc-449813916c4f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-80416d86-7df6-4a24-ba32-39e06ada3e77">
+<span class="eqno">(41)<a class="headerlink" href="#equation-80416d86-7df6-4a24-ba32-39e06ada3e77" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) = 1.
 \end{align}\]</div>
 <p>By changing variables from <span class="math notranslate nohighlight">\(\theta\)</span> to <span class="math notranslate nohighlight">\(\chi = \cos \theta\)</span>, the left hand side of the above equation becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-725f00a9-b9b7-477d-84dd-5a89ce50ee92">
-<span class="eqno">(42)<a class="headerlink" href="#equation-725f00a9-b9b7-477d-84dd-5a89ce50ee92" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ea60e8f4-2baf-4fb4-a825-8852a209a3fc">
+<span class="eqno">(42)<a class="headerlink" href="#equation-ea60e8f4-2baf-4fb4-a825-8852a209a3fc" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) &amp;= \int_{0}^{1} d\chi\, P(\chi) \notag \\
 &amp; = CN  
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of targer molecules. Thus, <span class="math notranslate nohighlight">\(C\)</span> is set to <span class="math notranslate nohighlight">\(C=1/N\)</span>.
 The <code class="docutils literal notranslate"><span class="pre">z_orient</span></code> mode calculates <span class="math notranslate nohighlight">\(P(\chi) = P(\cos \theta)\)</span>.</p>
 <p>Additionally, the reference <span class="math notranslate nohighlight">\(z\)</span>-axis does not have to be fixed in the laboratory frame; it can also be defined by the orientation of a particular molecule. If four points <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{B}_0}, {\bf x}_{\mathrm{H}_0}, {\bf x}_{\mathrm{B}_1}, {\bf x}_{\mathrm{H}_1}\)</span> are chosen from this reference molecule, the two vectors:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6874722-0295-4cbd-a7c1-e7c147904725">
-<span class="eqno">(43)<a class="headerlink" href="#equation-c6874722-0295-4cbd-a7c1-e7c147904725" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4f5e8d7c-c51e-459a-9b8a-744a738a62f2">
+<span class="eqno">(43)<a class="headerlink" href="#equation-4f5e8d7c-c51e-459a-9b8a-744a738a62f2" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf v}_0 = {\bf x}_{\mathrm{H}_0} - {\bf x}_{\mathrm{B}_0}, \quad
 {\bf v}_1 = {\bf x}_{\mathrm{H}_1} - {\bf x}_{\mathrm{B}_1}
 \end{align}\]</div>
 <p>can be used to define the <span class="math notranslate nohighlight">\(z\)</span>-axis unit vector via the cross product:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f42ce16e-04a0-4cfb-bb89-fc1fa4a19163">
-<span class="eqno">(44)<a class="headerlink" href="#equation-f42ce16e-04a0-4cfb-bb89-fc1fa4a19163" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-94a18208-27ff-464a-a21d-7aa3e518252f">
+<span class="eqno">(44)<a class="headerlink" href="#equation-94a18208-27ff-464a-a21d-7aa3e518252f" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf e}_z = \frac{ {\bf v}_1 \times {\bf v}_2 }{ \left| {\bf v}_1 \times {\bf v}_2 \right| }.
 \end{align}\]</div>
 <p>The orientation distribution <span class="math notranslate nohighlight">\(P(\cos \theta)\)</span> is then computed based on the angle between this <span class="math notranslate nohighlight">\({\bf e}_z\)</span> and the molecular axis <span class="math notranslate nohighlight">\({\bf u}\)</span>.</p>
@@ -2696,8 +2696,8 @@ The <code class="docutils literal notranslate"><span class="pre">z_orient</span>
 <li><p>In the case of <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">nmolup</span></code>: Let <span class="math notranslate nohighlight">\(N_{\mathrm{up}}\)</span> be the number specified by the <code class="docutils literal notranslate"><span class="pre">-nmolup</span></code> option. Then, the first <span class="math notranslate nohighlight">\(N_{\mathrm{up}}\)</span> molecules are assigned <span class="math notranslate nohighlight">\({\bf e}_{z} = {\bf e}_{z}^{\prime}\)</span> for calculating <span class="math notranslate nohighlight">\(\cos \theta\)</span>, and the remaining molecules are assigned <span class="math notranslate nohighlight">\({\bf e}_{z} = -{\bf e}_{z}^{\prime}\)</span> for calculating <span class="math notranslate nohighlight">\(\cos \theta\)</span>.</p></li>
 <li><p>In the case of <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">coord</span></code>: Let <span class="math notranslate nohighlight">\(z_{\mathrm{c}}\)</span> be the <span class="math notranslate nohighlight">\(z\)</span>-coordinate of the center of mass of the molecule specified by <code class="docutils literal notranslate"><span class="pre">-center_selid</span></code>, and <span class="math notranslate nohighlight">\(z_{\mathrm{B}}\)</span> and <span class="math notranslate nohighlight">\(z_{\mathrm{H}}\)</span> be the <span class="math notranslate nohighlight">\(z\)</span>-coordinates of the centers of mass of the regions specified by <code class="docutils literal notranslate"><span class="pre">-bottom_selid</span></code> and <code class="docutils literal notranslate"><span class="pre">-head_selid</span></code>, respectively. Then,</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-59923be4-aaa7-4ebb-9543-7c265c9d972a">
-<span class="eqno">(45)<a class="headerlink" href="#equation-59923be4-aaa7-4ebb-9543-7c265c9d972a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b6664221-8fa7-45e8-b0ce-ec4934794f3c">
+<span class="eqno">(45)<a class="headerlink" href="#equation-b6664221-8fa7-45e8-b0ce-ec4934794f3c" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf e}_{z} =
 \begin{cases}
 {\bf e}_{z}^{\prime}  &amp; \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} &gt; 0\\[.2cm]
