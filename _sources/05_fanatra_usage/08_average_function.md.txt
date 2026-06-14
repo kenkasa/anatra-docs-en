@@ -1,4 +1,4 @@
-## Average Function (average_function, avef)
+## Average Function (``average_function``, ``avef``)
 
 In this analysis mode, one-dimensional functions stored in multiple input files are averaged.
 For example, let $f_{i}\left(x\right)$ be the function stored in the $i$-th file and let $N$ be the total number of files.

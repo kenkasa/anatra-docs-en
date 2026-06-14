@@ -254,7 +254,7 @@ The format of the input data files specified in ``flist`` is the same as that of
 
 That is, the input data file must have the above structure.
 --->
-## Histogram (histogram, hist)
+## Histogram (``histogram``, ``hist``)
 
 In this analysis mode, the distribution function $P\left(x\right)$ is calculated from a given time-series data set $\xi\left(t\right)$.
 
@@ -365,7 +365,7 @@ EOF
 
 fanatra hist run.inp
 ```
-## Potential of Mean Force (potential_of_mean_force, pmf)
+## Potential of Mean Force (``potential_of_mean_force``, ``pmf``)
 
 In this analysis mode, the free-energy profile $W\left(\boldsymbol{\zeta}\right)$ along the reaction coordinate $\boldsymbol{\zeta}$ is calculated from the time-series data of the reaction coordinate, $\boldsymbol{\xi}\left(t\right)$. The function $W\left(\boldsymbol{\zeta}\right)$ is also referred to as the **potential of mean force (PMF)**.
 
@@ -784,7 +784,7 @@ EOF
 fanatra potential_of_mean_force run.inp
 
 ```
-## Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)
+## Restricted Radial Potential of Mean Force (``restricted_radial``, ``rrpmf``)
 
 This analysis mode calculates the free energy profile along the radial direction under a condition defined by one or more reaction coordinates (collective variables).
 
@@ -1179,7 +1179,7 @@ dGv     (kcal/mol) =       2.5903536
 dGzero  (kcal/mol) =       3.9389595
 Keq     (M^-1)     =   1.3506025E-03
 ```
-## Frame Extraction (extract_frame, extf)
+## Frame Extraction (``extract_frame``, ``extf``)
 
 In this analysis mode, snapshots (frames) that satisfy specified CV ranges are extracted.
 
@@ -1285,7 +1285,7 @@ fanatra extract_frame run.inp
 ```
 
 After execution, the extracted trajectory is written to ``out.dcd``.
-## Random Frame Extraction (random_frame, randf)
+## Random Frame Extraction (``random_frame``, ``randf``)
 
 In this analysis mode, snapshots (frames) are randomly extracted from a trajectory.
 
@@ -1419,7 +1419,7 @@ fanatra random_frame run.inp
 ```
 
 After execution, ``out.dcd`` and ``outXXXXX.inpcrd`` (``XXXXX = 00001, ..., 00100``) are generated.
-## Moving Average (moving_average, movave)
+## Moving Average (``moving_average``, ``movave``)
 
 In this analysis mode, one-dimensional data (e.g., distribution functions) are smoothed using a moving average.
 
@@ -1570,7 +1570,7 @@ fanatra moving_average run.inp
 ```
 
 Executing this command generates the smoothed function data file ``out0001.dat``.
-## Average Function (average_function, avef)
+## Average Function (``average_function``, ``avef``)
 
 In this analysis mode, one-dimensional functions stored in multiple input files are averaged.
 For example, let $f_{i}\left(x\right)$ be the function stored in the $i$-th file and let $N$ be the total number of files.

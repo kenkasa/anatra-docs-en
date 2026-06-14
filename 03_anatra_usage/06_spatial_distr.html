@@ -81,18 +81,18 @@
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, volume <span class="math notranslate nohighlight">\(V\)</span>, and number density <span class="math notranslate nohighlight">\(\rho_a = N_a / V\)</span>. Assume that one molecule is fixed at the center of the system, including its orientation, acting effectively as an external field. Although such a situation does not naturally occur in standard solution-phase MD simulations, a virtually equivalent condition can be constructed by aligning all trajectories to a reference structure (fitting), as described at the end of this section.</p>
 <p>Similar to the radial distribution function, we define the local number density of particle <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea4f655c-f2fd-424a-aa97-25867122c311">
-<span class="eqno">()<a class="headerlink" href="#equation-ea4f655c-f2fd-424a-aa97-25867122c311" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-24a131fc-bbd3-4a78-bc49-1b1759074ea7">
+<span class="eqno">()<a class="headerlink" href="#equation-24a131fc-bbd3-4a78-bc49-1b1759074ea7" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}} \delta\left({\bf r} - {\bf r}_i \right).
 \end{align}\]</div>
 <p>Its ensemble average under the external field gives the one-body density</p>
-<div class="amsmath math notranslate nohighlight" id="equation-64a39376-2c46-4b8b-9d1d-6d53d4d21aaf">
-<span class="eqno">()<a class="headerlink" href="#equation-64a39376-2c46-4b8b-9d1d-6d53d4d21aaf" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6b801ed-2a5a-4ae5-a058-67e20891a06d">
+<span class="eqno">()<a class="headerlink" href="#equation-a6b801ed-2a5a-4ae5-a058-67e20891a06d" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\langle \cdots \rangle_{\mathrm{ext}}\)</span> denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, <span class="math notranslate nohighlight">\(\rho_a({\bf r}) = \rho_a\)</span>. THen, we define the spatial distribution function (SDF) as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d9283b2-a424-4717-a30b-d2d3cdf2655e">
-<span class="eqno">()<a class="headerlink" href="#equation-0d9283b2-a424-4717-a30b-d2d3cdf2655e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a2abcbbe-a34c-43f2-b42a-a3f618ff97b4">
+<span class="eqno">()<a class="headerlink" href="#equation-a2abcbbe-a34c-43f2-b42a-a3f618ff97b4" title="Permalink to this equation"></a></span>\[\begin{align}
 g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
 \end{align}\]</div>
 <p>If <span class="math notranslate nohighlight">\(g_a({\bf r}) &gt; 1\)</span>, the local probability of finding particle <span class="math notranslate nohighlight">\(a\)</span> is larger than the bulk value; if <span class="math notranslate nohighlight">\(g_a({\bf r}) &lt; 1\)</span>, it is lower than in bulk.</p>
@@ -191,8 +191,8 @@ g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">-origin</span> <span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
 </ul>
 <p>Sets the origin of the grid. For origin <span class="math notranslate nohighlight">\((x_0, y_0, z_0)\)</span>, the coordinates of grid point <span class="math notranslate nohighlight">\((i_x, i_y, i_z)\)</span> are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d2741f6-9ae8-4253-880d-14093967b885">
-<span class="eqno">()<a class="headerlink" href="#equation-1d2741f6-9ae8-4253-880d-14093967b885" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8043e9d4-3394-460b-ab72-9121366c7d1f">
+<span class="eqno">()<a class="headerlink" href="#equation-8043e9d4-3394-460b-ab72-9121366c7d1f" title="Permalink to this equation"></a></span>\[\begin{align}
 x_i = x_0 + \Delta x \, (i_x - 1) \\
 y_i = y_0 + \Delta y \, (i_y - 1) \\
 z_i = z_0 + \Delta z \, (i_z - 1)
@@ -258,13 +258,13 @@ z_i = z_0 + \Delta z \, (i_z - 1)
 <li><p>Note: Active only if <code class="docutils literal notranslate"><span class="pre">-use_spline</span> <span class="pre">true</span></code> is specified.</p></li>
 </ul>
 <p>Specifies the subdivision factor <span class="math notranslate nohighlight">\(n_r\)</span> for each grid axis. Given the original grid spacing <span class="math notranslate nohighlight">\(\Delta \alpha\)</span> (<span class="math notranslate nohighlight">\(\alpha = x, y, z\)</span>), the refined grid spacing becomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f9b92df8-cb04-4efb-90f4-cfe17ad3f81a">
-<span class="eqno">()<a class="headerlink" href="#equation-f9b92df8-cb04-4efb-90f4-cfe17ad3f81a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5213ea48-d441-4db8-8762-3f1d4e36c364">
+<span class="eqno">()<a class="headerlink" href="#equation-5213ea48-d441-4db8-8762-3f1d4e36c364" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta \alpha' = \frac{\Delta \alpha}{n_r}
 \end{align}\]</div>
 <p>The total number of grid points changes from <span class="math notranslate nohighlight">\(N\)</span> to:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c575ae67-de39-4b04-85f1-8229c84595e9">
-<span class="eqno">()<a class="headerlink" href="#equation-c575ae67-de39-4b04-85f1-8229c84595e9" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-13536fdb-51ca-4b18-81bf-3246ecb27e59">
+<span class="eqno">()<a class="headerlink" href="#equation-13536fdb-51ca-4b18-81bf-3246ecb27e59" title="Permalink to this equation"></a></span>\[\begin{align}
 N' = n_r^3 \cdot N
 \end{align}\]</div>
 </li>

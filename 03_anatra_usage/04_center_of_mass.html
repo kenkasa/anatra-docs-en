@@ -65,7 +65,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)</li>
+      <li class="breadcrumb-item active">Center of Mass Analysis and Mean Square Displacement (<code class="docutils literal notranslate"><span class="pre">center_of_mass</span></code>, <code class="docutils literal notranslate"><span class="pre">com</span></code>)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/03_anatra_usage/04_center_of_mass.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,7 +76,7 @@
            <div itemprop="articleBody">
              
   <section id="center-of-mass-analysis-and-mean-square-displacement-center-of-mass-com">
-<h1>Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)<a class="headerlink" href="#center-of-mass-analysis-and-mean-square-displacement-center-of-mass-com" title="Link to this heading"></a></h1>
+<h1>Center of Mass Analysis and Mean Square Displacement (<code class="docutils literal notranslate"><span class="pre">center_of_mass</span></code>, <code class="docutils literal notranslate"><span class="pre">com</span></code>)<a class="headerlink" href="#center-of-mass-analysis-and-mean-square-displacement-center-of-mass-com" title="Link to this heading"></a></h1>
 <p>The program <code class="docutils literal notranslate"><span class="pre">center_of_mass</span></code> (<code class="docutils literal notranslate"><span class="pre">com</span></code>) computes the temporal variation of molecular centers of mass and the mean square displacement (MSD). To support two-dimensional diffusion (lateral diffusion) within lipid membranes, it also allows for MSD calculations restricted to the <span class="math notranslate nohighlight">\(xy\)</span>-plane.</p>
 <section id="theoretical-background">
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
@@ -84,34 +84,34 @@
 <h3>Mean Square Displacement<a class="headerlink" href="#mean-square-displacement" title="Link to this heading"></a></h3>
 <p>Here, we introduce the definition of the mean square displacement (MSD) <span class="math notranslate nohighlight">\(\chi(t)\)</span> and discuss its significance based on the diffusion equation.</p>
 <p>Let <span class="math notranslate nohighlight">\({\bf r}(t)\)</span> denote the position of a molecule at time <span class="math notranslate nohighlight">\(t\)</span>. The MSD is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c744397-ee3a-4997-8eaa-ebc4676547d4">
-<span class="eqno">()<a class="headerlink" href="#equation-1c744397-ee3a-4997-8eaa-ebc4676547d4" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4f8a1c50-c9c6-4390-86b8-e6bd7648d909">
+<span class="eqno">()<a class="headerlink" href="#equation-4f8a1c50-c9c6-4390-86b8-e6bd7648d909" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
 \end{align}\]</div>
 <p>That is, <span class="math notranslate nohighlight">\(\chi(t)\)</span> represents the time-averaged squared displacement of a molecule after a time interval <span class="math notranslate nohighlight">\(t\)</span>. To understand how MSD is described by the diffusion equation, let us consider a probability density <span class="math notranslate nohighlight">\(\rho({\bf r},t)\)</span> representing the location of a molecule, and a diffusion coefficient <span class="math notranslate nohighlight">\(D\)</span>. The diffusion equation is written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6540eeb-8ab9-42ae-af89-38ff0f1bb773">
-<span class="eqno">()<a class="headerlink" href="#equation-c6540eeb-8ab9-42ae-af89-38ff0f1bb773" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a0bd4d7c-2fd8-4c55-a481-b9537747fb80">
+<span class="eqno">()<a class="headerlink" href="#equation-a0bd4d7c-2fd8-4c55-a481-b9537747fb80" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
 \end{align}\]</div>
 <p>Assuming that the molecule was initially located at <span class="math notranslate nohighlight">\({\bf 0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, the initial condition is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8e8874e2-92aa-45f7-928a-00ec4251b356">
-<span class="eqno">()<a class="headerlink" href="#equation-8e8874e2-92aa-45f7-928a-00ec4251b356" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36868ab2-9f8d-448c-84b2-8f36f9492a81">
+<span class="eqno">()<a class="headerlink" href="#equation-36868ab2-9f8d-448c-84b2-8f36f9492a81" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
 \end{align}\]</div>
 <p>Solving the diffusion equation under this condition yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-67dd57ba-7d4b-4e8d-bd6b-dd41e66ebea7">
-<span class="eqno">()<a class="headerlink" href="#equation-67dd57ba-7d4b-4e8d-bd6b-dd41e66ebea7" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-52b874dd-618b-43b2-96b2-2574e9cb7d01">
+<span class="eqno">()<a class="headerlink" href="#equation-52b874dd-618b-43b2-96b2-2574e9cb7d01" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
 \end{align}\]</div>
 <p>Using this solution, the MSD can be expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-779fef5b-5e0e-4a10-a94f-328beeaba085">
-<span class="eqno">()<a class="headerlink" href="#equation-779fef5b-5e0e-4a10-a94f-328beeaba085" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1aa7dff8-d6bb-4fa9-83c3-2fe9b9d46cf6">
+<span class="eqno">()<a class="headerlink" href="#equation-1aa7dff8-d6bb-4fa9-83c3-2fe9b9d46cf6" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
                    = 6Dt,
 \end{align}\]</div>
 <p>indicating that MSD increases linearly with time, with a slope of <span class="math notranslate nohighlight">\(6D\)</span>. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f3fd913a-eccf-42b0-995b-e31f70ed522e">
-<span class="eqno">()<a class="headerlink" href="#equation-f3fd913a-eccf-42b0-995b-e31f70ed522e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2d1c5471-d5e4-4148-8bb0-b67391c41123">
+<span class="eqno">()<a class="headerlink" href="#equation-2d1c5471-d5e4-4148-8bb0-b67391c41123" title="Permalink to this equation"></a></span>\[\begin{align}
 D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
 \end{align}\]</div>
 <p>This expression is known as Einstein<span class="math notranslate nohighlight">\(^\prime\)</span>s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.</p>

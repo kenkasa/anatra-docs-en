@@ -1,4 +1,4 @@
-## Distribution Function Along the Membrane Normal ($z$-axis) (`z_profile`, `zprof`)
+## Distribution Function Along the Membrane Normal ($z$-axis) (``z_profile``, ``zprof``)
 
 The `z_profile` (`zprof`) mode calculates the distribution of molecular species along the membrane normal (i.e., the $z$-axis). The local density field of species $a$ along the $z$-axis is defined as
 

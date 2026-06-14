@@ -1,4 +1,4 @@
-## Distance Calculation (`distance`, `dis`)
+## Distance Calculation (``distance``, ``dis``)
 
 The `distance` mode computes the distance between two selected regions. By default, it calculates the distance between the centers of mass of the selected molecules. It can also compute the minimum distance between atoms in two regions.
 

@@ -1,4 +1,4 @@
-## Potential of Mean Force (potential_of_mean_force, pmf)
+## Potential of Mean Force (``potential_of_mean_force``, ``pmf``)
 
 In this analysis mode, the free-energy profile $W\left(\bm{\zeta}\right)$ along the reaction coordinate $\bm{\zeta}$ is calculated from the time-series data of the reaction coordinate, $\bm{\xi}\left(t\right)$. The function $W\left(\bm{\zeta}\right)$ is also referred to as the **potential of mean force (PMF)**.
 

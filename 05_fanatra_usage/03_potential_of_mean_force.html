@@ -65,7 +65,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Potential of Mean Force (potential_of_mean_force, pmf)</li>
+      <li class="breadcrumb-item active">Potential of Mean Force (<code class="docutils literal notranslate"><span class="pre">potential_of_mean_force</span></code>, <code class="docutils literal notranslate"><span class="pre">pmf</span></code>)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/05_fanatra_usage/03_potential_of_mean_force.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,40 +76,40 @@
            <div itemprop="articleBody">
              
   <section id="potential-of-mean-force-potential-of-mean-force-pmf">
-<h1>Potential of Mean Force (potential_of_mean_force, pmf)<a class="headerlink" href="#potential-of-mean-force-potential-of-mean-force-pmf" title="Link to this heading"></a></h1>
+<h1>Potential of Mean Force (<code class="docutils literal notranslate"><span class="pre">potential_of_mean_force</span></code>, <code class="docutils literal notranslate"><span class="pre">pmf</span></code>)<a class="headerlink" href="#potential-of-mean-force-potential-of-mean-force-pmf" title="Link to this heading"></a></h1>
 <p>In this analysis mode, the free-energy profile <span class="math notranslate nohighlight">\(W\left(\bm{\zeta}\right)\)</span> along the reaction coordinate <span class="math notranslate nohighlight">\(\bm{\zeta}\)</span> is calculated from the time-series data of the reaction coordinate, <span class="math notranslate nohighlight">\(\bm{\xi}\left(t\right)\)</span>. The function <span class="math notranslate nohighlight">\(W\left(\bm{\zeta}\right)\)</span> is also referred to as the <strong>potential of mean force (PMF)</strong>.</p>
 <section id="theoretical-background">
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system and <span class="math notranslate nohighlight">\(U\left({\bf X}\right)\)</span> its potential energy. The configurational integral <span class="math notranslate nohighlight">\(Z\)</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a5e8651f-4334-4cbd-816e-4c82e19b7c0b">
-<span class="eqno">()<a class="headerlink" href="#equation-a5e8651f-4334-4cbd-816e-4c82e19b7c0b" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e6df61ee-dc5c-4093-945e-5d88b5f8eef5">
+<span class="eqno">()<a class="headerlink" href="#equation-e6df61ee-dc5c-4093-945e-5d88b5f8eef5" title="Permalink to this equation"></a></span>\[\begin{align}
 Z =\int d{\bf X}\,\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is the inverse temperature.</p>
 <p>Similarly, the partition function corresponding to the state in which the system is trapped within the infinitesimal region <span class="math notranslate nohighlight">\(\bm{\zeta} - \bm{\zeta}+\Delta \bm{\zeta}\)</span> in the reaction coordinate space (<span class="math notranslate nohighlight">\(\bm{\zeta}\left({\bf X}\right)\)</span>) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a073cb3-dec0-4d8b-b1a9-ce1ba52d58a3">
-<span class="eqno">()<a class="headerlink" href="#equation-0a073cb3-dec0-4d8b-b1a9-ce1ba52d58a3" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f4b9de51-7954-4abe-89ab-77c7074a1ee1">
+<span class="eqno">()<a class="headerlink" href="#equation-f4b9de51-7954-4abe-89ab-77c7074a1ee1" title="Permalink to this equation"></a></span>\[\begin{align}
 Z\left(\bm{\zeta}\right) =\Delta\bm{\zeta}\int d{\bf X}\,\delta\left(\bm{\zeta}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 <p>Defining the probability density corresponding to <span class="math notranslate nohighlight">\(\bm{\zeta}\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-453b88c9-d850-429d-bdd7-d22cb846e85b">
-<span class="eqno">()<a class="headerlink" href="#equation-453b88c9-d850-429d-bdd7-d22cb846e85b" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-daa480b5-56dc-425e-8923-b5d176850abf">
+<span class="eqno">()<a class="headerlink" href="#equation-daa480b5-56dc-425e-8923-b5d176850abf" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left(\bm{\zeta}\right) = \Braket{\delta\left(\bm{\zeta} - \bm{\xi}\left({\bf X}\right)\right)} = \dfrac{1}{Z}\int d{\bf X}\,\delta\left(\bm{\zeta}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 <p>we obtain</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5f4848c-d216-492c-b8ec-345446c26274">
-<span class="eqno">()<a class="headerlink" href="#equation-d5f4848c-d216-492c-b8ec-345446c26274" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d05b3885-7233-452f-84be-592aaedf6474">
+<span class="eqno">()<a class="headerlink" href="#equation-d05b3885-7233-452f-84be-592aaedf6474" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{Z\left(\bm{\zeta}\right)}{Z} =\rho\left(\bm{\zeta}\right)\Delta\bm{\zeta}
 \end{align}\]</div>
 <p>Therefore, the free-energy difference <span class="math notranslate nohighlight">\(\Delta F\left(\bm{\zeta}\right)\)</span> between the unrestricted state and the state confined to the region <span class="math notranslate nohighlight">\(\bm{\zeta}-\bm{\zeta} + \Delta \bm{\zeta}\)</span> is expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-750e87b6-12fb-444b-bc92-da65e0ae272b">
-<span class="eqno">()<a class="headerlink" href="#equation-750e87b6-12fb-444b-bc92-da65e0ae272b" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e2f53b0e-1129-4b17-989f-05de732e74a9">
+<span class="eqno">()<a class="headerlink" href="#equation-e2f53b0e-1129-4b17-989f-05de732e74a9" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta F\left(\bm{\zeta}\right) =-\dfrac{1}{\beta}\log\dfrac{Z\left(\bm{\zeta}\right)}{Z}
  = -\dfrac{1}{\beta}\log \left(\rho\left(\bm{\zeta}\right)\Delta \bm{\zeta}\right)
 \end{align}\]</div>
 <p>The free energy relative to a reference point <span class="math notranslate nohighlight">\(\bm{\zeta}_{0}\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b38ce572-db95-440c-9e24-a7d7adee0bd2">
-<span class="eqno">()<a class="headerlink" href="#equation-b38ce572-db95-440c-9e24-a7d7adee0bd2" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-40a9a3b5-7923-4260-8e28-e841274e647f">
+<span class="eqno">()<a class="headerlink" href="#equation-40a9a3b5-7923-4260-8e28-e841274e647f" title="Permalink to this equation"></a></span>\[\begin{align}
 W\left(\bm{\zeta}\right) =\Delta F\left(\bm{\zeta}\right)-\Delta F\left(\bm{\zeta}_{0}\right)\notag\\
  =-\dfrac{1}{\beta}\log\dfrac{\rho\left(\bm{\zeta}\right)}{\rho\left(\bm{\zeta}_{0}\right)}
  \label{pmf:pmf}
@@ -117,14 +117,14 @@ W\left(\bm{\zeta}\right) =\Delta F\left(\bm{\zeta}\right)-\Delta F\left(\bm{\zet
 <p>This quantity <span class="math notranslate nohighlight">\(W\)</span> is called the <strong>potential of mean force</strong>. The choice of <span class="math notranslate nohighlight">\(\bm{\zeta}_{0}\)</span> is arbitrary, but in most cases it is chosen such that the minimum value of <span class="math notranslate nohighlight">\(W\left(\bm{\zeta}\right)\)</span> becomes zero.</p>
 <p>By calculating <span class="math notranslate nohighlight">\(W\left(\bm{\zeta}\right)\)</span>, it becomes possible to discuss the change in thermodynamic stability as a function of <span class="math notranslate nohighlight">\(\bm{\zeta}\)</span>.</p>
 <p>Equation EQREF(pmf:pmfEQREF) can also be rewritten by separating the <span class="math notranslate nohighlight">\(\bm{\zeta}\)</span>-dependent part and a constant <span class="math notranslate nohighlight">\(C\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5586eff5-fa67-477a-b100-d698ee80777f">
-<span class="eqno">()<a class="headerlink" href="#equation-5586eff5-fa67-477a-b100-d698ee80777f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4665ad35-ea16-47ac-a089-3a6dafd66c97">
+<span class="eqno">()<a class="headerlink" href="#equation-4665ad35-ea16-47ac-a089-3a6dafd66c97" title="Permalink to this equation"></a></span>\[\begin{align}
 W\left(\bm{\zeta}\right) =-\dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\bm{\zeta}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)+C
 \label{pmf:pmf2}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2cb5819c-b32e-47ec-b884-51188d8cbfb6">
-<span class="eqno">()<a class="headerlink" href="#equation-2cb5819c-b32e-47ec-b884-51188d8cbfb6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-19a95d72-8f21-4576-b179-8bd9ab98a1f2">
+<span class="eqno">()<a class="headerlink" href="#equation-19a95d72-8f21-4576-b179-8bd9ab98a1f2" title="Permalink to this equation"></a></span>\[\begin{align}
 C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\bm{\zeta}_{0}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}\]</div>
 </section>
@@ -337,8 +337,8 @@ C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\bm{\zeta}_{0}-\bm{\xi}\left(
 </ul>
 <p>Specifies the grid origin for each CV direction.</p>
 <p>For the <span class="math notranslate nohighlight">\(k\)</span>-th CV, let the origin be <span class="math notranslate nohighlight">\(x_k^{(0)}\)</span> and the grid spacing be <span class="math notranslate nohighlight">\(\Delta_k\)</span>. Then the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-959a8d89-aa5c-4001-8552-5bbfd804de1d">
-<span class="eqno">()<a class="headerlink" href="#equation-959a8d89-aa5c-4001-8552-5bbfd804de1d" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3f69b7a5-b033-4e8d-b69b-4ec1d7936011">
+<span class="eqno">()<a class="headerlink" href="#equation-3f69b7a5-b033-4e8d-b69b-4ec1d7936011" title="Permalink to this equation"></a></span>\[\begin{align}
 x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
 \end{align}\]</div>
 </li>
@@ -362,8 +362,8 @@ x_k^{(i)} = x_k^{(0)} + (i-1)\Delta_k
 </ul>
 <p>Specifies whether the CV contains a radial component.</p>
 <p>If <code class="docutils literal notranslate"><span class="pre">.true.</span></code>, the distribution function for the CV component <span class="math notranslate nohighlight">\(x_k\)</span> specified by <code class="docutils literal notranslate"><span class="pre">radcol</span></code> is calculated using the bin volume</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a8059c0-2637-4e9a-907f-66ffd0cb50f3">
-<span class="eqno">()<a class="headerlink" href="#equation-8a8059c0-2637-4e9a-907f-66ffd0cb50f3" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-52100993-8243-41ce-a817-07a0534342c6">
+<span class="eqno">()<a class="headerlink" href="#equation-52100993-8243-41ce-a817-07a0534342c6" title="Permalink to this equation"></a></span>\[\begin{align}
 4\pi x_{k}^{2} \Delta_{k}^{2}
 \end{align}\]</div>
 </li>

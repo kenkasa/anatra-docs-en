@@ -65,7 +65,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Radial Distribution Function (radial_distr, rdf)</li>
+      <li class="breadcrumb-item active">Radial Distribution Function (<code class="docutils literal notranslate"><span class="pre">radial_distr</span></code>, <code class="docutils literal notranslate"><span class="pre">rdf</span></code>)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/03_anatra_usage/05_radial_distr.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,75 +76,75 @@
            <div itemprop="articleBody">
              
   <section id="radial-distribution-function-radial-distr-rdf">
-<h1>Radial Distribution Function (radial_distr, rdf)<a class="headerlink" href="#radial-distribution-function-radial-distr-rdf" title="Link to this heading"></a></h1>
+<h1>Radial Distribution Function (<code class="docutils literal notranslate"><span class="pre">radial_distr</span></code>, <code class="docutils literal notranslate"><span class="pre">rdf</span></code>)<a class="headerlink" href="#radial-distribution-function-radial-distr-rdf" title="Link to this heading"></a></h1>
 <section id="theoretical-background">
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>This section explains the definition of the radial distribution function (RDF).</p>
 <section id="rdf-for-identical-particles">
 <h3>RDF for Identical Particles<a class="headerlink" href="#rdf-for-identical-particles" title="Link to this heading"></a></h3>
 <p>Consider a system containing <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, with a total volume <span class="math notranslate nohighlight">\(V\)</span> and a bulk number density <span class="math notranslate nohighlight">\(\rho_a = N_a/V\)</span>. The local density field <span class="math notranslate nohighlight">\(\hat{\rho}_{a}\left({\bf r}\right)\)</span> is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee35c5d6-8bba-4735-961f-261c89bfcc45">
-<span class="eqno">()<a class="headerlink" href="#equation-ee35c5d6-8bba-4735-961f-261c89bfcc45" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-50bf1def-80e9-4f04-be69-8d25a53da85e">
+<span class="eqno">()<a class="headerlink" href="#equation-50bf1def-80e9-4f04-be69-8d25a53da85e" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right).
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\({\bf r}_{i}\)</span> is the position of the <span class="math notranslate nohighlight">\(i\)</span>-th particle of type <span class="math notranslate nohighlight">\(a\)</span>. If no external field is present, the ensemble average of the local density field is reduced to the bulk density.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36b6b82c-9e78-4e93-a8dd-fb5327ad6d59">
-<span class="eqno">()<a class="headerlink" href="#equation-36b6b82c-9e78-4e93-a8dd-fb5327ad6d59" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c2e8e77e-c940-4258-a1a3-db678a5285c5">
+<span class="eqno">()<a class="headerlink" href="#equation-c2e8e77e-c940-4258-a1a3-db678a5285c5" title="Permalink to this equation"></a></span>\[\begin{align}
 \Braket{\hat{\rho}_{a}\left({\bf r}\right)} = \rho_{a}.
 \end{align}\]</div>
 <p>The, let us define the two-body density correlation function as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a74f6a8-4f50-450a-b162-c6bf38187a36">
-<span class="eqno">()<a class="headerlink" href="#equation-8a74f6a8-4f50-450a-b162-c6bf38187a36" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a446fe85-b2fa-4e26-9c72-3dd69c542a1d">
+<span class="eqno">()<a class="headerlink" href="#equation-a446fe85-b2fa-4e26-9c72-3dd69c542a1d" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left({\bf r},{\bf r}^{\prime}\right) = \Braket{\hat{\rho}_{a}\left({\bf r}\right)\hat{\rho}_{a}\left({\bf r}^{\prime}\right)} = \Braket{\sum_{i=1}^{N_{a}}\sum_{j=1}^{N_{a}}\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
 \end{align}\]</div>
 <p>Separating the terms for <span class="math notranslate nohighlight">\(i = j\)</span> and <span class="math notranslate nohighlight">\(i \ne j\)</span> gives</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3d644748-c63d-4cfd-ac7e-adaf9131af6a">
-<span class="eqno">()<a class="headerlink" href="#equation-3d644748-c63d-4cfd-ac7e-adaf9131af6a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8394b715-be96-4925-9366-81917fa17e99">
+<span class="eqno">()<a class="headerlink" href="#equation-8394b715-be96-4925-9366-81917fa17e99" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} + \sum_{i=1}^{N_{a}}{\sum_{j\ne i}^{N_{a}}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
 \end{align}\]</div>
 <p>The first term represents the probability that the same particle exists at both <span class="math notranslate nohighlight">\({\bf r}\)</span> and <span class="math notranslate nohighlight">\({\bf r}'\)</span>, which is clearly zero unless <span class="math notranslate nohighlight">\({\bf r} = {\bf r}'\)</span>, i.e.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca294e04-b169-4381-9be2-84236078e863">
-<span class="eqno">()<a class="headerlink" href="#equation-ca294e04-b169-4381-9be2-84236078e863" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dc5bc7c8-8341-4119-93cb-d0f64fd56e34">
+<span class="eqno">()<a class="headerlink" href="#equation-dc5bc7c8-8341-4119-93cb-d0f64fd56e34" title="Permalink to this equation"></a></span>\[\begin{align}
 \sum_{i=1}^{N_{a}}\braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{i}\right)} = \rho_{a}\delta\left({\bf r}-{\bf r}^{\prime}\right).
 \end{align}\]</div>
 <p>The second term, called the two-body density, represents the probability that one particle is at <span class="math notranslate nohighlight">\({\bf r}\)</span> and another is at <span class="math notranslate nohighlight">\({\bf r}'\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3aac03ce-0f9e-4fd5-8633-9ccc15cdb487">
-<span class="eqno">()<a class="headerlink" href="#equation-3aac03ce-0f9e-4fd5-8633-9ccc15cdb487" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-28ff364d-9a6e-4854-b56d-caa50ae553fe">
+<span class="eqno">()<a class="headerlink" href="#equation-28ff364d-9a6e-4854-b56d-caa50ae553fe" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \sum_{i=1}^{N_{a}}\sum_{j\ne i}^{N_{a}}\Braket{\delta\left({\bf r}-{\bf r}_{i}\right)\delta\left({\bf r}^{\prime}-{\bf r}_{j}\right)}.
 \end{align}\]</div>
 <p>If <span class="math notranslate nohighlight">\({\bf r}\)</span> and <span class="math notranslate nohighlight">\({\bf r}'\)</span> are far apart, their correlation is negligible. Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a0e94f6-049f-44dd-9b44-2ac504e3319f">
-<span class="eqno">()<a class="headerlink" href="#equation-0a0e94f6-049f-44dd-9b44-2ac504e3319f" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a72a7942-da0a-4068-82dd-aa1e096be825">
+<span class="eqno">()<a class="headerlink" href="#equation-a72a7942-da0a-4068-82dd-aa1e096be825" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) \approx \rho_{a}^{2}\left(1-\dfrac{1}{N_{a}}\right).\qquad (\left|{\bf r} - {\bf r}^{\prime}\right|\to \infty)
 \end{align}\]</div>
 <p>The pair distribution function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7d90dd68-db7d-4c57-acba-771d3a09977a">
-<span class="eqno">()<a class="headerlink" href="#equation-7d90dd68-db7d-4c57-acba-771d3a09977a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a925ea94-81c6-49b6-8174-8a40ece5782b">
+<span class="eqno">()<a class="headerlink" href="#equation-a925ea94-81c6-49b6-8174-8a40ece5782b" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}(1 - 1/N_{a})}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
 \end{align}\]</div>
 <p>For large systems, <span class="math notranslate nohighlight">\(1/N_a \approx 0\)</span>. Therefore,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82a5419b-ddbe-467b-a75e-9b491f1ff667">
-<span class="eqno">()<a class="headerlink" href="#equation-82a5419b-ddbe-467b-a75e-9b491f1ff667" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9c9530b8-0f85-48da-829c-7c40a735c389">
+<span class="eqno">()<a class="headerlink" href="#equation-9c9530b8-0f85-48da-829c-7c40a735c389" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = \dfrac{1}{\rho_{a}^{2}}\rho_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right).
 \end{align}\]</div>
 <p>In uniform systems, the function depends only on the relative position, indicating</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5a4582e-d539-45a9-a200-2cef9294a130">
-<span class="eqno">()<a class="headerlink" href="#equation-e5a4582e-d539-45a9-a200-2cef9294a130" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e66eae36-1cce-458c-ae8a-f49c72ce21ec">
+<span class="eqno">()<a class="headerlink" href="#equation-e66eae36-1cce-458c-ae8a-f49c72ce21ec" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}^{(2)}\left({\bf r},{\bf r}^{\prime}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}^{\prime}-{\bf r}\right).
 \end{align}\]</div>
 <p>Let <span class="math notranslate nohighlight">\({\bf r}\)</span> be <span class="math notranslate nohighlight">\({\bf r}' - {\bf r}\)</span> and <span class="math notranslate nohighlight">\(g_{aa}\left({\bf r}\right)\)</span> be the spatial distribution function (SDF) defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a13e0f63-1e96-4c8a-bece-65f5125ae941">
-<span class="eqno">()<a class="headerlink" href="#equation-a13e0f63-1e96-4c8a-bece-65f5125ae941" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4a02e194-52fb-41ba-9944-1f4ebda2390a">
+<span class="eqno">()<a class="headerlink" href="#equation-4a02e194-52fb-41ba-9944-1f4ebda2390a" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}\left({\bf r}\right) = g_{aa}^{(2)}\left({\bf 0},{\bf r}\right).
 \end{align}\]</div>
 <p>Averaging over orientation leads to the radial distribution function (RDF) defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-905f667e-d8d1-4000-bb6e-eff0ca43fc91">
-<span class="eqno">()<a class="headerlink" href="#equation-905f667e-d8d1-4000-bb6e-eff0ca43fc91" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4c7da199-da50-4667-82bb-2f5a70fc945f">
+<span class="eqno">()<a class="headerlink" href="#equation-4c7da199-da50-4667-82bb-2f5a70fc945f" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}\left(r\right) = \dfrac{1}{4\pi r^{2}}\int d{\bf r}\,\delta\left(\left|{\bf r}\right|-r\right)g_{aa}\left({\bf r}\right).
 \end{align}\]</div>
 <p>For isotropic systems, the following relationship holds.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-776b4ff1-3e6d-43f4-87c0-d82dfb6d9105">
-<span class="eqno">()<a class="headerlink" href="#equation-776b4ff1-3e6d-43f4-87c0-d82dfb6d9105" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-af5c57eb-52f6-4b1b-8c7b-a7af2a30a5fa">
+<span class="eqno">()<a class="headerlink" href="#equation-af5c57eb-52f6-4b1b-8c7b-a7af2a30a5fa" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
 \end{align}\]</div>
 <p>RDF gives the relative probability of finding a particle at distance <span class="math notranslate nohighlight">\(r\)</span> compared to bulk. <span class="math notranslate nohighlight">\(g_{aa}(r) &gt; 1\)</span> indicates higher probability, <span class="math notranslate nohighlight">\(g_{aa}(r) &lt; 1\)</span> indicates lower probability than bulk.</p>
@@ -152,23 +152,23 @@ g_{aa}\left(|{\bf r}|\right) = g_{aa}({\bf r}).
 <section id="rdf-for-heterogeneous-particles">
 <h3>RDF for Heterogeneous Particles<a class="headerlink" href="#rdf-for-heterogeneous-particles" title="Link to this heading"></a></h3>
 <p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(N_b\)</span> of type <span class="math notranslate nohighlight">\(b\)</span>, with respective bulk densities <span class="math notranslate nohighlight">\(\rho_a = N_a/V\)</span> and <span class="math notranslate nohighlight">\(\rho_b = N_b/V\)</span>. The two-body density is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-275fe2ba-f9af-4b73-b6ab-03a5c4acafe1">
-<span class="eqno">()<a class="headerlink" href="#equation-275fe2ba-f9af-4b73-b6ab-03a5c4acafe1" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff18822b-7fa7-4a93-ae59-71f8cd356c54">
+<span class="eqno">()<a class="headerlink" href="#equation-ff18822b-7fa7-4a93-ae59-71f8cd356c54" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{ab}^{(2)}({\bf r},{\bf r}') = \sum_{i=1}^{N_a}\sum_{j=1}^{N_b}\Braket{\delta({\bf r} - {\bf r}_i^a)\delta({\bf r}' - {\bf r}_j^b)}.
 \end{align}\]</div>
 <p>For uncorrelated particles,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e43b326-0fce-4afe-96d7-fca7411ce78a">
-<span class="eqno">()<a class="headerlink" href="#equation-5e43b326-0fce-4afe-96d7-fca7411ce78a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f1b0f6fe-0f8d-4e60-8f2f-684588080a0d">
+<span class="eqno">()<a class="headerlink" href="#equation-f1b0f6fe-0f8d-4e60-8f2f-684588080a0d" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{ab}^{(2)}({\bf r},{\bf r}') \approx \rho_a \rho_b.
 \end{align}\]</div>
 <p>The spatial distribution function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2e8b722-b700-48e7-ad88-03f8d3696522">
-<span class="eqno">()<a class="headerlink" href="#equation-b2e8b722-b700-48e7-ad88-03f8d3696522" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-19b336a3-01ef-4dd5-8d65-df493fede93d">
+<span class="eqno">()<a class="headerlink" href="#equation-19b336a3-01ef-4dd5-8d65-df493fede93d" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{ab}({\bf r}) = \dfrac{1}{\rho_a \rho_b} \rho_{ab}^{(2)}({\bf 0}, {\bf r}),
 \end{align}\]</div>
 <p>and the RDF is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bcbdf0d1-c850-4b71-a95e-07b6f4063aeb">
-<span class="eqno">()<a class="headerlink" href="#equation-bcbdf0d1-c850-4b71-a95e-07b6f4063aeb" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fc42769f-97ff-42e3-a5df-a67c33e7240a">
+<span class="eqno">()<a class="headerlink" href="#equation-fc42769f-97ff-42e3-a5df-a67c33e7240a" title="Permalink to this equation"></a></span>\[\begin{align}
 g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\bf r}).
 \end{align}\]</div>
 </section>

@@ -1,4 +1,4 @@
-## Root-Mean-Square Deviation (`rmsd`)
+## Root-Mean-Square Deviation (``rmsd``)
 
 ### Theoretical Background
 

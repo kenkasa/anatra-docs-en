@@ -1,4 +1,4 @@
-## Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)
+## Center of Mass Analysis and Mean Square Displacement (``center_of_mass``, ``com``)
 
 The program ``center_of_mass`` (``com``) computes the temporal variation of molecular centers of mass and the mean square displacement (MSD). To support two-dimensional diffusion (lateral diffusion) within lipid membranes, it also allows for MSD calculations restricted to the $xy$-plane.
 

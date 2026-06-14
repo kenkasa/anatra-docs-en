@@ -1,4 +1,4 @@
-## Moving Average (moving_average, movave)
+## Moving Average (``moving_average``, ``movave``)
 
 In this analysis mode, one-dimensional data (e.g., distribution functions) are smoothed using a moving average.
 

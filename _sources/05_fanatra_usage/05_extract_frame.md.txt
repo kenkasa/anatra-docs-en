@@ -1,4 +1,4 @@
-## Frame Extraction (extract_frame, extf)
+## Frame Extraction (``extract_frame``, ``extf``)
 
 In this analysis mode, snapshots (frames) that satisfy specified CV ranges are extracted.
 

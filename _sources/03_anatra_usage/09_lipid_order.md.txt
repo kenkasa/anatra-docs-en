@@ -1,4 +1,4 @@
-## Lipid Order Parameter (`lipid_order`, `scd`)
+## Lipid Order Parameter (``lipid_order``, ``scd``)
 
 The `lipid_order` (`scd`) mode allows for the calculation of the orientational order parameter $S_{\mathrm{CD}}$ associated with acyl chains of phospholipids. Using the membrane normal direction as the $z$-axis, the angle $\theta$ is defined between this axis and the vector connecting a specific carbon atom and its bonded hydrogen. The $S_{\mathrm{CD}}$ parameter is then defined as:
 

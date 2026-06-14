@@ -81,24 +81,24 @@
 <ul>
 <li><p><strong>Electrostatic Interaction</strong><br />
 Electrostatic interaction energy <span class="math notranslate nohighlight">\(U_{\mathrm{elec}}\)</span> between molecules A and B can be computed using two schemes. The first is the bare interaction,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d205195a-995b-44fa-8ecb-36971f8dfe63">
-<span class="eqno">()<a class="headerlink" href="#equation-d205195a-995b-44fa-8ecb-36971f8dfe63" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-da78f23f-93b5-4709-88d6-ee0a82febebe">
+<span class="eqno">()<a class="headerlink" href="#equation-da78f23f-93b5-4709-88d6-ee0a82febebe" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{elec}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} \frac{q_i q_j}{r_{ij}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> denote atomic indices in molecules A and B, respectively. The second scheme uses the Smooth Particle Mesh Ewald (SPME) method, which is the standard approach for accounting for long-range electrostatic interactions in MD simulations. If consistency with MD simulations is required, the SPME method should be employed.</p>
 </li>
 <li><p><strong>Lennard-Jones (LJ) Interaction</strong><br />
 The LJ interaction, which empirically describes van der Waals interactions, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4fbd85a-df07-4a37-8ed7-adf59660980a">
-<span class="eqno">()<a class="headerlink" href="#equation-a4fbd85a-df07-4a37-8ed7-adf59660980a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-74f0ca9d-2475-4245-b22b-6531453c234f">
+<span class="eqno">()<a class="headerlink" href="#equation-74f0ca9d-2475-4245-b22b-6531453c234f" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{LJ}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right].
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> and <span class="math notranslate nohighlight">\(\sigma_{ij}\)</span> are the LJ parameters between atom <span class="math notranslate nohighlight">\(i\)</span> in molecule A and atom <span class="math notranslate nohighlight">\(j\)</span> in molecule B.</p>
 </li>
 <li><p><strong>Attractive LJ Interaction</strong><br />
 The attractive component of the LJ interaction is defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c9f363c-4cf0-4cc0-93e7-5493795401de">
-<span class="eqno">()<a class="headerlink" href="#equation-2c9f363c-4cf0-4cc0-93e7-5493795401de" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5eab8d64-ec82-405c-acff-5507c9ea365d">
+<span class="eqno">()<a class="headerlink" href="#equation-5eab8d64-ec82-405c-acff-5507c9ea365d" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{attr}} &amp;= \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} u_{\mathrm{attr},ij}, \\
 u_{\mathrm{attr},ij} &amp;= \begin{cases}
 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right] &amp; r_{ij} \geq 2^{1/6} \sigma, \\

@@ -1,4 +1,4 @@
-## Histogram (histogram, hist)
+## Histogram (``histogram``, ``hist``)
 
 In this analysis mode, the distribution function $P\left(x\right)$ is calculated from a given time-series data set $\xi\left(t\right)$.
 

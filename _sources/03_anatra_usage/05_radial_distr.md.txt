@@ -1,4 +1,4 @@
-## Radial Distribution Function (radial_distr, rdf)
+## Radial Distribution Function (``radial_distr``, ``rdf``)
 
 ### Theoretical Background
 

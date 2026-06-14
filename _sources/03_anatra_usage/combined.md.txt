@@ -259,7 +259,7 @@ Usage of the ``-mode`` option. In ``residue``, the selected region is split by r
   For example, setting ``-prep_only true`` results in the generation of files such as ``*.molinfo``.
 --->
 
-## Trajectory Conversion (`trjconv`)
+## Trajectory Conversion (``trjconv``)
 
 The `trjconv` mode performs various transformations on MD trajectories. It is typically used for the following purposes:
 
@@ -510,7 +510,7 @@ anatra trjconv                              \
   -outselid   0                             \
   -fitselid   1
 ```
-## Distance Calculation (`distance`, `dis`)
+## Distance Calculation (``distance``, ``dis``)
 
 The `distance` mode computes the distance between two selected regions. By default, it calculates the distance between the centers of mass of the selected molecules. It can also compute the minimum distance between atoms in two regions.
 
@@ -631,7 +631,7 @@ anatra distance                                    \
   -mode1          residue
 ```
 
-## Center of Mass Analysis and Mean Square Displacement (center_of_mass, com)
+## Center of Mass Analysis and Mean Square Displacement (``center_of_mass``, ``com``)
 
 The program ``center_of_mass`` (``com``) computes the temporal variation of molecular centers of mass and the mean square displacement (MSD). To support two-dimensional diffusion (lateral diffusion) within lipid membranes, it also allows for MSD calculations restricted to the $xy$-plane.
 
@@ -806,7 +806,7 @@ anatra center_of_mass        \
   -t_range   100             \
   -t_sparse  0.01
 ```
-## Radial Distribution Function (radial_distr, rdf)
+## Radial Distribution Function (``radial_distr``, ``rdf``)
 
 ### Theoretical Background
 
@@ -1050,7 +1050,7 @@ anatra rdf                                        \
   -normalize     true                             \
   -separate_self false
 ```
-## Spatial Distribution Function (`spatial_distr`, `sdf`)
+## Spatial Distribution Function (``spatial_distr``, ``sdf``)
 
 ### Theoretical Background
 
@@ -1237,7 +1237,7 @@ anatra spatial_distr                         \
   -use_spline        true                    \
   -spline_resolution 4
 ```
-## Root-Mean-Square Deviation (`rmsd`)
+## Root-Mean-Square Deviation (``rmsd``)
 
 ### Theoretical Background
 
@@ -1348,7 +1348,7 @@ anatra rmsd                                   \
   -rmsdselid    2                             \
   -rmsdrefselid 3
 ```
-## Interaction Energy (`interaction_energy`, `ene`)
+## Interaction Energy (``interaction_energy``, ``ene``)
 
 The `interaction_energy` (`ene`) mode allows the calculation of interaction energies between selected molecules, groups of molecules, or specific regions. Currently, **ANATRA** supports the following three types of interactions:
 
@@ -1589,7 +1589,7 @@ anatra energy                                 \
   -sel1        resname LIG                    \
   -prep_only   false
 ```
-## Lipid Order Parameter (`lipid_order`, `scd`)
+## Lipid Order Parameter (``lipid_order``, ``scd``)
 
 The `lipid_order` (`scd`) mode allows for the calculation of the orientational order parameter $S_{\mathrm{CD}}$ associated with acyl chains of phospholipids. Using the membrane normal direction as the $z$-axis, the angle $\theta$ is defined between this axis and the vector connecting a specific carbon atom and its bonded hydrogen. The $S_{\mathrm{CD}}$ parameter is then defined as:
 
@@ -1660,7 +1660,7 @@ anatra lipid_order                            \
   -prep_only  false
 ```
 
-## Distribution Function Along the Membrane Normal ($z$-axis) (`z_profile`, `zprof`)
+## Distribution Function Along the Membrane Normal ($z$-axis) (``z_profile``, ``zprof``)
 
 The `z_profile` (`zprof`) mode calculates the distribution of molecular species along the membrane normal (i.e., the $z$-axis). The local density field of species $a$ along the $z$-axis is defined as
 
@@ -1768,7 +1768,7 @@ anatra z_profile                 \
   -denstype   number             \
   -prep_only  false
 ```
-## Molecular Orientation Along a Specific Direction (`z_orient`, `zori`)
+## Molecular Orientation Along a Specific Direction (``z_orient``, ``zori``)
 
 The `z_orient` (`zori`) mode computes the orientation distribution of molecules relative to a reference direction, typically the $z$-axis.  
 To define the orientation of a molecule, two parts of the molecule are selected: the *bottom* and the *head*. The centers of mass of these two parts are denoted by ${\bf R}_{\mathrm{B}}$ and ${\bf R}_{\mathrm{H}}$, respectively. The molecular axis ${\bf u}$ is then defined as

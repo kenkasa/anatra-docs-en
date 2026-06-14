@@ -1,4 +1,4 @@
-## Trajectory Conversion (`trjconv`)
+## Trajectory Conversion (``trjconv``)
 
 The `trjconv` mode performs various transformations on MD trajectories. It is typically used for the following purposes:
 

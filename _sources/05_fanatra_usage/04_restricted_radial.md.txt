@@ -1,4 +1,4 @@
-## Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)
+## Restricted Radial Potential of Mean Force (``restricted_radial``, ``rrpmf``)
 
 This analysis mode calculates the free energy profile along the radial direction under a condition defined by one or more reaction coordinates (collective variables).
 

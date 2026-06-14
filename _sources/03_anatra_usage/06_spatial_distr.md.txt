@@ -1,4 +1,4 @@
-## Spatial Distribution Function (`spatial_distr`, `sdf`)
+## Spatial Distribution Function (``spatial_distr``, ``sdf``)
 
 ### Theoretical Background
 

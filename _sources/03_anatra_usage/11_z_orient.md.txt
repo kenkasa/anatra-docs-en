@@ -1,4 +1,4 @@
-## Molecular Orientation Along a Specific Direction (`z_orient`, `zori`)
+## Molecular Orientation Along a Specific Direction (``z_orient``, ``zori``)
 
 The `z_orient` (`zori`) mode computes the orientation distribution of molecules relative to a reference direction, typically the $z$-axis.  
 To define the orientation of a molecule, two parts of the molecule are selected: the *bottom* and the *head*. The centers of mass of these two parts are denoted by ${\bf R}_{\mathrm{B}}$ and ${\bf R}_{\mathrm{H}}$, respectively. The molecular axis ${\bf u}$ is then defined as

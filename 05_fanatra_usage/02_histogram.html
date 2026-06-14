@@ -65,7 +65,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Histogram (histogram, hist)</li>
+      <li class="breadcrumb-item active">Histogram (<code class="docutils literal notranslate"><span class="pre">histogram</span></code>, <code class="docutils literal notranslate"><span class="pre">hist</span></code>)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/05_fanatra_usage/02_histogram.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,15 +76,15 @@
            <div itemprop="articleBody">
              
   <section id="histogram-histogram-hist">
-<h1>Histogram (histogram, hist)<a class="headerlink" href="#histogram-histogram-hist" title="Link to this heading"></a></h1>
+<h1>Histogram (<code class="docutils literal notranslate"><span class="pre">histogram</span></code>, <code class="docutils literal notranslate"><span class="pre">hist</span></code>)<a class="headerlink" href="#histogram-histogram-hist" title="Link to this heading"></a></h1>
 <p>In this analysis mode, the distribution function <span class="math notranslate nohighlight">\(P\left(x\right)\)</span> is calculated from a given time-series data set <span class="math notranslate nohighlight">\(\xi\left(t\right)\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd87efa4-4de2-4bb5-aa23-588503a1ce69">
-<span class="eqno">()<a class="headerlink" href="#equation-dd87efa4-4de2-4bb5-aa23-588503a1ce69" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eb1f1628-4c22-4b64-8eee-058ddd1cdc93">
+<span class="eqno">()<a class="headerlink" href="#equation-eb1f1628-4c22-4b64-8eee-058ddd1cdc93" title="Permalink to this equation"></a></span>\[\begin{align}
 P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of data points. The above expression satisfies the normalization condition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce3da6b0-26a1-41b8-bc45-bdcc61ce6218">
-<span class="eqno">()<a class="headerlink" href="#equation-ce3da6b0-26a1-41b8-bc45-bdcc61ce6218" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ae2b404c-1075-49a4-b1d9-16c06e182ead">
+<span class="eqno">()<a class="headerlink" href="#equation-ae2b404c-1075-49a4-b1d9-16c06e182ead" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{-\infty}^{\infty} dx P\left(x\right) = 1
 \end{align}\]</div>
 <section id="list-of-parameters">
@@ -176,8 +176,8 @@ P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsta</span> <span class="pre">=</span> <span class="pre">0.0</span></code></p></li>
 </ul>
 <p>Specifies the starting position of the grid, <span class="math notranslate nohighlight">\(x_{0}\)</span>. If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_{i}\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5e150e3-462f-438c-9ffc-bf3efbe0c7e3">
-<span class="eqno">()<a class="headerlink" href="#equation-d5e150e3-462f-438c-9ffc-bf3efbe0c7e3" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bef97bef-e4a2-478a-8adf-544da4bda3f0">
+<span class="eqno">()<a class="headerlink" href="#equation-bef97bef-e4a2-478a-8adf-544da4bda3f0" title="Permalink to this equation"></a></span>\[\begin{align}
 x_{i} = x_{0} + \left(i - 1 \right) \Delta x
 \end{align}\]</div>
 <p>holds.</p>

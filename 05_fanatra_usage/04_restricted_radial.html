@@ -65,7 +65,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)</li>
+      <li class="breadcrumb-item active">Restricted Radial Potential of Mean Force (<code class="docutils literal notranslate"><span class="pre">restricted_radial</span></code>, <code class="docutils literal notranslate"><span class="pre">rrpmf</span></code>)</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/05_fanatra_usage/04_restricted_radial.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -76,7 +76,7 @@
            <div itemprop="articleBody">
              
   <section id="restricted-radial-potential-of-mean-force-restricted-radial-rrpmf">
-<h1>Restricted Radial Potential of Mean Force (restricted_radial, rrpmf)<a class="headerlink" href="#restricted-radial-potential-of-mean-force-restricted-radial-rrpmf" title="Link to this heading"></a></h1>
+<h1>Restricted Radial Potential of Mean Force (<code class="docutils literal notranslate"><span class="pre">restricted_radial</span></code>, <code class="docutils literal notranslate"><span class="pre">rrpmf</span></code>)<a class="headerlink" href="#restricted-radial-potential-of-mean-force-restricted-radial-rrpmf" title="Link to this heading"></a></h1>
 <p>This analysis mode calculates the free energy profile along the radial direction under a condition defined by one or more reaction coordinates (collective variables).</p>
 <p>Using this profile, the free energy change associated with the binding of a host molecule and a guest molecule (binding free energy) can also be evaluated.</p>
 <section id="theoretical-background">
@@ -84,21 +84,21 @@
 <p>Let <span class="math notranslate nohighlight">\({\bf X}\)</span> denote the configuration of the system.
 The intermolecular distance between the host and guest molecules and the reaction coordinates defining the binding state are denoted by <span class="math notranslate nohighlight">\(d\left({\bf X}\right)\)</span> and <span class="math notranslate nohighlight">\(\bm{\xi}\left({\bf X}\right)\)</span>, respectively.</p>
 <p>The potential of mean force along the intermolecular distance is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-648350fa-29e2-4515-80ff-d11977489c4e">
-<span class="eqno">()<a class="headerlink" href="#equation-648350fa-29e2-4515-80ff-d11977489c4e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c7acd38c-2505-4d1b-81a3-d700171982d0">
+<span class="eqno">()<a class="headerlink" href="#equation-c7acd38c-2505-4d1b-81a3-d700171982d0" title="Permalink to this equation"></a></span>\[\begin{align}
 w\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
 \end{align}\]</div>
 <p>Furthermore, let <span class="math notranslate nohighlight">\(\bm{\Upsilon}\)</span> be the region in the reaction coordinate space corresponding to the bound state, and introduce the characteristic function <span class="math notranslate nohighlight">\(\Theta\left(\bm{\xi}\right)\)</span> defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d90e51fb-8297-4d67-8a96-20363643c7b3">
-<span class="eqno">()<a class="headerlink" href="#equation-d90e51fb-8297-4d67-8a96-20363643c7b3" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-07d87832-f351-4c9b-af33-b67d88cdff1d">
+<span class="eqno">()<a class="headerlink" href="#equation-07d87832-f351-4c9b-af33-b67d88cdff1d" title="Permalink to this equation"></a></span>\[\begin{align}
 \Theta_{\mathrm{B}}\left(\bm{\xi}\right) =\begin{cases}
 1 &amp; \bm{\xi}\in\bm{\Upsilon}\\
 0 &amp; \bm{\xi}\notin\bm{\Upsilon}
 \end{cases}
 \end{align}\]</div>
 <p>Using this function, the PMF for configurations belonging to the bound state is expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-26861872-5df6-45c2-9863-a5465f818994">
-<span class="eqno">()<a class="headerlink" href="#equation-26861872-5df6-45c2-9863-a5465f818994" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-98e1afdc-6213-4eb0-abbb-ad94e21db883">
+<span class="eqno">()<a class="headerlink" href="#equation-98e1afdc-6213-4eb0-abbb-ad94e21db883" title="Permalink to this equation"></a></span>\[\begin{align}
 w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\delta\left(r-d\left({\bf X}\right)\right)}{4\pi r^{2}}\Theta_{\mathrm{B}}\left(\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)\right]+C
 \end{align}\]</div>
 <p>The constant <span class="math notranslate nohighlight">\(C\)</span> appearing in both <span class="math notranslate nohighlight">\(w\left(r\right)\)</span> and <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> is taken to be the same value, and is chosen such that the minimum value of <span class="math notranslate nohighlight">\(w_{\mathrm{B}}\left(r\right)\)</span> becomes zero.</p>
@@ -106,24 +106,24 @@ w_{\mathrm{B}}\left(r\right) =-\dfrac{1}{\beta}\log\left[\int d{\bf X}\,\dfrac{\
 The choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span> is arbitrary as long as this condition is satisfied.
 This point will be discussed later.</p>
 <p>The probability ratio between the unbound state U, where the two molecules are separated by <span class="math notranslate nohighlight">\(r_{0}\leq r \leq r_{1}\)</span>, and the bound state B is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a6355a4-8cff-48fa-bd1e-111be46b284c">
-<span class="eqno">()<a class="headerlink" href="#equation-8a6355a4-8cff-48fa-bd1e-111be46b284c" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-573e0b96-8d78-40df-8c0a-2a04ee58bce4">
+<span class="eqno">()<a class="headerlink" href="#equation-573e0b96-8d78-40df-8c0a-2a04ee58bce4" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{{\displaystyle \int_{\bm{\Upsilon}}dr\,\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,\exp\left(-\beta w\left(r\right)\right)}}
 \end{align}\]</div>
 <p>Therefore, the free energy change <span class="math notranslate nohighlight">\(\Delta G_{\mathrm{PMF}}\)</span> associated with the transition from U to B is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8c8fdbb0-c4f2-4f3c-a724-0308bd558f2d">
-<span class="eqno">()<a class="headerlink" href="#equation-8c8fdbb0-c4f2-4f3c-a724-0308bd558f2d" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bdce9742-e320-44eb-8e8c-f47fe7f919b8">
+<span class="eqno">()<a class="headerlink" href="#equation-bdce9742-e320-44eb-8e8c-f47fe7f919b8" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G_{\mathrm{PMF}} =-\dfrac{1}{\beta}\log\dfrac{{\displaystyle \int_{\bm{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)}}{{\displaystyle \int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}\exp\left(-\beta w\left(r\right)\right)}}
 \end{align}\]</div>
 <p>Since <span class="math notranslate nohighlight">\(w\left(r\right)=\Delta w\)</span> within the range <span class="math notranslate nohighlight">\(r_{0}\leq r\leq r_{1}\)</span>, this equation can be rewritten as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca944697-b940-4a85-be62-ec17c7d19a26">
-<span class="eqno">()<a class="headerlink" href="#equation-ca944697-b940-4a85-be62-ec17c7d19a26" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-14e0036b-e55b-4b48-9770-8f9a4f733f4e">
+<span class="eqno">()<a class="headerlink" href="#equation-14e0036b-e55b-4b48-9770-8f9a4f733f4e" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G_{\mathrm{PMF}} =-\Delta w-\dfrac{1}{\beta}\log\dfrac{V_{\mathrm{B}}}{V_{\mathrm{U}}}
 \label{pmf:dGpmf}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-199a269f-61fc-4563-83c2-d524deceaedf">
-<span class="eqno">()<a class="headerlink" href="#equation-199a269f-61fc-4563-83c2-d524deceaedf" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-07e6de14-0956-4454-849e-f59a6f682ad1">
+<span class="eqno">()<a class="headerlink" href="#equation-07e6de14-0956-4454-849e-f59a6f682ad1" title="Permalink to this equation"></a></span>\[\begin{align}
 V_{\mathrm{B}} =\int_{\bm{\Upsilon}}dr\,4\pi r^{2}\exp\left(-\beta w_{\mathrm{B}}\left(r\right)\right)\\
 V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
 \end{align}\]</div>
@@ -132,29 +132,29 @@ V_{\mathrm{U}} =\int_{r_{0}}^{r_{1}}dr\,4\pi r^{2}
 <p>Let <span class="math notranslate nohighlight">\(V^{\circ}\)</span> be the volume corresponding to a concentration of <span class="math notranslate nohighlight">\(c^{\circ}\)</span> for a single guest molecule.
 Then <span class="math notranslate nohighlight">\(V^{\circ} = 1661\)</span> ANGSTROM<span class="math notranslate nohighlight">\(^{3}\)</span>.</p>
 <p>The free energy change <span class="math notranslate nohighlight">\(\Delta G^{\circ}_{\mathrm{corr}}\)</span> associated with the transition from concentration <span class="math notranslate nohighlight">\(c^{\circ}=1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{U}}\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d04279ee-150c-4bf9-9b93-117d11e30ef0">
-<span class="eqno">()<a class="headerlink" href="#equation-d04279ee-150c-4bf9-9b93-117d11e30ef0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-126ee762-8495-4f19-a005-60d529b66aed">
+<span class="eqno">()<a class="headerlink" href="#equation-126ee762-8495-4f19-a005-60d529b66aed" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G^{\circ}_{\mathrm{corr}} = - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{U}}}{V^{\circ}}
 \label{pmf:dGcorr}
 \end{align}\]</div>
 <p>Thus, by decomposing the transition from <span class="math notranslate nohighlight">\(1/V^{\circ}\)</span> to <span class="math notranslate nohighlight">\(1/V_{\mathrm{B}}\)</span> into the two steps,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f46ce63-efc8-4773-bf94-ecc56ffe55dd">
-<span class="eqno">()<a class="headerlink" href="#equation-8f46ce63-efc8-4773-bf94-ecc56ffe55dd" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7944af27-5b1b-4988-bccf-84ae2401ea6c">
+<span class="eqno">()<a class="headerlink" href="#equation-7944af27-5b1b-4988-bccf-84ae2401ea6c" title="Permalink to this equation"></a></span>\[\begin{align}
 1/V^{\circ} \to 1/V_{\mathrm{U}}
 \end{align}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a75cd50-30b4-40d6-ad90-8b0d7ee6dbcb">
-<span class="eqno">()<a class="headerlink" href="#equation-8a75cd50-30b4-40d6-ad90-8b0d7ee6dbcb" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6e9425b6-1f5c-43f0-bd40-df31e9a101db">
+<span class="eqno">()<a class="headerlink" href="#equation-6e9425b6-1f5c-43f0-bd40-df31e9a101db" title="Permalink to this equation"></a></span>\[\begin{align}
 1/V_{\mathrm{U}} \to 1/V_{\mathrm{B}}
 \end{align}\]</div>
 <p>we obtain</p>
-<div class="amsmath math notranslate nohighlight" id="equation-41f304a8-ea0b-4662-be85-83d23e7f5580">
-<span class="eqno">()<a class="headerlink" href="#equation-41f304a8-ea0b-4662-be85-83d23e7f5580" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b0ca1f47-6bb0-4c80-9ff5-d5d2e0329756">
+<span class="eqno">()<a class="headerlink" href="#equation-b0ca1f47-6bb0-4c80-9ff5-d5d2e0329756" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G^{\circ} = \Delta G_{\mathrm{PMF}} + \Delta G_{\mathrm{corr}}^{\circ}
 \end{align}\]</div>
 <p>Substituting Eqs. EQREF(pmf:dGpmfEQREF) and EQREF(pmf:dGcorrEQREF) into the above equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7be695b-7289-48e5-aeb3-a160511d6669">
-<span class="eqno">()<a class="headerlink" href="#equation-f7be695b-7289-48e5-aeb3-a160511d6669" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-af8cb0b6-e4c0-4722-9fa1-2d3600946d2c">
+<span class="eqno">()<a class="headerlink" href="#equation-af8cb0b6-e4c0-4722-9fa1-2d3600946d2c" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta G^{\circ} = - \Delta w - \dfrac{1}{\beta} \log \dfrac{V_{\mathrm{B}}}{V^{\circ}}
 \end{align}\]</div>
 <p>Since this expression does not contain <span class="math notranslate nohighlight">\(V_{\mathrm{U}}\)</span>, the value of <span class="math notranslate nohighlight">\(\Delta G^{\circ}\)</span> is independent of the choice of <span class="math notranslate nohighlight">\(r_{0}\)</span> and <span class="math notranslate nohighlight">\(r_{1}\)</span>.</p>

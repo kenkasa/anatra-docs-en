@@ -1,4 +1,4 @@
-## Interaction Energy (`interaction_energy`, `ene`)
+## Interaction Energy (``interaction_energy``, ``ene``)
 
 The `interaction_energy` (`ene`) mode allows the calculation of interaction energies between selected molecules, groups of molecules, or specific regions. Currently, **ANATRA** supports the following three types of interactions:
 
