@@ -47,7 +47,7 @@ D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf 
 
 This expression is known as Einstein$^\prime$s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.
 
-### List of Options
+### Option List
 
 **Option**           |  **Description**       | **Option**          | **Description**
 |:------------------:|:----------------------:|:-------------------:|:------------------:|

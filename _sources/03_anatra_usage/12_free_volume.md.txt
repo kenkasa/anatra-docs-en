@@ -9,7 +9,7 @@ At present, only the $z$ direction (``-coord_type z``) is supported.
 Before the analysis, the system is translated so that the center of the atoms specified by ``center_selid`` is aligned,
 and then the free volume fraction is calculated as a function of the $z$ coordinate.
 
-### List of Options
+### Option List
 
 **Option**         | **Remark**    | **Option**         | **Remark**
 :-----------------:|:-------------:|:------------------:|:--------------:

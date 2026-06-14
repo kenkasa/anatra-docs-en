@@ -62,7 +62,7 @@ where
 C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\bm{\zeta}_{0}-\bm{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}
 
-### List of Parameters
+### Parameter List
 
 **Namelist**         | **Parameter**          | **Remarks**
 :--------------------|:-----------------------|:-------------------------------------------------------------------

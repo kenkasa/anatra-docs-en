@@ -35,7 +35,7 @@ The `interaction_energy` (`ene`) mode allows the calculation of interaction ener
 
 In addition to the individual components above, the sum of electrostatic and LJ can also be calculated.
 
-### List of Options
+### Option List
 
 **Option**           | **Remarks**       | **Option**          | **Remarks**
 :-------------------:|:-----------------:|:-------------------:|:-----------------:

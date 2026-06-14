@@ -20,7 +20,7 @@ For comparison with experimental data, it is often useful to compute the electro
 
 where $q_\lambda$ is the number of electrons on the $\lambda$-th atom in molecule $a$, and $z_{i,\lambda}$ is its $z$-coordinate in the $i$-th molecule. The ensemble average yields the electron density distribution: $\rho^e_a(z) = \Braket{ \hat{\rho}^e_a(z) }$.
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**         | **Option**           | **Remarks**
 :-----------------:|:-------------------:|:---------------------:|:--------------------:

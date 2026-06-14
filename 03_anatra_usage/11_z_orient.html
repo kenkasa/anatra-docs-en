@@ -79,47 +79,47 @@
 <h1>Molecular Orientation Along a Specific Direction (<code class="docutils literal notranslate"><span class="pre">z_orient</span></code>, <code class="docutils literal notranslate"><span class="pre">zori</span></code>)<a class="headerlink" href="#molecular-orientation-along-a-specific-direction-z-orient-zori" title="Link to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">z_orient</span></code> (<code class="docutils literal notranslate"><span class="pre">zori</span></code>) mode computes the orientation distribution of molecules relative to a reference direction, typically the <span class="math notranslate nohighlight">\(z\)</span>-axis.<br />
 To define the orientation of a molecule, two parts of the molecule are selected: the <em>bottom</em> and the <em>head</em>. The centers of mass of these two parts are denoted by <span class="math notranslate nohighlight">\({\bf R}_{\mathrm{B}}\)</span> and <span class="math notranslate nohighlight">\({\bf R}_{\mathrm{H}}\)</span>, respectively. The molecular axis <span class="math notranslate nohighlight">\({\bf u}\)</span> is then defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1b9dbe3-bc7f-4fef-af4a-14364a4046b9">
-<span class="eqno">()<a class="headerlink" href="#equation-e1b9dbe3-bc7f-4fef-af4a-14364a4046b9" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-77138bc7-d6af-476f-8309-99842bc9b106">
+<span class="eqno">()<a class="headerlink" href="#equation-77138bc7-d6af-476f-8309-99842bc9b106" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf u} = {\bf R}_{\mathrm{H}} - {\bf R}_{\mathrm{B}}. \label{uvec}
 \end{align}\]</div>
 <p>Let <span class="math notranslate nohighlight">\(\theta\)</span> be the angle between the <span class="math notranslate nohighlight">\(z\)</span>-axis (unit vector <span class="math notranslate nohighlight">\({\bf e}_z\)</span>) and the molecular axis (unit vector <span class="math notranslate nohighlight">\({\bf e}_{\mathrm{u}}\)</span>). Then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2ddc6ed1-01ff-4d35-9d4f-c2ca5a353dcd">
-<span class="eqno">()<a class="headerlink" href="#equation-2ddc6ed1-01ff-4d35-9d4f-c2ca5a353dcd" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9ff25f91-eecb-4046-b180-2e831f487ac0">
+<span class="eqno">()<a class="headerlink" href="#equation-9ff25f91-eecb-4046-b180-2e831f487ac0" title="Permalink to this equation"></a></span>\[\begin{align}
 \cos \theta = {\bf e}_z \cdot {\bf e}_{\mathrm{u}}.
 \end{align}\]</div>
 <p>The orientation distribution function is defined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7035c409-db8e-4035-ab70-84d2870ca976">
-<span class="eqno">()<a class="headerlink" href="#equation-7035c409-db8e-4035-ab70-84d2870ca976" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6740ef46-3224-437e-af69-a7d584febaa3">
+<span class="eqno">()<a class="headerlink" href="#equation-6740ef46-3224-437e-af69-a7d584febaa3" title="Permalink to this equation"></a></span>\[\begin{align}
 P(\chi) = C \left\langle \delta(\chi - \cos \theta) \right\rangle,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C\)</span> is a normalization constant determined such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fc25244a-492c-4959-b1dd-bae23a1d75b7">
-<span class="eqno">()<a class="headerlink" href="#equation-fc25244a-492c-4959-b1dd-bae23a1d75b7" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d6b47b86-210c-4e70-b750-a82f89593e2c">
+<span class="eqno">()<a class="headerlink" href="#equation-d6b47b86-210c-4e70-b750-a82f89593e2c" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) = 1.
 \end{align}\]</div>
 <p>By changing variables from <span class="math notranslate nohighlight">\(\theta\)</span> to <span class="math notranslate nohighlight">\(\chi = \cos \theta\)</span>, the left hand side of the above equation becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a68c18da-abb8-49bc-ba76-29c86821e734">
-<span class="eqno">()<a class="headerlink" href="#equation-a68c18da-abb8-49bc-ba76-29c86821e734" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f3d3e68b-b650-41fc-999e-24edd643cbf5">
+<span class="eqno">()<a class="headerlink" href="#equation-f3d3e68b-b650-41fc-999e-24edd643cbf5" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{0}^{\pi} d\theta\, \sin \theta\, P(\chi) &amp;= \int_{0}^{1} d\chi\, P(\chi) \notag \\
 &amp; = CN  
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of targer molecules. Thus, <span class="math notranslate nohighlight">\(C\)</span> is set to <span class="math notranslate nohighlight">\(C=1/N\)</span>.
 The <code class="docutils literal notranslate"><span class="pre">z_orient</span></code> mode calculates <span class="math notranslate nohighlight">\(P(\chi) = P(\cos \theta)\)</span>.</p>
 <p>Additionally, the reference <span class="math notranslate nohighlight">\(z\)</span>-axis does not have to be fixed in the laboratory frame; it can also be defined by the orientation of a particular molecule. If four points <span class="math notranslate nohighlight">\({\bf x}_{\mathrm{B}_0}, {\bf x}_{\mathrm{H}_0}, {\bf x}_{\mathrm{B}_1}, {\bf x}_{\mathrm{H}_1}\)</span> are chosen from this reference molecule, the two vectors:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00a57407-1e2d-411c-8010-8a44c0000ad6">
-<span class="eqno">()<a class="headerlink" href="#equation-00a57407-1e2d-411c-8010-8a44c0000ad6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-51ccaf24-aea0-41f9-ad7e-0c54677d584f">
+<span class="eqno">()<a class="headerlink" href="#equation-51ccaf24-aea0-41f9-ad7e-0c54677d584f" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf v}_0 = {\bf x}_{\mathrm{H}_0} - {\bf x}_{\mathrm{B}_0}, \quad
 {\bf v}_1 = {\bf x}_{\mathrm{H}_1} - {\bf x}_{\mathrm{B}_1}
 \end{align}\]</div>
 <p>can be used to define the <span class="math notranslate nohighlight">\(z\)</span>-axis unit vector via the cross product:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc2d6f4e-44e1-4134-b4ea-7b866d78c7d0">
-<span class="eqno">()<a class="headerlink" href="#equation-bc2d6f4e-44e1-4134-b4ea-7b866d78c7d0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6a801ff2-631e-42e8-9ace-de2606cb2964">
+<span class="eqno">()<a class="headerlink" href="#equation-6a801ff2-631e-42e8-9ace-de2606cb2964" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf e}_z = \frac{ {\bf v}_1 \times {\bf v}_2 }{ \left| {\bf v}_1 \times {\bf v}_2 \right| }.
 \end{align}\]</div>
 <p>The orientation distribution <span class="math notranslate nohighlight">\(P(\cos \theta)\)</span> is then computed based on the angle between this <span class="math notranslate nohighlight">\({\bf e}_z\)</span> and the molecular axis <span class="math notranslate nohighlight">\({\bf u}\)</span>.</p>
-<section id="list-of-options">
-<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<section id="option-list">
+<h2>Option List<a class="headerlink" href="#option-list" title="Link to this heading"></a></h2>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>
@@ -248,8 +248,8 @@ The <code class="docutils literal notranslate"><span class="pre">z_orient</span>
 <li><p>In the case of <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">nmolup</span></code>: Let <span class="math notranslate nohighlight">\(N_{\mathrm{up}}\)</span> be the number specified by the <code class="docutils literal notranslate"><span class="pre">-nmolup</span></code> option. Then, the first <span class="math notranslate nohighlight">\(N_{\mathrm{up}}\)</span> molecules are assigned <span class="math notranslate nohighlight">\({\bf e}_{z} = {\bf e}_{z}^{\prime}\)</span> for calculating <span class="math notranslate nohighlight">\(\cos \theta\)</span>, and the remaining molecules are assigned <span class="math notranslate nohighlight">\({\bf e}_{z} = -{\bf e}_{z}^{\prime}\)</span> for calculating <span class="math notranslate nohighlight">\(\cos \theta\)</span>.</p></li>
 <li><p>In the case of <code class="docutils literal notranslate"><span class="pre">-judgeup</span> <span class="pre">coord</span></code>: Let <span class="math notranslate nohighlight">\(z_{\mathrm{c}}\)</span> be the <span class="math notranslate nohighlight">\(z\)</span>-coordinate of the center of mass of the molecule specified by <code class="docutils literal notranslate"><span class="pre">-center_selid</span></code>, and <span class="math notranslate nohighlight">\(z_{\mathrm{B}}\)</span> and <span class="math notranslate nohighlight">\(z_{\mathrm{H}}\)</span> be the <span class="math notranslate nohighlight">\(z\)</span>-coordinates of the centers of mass of the regions specified by <code class="docutils literal notranslate"><span class="pre">-bottom_selid</span></code> and <code class="docutils literal notranslate"><span class="pre">-head_selid</span></code>, respectively. Then,</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-eca1f312-dd85-4d86-8c44-c69bd62cf05a">
-<span class="eqno">()<a class="headerlink" href="#equation-eca1f312-dd85-4d86-8c44-c69bd62cf05a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8d57629d-4553-4283-8f93-e4c352524be6">
+<span class="eqno">()<a class="headerlink" href="#equation-8d57629d-4553-4283-8f93-e4c352524be6" title="Permalink to this equation"></a></span>\[\begin{align}
 {\bf e}_{z} =
 \begin{cases}
 {\bf e}_{z}^{\prime}  &amp; \dfrac{z_{\mathrm{H}}+z_{\mathrm{B}}}{2} &gt; 0\\[.2cm]

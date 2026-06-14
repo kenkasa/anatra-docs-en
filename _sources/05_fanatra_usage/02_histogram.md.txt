@@ -12,7 +12,7 @@ where $N$ is the number of data points. The above expression satisfies the norma
 \int_{-\infty}^{\infty} dx P\left(x\right) = 1
 \end{align}
 
-### List of Parameters
+### Parameter List
 
 **Namelist**     | **Parameter**    | **Remarks**
 :----------------|:-----------------|:--------------------------------------------------------

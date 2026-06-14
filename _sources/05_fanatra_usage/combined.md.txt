@@ -268,7 +268,7 @@ where $N$ is the number of data points. The above expression satisfies the norma
 \int_{-\infty}^{\infty} dx P\left(x\right) = 1
 \end{align}
 
-### List of Parameters
+### Parameter List
 
 **Namelist**     | **Parameter**    | **Remarks**
 :----------------|:-----------------|:--------------------------------------------------------
@@ -429,7 +429,7 @@ where
 C = \dfrac{1}{\beta}\log\int d{\bf X}\,\delta\left(\boldsymbol{\zeta}_{0}-\boldsymbol{\xi}\left({\bf X}\right)\right)\exp\left(-\beta U\left({\bf X}\right)\right)
 \end{align}
 
-### List of Parameters
+### Parameter List
 
 **Namelist**         | **Parameter**          | **Remarks**
 :--------------------|:-----------------------|:-------------------------------------------------------------------

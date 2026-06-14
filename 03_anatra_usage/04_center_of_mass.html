@@ -84,41 +84,41 @@
 <h3>Mean Square Displacement<a class="headerlink" href="#mean-square-displacement" title="Link to this heading"></a></h3>
 <p>Here, we introduce the definition of the mean square displacement (MSD) <span class="math notranslate nohighlight">\(\chi(t)\)</span> and discuss its significance based on the diffusion equation.</p>
 <p>Let <span class="math notranslate nohighlight">\({\bf r}(t)\)</span> denote the position of a molecule at time <span class="math notranslate nohighlight">\(t\)</span>. The MSD is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4f8a1c50-c9c6-4390-86b8-e6bd7648d909">
-<span class="eqno">()<a class="headerlink" href="#equation-4f8a1c50-c9c6-4390-86b8-e6bd7648d909" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2af50e40-c29d-4035-86d6-eebae42c5d74">
+<span class="eqno">()<a class="headerlink" href="#equation-2af50e40-c29d-4035-86d6-eebae42c5d74" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
 \end{align}\]</div>
 <p>That is, <span class="math notranslate nohighlight">\(\chi(t)\)</span> represents the time-averaged squared displacement of a molecule after a time interval <span class="math notranslate nohighlight">\(t\)</span>. To understand how MSD is described by the diffusion equation, let us consider a probability density <span class="math notranslate nohighlight">\(\rho({\bf r},t)\)</span> representing the location of a molecule, and a diffusion coefficient <span class="math notranslate nohighlight">\(D\)</span>. The diffusion equation is written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0bd4d7c-2fd8-4c55-a481-b9537747fb80">
-<span class="eqno">()<a class="headerlink" href="#equation-a0bd4d7c-2fd8-4c55-a481-b9537747fb80" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c2fe73f5-9050-41d2-8705-e33ac53c3615">
+<span class="eqno">()<a class="headerlink" href="#equation-c2fe73f5-9050-41d2-8705-e33ac53c3615" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
 \end{align}\]</div>
 <p>Assuming that the molecule was initially located at <span class="math notranslate nohighlight">\({\bf 0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, the initial condition is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36868ab2-9f8d-448c-84b2-8f36f9492a81">
-<span class="eqno">()<a class="headerlink" href="#equation-36868ab2-9f8d-448c-84b2-8f36f9492a81" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7c40e17c-413b-4195-bd27-c42f44be1f73">
+<span class="eqno">()<a class="headerlink" href="#equation-7c40e17c-413b-4195-bd27-c42f44be1f73" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
 \end{align}\]</div>
 <p>Solving the diffusion equation under this condition yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52b874dd-618b-43b2-96b2-2574e9cb7d01">
-<span class="eqno">()<a class="headerlink" href="#equation-52b874dd-618b-43b2-96b2-2574e9cb7d01" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c0061f26-c5a2-4891-886d-10ca634f4297">
+<span class="eqno">()<a class="headerlink" href="#equation-c0061f26-c5a2-4891-886d-10ca634f4297" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
 \end{align}\]</div>
 <p>Using this solution, the MSD can be expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1aa7dff8-d6bb-4fa9-83c3-2fe9b9d46cf6">
-<span class="eqno">()<a class="headerlink" href="#equation-1aa7dff8-d6bb-4fa9-83c3-2fe9b9d46cf6" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-198e2897-11e3-4ca5-81f9-a38f6b4c323a">
+<span class="eqno">()<a class="headerlink" href="#equation-198e2897-11e3-4ca5-81f9-a38f6b4c323a" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
                    = 6Dt,
 \end{align}\]</div>
 <p>indicating that MSD increases linearly with time, with a slope of <span class="math notranslate nohighlight">\(6D\)</span>. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d1c5471-d5e4-4148-8bb0-b67391c41123">
-<span class="eqno">()<a class="headerlink" href="#equation-2d1c5471-d5e4-4148-8bb0-b67391c41123" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-867f3afd-b6ba-494e-86a5-4b1d7e55e12a">
+<span class="eqno">()<a class="headerlink" href="#equation-867f3afd-b6ba-494e-86a5-4b1d7e55e12a" title="Permalink to this equation"></a></span>\[\begin{align}
 D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
 \end{align}\]</div>
 <p>This expression is known as Einstein<span class="math notranslate nohighlight">\(^\prime\)</span>s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.</p>
 </section>
 </section>
-<section id="list-of-options">
-<h2>List of Options<a class="headerlink" href="#list-of-options" title="Link to this heading"></a></h2>
+<section id="option-list">
+<h2>Option List<a class="headerlink" href="#option-list" title="Link to this heading"></a></h2>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><strong>Option</strong></p></th>

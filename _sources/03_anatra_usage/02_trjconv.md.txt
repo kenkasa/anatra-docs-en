@@ -9,7 +9,7 @@ The `trjconv` mode performs various transformations on MD trajectories. It is ty
 * To fit the system such that a selected region aligns with a reference structure.
 * To center the system such that a selected region is translated to the origin.
 
-### List of Options
+### Option List
 
 **Option**        | **Remarks**        | **Option**       | **Remarks**
 :----------------:|:------------------:|:----------------:|:------------------:

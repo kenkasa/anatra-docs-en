@@ -32,7 +32,7 @@ To compute the SDF, the system is first fitted such that the molecule treated as
 By aligning the system such that the molecule of interest overlaps with the reference structure (fitting), it becomes possible to examine the three-dimensional distribution of surrounding molecules relative to a fixed molecular orientation. The `spatial_distr` mode automates this entire procedure.
 ```
 
-### List of Options
+### Option List
 
 **Option**              | **Remarks**        | **Option**            | **Remarks**
 :----------------------:|:------------------:|:----------------------:|:------------------:

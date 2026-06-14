@@ -270,7 +270,7 @@ The `trjconv` mode performs various transformations on MD trajectories. It is ty
 * To fit the system such that a selected region aligns with a reference structure.
 * To center the system such that a selected region is translated to the origin.
 
-### List of Options
+### Option List
 
 **Option**        | **Remarks**        | **Option**       | **Remarks**
 :----------------:|:------------------:|:----------------:|:------------------:
@@ -514,7 +514,7 @@ anatra trjconv                              \
 
 The `distance` mode computes the distance between two selected regions. By default, it calculates the distance between the centers of mass of the selected molecules. It can also compute the minimum distance between atoms in two regions.
 
-### List of Options
+### Option List
 
 **Option**                  | **Remarks**       | **Option**            | **Remarks**
 :--------------------------:|:-----------------:|:----------------------:|:------------------:
@@ -680,7 +680,7 @@ D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf 
 
 This expression is known as Einstein$^\prime$s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.
 
-### List of Options
+### Option List
 
 **Option**           |  **Description**       | **Option**          | **Description**
 |:------------------:|:----------------------:|:-------------------:|:------------------:|
@@ -1084,7 +1084,7 @@ To compute the SDF, the system is first fitted such that the molecule treated as
 By aligning the system such that the molecule of interest overlaps with the reference structure (fitting), it becomes possible to examine the three-dimensional distribution of surrounding molecules relative to a fixed molecular orientation. The `spatial_distr` mode automates this entire procedure.
 ```
 
-### List of Options
+### Option List
 
 **Option**              | **Remarks**        | **Option**            | **Remarks**
 :----------------------:|:------------------:|:----------------------:|:------------------:
@@ -1249,7 +1249,7 @@ Consider a molecule composed of $N_{\mathrm{sel}}$ atoms. Let ${\bf r}_i$ denote
 \chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
 \end{align}
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**        | **Option**         | **Remarks**
 :-----------------:|:------------------:|:------------------:|:------------------:
@@ -1385,7 +1385,7 @@ The `interaction_energy` (`ene`) mode allows the calculation of interaction ener
 
 In addition to the individual components above, the sum of electrostatic and LJ can also be calculated.
 
-### List of Options
+### Option List
 
 **Option**           | **Remarks**       | **Option**          | **Remarks**
 :-------------------:|:-----------------:|:-------------------:|:-----------------:
@@ -1605,7 +1605,7 @@ The range of $S_{\mathrm{CD}}$ is $0 \leq S_{\mathrm{CD}} \leq 1$, where higher 
 The angle $\theta$ is defined between the membrane normal (the $z$-axis) and the vector connecting a specific carbon and its bonded hydrogen atom. This angle $\theta$ reflects the local orientation of the lipid.
 ```
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**        | **Option**       | **Remarks**
 :-----------------:|:------------------:|:----------------:|:------------------:
@@ -1682,7 +1682,7 @@ For comparison with experimental data, it is often useful to compute the electro
 
 where $q_\lambda$ is the number of electrons on the $\lambda$-th atom in molecule $a$, and $z_{i,\lambda}$ is its $z$-coordinate in the $i$-th molecule. The ensemble average yields the electron density distribution: $\rho^e_a(z) = \Braket{ \hat{\rho}^e_a(z) }$.
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**         | **Option**           | **Remarks**
 :-----------------:|:-------------------:|:---------------------:|:--------------------:
@@ -1820,7 +1820,7 @@ can be used to define the $z$-axis unit vector via the cross product:
 
 The orientation distribution $P(\cos \theta)$ is then computed based on the angle between this ${\bf e}_z$ and the molecular axis ${\bf u}$.
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**          | **Option**                | **Remarks**
 :-----------------:|:--------------------:|:--------------------------:|:-----------------------:
@@ -1966,7 +1966,7 @@ At present, only the $z$ direction (``-coord_type z``) is supported.
 Before the analysis, the system is translated so that the center of the atoms specified by ``center_selid`` is aligned,
 and then the free volume fraction is calculated as a function of the $z$ coordinate.
 
-### List of Options
+### Option List
 
 **Option**         | **Remark**    | **Option**         | **Remark**
 :-----------------:|:-------------:|:------------------:|:--------------:

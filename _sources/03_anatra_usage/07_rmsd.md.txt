@@ -10,7 +10,7 @@ Consider a molecule composed of $N_{\mathrm{sel}}$ atoms. Let ${\bf r}_i$ denote
 \chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
 \end{align}
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**        | **Option**         | **Remarks**
 :-----------------:|:------------------:|:------------------:|:------------------:

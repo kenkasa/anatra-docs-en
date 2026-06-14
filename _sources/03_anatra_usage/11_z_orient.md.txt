@@ -50,7 +50,7 @@ can be used to define the $z$-axis unit vector via the cross product:
 
 The orientation distribution $P(\cos \theta)$ is then computed based on the angle between this ${\bf e}_z$ and the molecular axis ${\bf u}$.
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**          | **Option**                | **Remarks**
 :-----------------:|:--------------------:|:--------------------------:|:-----------------------:

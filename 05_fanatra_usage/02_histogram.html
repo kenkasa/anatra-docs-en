@@ -78,17 +78,17 @@
   <section id="histogram-histogram-hist">
 <h1>Histogram (<code class="docutils literal notranslate"><span class="pre">histogram</span></code>, <code class="docutils literal notranslate"><span class="pre">hist</span></code>)<a class="headerlink" href="#histogram-histogram-hist" title="Link to this heading"></a></h1>
 <p>In this analysis mode, the distribution function <span class="math notranslate nohighlight">\(P\left(x\right)\)</span> is calculated from a given time-series data set <span class="math notranslate nohighlight">\(\xi\left(t\right)\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb1f1628-4c22-4b64-8eee-058ddd1cdc93">
-<span class="eqno">()<a class="headerlink" href="#equation-eb1f1628-4c22-4b64-8eee-058ddd1cdc93" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-909fc0e9-26aa-464a-b8ab-fff1f0c004d6">
+<span class="eqno">()<a class="headerlink" href="#equation-909fc0e9-26aa-464a-b8ab-fff1f0c004d6" title="Permalink to this equation"></a></span>\[\begin{align}
 P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of data points. The above expression satisfies the normalization condition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae2b404c-1075-49a4-b1d9-16c06e182ead">
-<span class="eqno">()<a class="headerlink" href="#equation-ae2b404c-1075-49a4-b1d9-16c06e182ead" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-341dabad-4c41-4a94-97de-64cf60605102">
+<span class="eqno">()<a class="headerlink" href="#equation-341dabad-4c41-4a94-97de-64cf60605102" title="Permalink to this equation"></a></span>\[\begin{align}
 \int_{-\infty}^{\infty} dx P\left(x\right) = 1
 \end{align}\]</div>
-<section id="list-of-parameters">
-<h2>List of Parameters<a class="headerlink" href="#list-of-parameters" title="Link to this heading"></a></h2>
+<section id="parameter-list">
+<h2>Parameter List<a class="headerlink" href="#parameter-list" title="Link to this heading"></a></h2>
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><strong>Namelist</strong></p></th>
@@ -176,8 +176,8 @@ P\left(x\right) =  \dfrac{1}{N}\Braket{\delta\left(x - \xi\right)}
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">xsta</span> <span class="pre">=</span> <span class="pre">0.0</span></code></p></li>
 </ul>
 <p>Specifies the starting position of the grid, <span class="math notranslate nohighlight">\(x_{0}\)</span>. If the position of the <span class="math notranslate nohighlight">\(i\)</span>-th grid point is denoted by <span class="math notranslate nohighlight">\(x_{i}\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bef97bef-e4a2-478a-8adf-544da4bda3f0">
-<span class="eqno">()<a class="headerlink" href="#equation-bef97bef-e4a2-478a-8adf-544da4bda3f0" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4f12f2eb-bf22-45ee-973e-1c9a204737e4">
+<span class="eqno">()<a class="headerlink" href="#equation-4f12f2eb-bf22-45ee-973e-1c9a204737e4" title="Permalink to this equation"></a></span>\[\begin{align}
 x_{i} = x_{0} + \left(i - 1 \right) \Delta x
 \end{align}\]</div>
 <p>holds.</p>

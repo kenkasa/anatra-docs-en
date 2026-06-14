@@ -14,7 +14,7 @@ The range of $S_{\mathrm{CD}}$ is $0 \leq S_{\mathrm{CD}} \leq 1$, where higher 
 The angle $\theta$ is defined between the membrane normal (the $z$-axis) and the vector connecting a specific carbon and its bonded hydrogen atom. This angle $\theta$ reflects the local orientation of the lipid.
 ```
 
-### List of Options
+### Option List
 
 **Option**         | **Remarks**        | **Option**       | **Remarks**
 :-----------------:|:------------------:|:----------------:|:------------------:
