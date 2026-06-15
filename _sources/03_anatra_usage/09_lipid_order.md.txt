@@ -48,7 +48,7 @@ The angle $\theta$ is defined between the membrane normal (the $z$-axis) and the
   * Column 1: Carbon index (as specified by ``-cindex``)  
   * Column 2: $S_{\mathrm{CD}}$
 
-### Examples of Analysis
+### Example
 
 #### Calculation of $S_{\mathrm{CD}}$ in a DPPC Lipid Bilayer
 

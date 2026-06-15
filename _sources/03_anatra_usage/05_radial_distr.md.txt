@@ -178,7 +178,7 @@ g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\
   The ``fanatra`` analysis mode ``rd_gather`` can be used to average RDFs from multiple trajectories, using this ``*.rdbin`` file as input.
 --->
 
-### Examples of Analysis
+### Examples
 
 #### RDF between Oxygen Atoms of Water Molecules
 

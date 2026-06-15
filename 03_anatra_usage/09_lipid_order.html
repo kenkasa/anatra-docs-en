@@ -78,8 +78,8 @@
   <section id="lipid-order-parameter-lipid-order-scd">
 <h1>Lipid Order Parameter (<code class="docutils literal notranslate"><span class="pre">lipid_order</span></code>, <code class="docutils literal notranslate"><span class="pre">scd</span></code>)<a class="headerlink" href="#lipid-order-parameter-lipid-order-scd" title="Link to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">lipid_order</span></code> (<code class="docutils literal notranslate"><span class="pre">scd</span></code>) mode allows for the calculation of the orientational order parameter <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> associated with acyl chains of phospholipids. Using the membrane normal direction as the <span class="math notranslate nohighlight">\(z\)</span>-axis, the angle <span class="math notranslate nohighlight">\(\theta\)</span> is defined between this axis and the vector connecting a specific carbon atom and its bonded hydrogen. The <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> parameter is then defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-134b524b-5952-47b0-87ba-f48908069b04">
-<span class="eqno">()<a class="headerlink" href="#equation-134b524b-5952-47b0-87ba-f48908069b04" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2c0145f6-28ab-4f9b-8d2d-b30974fd57fd">
+<span class="eqno">()<a class="headerlink" href="#equation-2c0145f6-28ab-4f9b-8d2d-b30974fd57fd" title="Permalink to this equation"></a></span>\[\begin{align}
 S_{\mathrm{CD}} = \frac{1}{2} \left\langle 3 \cos^2 \theta - 1 \right\rangle.
 \end{align}\]</div>
 <p>The range of <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> is <span class="math notranslate nohighlight">\(0 \leq S_{\mathrm{CD}} \leq 1\)</span>, where higher values indicate greater order, and a value of 0 corresponds to complete disorder. Since <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> is defined for each carbon atom, this analysis provides position-resolved information on lipid order along the acyl chains.</p>
@@ -160,8 +160,8 @@ The <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> values
 </li>
 </ul>
 </section>
-<section id="examples-of-analysis">
-<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
 <section id="calculation-of-s-mathrm-cd-in-a-dppc-lipid-bilayer">
 <h3>Calculation of <span class="math notranslate nohighlight">\(S_{\mathrm{CD}}\)</span> in a DPPC Lipid Bilayer<a class="headerlink" href="#calculation-of-s-mathrm-cd-in-a-dppc-lipid-bilayer" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">anatra</span> <span class="n">lipid_order</span>                            \

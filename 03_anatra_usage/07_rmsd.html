@@ -81,8 +81,8 @@
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>This section explains the definition of the root-mean-square deviation (RMSD). RMSD quantitatively evaluates the structural deviation of a molecule or a specific region of interest from a reference structure at a given time during an MD simulation. It is commonly used to assess how much a structure deviates from, for example, an experimental crystal structure during the equilibration phase, and whether or not it relaxes over time.</p>
 <p>Consider a molecule composed of <span class="math notranslate nohighlight">\(N_{\mathrm{sel}}\)</span> atoms. Let <span class="math notranslate nohighlight">\({\bf r}_i\)</span> denote the position of the <span class="math notranslate nohighlight">\(i\)</span>-th atom, <span class="math notranslate nohighlight">\({\bf r}^{\mathrm{ref}}_i\)</span> the corresponding coordinate in the reference structure, and <span class="math notranslate nohighlight">\({\bf r}_i(t)\)</span> the position at time <span class="math notranslate nohighlight">\(t\)</span>. Then, the RMSD <span class="math notranslate nohighlight">\(\chi(t)\)</span> is defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4348a93-ba2d-477c-b490-72be4e8f92c1">
-<span class="eqno">()<a class="headerlink" href="#equation-d4348a93-ba2d-477c-b490-72be4e8f92c1" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5bc9e1d5-4ade-4dca-9d11-b32da580995e">
+<span class="eqno">()<a class="headerlink" href="#equation-5bc9e1d5-4ade-4dca-9d11-b32da580995e" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi(t) = \sqrt{ \frac{1}{N_{\mathrm{sel}}} \sum_{i=1}^{N_{\mathrm{sel}}} \left| {\bf r}_i(t) - {\bf r}_i^{\mathrm{ref}} \right|^2 }.
 \end{align}\]</div>
 </section>
@@ -219,8 +219,8 @@
 </li>
 </ul>
 </section>
-<section id="examples-of-analysis">
-<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <section id="rmsd-from-the-crystal-structure-of-a-protein-in-solution">
 <h3>RMSD from the Crystal Structure of a Protein in Solution<a class="headerlink" href="#rmsd-from-the-crystal-structure-of-a-protein-in-solution" title="Link to this heading"></a></h3>
 <p>This example calculates the RMSD of the C<span class="math notranslate nohighlight">\(\alpha\)</span> atoms of a protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">161</span></code>) with respect to a crystal structure.</p>

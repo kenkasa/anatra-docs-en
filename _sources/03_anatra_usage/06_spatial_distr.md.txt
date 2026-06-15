@@ -16,7 +16,7 @@ Its ensemble average under the external field gives the one-body density
 \rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
 \end{align}
 
-Here, $\langle \cdots \rangle_{\mathrm{ext}}$ denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, $\rho_a({\bf r}) = \rho_a$. THen, we define the spatial distribution function (SDF) as:
+Here, $\langle \cdots \rangle_{\mathrm{ext}}$ denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, $\rho_a({\bf r}) = \rho_a$. Then, we define the spatial distribution function (SDF) as:
 
 \begin{align}
 g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
@@ -156,7 +156,7 @@ Advanced options for conditional SDF analysis exist but will be officially suppo
   Spline settings are embedded within the file, allowing ``sd_gather`` to apply interpolation during averaging.
 --->
 
-### Examples of Analysis
+### Examples
 
 #### SDF of Water Molecules Around a Protein
 

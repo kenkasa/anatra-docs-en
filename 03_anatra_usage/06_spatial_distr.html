@@ -81,18 +81,18 @@
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>Consider a system with <span class="math notranslate nohighlight">\(N_a\)</span> particles of type <span class="math notranslate nohighlight">\(a\)</span>, volume <span class="math notranslate nohighlight">\(V\)</span>, and number density <span class="math notranslate nohighlight">\(\rho_a = N_a / V\)</span>. Assume that one molecule is fixed at the center of the system, including its orientation, acting effectively as an external field. Although such a situation does not naturally occur in standard solution-phase MD simulations, a virtually equivalent condition can be constructed by aligning all trajectories to a reference structure (fitting), as described at the end of this section.</p>
 <p>Similar to the radial distribution function, we define the local number density of particle <span class="math notranslate nohighlight">\(a\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e60d7775-c8ae-4ca9-bd58-97f5b004a9cf">
-<span class="eqno">()<a class="headerlink" href="#equation-e60d7775-c8ae-4ca9-bd58-97f5b004a9cf" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bfe76b33-c699-4436-b449-d230bcd81d59">
+<span class="eqno">()<a class="headerlink" href="#equation-bfe76b33-c699-4436-b449-d230bcd81d59" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left({\bf r}\right) = \sum_{i=1}^{N_{a}} \delta\left({\bf r} - {\bf r}_i \right).
 \end{align}\]</div>
 <p>Its ensemble average under the external field gives the one-body density</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b7853438-6e35-41e2-a668-b2b6a6d4137c">
-<span class="eqno">()<a class="headerlink" href="#equation-b7853438-6e35-41e2-a668-b2b6a6d4137c" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1e30a8b6-5e17-4b0c-890b-a62deae75db6">
+<span class="eqno">()<a class="headerlink" href="#equation-1e30a8b6-5e17-4b0c-890b-a62deae75db6" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
 \end{align}\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(\langle \cdots \rangle_{\mathrm{ext}}\)</span> denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, <span class="math notranslate nohighlight">\(\rho_a({\bf r}) = \rho_a\)</span>. THen, we define the spatial distribution function (SDF) as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7b681848-ac22-461c-aa36-73879f71f723">
-<span class="eqno">()<a class="headerlink" href="#equation-7b681848-ac22-461c-aa36-73879f71f723" title="Permalink to this equation"></a></span>\[\begin{align}
+<p>Here, <span class="math notranslate nohighlight">\(\langle \cdots \rangle_{\mathrm{ext}}\)</span> denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, <span class="math notranslate nohighlight">\(\rho_a({\bf r}) = \rho_a\)</span>. Then, we define the spatial distribution function (SDF) as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-27c22495-df19-42a4-ba39-69ecd6144f66">
+<span class="eqno">()<a class="headerlink" href="#equation-27c22495-df19-42a4-ba39-69ecd6144f66" title="Permalink to this equation"></a></span>\[\begin{align}
 g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
 \end{align}\]</div>
 <p>If <span class="math notranslate nohighlight">\(g_a({\bf r}) &gt; 1\)</span>, the local probability of finding particle <span class="math notranslate nohighlight">\(a\)</span> is larger than the bulk value; if <span class="math notranslate nohighlight">\(g_a({\bf r}) &lt; 1\)</span>, it is lower than in bulk.</p>
@@ -191,8 +191,8 @@ g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
 <li><p>Example: <code class="docutils literal notranslate"><span class="pre">-origin</span> <span class="pre">0.0</span> <span class="pre">0.0</span> <span class="pre">0.0</span></code></p></li>
 </ul>
 <p>Sets the origin of the grid. For origin <span class="math notranslate nohighlight">\((x_0, y_0, z_0)\)</span>, the coordinates of grid point <span class="math notranslate nohighlight">\((i_x, i_y, i_z)\)</span> are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14c9c0b5-2a82-42bc-a35d-58bc84849a6e">
-<span class="eqno">()<a class="headerlink" href="#equation-14c9c0b5-2a82-42bc-a35d-58bc84849a6e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-38e00978-bd15-4876-a799-b02e09ddb147">
+<span class="eqno">()<a class="headerlink" href="#equation-38e00978-bd15-4876-a799-b02e09ddb147" title="Permalink to this equation"></a></span>\[\begin{align}
 x_i = x_0 + \Delta x \, (i_x - 1) \\
 y_i = y_0 + \Delta y \, (i_y - 1) \\
 z_i = z_0 + \Delta z \, (i_z - 1)
@@ -258,13 +258,13 @@ z_i = z_0 + \Delta z \, (i_z - 1)
 <li><p>Note: Active only if <code class="docutils literal notranslate"><span class="pre">-use_spline</span> <span class="pre">true</span></code> is specified.</p></li>
 </ul>
 <p>Specifies the subdivision factor <span class="math notranslate nohighlight">\(n_r\)</span> for each grid axis. Given the original grid spacing <span class="math notranslate nohighlight">\(\Delta \alpha\)</span> (<span class="math notranslate nohighlight">\(\alpha = x, y, z\)</span>), the refined grid spacing becomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-73ad64cd-96f3-4584-8b74-1247459fe706">
-<span class="eqno">()<a class="headerlink" href="#equation-73ad64cd-96f3-4584-8b74-1247459fe706" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cd92f1a5-4ead-4650-af22-220fb4b46acd">
+<span class="eqno">()<a class="headerlink" href="#equation-cd92f1a5-4ead-4650-af22-220fb4b46acd" title="Permalink to this equation"></a></span>\[\begin{align}
 \Delta \alpha' = \frac{\Delta \alpha}{n_r}
 \end{align}\]</div>
 <p>The total number of grid points changes from <span class="math notranslate nohighlight">\(N\)</span> to:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92f8033c-034f-4f44-8873-6bd38a4c8c87">
-<span class="eqno">()<a class="headerlink" href="#equation-92f8033c-034f-4f44-8873-6bd38a4c8c87" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7b992213-536a-494b-a53f-3ac37c83eb3c">
+<span class="eqno">()<a class="headerlink" href="#equation-7b992213-536a-494b-a53f-3ac37c83eb3c" title="Permalink to this equation"></a></span>\[\begin{align}
 N' = n_r^3 \cdot N
 \end{align}\]</div>
 </li>
@@ -286,8 +286,8 @@ SDF output in DX format with spline interpolation. Generated only if <code class
   Spline settings are embedded within the file, allowing ``sd_gather`` to apply interpolation during averaging.
 --->
 </section>
-<section id="examples-of-analysis">
-<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <section id="sdf-of-water-molecules-around-a-protein">
 <h3>SDF of Water Molecules Around a Protein<a class="headerlink" href="#sdf-of-water-molecules-around-a-protein" title="Link to this heading"></a></h3>
 <p>The following script computes the SDF of water molecule centers of mass around a protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">192</span></code>):</p>

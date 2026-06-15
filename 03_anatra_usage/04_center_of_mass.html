@@ -84,34 +84,34 @@
 <h3>Mean Square Displacement<a class="headerlink" href="#mean-square-displacement" title="Link to this heading"></a></h3>
 <p>Here, we introduce the definition of the mean square displacement (MSD) <span class="math notranslate nohighlight">\(\chi(t)\)</span> and discuss its significance based on the diffusion equation.</p>
 <p>Let <span class="math notranslate nohighlight">\({\bf r}(t)\)</span> denote the position of a molecule at time <span class="math notranslate nohighlight">\(t\)</span>. The MSD is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2af50e40-c29d-4035-86d6-eebae42c5d74">
-<span class="eqno">()<a class="headerlink" href="#equation-2af50e40-c29d-4035-86d6-eebae42c5d74" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9f03d74-90c2-4267-a017-1da5adacfa0d">
+<span class="eqno">()<a class="headerlink" href="#equation-f9f03d74-90c2-4267-a017-1da5adacfa0d" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right)  =\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}.
 \end{align}\]</div>
 <p>That is, <span class="math notranslate nohighlight">\(\chi(t)\)</span> represents the time-averaged squared displacement of a molecule after a time interval <span class="math notranslate nohighlight">\(t\)</span>. To understand how MSD is described by the diffusion equation, let us consider a probability density <span class="math notranslate nohighlight">\(\rho({\bf r},t)\)</span> representing the location of a molecule, and a diffusion coefficient <span class="math notranslate nohighlight">\(D\)</span>. The diffusion equation is written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c2fe73f5-9050-41d2-8705-e33ac53c3615">
-<span class="eqno">()<a class="headerlink" href="#equation-c2fe73f5-9050-41d2-8705-e33ac53c3615" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e60b7536-b761-43a3-ae76-bb40bbecc21e">
+<span class="eqno">()<a class="headerlink" href="#equation-e60b7536-b761-43a3-ae76-bb40bbecc21e" title="Permalink to this equation"></a></span>\[\begin{align}
 \dfrac{\partial}{\partial t}\rho\left({\bf r},t\right) =D\nabla^{2}\rho\left({\bf r},t\right).
 \end{align}\]</div>
 <p>Assuming that the molecule was initially located at <span class="math notranslate nohighlight">\({\bf 0}\)</span> at time <span class="math notranslate nohighlight">\(t=0\)</span>, the initial condition is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c40e17c-413b-4195-bd27-c42f44be1f73">
-<span class="eqno">()<a class="headerlink" href="#equation-7c40e17c-413b-4195-bd27-c42f44be1f73" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a4ba2fb5-d52b-4dc6-9c73-06923e753d53">
+<span class="eqno">()<a class="headerlink" href="#equation-a4ba2fb5-d52b-4dc6-9c73-06923e753d53" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t=0\right) =\delta\left({\bf r}\right)
 \end{align}\]</div>
 <p>Solving the diffusion equation under this condition yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0061f26-c5a2-4891-886d-10ca634f4297">
-<span class="eqno">()<a class="headerlink" href="#equation-c0061f26-c5a2-4891-886d-10ca634f4297" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-960057ea-9a4f-4852-a8c4-444bd7bc0d16">
+<span class="eqno">()<a class="headerlink" href="#equation-960057ea-9a4f-4852-a8c4-444bd7bc0d16" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho\left({\bf r},t\right) =\dfrac{1}{\left(4\pi Dt\right)^{3/2}}\exp\left[-\dfrac{\left|{\bf r}\right|^{2}}{4Dt}\right].
 \end{align}\]</div>
 <p>Using this solution, the MSD can be expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-198e2897-11e3-4ca5-81f9-a38f6b4c323a">
-<span class="eqno">()<a class="headerlink" href="#equation-198e2897-11e3-4ca5-81f9-a38f6b4c323a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f07c5f51-38d6-4963-b583-c949addfe7cd">
+<span class="eqno">()<a class="headerlink" href="#equation-f07c5f51-38d6-4963-b583-c949addfe7cd" title="Permalink to this equation"></a></span>\[\begin{align}
 \chi\left(t\right) =\int d{\bf r}\,\left|{\bf r}\right|^{2}\rho\left({\bf r},t\right) \\
                    = 6Dt,
 \end{align}\]</div>
 <p>indicating that MSD increases linearly with time, with a slope of <span class="math notranslate nohighlight">\(6D\)</span>. Because the diffusion equation is valid only in the long-time limit, the diffusion coefficient should be defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-867f3afd-b6ba-494e-86a5-4b1d7e55e12a">
-<span class="eqno">()<a class="headerlink" href="#equation-867f3afd-b6ba-494e-86a5-4b1d7e55e12a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-49b8da1c-1ece-414e-9dba-f768896f9644">
+<span class="eqno">()<a class="headerlink" href="#equation-49b8da1c-1ece-414e-9dba-f768896f9644" title="Permalink to this equation"></a></span>\[\begin{align}
 D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf r}\left(0\right)\right|^{2}}}{t},
 \end{align}\]</div>
 <p>This expression is known as Einstein<span class="math notranslate nohighlight">\(^\prime\)</span>s relation. It indicates that the diffusion coefficient can be computed from the slope of the MSD in the long-time regime.</p>
@@ -257,8 +257,8 @@ D =\dfrac{1}{6}\lim_{t\to\infty}\dfrac{\braket{\left|{\bf r}\left(t\right)-{\bf 
 </li>
 </ul>
 </section>
-<section id="examples-of-analysis">
-<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <section id="msd-calculation-for-a-protein">
 <h3>MSD Calculation for a Protein<a class="headerlink" href="#msd-calculation-for-a-protein" title="Link to this heading"></a></h3>
 <p>The following is an example of calculating the MSD of a single protein (<code class="docutils literal notranslate"><span class="pre">resid</span> <span class="pre">1</span> <span class="pre">to</span> <span class="pre">192</span></code>) dissolved in aqueous solution. Since the protein consists of multiple amino acid residues, it is necessary to specify the mode as “<code class="docutils literal notranslate"><span class="pre">-mode</span> <span class="pre">whole</span></code>”.</p>

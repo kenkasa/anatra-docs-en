@@ -128,7 +128,7 @@ This expression is known as Einstein$^\prime$s relation. It indicates that the d
   * Column 2: Mean MSD
   * Column 3: Standard deviation of MSD
 
-### Examples of Analysis
+### Examples
 
 #### MSD Calculation for a Protein
 

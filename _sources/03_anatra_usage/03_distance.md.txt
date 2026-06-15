@@ -95,7 +95,7 @@ Options marked with $^\dagger$ are not required for standard distance calculatio
 
   All distances are reported in ANGSTROM.
 
-### Example of Analysis
+### Example
 
 #### Standard Atom-to-Region Distance
 

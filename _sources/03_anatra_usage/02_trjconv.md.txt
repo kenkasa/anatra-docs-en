@@ -123,7 +123,7 @@ The `trjconv` mode performs various transformations on MD trajectories. It is ty
 
 ---
 
-### Examples of Analysis
+### Examples
 
 Below are script examples using the minimum necessary options for common analyses. Options such as ``-beg`` and ``-end`` are omitted.
 

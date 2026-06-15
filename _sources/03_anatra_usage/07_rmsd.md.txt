@@ -85,7 +85,7 @@ Consider a molecule composed of $N_{\mathrm{sel}}$ atoms. Let ${\bf r}_i$ denote
   * Column 1: Time  
   * Column 2: RMSD
 
-### Examples of Analysis
+### Examples
 
 #### RMSD from the Crystal Structure of a Protein in Solution
 

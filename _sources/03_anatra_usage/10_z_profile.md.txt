@@ -84,7 +84,7 @@ where $q_\lambda$ is the number of electrons on the $\lambda$-th atom in molecul
   * Column 1: $z$-coordinate  
   * Column 2: Density value
 
-### Examples of Analysis
+### Examples
 
 #### Number Density Profile of Water in a Lipid Membrane System
 

@@ -78,18 +78,18 @@
   <section id="distribution-function-along-the-membrane-normal-z-axis-z-profile-zprof">
 <h1>Distribution Function Along the Membrane Normal (<span class="math notranslate nohighlight">\(z\)</span>-axis) (<code class="docutils literal notranslate"><span class="pre">z_profile</span></code>, <code class="docutils literal notranslate"><span class="pre">zprof</span></code>)<a class="headerlink" href="#distribution-function-along-the-membrane-normal-z-axis-z-profile-zprof" title="Link to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">z_profile</span></code> (<code class="docutils literal notranslate"><span class="pre">zprof</span></code>) mode calculates the distribution of molecular species along the membrane normal (i.e., the <span class="math notranslate nohighlight">\(z\)</span>-axis). The local density field of species <span class="math notranslate nohighlight">\(a\)</span> along the <span class="math notranslate nohighlight">\(z\)</span>-axis is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5fb9ad3-a6d9-4e58-bf39-8baddcc41eef">
-<span class="eqno">()<a class="headerlink" href="#equation-e5fb9ad3-a6d9-4e58-bf39-8baddcc41eef" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d8c5a97e-9b6a-4b00-8554-c6cc7deafb53">
+<span class="eqno">()<a class="headerlink" href="#equation-d8c5a97e-9b6a-4b00-8554-c6cc7deafb53" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}_{a}\left(z\right) = \dfrac{1}{A_{xy}} \sum_{i=1}^{N_{\mathrm{a}}} \delta\left(z - z_{i}\right),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{xy}\)</span> is the cross-sectional area of the simulation box in the <span class="math notranslate nohighlight">\(xy\)</span>-plane, and <span class="math notranslate nohighlight">\(z_i\)</span> is the <span class="math notranslate nohighlight">\(z\)</span>-coordinate of the <span class="math notranslate nohighlight">\(i\)</span>-th molecule. The ensemble-averaged distribution function is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3141f50-738a-4238-a0f8-115431c6d93e">
-<span class="eqno">()<a class="headerlink" href="#equation-a3141f50-738a-4238-a0f8-115431c6d93e" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-574d3217-46f7-4d95-a6da-16a5e954fa0b">
+<span class="eqno">()<a class="headerlink" href="#equation-574d3217-46f7-4d95-a6da-16a5e954fa0b" title="Permalink to this equation"></a></span>\[\begin{align}
 \rho_{a}\left(z\right) = \Braket{ \hat{\rho}_{a}(z) }.
 \end{align}\]</div>
 <p>For comparison with experimental data, it is often useful to compute the electron density distribution <span class="math notranslate nohighlight">\(\rho^e_a(z)\)</span>. The corresponding local density field is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e505cd8e-00d3-4ba5-8838-ac22862b570a">
-<span class="eqno">()<a class="headerlink" href="#equation-e505cd8e-00d3-4ba5-8838-ac22862b570a" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1ab6a8cd-17f0-470a-b98a-d6536db1ed3c">
+<span class="eqno">()<a class="headerlink" href="#equation-1ab6a8cd-17f0-470a-b98a-d6536db1ed3c" title="Permalink to this equation"></a></span>\[\begin{align}
 \hat{\rho}^{e}_{a}(z) = \sum_{i=1}^{N_a} \sum_{\lambda=1}^{N_s} q_\lambda \delta(z - z_{i,\lambda}),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_\lambda\)</span> is the number of electrons on the <span class="math notranslate nohighlight">\(\lambda\)</span>-th atom in molecule <span class="math notranslate nohighlight">\(a\)</span>, and <span class="math notranslate nohighlight">\(z_{i,\lambda}\)</span> is its <span class="math notranslate nohighlight">\(z\)</span>-coordinate in the <span class="math notranslate nohighlight">\(i\)</span>-th molecule. The ensemble average yields the electron density distribution: <span class="math notranslate nohighlight">\(\rho^e_a(z) = \Braket{ \hat{\rho}^e_a(z) }\)</span>.</p>
@@ -211,8 +211,8 @@
 </li>
 </ul>
 </section>
-<section id="examples-of-analysis">
-<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <section id="number-density-profile-of-water-in-a-lipid-membrane-system">
 <h3>Number Density Profile of Water in a Lipid Membrane System<a class="headerlink" href="#number-density-profile-of-water-in-a-lipid-membrane-system" title="Link to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>

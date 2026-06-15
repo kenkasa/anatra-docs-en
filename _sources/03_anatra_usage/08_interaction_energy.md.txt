@@ -176,7 +176,7 @@ In addition to the individual components above, the sum of electrostatic and LJ 
   * Column $n_2+1$: Interaction between pair (2, 1)  
     ...
 
-### Examples of Analysis
+### Examples
 
 The following are minimal examples for common types of interaction energy analysis.
 

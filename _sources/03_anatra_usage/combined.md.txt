@@ -384,7 +384,7 @@ The `trjconv` mode performs various transformations on MD trajectories. It is ty
 
 ---
 
-### Examples of Analysis
+### Examples
 
 Below are script examples using the minimum necessary options for common analyses. Options such as ``-beg`` and ``-end`` are omitted.
 
@@ -607,7 +607,7 @@ Options marked with $^\dagger$ are not required for standard distance calculatio
 
   All distances are reported in Angstrom.
 
-### Example of Analysis
+### Example
 
 #### Standard Atom-to-Region Distance
 
@@ -761,7 +761,7 @@ This expression is known as Einstein$^\prime$s relation. It indicates that the d
   * Column 2: Mean MSD
   * Column 3: Standard deviation of MSD
 
-### Examples of Analysis
+### Examples
 
 #### MSD Calculation for a Protein
 
@@ -986,7 +986,7 @@ g_{ab}(r) = \dfrac{1}{4\pi r^2} \int d{\bf r} \, \delta(|{\bf r}| - r) g_{ab}({\
   The ``fanatra`` analysis mode ``rd_gather`` can be used to average RDFs from multiple trajectories, using this ``*.rdbin`` file as input.
 --->
 
-### Examples of Analysis
+### Examples
 
 #### RDF between Oxygen Atoms of Water Molecules
 
@@ -1068,7 +1068,7 @@ Its ensemble average under the external field gives the one-body density
 \rho_a({\bf r}) = \left\langle \hat{\rho}_{a}({\bf r}) \right\rangle_{\mathrm{ext}} = \left\langle \sum_{i=1}^{N_a} \delta({\bf r} - {\bf r}_i) \right\rangle_{\mathrm{ext}}.
 \end{align}
 
-Here, $\langle \cdots \rangle_{\mathrm{ext}}$ denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, $\rho_a({\bf r}) = \rho_a$. THen, we define the spatial distribution function (SDF) as:
+Here, $\langle \cdots \rangle_{\mathrm{ext}}$ denotes the ensemble average under the external field. In the absence of an external field or far from the fixed molecule, $\rho_a({\bf r}) = \rho_a$. Then, we define the spatial distribution function (SDF) as:
 
 \begin{align}
 g_a({\bf r}) = \frac{\rho_a({\bf r})}{\rho_a}.
@@ -1208,7 +1208,7 @@ Advanced options for conditional SDF analysis exist but will be officially suppo
   Spline settings are embedded within the file, allowing ``sd_gather`` to apply interpolation during averaging.
 --->
 
-### Examples of Analysis
+### Examples
 
 #### SDF of Water Molecules Around a Protein
 
@@ -1324,7 +1324,7 @@ Consider a molecule composed of $N_{\mathrm{sel}}$ atoms. Let ${\bf r}_i$ denote
   * Column 1: Time  
   * Column 2: RMSD
 
-### Examples of Analysis
+### Examples
 
 #### RMSD from the Crystal Structure of a Protein in Solution
 
@@ -1526,7 +1526,7 @@ In addition to the individual components above, the sum of electrostatic and LJ 
   * Column $n_2+1$: Interaction between pair (2, 1)  
     ...
 
-### Examples of Analysis
+### Examples
 
 The following are minimal examples for common types of interaction energy analysis.
 
@@ -1639,7 +1639,7 @@ The angle $\theta$ is defined between the membrane normal (the $z$-axis) and the
   * Column 1: Carbon index (as specified by ``-cindex``)  
   * Column 2: $S_{\mathrm{CD}}$
 
-### Examples of Analysis
+### Example
 
 #### Calculation of $S_{\mathrm{CD}}$ in a DPPC Lipid Bilayer
 
@@ -1746,7 +1746,7 @@ where $q_\lambda$ is the number of electrons on the $\lambda$-th atom in molecul
   * Column 1: $z$-coordinate  
   * Column 2: Density value
 
-### Examples of Analysis
+### Examples
 
 #### Number Density Profile of Water in a Lipid Membrane System
 
@@ -1928,7 +1928,7 @@ This option specifies the orientation of ${\bf e}_{z}$ when taking the laborator
   * Column 1: $\cos \theta$  
   * Column 2: $P(\cos \theta)$
 
-### Examples of Analysis
+### Examples
 
 #### Orientation Distribution of Lipids in a Bilayer
 

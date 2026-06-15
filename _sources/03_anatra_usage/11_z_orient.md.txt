@@ -158,7 +158,7 @@ This option specifies the orientation of ${\bf e}_{z}$ when taking the laborator
   * Column 1: $\cos \theta$  
   * Column 2: $P(\cos \theta)$
 
-### Examples of Analysis
+### Examples
 
 #### Orientation Distribution of Lipids in a Bilayer
 

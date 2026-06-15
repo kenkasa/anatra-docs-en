@@ -81,24 +81,24 @@
 <ul>
 <li><p><strong>Electrostatic Interaction</strong><br />
 Electrostatic interaction energy <span class="math notranslate nohighlight">\(U_{\mathrm{elec}}\)</span> between molecules A and B can be computed using two schemes. The first is the bare interaction,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b33760df-91f5-460e-8f8f-e65a26f23677">
-<span class="eqno">()<a class="headerlink" href="#equation-b33760df-91f5-460e-8f8f-e65a26f23677" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4ce9eee-a47f-47cc-898a-3fd265a154af">
+<span class="eqno">()<a class="headerlink" href="#equation-d4ce9eee-a47f-47cc-898a-3fd265a154af" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{elec}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} \frac{q_i q_j}{r_{ij}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> denote atomic indices in molecules A and B, respectively. The second scheme uses the Smooth Particle Mesh Ewald (SPME) method, which is the standard approach for accounting for long-range electrostatic interactions in MD simulations. If consistency with MD simulations is required, the SPME method should be employed.</p>
 </li>
 <li><p><strong>Lennard-Jones (LJ) Interaction</strong><br />
 The LJ interaction, which empirically describes van der Waals interactions, is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b9348d0f-735e-48ca-a1a4-27eaaf2d16ad">
-<span class="eqno">()<a class="headerlink" href="#equation-b9348d0f-735e-48ca-a1a4-27eaaf2d16ad" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2cd34fc7-13bf-4846-80c4-f423f9a92d40">
+<span class="eqno">()<a class="headerlink" href="#equation-2cd34fc7-13bf-4846-80c4-f423f9a92d40" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{LJ}} = \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right].
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> and <span class="math notranslate nohighlight">\(\sigma_{ij}\)</span> are the LJ parameters between atom <span class="math notranslate nohighlight">\(i\)</span> in molecule A and atom <span class="math notranslate nohighlight">\(j\)</span> in molecule B.</p>
 </li>
 <li><p><strong>Attractive LJ Interaction</strong><br />
 The attractive component of the LJ interaction is defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-68d35bc2-4567-48ba-ba85-bd30d2dd790d">
-<span class="eqno">()<a class="headerlink" href="#equation-68d35bc2-4567-48ba-ba85-bd30d2dd790d" title="Permalink to this equation"></a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e4f97a60-1b7d-4b80-b275-64c5a440bd85">
+<span class="eqno">()<a class="headerlink" href="#equation-e4f97a60-1b7d-4b80-b275-64c5a440bd85" title="Permalink to this equation"></a></span>\[\begin{align}
 U_{\mathrm{attr}} &amp;= \sum_{i \in \mathrm{A}} \sum_{j \in \mathrm{B}} u_{\mathrm{attr},ij}, \\
 u_{\mathrm{attr},ij} &amp;= \begin{cases}
 4 \epsilon_{ij} \left[ \left( \frac{\sigma_{ij}}{r_{ij}} \right)^{12} - \left( \frac{\sigma_{ij}}{r_{ij}} \right)^6 \right] &amp; r_{ij} \geq 2^{1/6} \sigma, \\
@@ -339,8 +339,8 @@ u_{\mathrm{attr},ij} &amp;= \begin{cases}
 </li>
 </ul>
 </section>
-<section id="examples-of-analysis">
-<h2>Examples of Analysis<a class="headerlink" href="#examples-of-analysis" title="Link to this heading"></a></h2>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>The following are minimal examples for common types of interaction energy analysis.</p>
 <section id="electrostatic-lj-interaction-between-solute-molecules">
 <h3>Electrostatic + LJ Interaction Between Solute Molecules<a class="headerlink" href="#electrostatic-lj-interaction-between-solute-molecules" title="Link to this heading"></a></h3>
